@@ -15,16 +15,16 @@ Instalar los prodcutos de MySQL 8.0.17 desde el siguiente link: https://dev.mysq
   Nota: Al finalizar la instalacion de MySQL, puedes ejecutar MySQL Installer para instalar un producto que hayas olvidado, de esta manera evitas la reinstalacion.
 
 ## Instalar mysqlclient
-1. Ejecutar la siguiente isntruccion en la consola de comandos de windows (la ubicacion dependera en que ambiente de desarrollo tiene instalado python)
+1. Ejecutar la siguiente instruccion en la consola de comandos de windows (la ubicacion dependera en que ambiente de desarrollo tiene instalado python)
 ```
 py -m pip list
 ```
 2. Se desplegará un listado de todos los modulos instalados en python, ubique el paquete **mysqlclient 1.4.2.post1**. (las versiones posteriores a esta tambien son compatibles)
-3. En caso que no lo tenga instalado, ejecutar la siguiente instruccion:
+3. En caso que no tenerlo instalado, ejecutar la siguiente instruccion:
 ```
 py -m pip install mysqlclient
 ```
-4. En caso de que tenga una version no compatible, ejecutar la siguiente instruccion para actualizar:
+4. En caso de tener una version no compatible, ejecutar la siguiente instruccion para actualizar:
 ```
 py -m pip install --upgrade mysqlclient
 ```
@@ -43,7 +43,7 @@ GRANT ALL PRIVILEGES ON guiarconsultores.* TO admin@localhost;
 FLUSH PRIVILEGES;
 ```
 ## Configurar ProyectoGuiarConsultores con MySQL 8.0.12
-En el archivo settings.py de la carpeta ProyectoGuiarConsultores
+En el archivo **settings.py** de la carpeta ProyectoGuiarConsultores
 ```
 ProyectoGuiarConsultores/
     manage.py
@@ -69,4 +69,34 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+```
+## Crear tablas en Django
+El archivo **models.py** es encargado de construir una tabla en la base de datos. Cada aplicacion tiene su propio archivo **models.py** y en este caso vamos a crear la tabla ```Tabla_usuario```
+```python
+from django.db import models
+
+# Create your models here.
+
+class Tabla_usuario(models.Model):
+    user = models.CharField(max_length=200)
+    pass_user = models.CharField(max_length=200)
+```
+Lo anterior muestra el codigo insertado en el archivo models.py de la aplicacion Poll.
+
+## MakeMigrations
+Para crear las migraciones es necesario ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
+```
+py manage.py makemigrations
+```
+
+## Migrate
+Para migrar las tablas es necesario ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
+```
+py manage.py migrate
+```
+
+## Levantar Servidor
+Para visualizar la pagina web se debe ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
+```
+py manage.py runserver
 ```
