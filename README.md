@@ -19,12 +19,17 @@ Instalar los prodcutos de MySQL 8.0.17 desde el siguiente link: https://dev.mysq
 ```
 py -m pip list
 ```
-2. Se desplegará un listado de todos los modulos instalados en python, ubique el paquete **mysqlclient 1.4.2.post1**. (las versiones posteriores a esta tambien son compatibles)
-3. En caso que no tenerlo instalado, ejecutar la siguiente instruccion:
+2. Se desplegará un listado de todos los modulos instalados en su equipo
+3. Desinstalar el paquete **pymysql** si lo tiene instalado, ejecute la siguiente instruccion:
+```
+py -m pip uninstall pymysql
+```
+3. En el listado del paso N°2, ubique el paquete **mysqlclient 1.4.2.post1**. (las versiones posteriores a esta tambien son compatibles)
+4. En caso que no tenerlo instalado, ejecutar la siguiente instruccion:
 ```
 py -m pip install mysqlclient
 ```
-4. En caso de tener una version no compatible, ejecutar la siguiente instruccion para actualizar:
+5. En caso de tener una version no compatible, ejecutar la siguiente instruccion para actualizar:
 ```
 py -m pip install --upgrade mysqlclient
 ```
