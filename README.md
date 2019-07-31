@@ -5,6 +5,15 @@ Para continuar el desarrollo del sistema en otro equipo, usted debe clonar el pr
   ```
   git clone https://github.com/JulioCesar0180/ProyectoGuiarConsultores.git
   ```
+## Instalar python 3.X
+Se requiere instalar python 3.6 (min version) de 64 bits.
+
+## Instalar Django
+Se requiere instalar Django ejecutando la siguiente instruccion:
+```
+py -m pip install Django
+```
+
 ## Instalacion de MySQL 8.0.12
 Instalar los prodcutos de MySQL 8.0.17 desde el siguiente link: https://dev.mysql.com/downloads/file/?id=488055
   - MySQL Server
