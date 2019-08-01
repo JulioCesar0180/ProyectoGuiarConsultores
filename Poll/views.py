@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Poll.")
+    return render(request, "MideTuRiesgo/mideturiesgo.html")
 
 
 
