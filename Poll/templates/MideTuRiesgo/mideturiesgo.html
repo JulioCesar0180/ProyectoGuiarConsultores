@@ -12,6 +12,9 @@
     <title>Mide tu riesgo</title>
   </head>
   <body>
+    <div id="azul"></div>
+    <div id="blanco"></div>
+    <div id="plomo"></div>
     <div id="head"></div>
     <div class="inicio">
       Bienvenido a nuestro evaluador de riesgo de negocio. Este formulario tiene como objetivo saber de las características de su empresa, de tal manera de mostrarle sus principales oportunidades para disminuir su riesgo de operación, de tal manera de proteger su patrimonio y transferir el riesgo no deseado.
@@ -84,7 +87,7 @@
                 Razón Social
               </td>
               <td class="campos">
-                <input type="text" name="razon">
+                <input type="text" name="razon" id="razon">
               </td>
             </tr>
             <tr>
@@ -92,7 +95,7 @@
                 RUT
               </td>
               <td class="campos">
-                <input type="text" name="rut">
+                <input type="text" name="rut" id="rut">
               </td>
             </tr>
             <tr>
@@ -100,7 +103,7 @@
                 Antigüedad de la empresa (años)
               </td>
               <td class="campos">
-                <input type="text" name="años">
+                <input type="text" name="experiencia" id="experiencia">
               </td>
             </tr>
             <tr>
@@ -108,7 +111,7 @@
                 Dirección
               </td>
               <td class="campos">
-                <input type="text" name="calle">
+                <input type="text" name="direccion">
               </td>
             </tr>
             <tr>
@@ -136,6 +139,30 @@
       <div>
         <hr>
       </div>
+    </div>
+
+    <div class="inicio">
+        <b>P3.</b> Ventas anuales de la empresa
+        <div>
+          <br>
+        </div>
+      <div class="input-radio">
+        <input type="radio" id="minimo" name="ventas" value="minimo">
+        <label for="minimo">De UF 0 a UF 2.400</label>
+      </div>
+      <div class="input-radio">
+        <input type="radio" id="intermedio" name="ventas" value="intermedio">
+        <label for="intermedio">De UF 2.400 a UF 25.000</label>
+      </div>
+      <div class="input-radio">
+        <input type="radio" name="ventas" id="maximo" value="maximo">
+        <label for="maximo">De UF 25.000 a UF 100.000</label>
+      </div>
+      <div class="input-radio">
+        <input type="radio" name="ventas" id="mas" value="mas">
+        <label for="mas">Más de UF 100.000</label>
+      </div>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
