@@ -111,7 +111,7 @@
                 Dirección
               </td>
               <td class="campos">
-                <input type="text" name="direccion">
+                <input type="text" name="direccion" id="direccion">
               </td>
             </tr>
             <tr>
@@ -119,7 +119,7 @@
                 Comuna
               </td>
               <td class="campos">
-                <input type="text" name="comuna">
+                <input type="text" name="comuna" id="comuna">
               </td>
             </tr>
             <tr>
@@ -127,7 +127,7 @@
                 Ciudad
               </td>
               <td class="campos">
-                <input type="text" name="ciudad">
+                <input type="text" name="ciudad" id="ciudad">
               </td>
             </tr>
           </tbody>
@@ -148,11 +148,11 @@
         </div>
       <div class="input-radio">
         <input type="radio" id="minimo" name="ventas" value="minimo">
-        <label for="minimo">De UF 0 a UF 2.400</label>
+        <label for="minimo" class="unselectable">De UF 0 a UF 2.400</label>
       </div>
       <div class="input-radio">
         <input type="radio" id="intermedio" name="ventas" value="intermedio">
-        <label for="intermedio">De UF 2.400 a UF 25.000</label>
+        <label for="intermedio" class="unselectable">De UF 2.400 a UF 25.000</label>
       </div>
       <div class="input-radio">
         <input type="radio" name="ventas" id="maximo" value="maximo">
@@ -160,7 +160,119 @@
       </div>
       <div class="input-radio">
         <input type="radio" name="ventas" id="mas" value="mas">
-        <label for="mas">Más de UF 100.000</label>
+        <label for="mas" class="unselectable">Más de UF 100.000</label>
+      </div>
+    </div>
+
+    <div class="inicio">
+      <b>P4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
+      <div>
+        <br>
+      </div>
+      <div class="datos">
+        <table>
+          <tbody>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de empleados contratados
+              </td>
+              <td class="campos">
+                <input type="text" name="empContratados" id="empContratados">
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de empleados contratistas
+              </td>
+              <td class="campos">
+                <input type="text" name="empContratistas" id="empContratistas">
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de vehículos comerciales livianos de la empresa
+              </td>
+              <td class="campos">
+                <input type="text" name="vehLivianos" id="vehLivianos">
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de vehículos comerciales de contratistas
+              </td>
+              <td class="campos">
+                <input type="text" name="vehContratistas" id="vehContratistas">
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de vehículos comerciales pesados de la empresa
+              </td>
+              <td class="campos">
+                <input type="text" name="vehPesados" id="vehPesados">
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de vehículos comerciales pesados de contratistas
+              </td>
+              <td class="campos">
+                <input type="text" name="vehPesadosContratistas" id="vehPesadosContratistas">
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de maquinaria pesada de la empresa
+              </td>
+              <td class="campos">
+                <input type="text" name="maqEmpresa" id="maqEmpresa">
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Cantidad de maquinaria pesada de contratista
+              </td>
+              <td class="campos">
+                <input type="text" name="marContratista" id="marContratista">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <br>
+        </div>
+      </div>
+      <div>
+        <hr>
+      </div>
+    </div>
+
+    <div class="inicio">
+        <b>P5.</b> Indique el o los rubros en que participa la empresa
+        <div>
+          <br>
+        </div>
+      <div class="input-radio">
+        <input type="checkbox" id="construccion" name="construccion" value="construccion">
+        <label for="construccion" class="unselectable">Construcción</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="manufactura" name="manufactura" value="manufactura">
+        <label for="manufactura" class="unselectable">Manufactura</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="transporte" id="transporte" value="transporte">
+        <label for="transporte" class="unselectable">Transporte terreste</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="servicio" id="servicio" value="servicio">
+        <label for="servicio" class="unselectable">Servicios generales</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="otro" id="otro" value="otro">
+        <label for="otro" class="unselectable">Otro (por favor especifique)</label>
+        <br>
+        <input type="text" name="opcion" class="campo">
       </div>
     </div>
     <!-- Optional JavaScript -->
