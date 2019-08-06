@@ -44,7 +44,7 @@
                 Nombre
               </td>
               <td class="campos">
-                <input type="text" name="nombre">
+                <input type="text" name="nombre" id="nombre">
               </td>
             </tr>
             <tr>
@@ -52,7 +52,7 @@
                 Correo Electronico
               </td>
               <td class="campos">
-                <input type="text" name="email">
+                <input type="text" name="email" id="email">
               </td>
             </tr>
             <tr>
@@ -60,7 +60,7 @@
                 Teléfono
               </td>
               <td class="campos">
-                <input type="text" name="telefono">
+                <input type="text" name="telefono" id="telefono">
               </td>
             </tr>
           </tbody>
@@ -276,6 +276,8 @@
       </div>
     </div>
     <form method="post" action="2/" class="siguiente">
+      {% csrf_token %}
+      {{ FormInicial }}
       <button type="submit" value="Submit" id="next">→</button>
     </form>
     <div>

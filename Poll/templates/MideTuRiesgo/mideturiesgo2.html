@@ -271,7 +271,7 @@
       <form method="get" class="anterior">
         <button type="submit" value="Submit" id="previous">←</button>
       </form>
-      <form method="post" action="2/" class="siguiente">
+      <form method="post" action="2/" class="siguiente">{% csrf_token %}
         <button type="submit" value="Submit" id="next">→</button>
       </form>
     </div>

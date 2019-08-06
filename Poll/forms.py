@@ -11,3 +11,16 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+class FormInicial(forms.Form):
+    nombre = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    telefono = forms.CharField(max_length=100)
+    razon = forms.CharField(max_length=100)
+    rut = forms.CharField(max_length=100)
+    experiencia = forms.CharField(max_length=100)
+    direccion = forms.CharField(max_length=100)
+    comuna = forms.CharField(max_length=100)
+    ciudad = forms.CharField(max_length=100)
+    # ventas = forms.BooleanField(required=False)
+    message = forms.CharField(widget=forms.Textarea)
