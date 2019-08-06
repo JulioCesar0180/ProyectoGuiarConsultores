@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Home.apps.HomeConfig',
-    'Poll.apps.PollConfig'
+    'Poll.apps.PollConfig',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +130,6 @@ STATICFILES_DIRS = [
     'Home/static',
     'Poll/static'
 ]
+
+LOGIN_REDIRECT_URL = '/MideTuRiesgo/perfil'
+LOGOUT_REDIRECT_URL = '/'
