@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Pagina de inicio de Mide Tu Riesgo</h2>
+    <p>Bienvenido(a) a Mide Tu Riesgo, {% if user.is_authenticated %}{{ user.username }}{% else %}visitante {% endif %}!</p>
+    <p>
+        <strong>Total de usuarios registrados: </strong> {{count}}
+    </p>
+
+{% endblock %}

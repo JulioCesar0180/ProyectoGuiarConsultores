@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'guiarconsultores',
         'USER': 'admin',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
@@ -131,5 +131,8 @@ STATICFILES_DIRS = [
     'Poll/static'
 ]
 
-LOGIN_REDIRECT_URL = '/MideTuRiesgo/perfil'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
