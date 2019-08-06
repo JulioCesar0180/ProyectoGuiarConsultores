@@ -1,3 +1,15 @@
+form {
+    display: inline-block;
+}
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -42,6 +54,29 @@ table{
     margin-left: 20%;
     margin-right: 20%;
 }
+.campo{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d;
+    height: 40%;
+    width: 25%
+}
+
+.campo:focus{
+    outline: none;
+    border: 2px solid black;
+}
+
+.campos input{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d;
+    height: 40%;
+    width: 150%
+}
+
 .campos input{
     border: 2px solid #d2d2d6;
     font-family: Grotesque,Arial,sans-serif;
@@ -81,4 +116,42 @@ input[type=radio] + label {
     font-family: Grotesque,Arial,sans-serif;
     font-size: 16px;
     width:100%;
+  }
+  input[type=checkbox] {
+    display: none;
+}
+
+    input[type=checkbox] + label {
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    text-align:left;
+    transition: 0.2s;
+    width: 100%;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    background: #f3f5f6;
+    border-color: #f3f5f6;
+  }
+
+  input[type=checkbox]:checked + label {
+    background:#2e393f;
+    border-color:#030404;
+    color:white;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    width:100%;
+  }
+  .siguiente{
+    margin-left: 44%
+  }
+  #next, #previous{
+    color:white;
+    background-color:blue;
+    border: blue;
+    border-radius: 5px;
+    width: 600%
+  }
+    .anterior{
+    margin-left: 21%
   }

@@ -18,7 +18,10 @@ def signup(request):
     return render(request, "registration/registrarse.html", {
         'form': form
     })
+def dos(request):
+    return render(request, "MideTuRiesgo/mideturiesgo2.html")
 
 def profile(request):
     return render(request, "registration/profile.html")
+
 
