@@ -17,15 +17,7 @@
     <div id="plomo"></div>
     <div id="head"></div>
     <div class="inicio">
-      Bienvenido a nuestro evaluador de riesgo de negocio. Este formulario tiene como objetivo saber de las características de su empresa, de tal manera de mostrarle sus principales oportunidades para disminuir su riesgo de operación, de tal manera de proteger su patrimonio y transferir el riesgo no deseado.
-      <div>
-        <br>
-      </div>
-      Este formulario consta de 4 secciones, cada una personalizada en base a sus respuestas.
-      <div>
-        <br>
-      </div>
-      A continuación realizaremos una serie de preguntas que permitirá identificar estas oportunidades.
+      Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado.
       <div>
         <hr>
       </div>
@@ -44,7 +36,7 @@
                 Nombre
               </td>
               <td class="campos">
-                <input type="text" name="nombre" id="nombre">
+                <input type="text" name="nombre">
               </td>
             </tr>
             <tr>
@@ -52,7 +44,7 @@
                 Correo Electronico
               </td>
               <td class="campos">
-                <input type="text" name="email" id="email">
+                <input type="text" name="email">
               </td>
             </tr>
             <tr>
@@ -60,7 +52,7 @@
                 Teléfono
               </td>
               <td class="campos">
-                <input type="text" name="telefono" id="telefono">
+                <input type="text" name="telefono">
               </td>
             </tr>
           </tbody>
@@ -275,11 +267,14 @@
         <input type="text" name="opcion" class="campo">
       </div>
     </div>
-    <form method="post" action="2/" class="siguiente">
-      {% csrf_token %}
-      {{ FormInicial }}
-      <button type="submit" value="Submit" id="next">→</button>
-    </form>
+    <div class="direccion">
+      <form method="get" class="anterior">
+        <button type="submit" value="Submit" id="previous">←</button>
+      </form>
+      <form method="post" action="2/" class="siguiente">{% csrf_token %}
+        <button type="submit" value="Submit" id="next">→</button>
+      </form>
+    </div>
     <div>
       <br>
     </div>
