@@ -1,6 +1,6 @@
 body {
   overflow-x: hidden;
-    padding-top: 56px;
+    padding-top: 54px;
 }
 
 #sidebar-wrapper {
@@ -10,9 +10,10 @@ body {
     -moz-transition: margin .25s ease-out;
     -o-transition: margin .25s ease-out;
     transition: margin .25s ease-out;
-    background: blue !important;
+    background: #07539C !important;
     position: fixed;
     z-index: 2;
+    border-right-color: #07539C;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -49,4 +50,35 @@ body {
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+}
+
+#logo-top-img{
+    margin-left: 10px;
+    width: 300px;
+}
+
+@media (max-width: 460px) {
+    #logo-top-img{
+        width: 150px;
+    }
+}
+
+#title-MideTuRiesgo{
+    font-size: 25px;
+    font-family: 'Open Sans', sans-serif;
+    padding-right: 10px;
+    color: black;
+}
+
+/* boton comenzar*/
+a.btn.btn-primary{
+    color: white !important;
+    border-radius: 40px;
+}
+
+
+@media (max-width: 540px) {
+    #btn-MideTuRiesgo{
+        display: none;
+    }
 }
