@@ -21,7 +21,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top" style="padding-right: 15px">
         <div class="d-flex justify-content">
             <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
             <img id="logo-top-img" src="{% static 'images/image001-1.png' %}">
@@ -65,5 +65,8 @@
           $("#wrapper").toggleClass("toggled");
         });
     </script>
+
+    {% block script %}
+    {% endblock %}
 </body>
 </html>

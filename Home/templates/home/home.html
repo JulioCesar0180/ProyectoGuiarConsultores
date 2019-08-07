@@ -4,10 +4,21 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 {% block content %}
-    <div id="container-sections" style="height: 100vh">
-        {% include 'home/carousel.html' %}
-
+  <div class="row">
+    <div class="col">{% include 'home/carousel.html' %}</div>
+    <div class="w-100"></div>
+    <div id="container-section" class="col">
+        <section id="About" style="background: blue; padding-left: 25px; padding-top: 50px; margin-left: 25px; margin-top: 50px; border-radius: 50px">
+            - Copy y paste las demas secciones - crear CSS dedicado
+            - Aplicar Responsive al Carousel
+            - Aplicar opacity a las sections
+            - preguntar si aplicamos gradiente al sidebar
+        </section>
     </div>
+  </div>
+{% endblock %}
+
+{% block script %}
 {% endblock %}
 
 
