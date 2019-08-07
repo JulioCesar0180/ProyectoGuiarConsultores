@@ -1,0 +1,13 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+    <div id="container-sections" style="height: 100vh">
+        {% include 'home/carousel.html' %}
+
+    </div>
+{% endblock %}
+
+

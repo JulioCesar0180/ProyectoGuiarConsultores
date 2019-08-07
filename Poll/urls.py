@@ -3,7 +3,6 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-
     path('home', views.home, name="home"),
     path('encuesta', views.index,),
 
@@ -14,6 +13,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 
-    path('/', views.index),
-    path('/2/', views.dos)
+    path('', views.index),
+    path('2/', views.dos)
 ]
