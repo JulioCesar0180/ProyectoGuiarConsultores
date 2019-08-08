@@ -21,7 +21,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top" style="padding-right: 15px">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top" style="padding-right: 15px; display: flex">
         <div class="d-flex justify-content">
             <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-bars"></i></button>
             <img id="logo-top-img" src="{% static 'images/logoGC.png' %}">
@@ -37,11 +37,11 @@
           <div class="sidebar-heading"></div>
           <div class="list-group list-group-flush">
             <a href="{% url '' %}#" class="list-group-item list-group-item-action bg-light">Inicio</a>
-            <a href="{% url '' %}#empresa" class="list-group-item list-group-item-action bg-light">Empresa</a>
-            <a href="{% url '' %}#servicios" class="list-group-item list-group-item-action bg-light">Servicios</a>
-            <a href="{% url '' %}#alianzas" class="list-group-item list-group-item-action bg-light">Aseguradoras Aliadas</a>
+            <a href="{% url '' %}#empresa-prev-link" class="list-group-item list-group-item-action bg-light">Empresa</a>
+            <a href="{% url '' %}#servicios-prev-link" class="list-group-item list-group-item-action bg-light">Servicios</a>
+            <a href="{% url '' %}#aliadas-prev-link" class="list-group-item list-group-item-action bg-light">Aseguradoras Aliadas</a>
             <a href="{% url 'login' %}" class="list-group-item list-group-item-action bg-light">mideturiesgo</a>
-            <a href="{% url '' %}#contacto" class="list-group-item list-group-item-action bg-light">Contacto</a>
+            <a href="{% url '' %}#contacto-prev-link" class="list-group-item list-group-item-action bg-light">Contacto</a>
           </div>
         </div>
         <!-- /#sidebar-wrapper -->

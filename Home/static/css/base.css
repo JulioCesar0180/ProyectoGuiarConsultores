@@ -4,7 +4,8 @@ html{
 
 body {
     overflow-x: hidden;
-    padding-top: 64px;
+    margin-top: 64px;
+    padding-bottom: 50px;
 }
 
 #sidebar-wrapper {
