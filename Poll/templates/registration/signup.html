@@ -1,13 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'header.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
 {% block content %}
-
-    <h2>Crear Cuenta</h2>
-    <form method="post">
-        {% csrf_token  %}
-        {{ form.as_p }}
-        <button type="submit" > Crear Cuenta </button>
-    </form>
+    <link rel="stylesheet" href="{% static 'css/registration.css'%}">
 
 
+    <div class="center">
+        <div class="container">
+            <div class="d-flex justify-content-center h-100">
+                <div class="card2">
+                    <div class="card-body">
+                        <font color="white">
+                            <h2>Crear Cuenta</h2>
+                            <form method="post">
+                                {% csrf_token  %}
+                                {{ form|crispy }}
+                                <button type="submit" > Crear Cuenta </button>
+                            </form>
+                        </font>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
