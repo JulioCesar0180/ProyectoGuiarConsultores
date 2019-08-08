@@ -36,12 +36,12 @@
         <div class="bg-light border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"></div>
           <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item list-group-item-action bg-light">Inicio</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Empresa</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Servicios</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Aseguradoras Aliadas</a>
+            <a href="{% url '' %}#" class="list-group-item list-group-item-action bg-light">Inicio</a>
+            <a href="{% url '' %}#empresa" class="list-group-item list-group-item-action bg-light">Empresa</a>
+            <a href="{% url '' %}#servicios" class="list-group-item list-group-item-action bg-light">Servicios</a>
+            <a href="{% url '' %}#alianzas" class="list-group-item list-group-item-action bg-light">Aseguradoras Aliadas</a>
             <a href="{% url 'login' %}" class="list-group-item list-group-item-action bg-light">mideturiesgo</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Contacto</a>
+            <a href="{% url '' %}#contacto" class="list-group-item list-group-item-action bg-light">Contacto</a>
           </div>
         </div>
         <!-- /#sidebar-wrapper -->
