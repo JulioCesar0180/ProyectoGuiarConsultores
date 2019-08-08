@@ -15,7 +15,7 @@ body {
   background-size: cover;
 }
 
-#container-section #main > *{
+#container-section > *{
   padding: 50px 30px 50px 30px;
   margin: 80px 25px 0 25px;
   border-radius: 30px;
@@ -28,6 +28,7 @@ body {
 
 #empresa h2, p{
   color: rgb(0,79,155);
+  text-align: center;
 }
 
 #servicios{
