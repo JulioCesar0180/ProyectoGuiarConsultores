@@ -27,8 +27,12 @@
             <img id="logo-top-img" src="{% static 'images/logoGC.png' %}">
         </div>
         <a id="title-MideTuRiesgo">
-            <strong>mideturiesgo</strong>
-            <a href="{% url 'home' %}" class="btn btn-primary">Comenzar</a>
+            <strong>MideTuRiesgo</strong>
+            {% if user.is_authenticated %}
+                <a href="{% url 'home' %}" class="btn btn-primary">Entrar</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-primary">Entrar</a>
+            {% endif %}
         </a>
     </nav>
     <div class="d-flex toggled" id="wrapper">
@@ -36,12 +40,13 @@
         <div class="bg-light border-right" id="sidebar-wrapper">
           <div class="sidebar-heading"></div>
           <div class="list-group list-group-flush">
-            <a href="{% url '' %}#" class="list-group-item list-group-item-action bg-light">Inicio</a>
-            <a href="{% url '' %}#empresa-prev-link" class="list-group-item list-group-item-action bg-light">Empresa</a>
-            <a href="{% url '' %}#servicios-prev-link" class="list-group-item list-group-item-action bg-light">Servicios</a>
-            <a href="{% url '' %}#aliadas-prev-link" class="list-group-item list-group-item-action bg-light">Aseguradoras Aliadas</a>
+            <a href="{% url 'homeGC' %}#" class="list-group-item list-group-item-action bg-light">Inicio</a>
+            <a href="{% url 'homeGC' %}#empresa-prev-link" class="list-group-item list-group-item-action bg-light">Empresa</a>
+            <a href="{% url 'homeGC' %}#servicios-prev-link" class="list-group-item list-group-item-action bg-light">Servicios</a>
+            <a href="{% url 'homeGC' %}#aliadas-prev-link" class="list-group-item list-group-item-action bg-light">Aseguradoras Aliadas</a>
             <a href="{% url 'login' %}" class="list-group-item list-group-item-action bg-light">mideturiesgo</a>
-            <a href="{% url '' %}#contacto-prev-link" class="list-group-item list-group-item-action bg-light">Contacto</a>
+            <a href="{% url 'homeGC' %}#contacto-prev-link" class="list-group-item list-group-item-action bg-light">Contacto</a>
+            <a href="{% url 'logout' %}#contacto-prev-link" class="list-group-item list-group-item-action bg-light">Cerrar Sesión</a>
           </div>
         </div>
         <!-- /#sidebar-wrapper -->

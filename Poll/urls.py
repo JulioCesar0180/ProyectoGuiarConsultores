@@ -13,6 +13,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 
-    path('', views.index),
+    path('', views.index, name="encuesta"),
     path('2/', views.dos)
 ]

@@ -8,7 +8,6 @@ from django.contrib.auth import login, authenticate
 from .forms import SignUpForm, FormInicial
 from Poll.models import Tabla_usuario
 
-"""Testing"""
 
 def home(request):
     count = User.objects.count()
