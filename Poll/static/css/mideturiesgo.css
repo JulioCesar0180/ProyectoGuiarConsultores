@@ -46,7 +46,7 @@ table{
     padding-top: 2%;
 }
 
-.inicio{
+.inicio, #explosivos, #explosivosNext, #electricidad, #electricidadNext, #sustancias, #sustanciasNext, #altura, #alturaNext{
     font-size: 16px;
     color: #43464d;
     padding: 20px;
@@ -54,6 +54,13 @@ table{
     margin-left: 20%;
     margin-right: 20%;
 }
+
+#explosivosNext, #electricidadNext, #sustanciasNext, #alturaNext{
+    width:100%;
+    margin-left:0;
+    margin-right:0;
+}
+
 .campo{
     border: 2px solid #d2d2d6;
     font-family: Grotesque,Arial,sans-serif;

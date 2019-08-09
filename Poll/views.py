@@ -45,8 +45,14 @@ def signup(request):
     })
 
 
-def dos(request):
+def polltwo(request):
     return render(request, "MideTuRiesgo/mideturiesgo2.html")
+
+def pollthree(request):
+    return render(request, "MideTuRiesgo/mideturiesgo3.html")
+
+def pollfour(request):
+    return render(request, "MideTuRiesgo/mideturiesgo4.html")
 
 def profile(request):
     return render(request, "registration/profile.html")
