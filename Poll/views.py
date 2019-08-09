@@ -36,11 +36,36 @@ def signup(request):
 def index(request):
     # codigo para la encuesta completa
     # nombre, email, telefono, razon, rut (empresa), experiencia, direccion, comuna, ciudad, ventas,
-    return render(request, "MideTuRiesgo/mideturiesgo.html")
-
-def pagina2(request):
-
-    return render(request, "MideTuRiesgo/mideturiesgo.html")
+    if request.method == 'POST':
+        form = FormInicial(request.POST)
+        if form.is_valid():
+            nombre = form.cleaned_data['nombre']
+            email = form.cleaned_data['email']
+            telefono = form.cleaned_data['telefono']
+            razon = form.cleaned_data['razon']
+            rut = form.cleaned_data['rut']
+            experiencia = form.cleaned_data['experiencia']
+            direccion = form.cleaned_data['direccion']
+            comuna = form.cleaned_data['comuna']
+            ciudad = form.cleaned_data['ciudad']
+            ventas = form.cleaned_data['ventas']
+            usuario = Tabla_usuario(user=1,
+                                    pass_user=123,
+                                    nombre_empresa=nombre,
+                                    rut_empresa=rut,
+                                    direccion_empresa=direccion,
+                                    experiencia_empresa=experiencia,
+                                    ciudad_empresa=ciudad,
+                                    comuna_empresa=comuna,
+                                    nombre_contacto_empresa='placeholder',
+                                    telefono_empresa=telefono,
+                                    email_empresa=email,
+                                    ventas_anuales_empresa=ventas)
+            usuario.save()
+            # return HttpResponseRedirect('/thanks/')
+    else:
+        form = FormInicial()
+    return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form': form})
 
 
 def dos(request):
