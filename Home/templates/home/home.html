@@ -1,0 +1,86 @@
+{% extends 'home/base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col">{% include 'home/carousel.html' %}</div>
+    <div class="w-100"></div>
+    <div id="container-section" class="col">
+        <section id="empresa">
+            <div class="container-fluid">
+                <h2>Bienvenidos a Guiar Consultores en Riesgos y Seguros</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="row">
+                    <div class="col">
+                        <img src="{% static 'images/building-2762342_1920.jpg' %}" style="height: 300px; width: 300px">
+                    </div>
+                    <div class="col">
+                    </div>
+                </div>
+            </div>
+            <div id="servicios-prev-link"></div>
+        </section>
+
+        <section id="servicios">
+            <div class="container-fluid">
+                <h2 style="text-align: center">Servicios</h2>
+                <p style="text-align: center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="row">
+                    <div class="col">
+                        <img src="{% static 'images/building-2762342_1920.jpg' %}" style="height: 300px; width: 300px">
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+              </div>
+            <div id="aliadas-prev-link"></div>
+        </section>
+
+        <section id="aliadas">
+            <div class="container-fluid">
+                <h2 style="text-align: center">Alianzas</h2>
+                <p style="text-align: center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="row">
+                    <div class="col">
+                        <img src="{% static 'images/building-2762342_1920.jpg' %}" style="height: 300px; width: 300px">
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+              </div>
+            <div id="contacto-prev-link"></div>
+        </section>
+
+
+        <section id="contacto">
+            <div class="container-fluid">
+                <h2 style="text-align: center">Contacto</h2>
+                <p style="text-align: center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <div class="row">
+                    <div class="col">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                    <div class="col">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2583.6709617234965!2d-70.4093684598801!3d-23.680874183705185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2scl!4v1563829805591!5m2!1ses-419!2scl" width="100%" height="380" style="border: 4px; border-color: rgb(255,255,255); border-style: solid" frameborder="0"  allowfullscreen></iframe>
+                    </div>
+                </div>
+              </div>
+        </section>
+
+    </div>
+  </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
+
+

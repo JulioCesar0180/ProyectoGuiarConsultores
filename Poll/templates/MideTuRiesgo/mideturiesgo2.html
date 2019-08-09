@@ -271,7 +271,7 @@
       <form action="/MideTuRiesgo" class="anterior">
         <button type="submit" value="Submit" id="previous">←</button>
       </form>
-      <form action="/MideTuRiesgo/3" class="siguiente">
+      <form action="/MideTuRiesgo/3" class="siguiente">{% crsf_token %}
         <button type="submit" value="Submit" id="next">→</button>
       </form>
     </div>

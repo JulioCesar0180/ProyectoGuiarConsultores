@@ -1,14 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'header.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="{% static 'css/registration.css'%}">
 
-    <h2>Iniciar Sesión</h2>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Iniciar Sesión</button>
-        <a href="{% url 'password_reset' %}"> ¿Olvidó su contraseña? </a>
-    </form>
+    <div class="center">
+        <div class="container">
+            <div class="d-flex justify-content-center h-100">
+                <div class="card">
+                    <div class="card-body">
+                        <font color="white">
+                        <h2>Iniciar Sesión</h2>
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <center><button type="submit" class="btn login_btn">Iniciar Sesión</button></center>
+                            </form>
+                        </font>
+                        <div class="d-flex justify-content-center links">
+                            ¿No tiene una cuenta?<a href="{% url 'signup'%}">Registrarse</a>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'password_reset' %}"> ¿Olvidó su contraseña? </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
