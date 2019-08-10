@@ -325,14 +325,6 @@ li,ul{
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
-.search input {
-    border: none;
-    font-size: 15px;
-    padding: 15px 9px;
-    width: 100%;
-    background: rgba(0, 0, 0, 0) url("../images/search.png") no-repeat scroll 99% 12px;
-    color: #8492af;
-}
 
 header {
     background: #ffffff none repeat scroll 0 0;
