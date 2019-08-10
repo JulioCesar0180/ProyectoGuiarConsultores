@@ -1,34 +1,41 @@
 # ProyectoGuiarConsultores
 
 **Contenidos**
-1. [Clonar Proyecto](#git clone)
-2. [Instalar Python 3.X](#python install)
-3. [Instalar Django](#django install)
+1. [Clonar Proyecto](#gitClone)
+2. [Instalar Python 3.X](#pythonInstall)
+3. [Instalar Django](#djangoInstall)
+4. [Instalacion de MySQL 8.0.17](#mysqlInstall)
+5. [Instalar mysqlclient](#mysqlclientInstall)
+6. [Crear Base de datos para GuiarConsultores](#createDatabase)
+7. [Configurar ProyectoGuiarConsultores con MySQL 8.0.17](#configDatabase)
+8. [Crear tablas en Django](#createTables)
+9. [MakeMigrations](#makemigrations)
+10.[Migrations](#migrations)
 
-## Clonar ProyectoGuiarConsultores<a name="git clone"></a>
+## Clonar ProyectoGuiarConsultores<a name="gitClone"></a>
 Para continuar el desarrollo del sistema en otro equipo, usted debe clonar el proyecto a través de github mediante la consola de windows ejecutar el siguiente instruccion (verifique que se encuentre en el directorio deseado):
   ```
   git clone https://github.com/JulioCesar0180/ProyectoGuiarConsultores.git
   ```
-## Instalar python 3.X<a name="python install"></a>
+## Instalar python 3.X<a name="pythonInstall"></a>
 Se requiere instalar python 3.6 (min version) de 64 bits.
 
-## Instalar Django<a name="django install"></a>
+## Instalar Django<a name="djangoInstall"></a>
 Se requiere instalar Django ejecutando la siguiente instruccion:
 ```
 py -m pip install Django
 ```
 
-## Instalacion de MySQL 8.0.12
+## Instalacion de MySQL 8.0.17<a name="mysqlInstall"></a>
 Instalar los prodcutos de MySQL 8.0.17 desde el siguiente link: https://dev.mysql.com/downloads/file/?id=488055
   - MySQL Server
   - MySQL Workbench
-  - Connector/Python (3.6) 8.0.12
+  - Connector/Python (3.6) 8.0.17
   - El resto de los productos es opcional
   
   Nota: Al finalizar la instalacion de MySQL, puedes ejecutar MySQL Installer para instalar un producto que hayas olvidado, de esta manera evitas la reinstalacion.
 
-## Instalar mysqlclient
+## Instalar mysqlclient<a name="mysqlclientInstall"></a>
 1. Ejecutar la siguiente instruccion en la consola de comandos de windows (la ubicacion dependera en que ambiente de desarrollo tiene instalado python)
 ```
 py -m pip list
@@ -48,7 +55,7 @@ py -m pip install mysqlclient
 py -m pip install --upgrade mysqlclient
 ```
 
-## Crear la Base de Datos para GuiarConsultores
+## Crear la Base de Datos para GuiarConsultores<a name="createDatabase"></a>
 2. En MySQL Workbench ingresamos a nuestra base de datos local (localhost) y escribimos la siguiente query:
 ```sql
 CREATE DATABASE guiarconsultores CHARACTER SET utf8mb4;
@@ -61,7 +68,7 @@ CREATE USER admin@localhost IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON guiarconsultores.* TO admin@localhost;
 FLUSH PRIVILEGES;
 ```
-## Configurar ProyectoGuiarConsultores con MySQL 8.0.12
+## Configurar ProyectoGuiarConsultores con MySQL 8.0.17<a name="configDatabase"></a>
 En el archivo **settings.py** de la carpeta ProyectoGuiarConsultores
 ```
 ProyectoGuiarConsultores/
@@ -89,7 +96,7 @@ DATABASES = {
     }
 }
 ```
-## Crear tablas en Django
+## Crear tablas en Django<a name="createTables"></a>
 El archivo **models.py** es encargado de construir una tabla en la base de datos. Cada aplicacion tiene su propio archivo **models.py** y en este caso vamos a crear la tabla ```Tabla_usuario```
 ```python
 from django.db import models
@@ -102,13 +109,13 @@ class Tabla_usuario(models.Model):
 ```
 Lo anterior muestra el codigo insertado en el archivo models.py de la aplicacion Poll.
 
-## MakeMigrations
+## MakeMigrations<a name="makemigrations"></a>
 Para crear las migraciones es necesario ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
 ```
 py manage.py makemigrations
 ```
 
-## Migrate
+## Migrate<a name="migrate"></a>
 Para migrar las tablas es necesario ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
 ```
 py manage.py migrate
