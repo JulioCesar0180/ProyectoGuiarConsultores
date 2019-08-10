@@ -68,7 +68,7 @@ def index(request):
     return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form': form})
 
 
-def dos(request):
+def polltwo(request):
     # nombre = request.get('nombre')
     # nombre = request('nombre')
     if request.method == 'POST':
