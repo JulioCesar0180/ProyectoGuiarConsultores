@@ -17,3 +17,8 @@ admin.site.register(Tabla_resultados_sustancias_peligrosas)
 admin.site.register(Tabla_resultados_altura)
 admin.site.register(Tabla_resultados_finales)
 admin.site.register(Tabla_priorizacion_riesgos)
+
+
+admin.site.site_header = "MideTuRiesgo"
+admin.site.site_index = "GuiarConsultores"
+admin.site.site_title = "MideTuRiesgo"
