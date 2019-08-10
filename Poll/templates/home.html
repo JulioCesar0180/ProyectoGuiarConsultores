@@ -17,12 +17,12 @@
             <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
                 <div class="navi">
                     <ul>
-                        <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+                        <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
+                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
                         <li><a href="#"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Workflow</span></a></li>
-                        <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Statistics</span></a></li>
-                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Calender</span></a></li>
-                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Users</span></a></li>
-                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Setting</span></a></li>
+                        <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
+                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Agendar</span></a></li>
+                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Configuración</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -43,27 +43,26 @@
                         </div>
                 </div>
                 <div class="user-dashboard">
-                    <h2>Pagina de inicio de Mide Tu Riesgo</h2>
-                    <p>Bienvenido(a) a Mide Tu Riesgo, {% if user.is_authenticated %}{{ user.username }}{% else %}visitante {% endif %}!</p>
-
+                    <h2>Bienvenido(a) a MideTuRiesgo, {% if user.is_authenticated %}{{ user.username }}{% else %}visitante {% endif %}!</h2>
+                    <p>
                     <div>
                         <style>
                             .button {
                               display: inline-block;
-                              padding: 50px 45px;
-                              font-size: 24px;
+                              padding: 20px 30px;
+                              font-size: 20px;
                               cursor: pointer;
                               text-align: center;
                               text-decoration: none;
                               outline: none;
                               color: #fff;
-                              background-color: #4CAF50;
+                              background-color: #004387;
                               border: none;
                               border-radius: 15px;
-                              box-shadow: 0 9px #999;
+                              box-shadow: 0 5px #999;
                             }
 
-                            .button:hover {background-color: #3e8e41}
+                            .button:hover {background-color: #237fdb}
 
                             .button:active {
                               background-color: #3e8e41;
@@ -71,38 +70,22 @@
                               transform: translateY(4px);
                             }
                         </style>
-                        <a href="{% url 'encuesta' %}" class="button">Comenzar</a>
+
+                    <center>
+                            <div class="row">
+                                 <div class="col-sm-5">
+                                     <img src="{% static 'images/mideturiesgo.png' %}">
+                                 </div>
+                                <div class="col-sm-7">
+                                    <a href="{% url 'encuesta' %}" class="button">Comenzar</a>
+                                </div>
+                            </div>
+                  </center>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div id="add_project" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header login-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">Add Project</h4>
-                </div>
-                <div class="modal-body">
-                            <input type="text" placeholder="Project Title" name="name">
-                            <input type="text" placeholder="Post of Post" name="mail">
-                            <input type="text" placeholder="Author" name="passsword">
-                            <textarea placeholder="Desicrption"></textarea>
-                    </div>
-                <div class="modal-footer">
-                    <button type="button" class="cancel" data-dismiss="modal">Close</button>
-                    <button type="button" class="add-project" data-dismiss="modal">Save</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 </body>
 
 {% endblock %}
