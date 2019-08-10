@@ -15,7 +15,7 @@
 
 <a name="gitClone"></a>
 ## Clonar ProyectoGuiarConsultores
-Para continuar el desarrollo del sistema en otro equipo, usted debe clonar el proyecto a través de github mediante la consola de windows ejecutar el siguiente instruccion (verifique que se encuentre en el directorio deseado):
+Para continuar el desarrollo del sistema en otro equipo, usted debe clonar el proyecto a través de github mediante la consola de windows ejecutando la siguiente instruccion (verifique que se encuentre en el directorio deseado):
   ```
   git clone https://github.com/JulioCesar0180/ProyectoGuiarConsultores.git
   ```
@@ -33,13 +33,13 @@ py -m pip install Django
 
 <a name="mysqlInstall"></a>
 ## Instalacion de MySQL 8.0.17
-Instalar los prodcutos de MySQL 8.0.17 desde el siguiente link: https://dev.mysql.com/downloads/file/?id=488055
+Instalar los productos de MySQL 8.0.17 desde el siguiente link: [MySQL Community](https://dev.mysql.com/downloads/file/?id=488055)
   - MySQL Server
   - MySQL Workbench
   - Connector/Python (3.6) 8.0.17
   - El resto de los productos es opcional
   
-  Nota: Al finalizar la instalacion de MySQL, puedes ejecutar MySQL Installer para instalar un producto que hayas olvidado, de esta manera evitas la reinstalacion.
+  Nota: Al finalizar la instalacion, puedes ejecutar MySQL Installer para instalar un producto que hayas olvidado, de esta manera evitas la reinstalacion.
 
 <a name="mysqlclientInstall"></a>
 ## Instalar mysqlclient
@@ -109,7 +109,7 @@ DATABASES = {
 
 <a name="createTables"></a>
 ## Crear tablas en Django
-El archivo **models.py** es encargado de construir una tabla en la base de datos. Cada aplicacion tiene su propio archivo **models.py** y en este caso vamos a crear la tabla ```Tabla_usuario```
+El archivo **models.py** es encargado de declarar las tablas de la base de datos. Cada aplicacion tiene su propio archivo **models.py** y en este caso se crea la tabla ```Tabla_usuario```
 ```python
 from django.db import models
 
@@ -133,6 +133,66 @@ py manage.py makemigrations
 Para migrar las tablas es necesario ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
 ```
 py manage.py migrate
+```
+
+<a name="crispy-forms"></a>
+## Crispy Forms
+Es necesario tener instalado Crispy tanto Python como en el ProyectoGuiarConsultores. Para instalar esta app se debe seguir los siguientes pasos:
+
+1. Instalar Crispy
+```
+py -m pip install django-crispy-forms
+```
+
+2. Configurar settings.py de ProyectoGuiarConsultores
+```python
+INSTALLED_APPS = [
+    ...
+    'crispy_forms'
+]
+```
+
+<a name="configAdmin"></a>
+## Django-Admin
+Django Admin es una herramienta que nos ayuda a administrar nuestra base de datos de forma mas rapida. Siga los siguientes pasos para su configuracion.
+
+1. En el archivo urls.py del ProyectoGuiarConsultores.
+```
+ProyectoGuiarConsultores/
+    manage.py
+    .gitignore
+    db.sqlite3
+    ProyectoGuiarConsultores/
+        __init__.py
+        settings.py       
+        urls.py       <--- Este archivo
+        wsgi.py
+    Home/
+    Poll/
+```
+Se debe agregar la siguiente ruta a la lista urlpatterns.
+```
+path('admin/', admin.site.urls)
+```
+Ejemplo:
+```python
+urlpatterns = [
+    path('', include('Home.urls')),
+    path('MideTuRiesgo/', include('Poll.urls')),
+    path('admin/', admin.site.urls),
+]
+```
+2. Al ingresar a 127.0.0.1:8000/admin debiese mostrar el portal de Django Admin. Si este es el caso vaya a la terminal y ejecute la siguiente instruccion (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores):
+```
+py manage.py createsuperuser
+```
+La instruccion anterior es para crear una cuenta super-usuario para tener control total de la base de datos. A continuacion nos solicitará completar un formulario para registrarnos, estos datos son:
+```
+username: admin
+Email address: admin@mideturiesgo.cl
+Password: mideturiesgo
+Password (again): mideturiesgo
+Superuser created successfully.
 ```
 
 <a name="runserver"></a>
