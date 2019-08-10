@@ -11,6 +11,7 @@
 8. [Crear tablas en Django](#createTables)
 9. [MakeMigrations](#makemigrations)
 10. [Migrations](#migrate)
+11. [Levantar Servidor](#runserver)
 
 <a name="gitClone"></a>
 ## Clonar ProyectoGuiarConsultores
@@ -18,10 +19,13 @@ Para continuar el desarrollo del sistema en otro equipo, usted debe clonar el pr
   ```
   git clone https://github.com/JulioCesar0180/ProyectoGuiarConsultores.git
   ```
-## Instalar python 3.X<a name="pythonInstall"></a>
+
+<a name="pythonInstall"></a>
+## Instalar python 3.X
 Se requiere instalar python 3.6 (min version) de 64 bits.
 
-## Instalar Django<a name="djangoInstall"></a>
+<a name="djangoInstall"></a>
+## Instalar Django
 Se requiere instalar Django ejecutando la siguiente instruccion:
 ```
 py -m pip install Django
@@ -37,7 +41,8 @@ Instalar los prodcutos de MySQL 8.0.17 desde el siguiente link: https://dev.mysq
   
   Nota: Al finalizar la instalacion de MySQL, puedes ejecutar MySQL Installer para instalar un producto que hayas olvidado, de esta manera evitas la reinstalacion.
 
-## Instalar mysqlclient<a name="mysqlclientInstall"></a>
+<a name="mysqlclientInstall"></a>
+## Instalar mysqlclient
 1. Ejecutar la siguiente instruccion en la consola de comandos de windows (la ubicacion dependera en que ambiente de desarrollo tiene instalado python)
 ```
 py -m pip list
@@ -57,7 +62,8 @@ py -m pip install mysqlclient
 py -m pip install --upgrade mysqlclient
 ```
 
-## Crear la Base de Datos para GuiarConsultores<a name="createDatabase"></a>
+<a name="createDatabase"></a>
+## Crear la Base de Datos para GuiarConsultores
 2. En MySQL Workbench ingresamos a nuestra base de datos local (localhost) y escribimos la siguiente query:
 ```sql
 CREATE DATABASE guiarconsultores CHARACTER SET utf8mb4;
@@ -70,7 +76,9 @@ CREATE USER admin@localhost IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON guiarconsultores.* TO admin@localhost;
 FLUSH PRIVILEGES;
 ```
-## Configurar ProyectoGuiarConsultores con MySQL 8.0.17<a name="configDatabase"></a>
+
+<a name="configDatabase"></a>
+## Configurar ProyectoGuiarConsultores con MySQL 8.0.17
 En el archivo **settings.py** de la carpeta ProyectoGuiarConsultores
 ```
 ProyectoGuiarConsultores/
@@ -98,7 +106,9 @@ DATABASES = {
     }
 }
 ```
-## Crear tablas en Django<a name="createTables"></a>
+
+<a name="createTables"></a>
+## Crear tablas en Django
 El archivo **models.py** es encargado de construir una tabla en la base de datos. Cada aplicacion tiene su propio archivo **models.py** y en este caso vamos a crear la tabla ```Tabla_usuario```
 ```python
 from django.db import models
@@ -111,18 +121,21 @@ class Tabla_usuario(models.Model):
 ```
 Lo anterior muestra el codigo insertado en el archivo models.py de la aplicacion Poll.
 
-## MakeMigrations<a name="makemigrations"></a>
+<a name="makemigrations"></a>
+## MakeMigrations
 Para crear las migraciones es necesario ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
 ```
 py manage.py makemigrations
 ```
 
-## Migrations<a name="migrate"></a>
+<a name="migrate"></a>
+## Migrations
 Para migrar las tablas es necesario ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
 ```
 py manage.py migrate
 ```
 
+<a name="runserver"></a>
 ## Levantar Servidor
 Para visualizar la pagina web se debe ejecutar la siguiente instruccion en la consola de windows (Es obligatorio ejecutar esta instruccion donde se encuentra almacenado el ProyectoGuiarConsultores)
 ```
