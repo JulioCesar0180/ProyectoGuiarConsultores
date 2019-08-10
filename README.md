@@ -11,7 +11,9 @@
 8. [Crear tablas en Django](#createTables)
 9. [MakeMigrations](#makemigrations)
 10. [Migrations](#migrate)
-11. [Levantar Servidor](#runserver)
+11. [Crispy Forms](#crispy-forms)
+12. [Django-Admin](#configAdmin)
+13. [Levantar Servidor](#runserver)
 
 <a name="gitClone"></a>
 ## Clonar ProyectoGuiarConsultores
@@ -194,6 +196,7 @@ Password: mideturiesgo
 Password (again): mideturiesgo
 Superuser created successfully.
 ```
+Ingresamos nuestras credenciales recien creadas en 127.0.0.1:8000/admin.
 
 <a name="runserver"></a>
 ## Levantar Servidor
