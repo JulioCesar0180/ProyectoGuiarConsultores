@@ -1,14 +1,19 @@
 # ProyectoGuiarConsultores
 
-## Clonar ProyectoGuiarConsultores
+**Contenidos**
+1. [Clonar Proyecto](#git clone)
+2. [Instalar Python 3.X](#python install)
+3. [Instalar Django](#django install)
+
+## Clonar ProyectoGuiarConsultores<a name="git clone"></a>
 Para continuar el desarrollo del sistema en otro equipo, usted debe clonar el proyecto a través de github mediante la consola de windows ejecutar el siguiente instruccion (verifique que se encuentre en el directorio deseado):
   ```
   git clone https://github.com/JulioCesar0180/ProyectoGuiarConsultores.git
   ```
-## Instalar python 3.X
+## Instalar python 3.X<a name="python install"></a>
 Se requiere instalar python 3.6 (min version) de 64 bits.
 
-## Instalar Django
+## Instalar Django<a name="django install"></a>
 Se requiere instalar Django ejecutando la siguiente instruccion:
 ```
 py -m pip install Django
