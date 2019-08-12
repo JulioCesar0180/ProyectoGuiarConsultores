@@ -66,8 +66,8 @@ table{
     font-family: Grotesque,Arial,sans-serif;
     font-size: 16px;
     color: #43464d;
-    height: 40%;
-    width: 25%
+    height: auto;
+    width: auto;
 }
 
 .campo:focus{
