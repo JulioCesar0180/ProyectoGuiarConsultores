@@ -2,10 +2,12 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-{% block content %}
+{% block head %}
     <link rel="stylesheet" href="{% static 'css/registration.css'%}">
+{% endblock %}
 
-    <div class="center">
+{% block content %}
+    <div class="center" style="margin-top: 10%">
         <div class="container">
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
@@ -29,5 +31,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
