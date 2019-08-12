@@ -1,11 +1,10 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Tabla_usuario(models.Model):
-    user = models.CharField(max_length=200)
-    pass_user = models.CharField(max_length=200)
+class Tabla_perfil_usuario(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre_empresa = models.CharField(max_length=100, default="")
     rut_empresa = models.CharField(max_length=15, default="")
     direccion_empresa = models.CharField(max_length=100, default="")
@@ -18,7 +17,7 @@ class Tabla_usuario(models.Model):
     ventas_anuales_empresa = models.CharField(max_length=50, default="")
 
 class Tabla_resultados_transporte(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -31,7 +30,7 @@ class Tabla_resultados_transporte(models.Model):
     answer10 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_construccion(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -41,7 +40,7 @@ class Tabla_resultados_construccion(models.Model):
     answer7 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_manufactura(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -50,7 +49,7 @@ class Tabla_resultados_manufactura(models.Model):
     answer6 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_servicios(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -67,7 +66,7 @@ class Tabla_resultados_servicios(models.Model):
     answer14 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_dotacion(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -78,7 +77,7 @@ class Tabla_resultados_dotacion(models.Model):
     answer8 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_gestion(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -92,7 +91,7 @@ class Tabla_resultados_gestion(models.Model):
     answer11 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_procesos(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -100,7 +99,7 @@ class Tabla_resultados_procesos(models.Model):
     answer5 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_explosivos(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -108,7 +107,7 @@ class Tabla_resultados_explosivos(models.Model):
     answer5 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_electricidad(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -116,7 +115,7 @@ class Tabla_resultados_electricidad(models.Model):
     answer5 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_sustancias_peligrosas(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
@@ -125,14 +124,14 @@ class Tabla_resultados_sustancias_peligrosas(models.Model):
     answer6 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_altura(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=2, default="")
     answer2 = models.CharField(max_length=2, default="")
     answer3 = models.CharField(max_length=2, default="")
     answer4 = models.CharField(max_length=2, default="")
 
 class Tabla_resultados_finales(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     riesgo_transporte = models.CharField(max_length=2, default="")
     riesgo_construccion = models.CharField(max_length=2, default="")
     riesgo_manufactura = models.CharField(max_length=2, default="")
@@ -146,7 +145,7 @@ class Tabla_resultados_finales(models.Model):
     riesgo_altura = models.CharField(max_length=2, default="")
 
 class Tabla_priorizacion_riesgos(models.Model):
-    empresa = models.ForeignKey(Tabla_usuario, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     resultados = models.ForeignKey(Tabla_resultados_finales, on_delete=models.CASCADE)
     responsabilidad_civil_empresa = models.CharField(max_length=2, default="")
     equipos_moviles = models.CharField(max_length=2, default="")

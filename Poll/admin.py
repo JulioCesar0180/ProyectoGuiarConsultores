@@ -3,7 +3,7 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Tabla_usuario)
+admin.site.register(Tabla_perfil_usuario)
 admin.site.register(Tabla_resultados_transporte)
 admin.site.register(Tabla_resultados_construccion)
 admin.site.register(Tabla_resultados_manufactura)
