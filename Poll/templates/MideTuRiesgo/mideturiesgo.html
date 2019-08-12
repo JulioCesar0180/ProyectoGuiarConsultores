@@ -1,4 +1,6 @@
+{% extends 'header.html' %}
 {% load static %}
+{% block content %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -272,7 +274,7 @@
         <input type="checkbox" name="otro" id="otro" value="otro">
         <label for="otro" class="unselectable">Otro (por favor especifique)</label>
         <br>
-        <input type="text" name="opcion" class="campo">
+        <input type="text" name="opcion" class="campo" size="auto">
       </div>
     </div>
     <form method="post" action="/MideTuRiesgo/2" class="siguiente">
@@ -290,3 +292,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
+
+{% endblock %}
