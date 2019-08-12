@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm, FormInicial
-from Poll.models import Tabla_usuario
+from Poll.models import Tabla_perfil_usuario
 
 
 def home(request):
@@ -49,8 +49,7 @@ def index(request):
             comuna = form.cleaned_data['comuna']
             ciudad = form.cleaned_data['ciudad']
             ventas = form.cleaned_data['ventas']
-            usuario = Tabla_usuario(user=1,
-                                    pass_user=123,
+            usuario = Tabla_perfil_usuario(user=1,
                                     nombre_empresa=nombre,
                                     rut_empresa=rut,
                                     direccion_empresa=direccion,
@@ -65,7 +64,7 @@ def index(request):
             # return HttpResponseRedirect('/thanks/')
     else:
         form = FormInicial()
-    return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form': form})
+    return render(request, "MideTuRiesgo/mideturiesgo.html", {'form': form})
 
 
 def polltwo(request):
@@ -84,8 +83,7 @@ def polltwo(request):
             comuna = form.cleaned_data['comuna']
             ciudad = form.cleaned_data['ciudad']
             ventas = form.cleaned_data['ventas']
-            usuario = Tabla_usuario(user=1,
-                                    pass_user=123,
+            usuario = Tabla_perfil_usuario(user=1,
                                     nombre_empresa=nombre,
                                     rut_empresa=rut,
                                     direccion_empresa=direccion,

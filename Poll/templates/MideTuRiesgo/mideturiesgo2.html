@@ -1,5 +1,9 @@
 {% extends 'header.html' %}
 {% load static %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 {% block content %}
 <!doctype html>
 <html lang="en">
@@ -270,7 +274,7 @@
       </div>
     </div>
     <div class="direccion">
-      <form action="/MideTuRiesgo" class="anterior">
+      <form action="/MideTuRiesgo" class="anterior">{% csrf_token %}
         <button type="submit" value="Submit" id="previous">←</button>
       </form>
       <form action="/MideTuRiesgo/3" class="siguiente">{% csrf_token %}

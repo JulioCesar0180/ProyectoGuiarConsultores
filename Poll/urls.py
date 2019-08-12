@@ -1,6 +1,6 @@
 from django.urls import path, include
 from django.contrib import admin
-from . import views
+from Poll import views
 
 urlpatterns = [
     path('home', views.home, name="home"),
