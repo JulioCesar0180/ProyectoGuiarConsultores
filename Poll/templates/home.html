@@ -46,41 +46,16 @@
                     <h2>Bienvenido(a) a MideTuRiesgo, {% if user.is_authenticated %}{{ user.username }}{% else %}visitante {% endif %}!</h2>
                     <p>
                     <div>
-                        <style>
-                            .button {
-                              display: inline-block;
-                              padding: 20px 30px;
-                              font-size: 20px;
-                              cursor: pointer;
-                              text-align: center;
-                              text-decoration: none;
-                              outline: none;
-                              color: #fff;
-                              background-color: #004387;
-                              border: none;
-                              border-radius: 15px;
-                              box-shadow: 0 5px #999;
-                            }
-
-                            .button:hover {background-color: #237fdb}
-
-                            .button:active {
-                              background-color: #3e8e41;
-                              box-shadow: 0 5px #666;
-                              transform: translateY(4px);
-                            }
-                        </style>
-
                     <center>
-                            <div class="row">
-                                 <div class="col-sm-5">
-                                     <img src="{% static 'images/mideturiesgo.png' %}">
-                                 </div>
-                                <div class="col-sm-7">
-                                    <a href="{% url 'encuesta' %}" class="button">Comenzar</a>
-                                </div>
+                        <div class="row">
+                             <div class="col-sm-5">
+                                 <img src="{% static 'images/mideturiesgo.png' %}">
+                             </div>
+                            <div class="col-sm-7">
+                                <a id="btn-button" href="{% url 'encuesta' %}" class="button">Comenzar</a>
                             </div>
-                  </center>
+                        </div>
+                    </center>
                     </div>
                 </div>
             </div>
