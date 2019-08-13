@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm, FormInicial
 from Poll.models import Tabla_perfil_usuario
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -31,8 +32,7 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-
-
+@login_required
 def index(request):
     # codigo para la encuesta completa
     # nombre, email, telefono, razon, rut (empresa), experiencia, direccion, comuna, ciudad, ventas,
@@ -66,7 +66,7 @@ def index(request):
         form = FormInicial()
     return render(request, "MideTuRiesgo/mideturiesgo.html", {'form': form})
 
-
+@login_required
 def polltwo(request):
     # nombre = request.get('nombre')
     # nombre = request('nombre')
@@ -100,11 +100,14 @@ def polltwo(request):
         form = FormInicial()
     return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form': form})
 
+@login_required
 def pollthree(request):
     return render(request, "MideTuRiesgo/mideturiesgo3.html")
 
+@login_required
 def pollfour(request):
     return render(request, "MideTuRiesgo/mideturiesgo4.html")
+
 
 def profile(request):
     return render(request, "registration/profile.html")
