@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from .forms import SignUpForm, FormInicial
 from Poll.models import Tabla_perfil_usuario
-
+from .form_datos_personales import *
 
 def home(request):
     count = User.objects.count()
@@ -110,3 +110,9 @@ def profile(request):
     return render(request, "registration/profile.html")
 
 
+def poll_page_one(request):
+    form1 = form_datos_personales()
+    form2 = form_datosGeneralesEmpresa()
+    form3 = form_ventasEmpresa()
+    context = {'datos_personales':form1, 'datos_empresa': form2, 'ventas_empresa': form3}
+    return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
