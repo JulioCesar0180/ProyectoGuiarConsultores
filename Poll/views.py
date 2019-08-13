@@ -31,6 +31,9 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+def denunciar(request):
+
+    return render(request,'Navbar/denunciar.html')
 
 
 def index(request):

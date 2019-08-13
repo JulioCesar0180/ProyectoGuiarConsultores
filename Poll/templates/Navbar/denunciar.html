@@ -21,7 +21,7 @@
                         <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
                         <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
                         <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Agendar</span></a></li>
-                        <li><a href="{% url 'denunciar' %}"><i class="fa fas fa-flag" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Denunciar</span></a></li>
+                        <li><a href="#"><i class="fa fas fa-flag" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Denunciar</span></a></li>
                         <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Configuración</span></a></li>
                         <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cerrar Sesión</span></a></li>
                         <li><a href="{% url 'password_change' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cambiar Contraseña</span></a></li>
@@ -45,18 +45,8 @@
                         </div>
                 </div>
                 <div class="user-dashboard">
-                    <h2>Bienvenido(a) a MideTuRiesgo, {% if user.is_authenticated %}{{ user.username }}{% else %}visitante {% endif %}!</h2>
+                    <h2>PAGINA DE DENUNCIAS</h2>
                     <p>
-                    <div>
-                    <center>
-                        <div class="row">
-                             <div class="row">
-                                 <img src="{% static 'images/mideturiesgo.png' %}">
-                                 <a id="btn-button" href="{% url 'encuesta' %}" class="button">Comenzar</a>
-                            </div>
-                        </div>
-                    </center>
-                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +54,3 @@
 </body>
 
 {% endblock %}
-
-
-
-
