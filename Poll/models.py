@@ -67,14 +67,14 @@ class Tabla_resultados_servicios(models.Model):
 
 class Tabla_resultados_dotacion(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-    answer7 = models.BooleanField(default=False)
-    answer8 = models.BooleanField(default=False)
+    answer1 = models.CharField(max_length=10, default="")
+    answer2 = models.CharField(max_length=10, default="")
+    answer3 = models.CharField(max_length=10, default="")
+    answer4 = models.CharField(max_length=10, default="")
+    answer5 = models.CharField(max_length=10, default="")
+    answer6 = models.CharField(max_length=10, default="")
+    answer7 = models.CharField(max_length=10, default="")
+    answer8 = models.CharField(max_length=10, default="")
 
 class Tabla_resultados_gestion(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)

@@ -19,256 +19,222 @@
     <div id="plomo"></div>
     <div id="head"></div>
     <div class="inicio">
-      Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado.
+      Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado
       <div>
         <hr>
       </div>
     </div>
 
     <div class="inicio">
-      <b>P1.</b> Datos de contacto
-      <div>
+      <b>Pn.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
+       <div>
         <br>
       </div>
-      <div class="datos">
-        <table>
-          <tbody>
-            <tr>
-              <td class="nombreCampo">
-                Nombre
-              </td>
-              <td class="campos">
-                <input type="text" name="nombre">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Correo Electronico
-              </td>
-              <td class="campos">
-                <input type="text" name="email">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Teléfono
-              </td>
-              <td class="campos">
-                <input type="text" name="telefono">
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="input-radio">
+        <input type="checkbox" id="estructura" name="estructura" value="estructura">
+        <label for="estructura" class="unselectable">Ingeniería, construcción o fabricación de estructuras metálicas</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="gruesa" name="gruesa" value="gruesa">
+        <label for="gruesa" class="unselectable">Ingeniería o construcción de edificios, obra gruesa, concreto, carreteras</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="instalaciones" id="instalaciones" value="instalaciones">
+        <label for="instalaciones" class="unselectable">Ingeniería, construcción o montaje de obras e instalaciones privadas o públicas</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="menores" name="menores" value="menores">
+        <label for="menores" class="unselectable">Obras menores de construcción, contratistas, albañería, carpintería, climatización</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="tuberias" name="tuberias" value="tuberias">
+        <label for="tuberias" class="unselectable">Instalación de tuberías y construcción de alcantarillado, base de concreto y obras de cimentación, excavación</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="refuerzos" id="refuerzos" value="refuerzos">
+        <label for="refuerzos" class="unselectable">Refuerzos, reparación y protección de estructuras de acero, reparación de estanques, impermeabilización, protección catódica</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="otraConst" id="otraConst" value="otraConst">
+        <label for="otraConst" class="unselectable">Otro (por favor especifique)</label>
+        <br>
+        <input type="text" name="otraConst" class="campo">
+      </div>
         <div>
           <br>
         </div>
-      </div>
       <div>
         <hr>
       </div>
     </div>
 
     <div class="inicio">
-      <b>P2.</b> Datos generales de la empresa
-      <div>
+      <b>Pn.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
+       <div>
         <br>
       </div>
-      <div class="datos">
-        <table>
-          <tbody>
-            <tr>
-              <td class="nombreCampo">
-                Razón Social
-              </td>
-              <td class="campos">
-                <input type="text" name="razon" id="razon">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                RUT
-              </td>
-              <td class="campos">
-                <input type="text" name="rut" id="rut">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Antigüedad de la empresa (años)
-              </td>
-              <td class="campos">
-                <input type="text" name="experiencia" id="experiencia">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Dirección
-              </td>
-              <td class="campos">
-                <input type="text" name="direccion" id="direccion">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Comuna
-              </td>
-              <td class="campos">
-                <input type="text" name="comuna" id="comuna">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Ciudad
-              </td>
-              <td class="campos">
-                <input type="text" name="ciudad" id="ciudad">
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="input-radio">
+        <input type="checkbox" id="produccion" name="produccion" value="produccion">
+        <label for="produccion" class="unselectable">Producción, procesamiento y conservación de alimentos, casinos, abastecimientos alimenticios</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="confeccion" name="confeccion" value="confeccion">
+        <label for="confeccion" class="unselectable">Confección, fabricación y distribución de prendas de vestir, seguridad, zapatos</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="tornerias" id="tornerias" value="tornerias">
+        <label for="tornerias" class="unselectable">Diseño y fabricación de piezas especiales menores, tornerías, otros</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="pvc" name="pvc" value="pvc">
+        <label for="pvc" class="unselectable">Diseño y fabricación de piezas especiales mayores, PVC, acero, otros</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="muebles" name="muebles" value="muebles">
+        <label for="muebles" class="unselectable">Diseño y fabricación de muebles para acondicionamiento de oficinas y faenas</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="prototipos" id="prototipos" value="prototipos">
+        <label for="prototipos" class="unselectable">Diseño y fabricación de prototipos industriales y mineros</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="otraManufac" id="otraManufac" value="otraManufac">
+        <label for="otraManufac" class="unselectable">Otro (por favor especifique)</label>
+        <br>
+        <input type="text" name="otraManufac" class="campo">
+      </div>
         <div>
           <br>
         </div>
-      </div>
       <div>
         <hr>
       </div>
     </div>
 
     <div class="inicio">
-        <b>P3.</b> Ventas anuales de la empresa
-        <div>
-          <br>
-        </div>
-      <div class="input-radio">
-        <input type="radio" id="minimo" name="ventas" value="minimo">
-        <label for="minimo" class="unselectable">De UF 0 a UF 2.400</label>
-      </div>
-      <div class="input-radio">
-        <input type="radio" id="intermedio" name="ventas" value="intermedio">
-        <label for="intermedio" class="unselectable">De UF 2.400 a UF 25.000</label>
-      </div>
-      <div class="input-radio">
-        <input type="radio" name="ventas" id="maximo" value="maximo">
-        <label for="maximo">De UF 25.000 a UF 100.000</label>
-      </div>
-      <div class="input-radio">
-        <input type="radio" name="ventas" id="mas" value="mas">
-        <label for="mas" class="unselectable">Más de UF 100.000</label>
-      </div>
-    </div>
-
-    <div class="inicio">
-      <b>P4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
-      <div>
+      <b>Pn.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
+       <div>
         <br>
       </div>
-      <div class="datos">
-        <table>
-          <tbody>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de empleados contratados
-              </td>
-              <td class="campos">
-                <input type="text" name="empContratados" id="empContratados">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de empleados contratistas
-              </td>
-              <td class="campos">
-                <input type="text" name="empContratistas" id="empContratistas">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales livianos de la empresa
-              </td>
-              <td class="campos">
-                <input type="text" name="vehLivianos" id="vehLivianos">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales de contratistas
-              </td>
-              <td class="campos">
-                <input type="text" name="vehContratistas" id="vehContratistas">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales pesados de la empresa
-              </td>
-              <td class="campos">
-                <input type="text" name="vehPesados" id="vehPesados">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales pesados de contratistas
-              </td>
-              <td class="campos">
-                <input type="text" name="vehPesadosContratistas" id="vehPesadosContratistas">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de maquinaria pesada de la empresa
-              </td>
-              <td class="campos">
-                <input type="text" name="maqEmpresa" id="maqEmpresa">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de maquinaria pesada de contratista
-              </td>
-              <td class="campos">
-                <input type="text" name="marContratista" id="marContratista">
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="input-radio">
+        <input type="checkbox" id="materiales" name="materiales" value="materiales">
+        <label for="materiales" class="unselectable">Materiales diversos de construcción, repuestos, otros</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="personas" name="personas" value="personas">
+        <label for="personas" class="unselectable">Personas, trabajadores propios o terceros</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="maquinaria" id="maquinaria" value="maquinaria">
+        <label for="maquinaria" class="unselectable">Maquinaria pesada, motores, vehículos, equipo minero</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="mercaderia" name="mercaderia" value="mercaderia">
+        <label for="mercaderia" class="unselectable">Mercadería en alimentos, medicinales</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="granel" name="granel" value="granel">
+        <label for="granel" class="unselectable">Minerales a granel</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="solidos" id="solidos" value="solidos">
+        <label for="solidos" class="unselectable">Minerales sólidos</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="corrosivo" id="corrosivo" value="corrosivo">
+        <label for="corrosivo" class="unselectable">Materiales corrosivos, tóxicos, residuos peligrosos</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="aceite" id="aceite" value="aceite">
+        <label for="aceite" class="unselectable">Aceites, lubricantes aditivos</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="carga" id="carga" value="carga">
+        <label for="carga" class="unselectable">Carga sobredimensionada, estructuras, piezas y/o partes, equipo minero</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="otraTerr" id="otraTerr" value="otraTerr">
+        <label for="otraTerr" class="unselectable">Otro (por favor especifique)</label>
+        <br>
+        <input type="text" name="otraManufac" class="campo">
+      </div>
         <div>
           <br>
         </div>
-      </div>
       <div>
         <hr>
       </div>
     </div>
 
     <div class="inicio">
-        <b>P5.</b> Indique el o los rubros en que participa la empresa
+      <b>Pn.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
+       <div>
+        <br>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="maestranza" name="maestranza" value="maestranza">
+        <label for="maestranza" class="unselectable">Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="reparacion" name="reparacion" value="reparacion">
+        <label for="reparacion" class="unselectable">Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="electricos" id="electricos" value="electricos">
+        <label for="electricos" class="unselectable">Mantención y repación de componentes eléctricos</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="generador" name="generador" value="generador">
+        <label for="generador" class="unselectable">Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="repuesto" name="repuesto" value="repuesto">
+        <label for="repuesto" class="unselectable">Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="hidraulico" id="hidraulico" value="hidraulico">
+        <label for="hidraulico" class="unselectable">Mantención, reparación y montaje de sistemas hidráulicos, válvulas, compresores, bombas, otros</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="computacional" id="computacional" value="computacional">
+        <label for="computacional" class="unselectable">Mantención, reparación y venta de equipos computacionales, software, adware</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="lavenderia" id="lavenderia" value="lavenderia">
+        <label for="lavenderia" class="unselectable">Servicio de lavandería industrial y afines</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="movimiento" id="movimiento" value="movimiento">
+        <label for="movimiento" class="unselectable">Servicio de movimiento de tierras, perforaciones, mecánicas de rocas</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="arriendo" id="arriendo" value="arriendo">
+        <label for="arriendo" class="unselectable">Servicio y arriendo de equipo minero, perforaciones, movimiento de tierras, maquinaria pesada</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="ferreteria" id="ferreteria" value="ferreteria">
+        <label for="ferreteria" class="unselectable">Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="carretera" id="carretera" value="carretera">
+        <label for="carretera" class="unselectable">Servicios de fabricación e instalación de señaléticas en carreteras y/o caminos privados</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="izaje" id="izaje" value="izaje">
+        <label for="izaje" class="unselectable">Servicios de izajes, manipulación de cargas y equipos</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="garage" id="garage" value="garage">
+        <label for="garage" class="unselectable">Servicios de mantención, reparación, garage, desabollada, vehículos multi-marca</label>
+      </div>
         <div>
           <br>
         </div>
-      <div class="input-radio">
-        <input type="checkbox" id="construccion" name="construccion" value="construccion">
-        <label for="construccion" class="unselectable">Construcción</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="manufactura" name="manufactura" value="manufactura">
-        <label for="manufactura" class="unselectable">Manufactura</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="transporte" id="transporte" value="transporte">
-        <label for="transporte" class="unselectable">Transporte terreste</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="servicio" id="servicio" value="servicio">
-        <label for="servicio" class="unselectable">Servicios generales</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="otro" id="otro" value="otro">
-        <label for="otro" class="unselectable">Otro (por favor especifique)</label>
-        <br>
-        <input type="text" name="opcion" class="campo">
+      <div>
+        <hr>
       </div>
     </div>
+
     <div class="direccion">
       <form action="/MideTuRiesgo" class="anterior">{% csrf_token %}
         <button type="submit" value="Submit" id="previous">←</button>

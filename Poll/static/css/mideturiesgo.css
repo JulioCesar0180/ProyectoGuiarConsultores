@@ -159,6 +159,13 @@ input[type=radio] + label {
     border-radius: 5px;
     width: 600%
   }
+  #resultado{
+    color:white;
+    background-color:orange;
+    border: blue;
+    border-radius: 5px;
+    width: 210%
+  }
     .anterior{
     margin-left: 21%
   }
