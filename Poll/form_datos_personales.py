@@ -15,3 +15,9 @@ class form_datosGeneralesEmpresa(forms.Form):
     comuna = forms.CharField(label='Comuna', widget=forms.TextInput())
     ciudad = forms.CharField(label='Ciudad', widget=forms.TextInput())
 
+
+class form_ventasEmpresa(forms.Form):
+    rango_level_1 = forms.CharField(widget=forms.CheckboxSelectMultiple())
+    rango_level_2 = forms.CharField(widget=forms.CheckboxSelectMultiple())
+    rango_level_3 = forms.CharField(widget=forms.CheckboxSelectMultiple())
+
