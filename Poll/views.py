@@ -5,8 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
-from .forms import SignUpForm, FormInicial
-from Poll.models import Tabla_perfil_usuario
+from .forms import *
+from Poll.models import *
 from django.contrib.auth.decorators import login_required
 
 
@@ -37,68 +37,63 @@ def index(request):
     # codigo para la encuesta completa
     # nombre, email, telefono, razon, rut (empresa), experiencia, direccion, comuna, ciudad, ventas,
     if request.method == 'POST':
-        form = FormInicial(request.POST)
-        if form.is_valid():
-            nombre = form.cleaned_data['nombre']
-            email = form.cleaned_data['email']
-            telefono = form.cleaned_data['telefono']
-            razon = form.cleaned_data['razon']
-            rut = form.cleaned_data['rut']
-            experiencia = form.cleaned_data['experiencia']
-            direccion = form.cleaned_data['direccion']
-            comuna = form.cleaned_data['comuna']
-            ciudad = form.cleaned_data['ciudad']
-            ventas = form.cleaned_data['ventas']
-            usuario = Tabla_perfil_usuario(user=1,
-                                    nombre_empresa=nombre,
-                                    rut_empresa=rut,
-                                    direccion_empresa=direccion,
-                                    experiencia_empresa=experiencia,
-                                    ciudad_empresa=ciudad,
-                                    comuna_empresa=comuna,
-                                    nombre_contacto_empresa='placeholder',
-                                    telefono_empresa=telefono,
-                                    email_empresa=email,
-                                    ventas_anuales_empresa=ventas)
-            usuario.save()
-            # return HttpResponseRedirect('/thanks/')
+        form1 = FormInicial(request.POST)
+        form2 = FormDefault(request.POST)
+        context = {'perfil_usuario':form1, 'dotacion':form2}
+        if form1.is_valid():
+            if form2.is_valid():
+                nombre = form1.cleaned_data['nombre']
+                email = form1.cleaned_data['email']
+                telefono = form1.cleaned_data['telefono']
+                razon = form1.cleaned_data['razon']
+                rut = form1.cleaned_data['rut']
+                experiencia = form1.cleaned_data['experiencia']
+                direccion = form1.cleaned_data['direccion']
+                comuna = form1.cleaned_data['comuna']
+                ciudad = form1.cleaned_data['ciudad']
+                ventas = 200 # form.cleaned_data['ventas']
+                usuario = Tabla_perfil_usuario(user=1,
+                                               nombre_empresa=nombre,
+                                               rut_empresa=rut,
+                                               direccion_empresa=direccion,
+                                               experiencia_empresa=experiencia,
+                                               ciudad_empresa=ciudad,
+                                               comuna_empresa=comuna,
+                                               nombre_contacto_empresa='placeholder',
+                                               telefono_empresa=telefono,
+                                               email_empresa=email,
+                                               ventas_anuales_empresa=ventas)
+                usuario.save()
+                # return HttpResponseRedirect('/thanks/')
+                empContratados = form2.cleaned_data['empContratados']
+                empContratistas = form2.cleaned_data['empContratistas']
+                vehLivianos = form2.cleaned_data['vehLivianos']
+                vehContratistas = form2.cleaned_data['vehContratistas']
+                vehPesados = form2.cleaned_data['vehPesados']
+                vehPesadosContratistas = form2.cleaned_data['vehPesadosContratistas']
+                maqEmpresa = form2.cleaned_data['maqEmpresa']
+                marContratista = form2.cleaned_data['marContratista']
+                dotacion = Tabla_resultados_dotacion(user=1,
+                                                     empContratados=empContratados,
+                                                     empContratistas=empContratistas,
+                                                     vehLivianos=vehLivianos,
+                                                     vehContratistas=vehContratistas,
+                                                     vehPesados=vehPesados,
+                                                     vehPesadosContratistas=vehPesadosContratistas,
+                                                     maqEmpresa=maqEmpresa,
+                                                     marContratista=marContratista)
+                dotacion.save()
+            # hay problemas con el Form 2
+        # hay problemas con el Form 1
     else:
-        form = FormInicial()
-    return render(request, "MideTuRiesgo/mideturiesgo.html", {'form': form})
+        form1 = FormInicial()
+        form2 = FormDefault()
+        context = {'perfil_usuario':form1, 'dotacion':form2}
+    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 @login_required
 def polltwo(request):
-    # nombre = request.get('nombre')
-    # nombre = request('nombre')
-    if request.method == 'POST':
-        form = FormInicial(request.POST)
-        if form.is_valid():
-            nombre = form.cleaned_data['nombre']
-            email = form.cleaned_data['email']
-            telefono = form.cleaned_data['telefono']
-            razon = form.cleaned_data['razon']
-            rut = form.cleaned_data['rut']
-            experiencia = form.cleaned_data['experiencia']
-            direccion = form.cleaned_data['direccion']
-            comuna = form.cleaned_data['comuna']
-            ciudad = form.cleaned_data['ciudad']
-            ventas = form.cleaned_data['ventas']
-            usuario = Tabla_perfil_usuario(user=1,
-                                    nombre_empresa=nombre,
-                                    rut_empresa=rut,
-                                    direccion_empresa=direccion,
-                                    experiencia_empresa=experiencia,
-                                    ciudad_empresa=ciudad,
-                                    comuna_empresa=comuna,
-                                    nombre_contacto_empresa='placeholder',
-                                    telefono_empresa=telefono,
-                                    email_empresa=email,
-                                    ventas_anuales_empresa=ventas)
-            usuario.save()
-            # return HttpResponseRedirect('/thanks/')
-    else:
-        form = FormInicial()
-    return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form': form})
+    return render(request, "MideTuRiesgo/mideturiesgo2.html")
 
 @login_required
 def pollthree(request):
