@@ -32,6 +32,11 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+def denunciar(request):
+
+    return render(request,'Navbar/denunciar.html')
+
+
 @login_required
 def index(request):
     # codigo para la encuesta completa
@@ -103,6 +108,8 @@ def pollthree(request):
 def pollfour(request):
     return render(request, "MideTuRiesgo/mideturiesgo4.html")
 
+def resultado(request):
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html")
 
 def profile(request):
     return render(request, "registration/profile.html")

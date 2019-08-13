@@ -1,5 +1,6 @@
 {% extends 'header.html' %}
 {% load static %}
+
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/user_Home.css'%}">
@@ -7,11 +8,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
+<!------ Include the above in your HEAD tag ---------->
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-
-{% if user.is_authenticated %}
 <body class="home">
     <div class="container-fluid display-table">
         <div class="row display-table-row">
@@ -22,7 +21,7 @@
                         <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
                         <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
                         <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Agendar</span></a></li>
-                        <li><a href="{% url 'denunciar' %}"><i class="fa fas fa-flag" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Denunciar</span></a></li>
+                        <li><a href="#"><i class="fa fas fa-flag" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Denunciar</span></a></li>
                         <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Configuración</span></a></li>
                         <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cerrar Sesión</span></a></li>
                         <li><a href="{% url 'password_change' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cambiar Contraseña</span></a></li>
@@ -46,31 +45,12 @@
                         </div>
                 </div>
                 <div class="user-dashboard">
-                    <h2>Bienvenido(a) a MideTuRiesgo, {% if user.is_authenticated %}{{ user.username }}{% else %}visitante {% endif %}!</h2>
+                    <h2>PAGINA DE DENUNCIAS</h2>
                     <p>
-                    <div>
-                    <center>
-                        <div class="row">
-                             <div class="row">
-                                 <img src="{% static 'images/mideturiesgo.png' %}">
-                                 <a id="btn-button" href="{% url 'encuesta' %}" class="button">Comenzar</a>
-                            </div>
-                        </div>
-                    </center>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-{% else %}
-
-    <meta http-equiv="REFRESH" content="0;url={% url 'login' %}">
-
-{% endif %}
 
 {% endblock %}
-
-
-
-
