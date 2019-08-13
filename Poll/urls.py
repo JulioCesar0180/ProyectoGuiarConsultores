@@ -16,5 +16,6 @@ urlpatterns = [
     path('', views.index, name="encuesta"),
     path('2/', views.polltwo),
     path('3/', views.pollthree),
-    path('4/', views.pollfour)
+    path('4/', views.pollfour),
+    path('resultado/', views.resultado)
 ]

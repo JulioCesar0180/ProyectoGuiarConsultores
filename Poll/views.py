@@ -106,6 +106,9 @@ def pollthree(request):
 def pollfour(request):
     return render(request, "MideTuRiesgo/mideturiesgo4.html")
 
+def resultado(request):
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html")
+
 def profile(request):
     return render(request, "registration/profile.html")
 
