@@ -23,3 +23,6 @@ class FormInicial(forms.Form):
     ciudad = forms.CharField(max_length=100)
     # ventas = forms.BooleanField(required=False)
     message = forms.CharField(widget=forms.Textarea)
+
+class FormDefault(forms.Form):
+    placeholder = forms.CharField()

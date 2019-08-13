@@ -17,5 +17,8 @@ urlpatterns = [
     path('2/', views.polltwo),
     path('3/', views.pollthree),
     path('4/', views.pollfour),
-    path('testpage1', views.poll_page_one)
+
+    path('testpage1', views.poll_page_one),
+    path('resultado/', views.resultado),
+    path('denunciar', views.denunciar, name='denunciar'),
 ]
