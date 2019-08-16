@@ -34,8 +34,8 @@
         <hr>
         </div>
     </div>
-    <div class="container" style="display:flex; align-items: start">
-        <form>
+    <div class="inicio" style="display:flex; align-items: start">
+        <form method="POST">
             <table>
                 <th>
                     <span>
@@ -58,6 +58,7 @@
                 </td>
             </table>
             {% csrf_token %}{{ ventas_empresa.as_table }}
+            <button type="submit" value="Submit" id="next" style="width: 200px">→</button>
         </form>
     </div>
 

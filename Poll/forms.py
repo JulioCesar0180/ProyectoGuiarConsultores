@@ -86,7 +86,7 @@ class Form_ventasEmpresa(forms.Form):
               ('3', 'De UF 25.000 a UF 100.000'),
               ('4', 'Más de UF 100.000')]
     attrs_ventas = {'class': 'form-check-input'}
-    ventas = forms.MultipleChoiceField(choices=CHOICE, widget=forms.RadioSelect())
+    ventas = forms.MultipleChoiceField(choices=CHOICE, widget=forms.CheckboxInput())
 
 
 class Form_dotacionEmpresa(forms.Form):
@@ -107,6 +107,7 @@ class Form_rubroEmpresa(forms.Form):
               ('4', 'Servicios Generales'),
               ('5', 'Otro (por favor especifique')]
     rubro = forms.ChoiceField(widget=forms.RadioSelect(choices=CHOICE))
+
 """
 
     
@@ -155,7 +156,7 @@ class Form_tipoCargas(forms.Form):
               ('9', 'Carga sobredimensionada, estructuras, piezas y/o partes, equipo minero'),
               ('10', 'otro')]
 
-    attrs_otros = {'class':'form-control'}
+    attrs_otros = {'class': 'form-control'}
     otro = forms.CharField(widget=forms.TextInput(attrs=attrs_otros))
 
 
@@ -174,6 +175,8 @@ class Form_serviciosGenerales(forms.Form):
               ('12', 'Servicios de fabricación e instalación de señaleticas en carreteras y/o caminos privados'),
               ('13', 'Servicios de izajes, manipulación de cargas y equipos'),
               ('14', 'Servicios de mantención, reparación, garage, desabollada, vehículos, multi-marca')]
+
+
 
 class Form_certificacionesEmpresa(forms.Form):
     CHOICE = [('1', 'ISO 9.001'),

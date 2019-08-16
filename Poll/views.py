@@ -59,6 +59,10 @@ def index(request):
                         comuna = form2.cleaned_data['comuna']
                         ciudad = form2.cleaned_data['ciudad']
                         ventas = form3.cleaned_data['ciudad']
+                        usuario1 = Tabla_perfil_usuario(user=2, nombre_empresa='Lipigas', rut_empresa='15-5', direccion_empresa='POD',
+                                                        experiencia_empresa='2323', ciudad_empresa='Calama', comuna_empresa='wdw',
+                                                        nombre_contacto_empresa='placeholder', telefono_empresa='232323',
+                                                        email_empresa='H@klo.cl',ventas_anuales_empresa='9896')
                         usuario = Tabla_perfil_usuario(user=1,
                                                        nombre_empresa=nombre,
                                                        rut_empresa=rut,
