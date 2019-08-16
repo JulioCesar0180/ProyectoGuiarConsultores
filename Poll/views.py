@@ -40,58 +40,67 @@ def denunciar(request):
 @login_required
 def index(request):
     if request.method == 'POST':
-        form1 = FormInicial(request.POST)
-        form2 = FormDefault(request.POST)
-        context = {'perfil_usuario':form1, 'resultados_dotacion':form2}
+        form1 = Form_datosPersonales(request.POST)
+        form2 = Form_datosEmpresa(request.POST)
+        form3 = Form_ventasEmpresa(request.POST)
+        form4 = Form_dotacionEmpresa(request.POST)
+        context = {'perfil_usuario_datosPersonales':form1, 'perfil_usuario_datosEmpresa':form2, 'perfil_usuario_ventasEmpresa':form3, 'resultados_dotacion':form4}
         if form1.is_valid():
             if form2.is_valid():
-                nombre = form1.cleaned_data['nombre']
-                email = form1.cleaned_data['email']
-                telefono = form1.cleaned_data['telefono']
-                razon = form1.cleaned_data['razon'] # Este dato actualmente no se usa
-                rut = form1.cleaned_data['rut']
-                experiencia = form1.cleaned_data['experiencia']
-                direccion = form1.cleaned_data['direccion']
-                comuna = form1.cleaned_data['comuna']
-                ciudad = form1.cleaned_data['ciudad']
-                ventas = 200 # form.cleaned_data['ventas']
-                usuario = Tabla_perfil_usuario(user=1,
-                                               nombre_empresa=nombre,
-                                               rut_empresa=rut,
-                                               direccion_empresa=direccion,
-                                               experiencia_empresa=experiencia,
-                                               ciudad_empresa=ciudad,
-                                               comuna_empresa=comuna,
-                                               nombre_contacto_empresa='placeholder',
-                                               telefono_empresa=telefono,
-                                               email_empresa=email,
-                                               ventas_anuales_empresa=ventas)
-                usuario.save()
-                # return HttpResponseRedirect('/thanks/')
-                empContratados = form2.cleaned_data['empContratados']
-                empContratistas = form2.cleaned_data['empContratistas']
-                vehLivianos = form2.cleaned_data['vehLivianos']
-                vehContratistas = form2.cleaned_data['vehContratistas']
-                vehPesados = form2.cleaned_data['vehPesados']
-                vehPesadosContratistas = form2.cleaned_data['vehPesadosContratistas']
-                maqEmpresa = form2.cleaned_data['maqEmpresa']
-                marContratista = form2.cleaned_data['marContratista']
-                dotacion = Tabla_resultados_dotacion(user=1,
-                                                     empContratados=empContratados,
-                                                     empContratistas=empContratistas,
-                                                     vehLivianos=vehLivianos,
-                                                     vehContratistas=vehContratistas,
-                                                     vehPesados=vehPesados,
-                                                     vehPesadosContratistas=vehPesadosContratistas,
-                                                     maqEmpresa=maqEmpresa,
-                                                     marContratista=marContratista)
-                dotacion.save()
+                if form3.is_valid():
+                    if form4.is_valid():
+                        nombre = form1.cleaned_data['nombre']
+                        email = form1.cleaned_data['email']
+                        telefono = form1.cleaned_data['telefono']
+                        razon = form2.cleaned_data['razon']
+                        rut = form2.cleaned_data['rut']
+                        experiencia = form2.cleaned_data['experiencia']
+                        direccion = form2.cleaned_data['direccion']
+                        comuna = form2.cleaned_data['comuna']
+                        ciudad = form2.cleaned_data['ciudad']
+                        ventas = form3.cleaned_data['ciudad']
+                        usuario = Tabla_perfil_usuario(user=1,
+                                                       nombre_empresa=nombre,
+                                                       rut_empresa=rut,
+                                                       direccion_empresa=direccion,
+                                                       experiencia_empresa=experiencia,
+                                                       ciudad_empresa=ciudad,
+                                                       comuna_empresa=comuna,
+                                                       nombre_contacto_empresa='placeholder',
+                                                       telefono_empresa=telefono,
+                                                       email_empresa=email,
+                                                       ventas_anuales_empresa=ventas,
+                                                       razon_social_empresa=razon)
+                        usuario.save()
+                        # return HttpResponseRedirect('/thanks/')
+                        empContratados = form4.cleaned_data['empContratados']
+                        empContratistas = form4.cleaned_data['empContratistas']
+                        vehLivianos = form4.cleaned_data['vehLivianos']
+                        vehContratistas = form4.cleaned_data['vehContratistas']
+                        vehPesados = form4.cleaned_data['vehPesados']
+                        vehPesadosContratistas = form4.cleaned_data['vehPesadosContratistas']
+                        maqEmpresa = form4.cleaned_data['maqEmpresa']
+                        marContratista = form4.cleaned_data['marContratista']
+                        dotacion = Tabla_resultados_dotacion(user=1,
+                                                             empContratados=empContratados,
+                                                             empContratistas=empContratistas,
+                                                             vehLivianos=vehLivianos,
+                                                             vehContratistas=vehContratistas,
+                                                             vehPesados=vehPesados,
+                                                             vehPesadosContratistas=vehPesadosContratistas,
+                                                             maqEmpresa=maqEmpresa,
+                                                             marContratista=marContratista)
+                        dotacion.save()
+                    # hay problemas con el Form 4
+                # hay problemas con el Form 3
             # hay problemas con el Form 2
         # hay problemas con el Form 1
     else:
-        form1 = FormInicial()
-        form2 = FormDefault()
-        context = {'perfil_usuario':form1, 'resultados_dotacion':form2}
+        form1 = Form_datosPersonales()
+        form2 = Form_datosEmpresa()
+        form3 = Form_ventasEmpresa()
+        form4 = Form_dotacionEmpresa()
+        context = {'perfil_usuario_datosPersonales':form1, 'perfil_usuario_datosEmpresa':form2, 'perfil_usuario_ventasEmpresa':form3, 'resultados_dotacion':form4}
     return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 @login_required
