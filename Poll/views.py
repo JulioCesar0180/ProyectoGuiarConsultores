@@ -121,10 +121,10 @@ def index(request):
 @login_required
 def polltwo(request):
     if request.method == 'POST':
-        form1 = FormDefault(request.POST)
-        form2 = FormDefault(request.POST)
-        form3 = FormDefault(request.POST)
-        form4 = FormDefault(request.POST)
+        form1 = Form_elementosRiesgo(request.POST)
+        form2 = Form_actManufaturas(request.POST)
+        form3 = Form_tipoCargas(request.POST)
+        form4 = Form_serviciosGenerales(request.POST)
         context = {'resultados_construccion':form1, 'resultados_manufactura':form2, 'resultados_transporte':form3, 'resultados_servicios':form4}
         if form1.is_valid():
             if form2.is_valid():
@@ -222,47 +222,55 @@ def polltwo(request):
             # hay problemas con el Form 2
         # hay problemas con el Form 1
     else:
-        form1 = FormDefault()
-        form2 = FormDefault()
-        form3 = FormDefault()
-        form4 = FormDefault()
+        form1 = Form_elementosRiesgo()
+        form2 = Form_actManufaturas()
+        form3 = Form_tipoCargas()
+        form4 = Form_serviciosGenerales()
         context = {'resultados_construccion':form1, 'resultados_manufactura':form2, 'resultados_transporte':form3, 'resultados_servicios':form4}
     return render(request, "MideTuRiesgo/mideturiesgo2.html", context)
 
 @login_required
 def pollthree(request):
     if request.method == 'POST':
-        form1 = FormDefault(request.POST)
-        context = {'resultados_gestion':form1}
+        form1 = Form_certificacionesEmpresa(request.POST)
+        form2 = Form_elementosManejoRiesgos(request.POST)
+        form3 = Form_jornadaPrevencionista(request.POST)
+        context = {'resultados_gestion_certificaciones':form1, 'resultados_gestion_elementos':form2, 'resultados_gestion_jornada':form3}
         if form1.is_valid():
-            iso9001 = form1.cleaned_data['iso9001']
-            iso14001 = form1.cleaned_data['iso14001']
-            ohsas18001 = form1.cleaned_data['ohsas18001']
-            otraCert = form1.cleaned_data['otraCert'] # requiere texto por lo que puede dar errores
-            procedimiento = form1.cleaned_data['procedimiento']
-            asesoria = form1.cleaned_data['asesoria']
-            gerencia = form1.cleaned_data['gerencia']
-            tiempoCompleto = form1.cleaned_data['tiempoCompleto']
-            tiempoParcial = form1.cleaned_data['tiempoParcial']
-            proyectos = form1.cleaned_data['proyectos']
-            noTiene = form1.cleaned_data['noTiene']
-            gestion = Tabla_resultados_gestion(empresa=1,
-                                               answer1=iso9001,
-                                               answer2=iso14001,
-                                               answer3=ohsas18001,
-                                               answer4=otraCert,
-                                               answer5=procedimiento,
-                                               answer6=asesoria,
-                                               answer7=gerencia,
-                                               answer8=tiempoCompleto,
-                                               answer9=tiempoParcial,
-                                               answer10=proyectos,
-                                               answer11=noTiene)
-            gestion.save()
+            if form2.is_valid():
+                if form3.is_valid():
+                    iso9001 = form1.cleaned_data['iso9001']
+                    iso14001 = form1.cleaned_data['iso14001']
+                    ohsas18001 = form1.cleaned_data['ohsas18001']
+                    otraCert = form1.cleaned_data['otraCert'] # requiere texto por lo que puede dar errores
+                    procedimiento = form2.cleaned_data['procedimiento']
+                    asesoria = form2.cleaned_data['asesoria']
+                    gerencia = form2.cleaned_data['gerencia']
+                    tiempoCompleto = form3.cleaned_data['tiempoCompleto']
+                    tiempoParcial = form3.cleaned_data['tiempoParcial']
+                    proyectos = form3.cleaned_data['proyectos']
+                    noTiene = form3.cleaned_data['noTiene']
+                    gestion = Tabla_resultados_gestion(empresa=1,
+                                                       answer1=iso9001,
+                                                       answer2=iso14001,
+                                                       answer3=ohsas18001,
+                                                       answer4=otraCert,
+                                                       answer5=procedimiento,
+                                                       answer6=asesoria,
+                                                       answer7=gerencia,
+                                                       answer8=tiempoCompleto,
+                                                       answer9=tiempoParcial,
+                                                       answer10=proyectos,
+                                                       answer11=noTiene)
+                    gestion.save()
+                # hay problemas con el Form 3
+            # hay problemas con el Form 2
         # hay problemas con el Form 1
     else:
-        form1 = FormDefault()
-        context = {'resultados_gestion':form1}
+        form1 = Form_certificacionesEmpresa(request.POST)
+        form2 = Form_elementosManejoRiesgos(request.POST)
+        form3 = Form_jornadaPrevencionista(request.POST)
+        context = {'resultados_gestion_certificaciones':form1, 'resultados_gestion_elementos':form2, 'resultados_gestion_jornada':form3}
     return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
 
 @login_required
