@@ -24,6 +24,17 @@
   transform: translateY(4px);
 }
 
+#logo-top-img{
+    margin-left: 10px;
+    width: 300px;
+}
+
+@media (max-width: 460px) {
+    #logo-top-img{
+        width: 150px;
+    }
+}
+
 /*Login Signup Page*/
 a:focus,a:hover,a{
     outline:none;
