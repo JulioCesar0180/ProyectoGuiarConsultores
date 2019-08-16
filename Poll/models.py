@@ -14,6 +14,7 @@ class Tabla_perfil_usuario(models.Model):
     nombre_contacto_empresa = models.CharField(max_length=100, default="")
     telefono_empresa = models.CharField(max_length=20, default="")
     email_empresa = models.CharField(max_length=100, default="")
+    razon_social_empresa = models.CharField(max_length=100, default="")
     ventas_anuales_empresa = models.CharField(max_length=50, default="")
 
 class Tabla_resultados_transporte(models.Model):
