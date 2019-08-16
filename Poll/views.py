@@ -6,7 +6,6 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 
-from .form_datos_personales import *
 from .forms import *
 from Poll.models import *
 from django.contrib.auth.decorators import login_required
@@ -118,8 +117,9 @@ def profile(request):
 
 
 def poll_page_one(request):
-    form1 = form_datos_personales()
-    form2 = form_datosGeneralesEmpresa()
-    form3 = form_ventasEmpresa()
-    context = {'datos_personales':form1, 'datos_empresa': form2, 'ventas_empresa': form3}
+    form1 = Form_datosPersonales()
+    form2 = Form_datosEmpresa()
+    form3 = Form_ventasEmpresa()
+    form4 = Form_rubroEmpresa()
+    context = {'datos_personales':form1, 'datos_empresa': form2, 'ventas_empresa': form3, 'rubro_empresa': form4}
     return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
