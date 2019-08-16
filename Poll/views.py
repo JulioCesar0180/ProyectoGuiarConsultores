@@ -44,53 +44,66 @@ def index(request):
         form2 = Form_datosEmpresa(request.POST)
         form3 = Form_ventasEmpresa(request.POST)
         form4 = Form_dotacionEmpresa(request.POST)
-        context = {'perfil_usuario_datosPersonales':form1, 'perfil_usuario_datosEmpresa':form2, 'perfil_usuario_ventasEmpresa':form3, 'resultados_dotacion':form4}
+        form5 = Form_rubroEmpresa(request.POST)
+        context = {'perfil_usuario_datosPersonales':form1, 'perfil_usuario_datosEmpresa':form2,
+                   'perfil_usuario_ventasEmpresa':form3, 'resultados_dotacion':form4, 'resultados_procesos':form5}
         if form1.is_valid():
             if form2.is_valid():
                 if form3.is_valid():
                     if form4.is_valid():
-                        nombre = form1.cleaned_data['nombre']
-                        email = form1.cleaned_data['email']
-                        telefono = form1.cleaned_data['telefono']
-                        razon = form2.cleaned_data['razon']
-                        rut = form2.cleaned_data['rut']
-                        experiencia = form2.cleaned_data['experiencia']
-                        direccion = form2.cleaned_data['direccion']
-                        comuna = form2.cleaned_data['comuna']
-                        ciudad = form2.cleaned_data['ciudad']
-                        ventas = form3.cleaned_data['ciudad']
-                        usuario = Tabla_perfil_usuario(user=1,
-                                                       nombre_empresa=nombre,
-                                                       rut_empresa=rut,
-                                                       direccion_empresa=direccion,
-                                                       experiencia_empresa=experiencia,
-                                                       ciudad_empresa=ciudad,
-                                                       comuna_empresa=comuna,
-                                                       nombre_contacto_empresa='placeholder',
-                                                       telefono_empresa=telefono,
-                                                       email_empresa=email,
-                                                       ventas_anuales_empresa=ventas,
-                                                       razon_social_empresa=razon)
-                        usuario.save()
-                        # return HttpResponseRedirect('/thanks/')
-                        empContratados = form4.cleaned_data['empContratados']
-                        empContratistas = form4.cleaned_data['empContratistas']
-                        vehLivianos = form4.cleaned_data['vehLivianos']
-                        vehContratistas = form4.cleaned_data['vehContratistas']
-                        vehPesados = form4.cleaned_data['vehPesados']
-                        vehPesadosContratistas = form4.cleaned_data['vehPesadosContratistas']
-                        maqEmpresa = form4.cleaned_data['maqEmpresa']
-                        marContratista = form4.cleaned_data['marContratista']
-                        dotacion = Tabla_resultados_dotacion(user=1,
-                                                             empContratados=empContratados,
-                                                             empContratistas=empContratistas,
-                                                             vehLivianos=vehLivianos,
-                                                             vehContratistas=vehContratistas,
-                                                             vehPesados=vehPesados,
-                                                             vehPesadosContratistas=vehPesadosContratistas,
-                                                             maqEmpresa=maqEmpresa,
-                                                             marContratista=marContratista)
-                        dotacion.save()
+                        if form5.is_valid():
+                            nombre = form1.cleaned_data['nombre']
+                            email = form1.cleaned_data['email']
+                            telefono = form1.cleaned_data['telefono']
+                            razon = form2.cleaned_data['razon']
+                            rut = form2.cleaned_data['rut']
+                            experiencia = form2.cleaned_data['experiencia']
+                            direccion = form2.cleaned_data['direccion']
+                            comuna = form2.cleaned_data['comuna']
+                            ciudad = form2.cleaned_data['ciudad']
+                            ventas = form3.cleaned_data['ciudad']
+                            usuario = Tabla_perfil_usuario(user=1,
+                                                           nombre_empresa=nombre,
+                                                           rut_empresa=rut,
+                                                           direccion_empresa=direccion,
+                                                           experiencia_empresa=experiencia,
+                                                           ciudad_empresa=ciudad,
+                                                           comuna_empresa=comuna,
+                                                           nombre_contacto_empresa='placeholder',
+                                                           telefono_empresa=telefono,
+                                                           email_empresa=email,
+                                                           ventas_anuales_empresa=ventas,
+                                                           razon_social_empresa=razon)
+                            usuario.save()
+                            # return HttpResponseRedirect('/thanks/')
+                            empContratados = form4.cleaned_data['empContratados']
+                            empContratistas = form4.cleaned_data['empContratistas']
+                            vehLivianos = form4.cleaned_data['vehLivianos']
+                            vehContratistas = form4.cleaned_data['vehContratistas']
+                            vehPesados = form4.cleaned_data['vehPesados']
+                            vehPesadosContratistas = form4.cleaned_data['vehPesadosContratistas']
+                            maqEmpresa = form4.cleaned_data['maqEmpresa']
+                            marContratista = form4.cleaned_data['marContratista']
+                            dotacion = Tabla_resultados_dotacion(empresa=1,
+                                                                 empContratados=empContratados,
+                                                                 empContratistas=empContratistas,
+                                                                 vehLivianos=vehLivianos,
+                                                                 vehContratistas=vehContratistas,
+                                                                 vehPesados=vehPesados,
+                                                                 vehPesadosContratistas=vehPesadosContratistas,
+                                                                 maqEmpresa=maqEmpresa,
+                                                                 marContratista=marContratista)
+                            dotacion.save()
+                            # return HttpResponseRedirect('/thanks/')
+                            rubro = form5.cleaned_data['rubro']
+                            procesos = Tabla_resultados_procesos(empresa=1,
+                                                                 answer1=rubro['1'],
+                                                                 answer2=rubro['2'],
+                                                                 answer3=rubro['3'],
+                                                                 answer4=rubro['4'],
+                                                                 answer5=rubro['5'])
+                            procesos.save()
+                        # hay problemas con el Form 5
                     # hay problemas con el Form 4
                 # hay problemas con el Form 3
             # hay problemas con el Form 2
@@ -100,7 +113,9 @@ def index(request):
         form2 = Form_datosEmpresa()
         form3 = Form_ventasEmpresa()
         form4 = Form_dotacionEmpresa()
-        context = {'perfil_usuario_datosPersonales':form1, 'perfil_usuario_datosEmpresa':form2, 'perfil_usuario_ventasEmpresa':form3, 'resultados_dotacion':form4}
+        form5 = Form_rubroEmpresa()
+        context = {'perfil_usuario_datosPersonales':form1, 'perfil_usuario_datosEmpresa':form2,
+                   'perfil_usuario_ventasEmpresa':form3, 'resultados_dotacion':form4, 'resultados_procesos':form5}
     return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 @login_required
@@ -122,7 +137,7 @@ def polltwo(request):
                         tuberias = form1.cleaned_data['tuberias']
                         refuerzos = form1.cleaned_data['refuerzos']
                         otraConst = form1.cleaned_data['otraConst'] # Aca se especifica texto, puede dar errores
-                        construccion = Tabla_resultados_construccion(user=1,
+                        construccion = Tabla_resultados_construccion(empresa=1,
                                                                      answer1=estructura,
                                                                      answer2=gruesa,
                                                                      answer3=instalaciones,
@@ -139,7 +154,7 @@ def polltwo(request):
                         muebles = form2.cleaned_data['muebles']
                         prototipos = form2.cleaned_data['prototipos']
                         otraManufac = form2.cleaned_data['otraManufac'] # Aca se especifica texto, puede dar errores
-                        manufactura= Tabla_resultados_manufactura(user=1,
+                        manufactura= Tabla_resultados_manufactura(empresa=1,
                                                                   answer1=produccion,
                                                                   answer2=confeccion,
                                                                   answer3=tornerias,
@@ -159,7 +174,7 @@ def polltwo(request):
                         aceite = form3.cleaned_data['aceite']
                         carga = form3.cleaned_data['carga']
                         otraTerr = form3.cleaned_data['otraTerr'] # Aca se especifica texto, puede dar errores
-                        transporte = Tabla_resultados_transporte(user=1,
+                        transporte = Tabla_resultados_transporte(empresa=1,
                                                                  answer1=materiales,
                                                                  answer2=personas,
                                                                  answer3=maquinaria,
@@ -186,7 +201,7 @@ def polltwo(request):
                         carretera = form4.cleaned_data['carretera']
                         izaje = form4.cleaned_data['izaje']
                         garage = form4.cleaned_data['garage']
-                        servicios = Tabla_resultados_servicios(user=1,
+                        servicios = Tabla_resultados_servicios(empresa=1,
                                                                answer1=maestranza,
                                                                answer2=reparacion,
                                                                answer3=electricos,
@@ -231,7 +246,7 @@ def pollthree(request):
             tiempoParcial = form1.cleaned_data['tiempoParcial']
             proyectos = form1.cleaned_data['proyectos']
             noTiene = form1.cleaned_data['noTiene']
-            gestion = Tabla_resultados_gestion(user=1,
+            gestion = Tabla_resultados_gestion(empresa=1,
                                                answer1=iso9001,
                                                answer2=iso14001,
                                                answer3=ohsas18001,
@@ -268,7 +283,7 @@ def pollfour(request):
                         polvorin = form1.cleaned_data['polvorin']
                         procedimientos = form1.cleaned_data['procedimientos']
                         dispositivos = form1.cleaned_data['dispositivos']
-                        explosivos = Tabla_resultados_explosivos(user=1,
+                        explosivos = Tabla_resultados_explosivos(empresa=1,
                                                                  answer1=inscripcion,
                                                                  answer2=certificado,
                                                                  answer3=personal,
@@ -282,7 +297,7 @@ def pollfour(request):
                         ausencia = form2.cleaned_data['ausencia']
                         tierra = form2.cleaned_data['tierra']
                         delimitacion = form2.cleaned_data['delimitacion']
-                        electricidad = Tabla_resultados_electricidad(user=1,
+                        electricidad = Tabla_resultados_electricidad(empresa=1,
                                                                      answer1=apertura,
                                                                      answer2=encaramiento,
                                                                      answer3=ausencia,
@@ -299,7 +314,7 @@ def pollfour(request):
                         tipoA = form3.cleaned_data['tipoA']
                         tipoB = form3.cleaned_data['tipoB']
                         tipoC = form3.cleaned_data['tipoC']
-                        sustancias_peligrosas = Tabla_resultados_sustancias_peligrosas(user=1,
+                        sustancias_peligrosas = Tabla_resultados_sustancias_peligrosas(empresa=1,
                                                                                        answer1=distintivos,
                                                                                        answer2=tacografo,
                                                                                        answer3=antiguedad,
@@ -315,7 +330,7 @@ def pollfour(request):
                         supervisor = form4.cleaned_data['supervisor']
                         proteccion = form4.cleaned_data['proteccion']
                         equipamiento = form4.cleaned_data['equipamiento']
-                        altura = Tabla_resultados_altura(user=1,
+                        altura = Tabla_resultados_altura(empresa=1,
                                                          answer1=norma,
                                                          answer2=supervisor,
                                                          answer3=proteccion,
