@@ -28,7 +28,6 @@ class Tabla_resultados_transporte(models.Model):
     answer7 = models.BooleanField(default=False)
     answer8 = models.BooleanField(default=False)
     answer9 = models.BooleanField(default=False)
-    answer10 = models.CharField(max_length=200,default='') # se ingresa la opcion 'Otros' lo que requiere texto
 
 class Tabla_resultados_construccion(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -38,7 +37,6 @@ class Tabla_resultados_construccion(models.Model):
     answer4 = models.BooleanField(default=False)
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
-    answer7 = models.CharField(max_length=200,default='') # se ingresa la opcion 'Otros' lo que requiere texto
 
 class Tabla_resultados_manufactura(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -48,7 +46,6 @@ class Tabla_resultados_manufactura(models.Model):
     answer4 = models.BooleanField(default=False)
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
-    answer7 = models.CharField(max_length=200,default='') # se ingresa la opcion 'Otros' lo que requiere texto
 
 class Tabla_resultados_servicios(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -83,14 +80,13 @@ class Tabla_resultados_gestion(models.Model):
     answer1 = models.BooleanField(default=False)
     answer2 = models.BooleanField(default=False)
     answer3 = models.BooleanField(default=False)
-    answer4 = models.CharField(max_length=200,default='') # opcion 'Otros' lo cual requiere texto
+    answer4 = models.BooleanField(default=False)
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
     answer7 = models.BooleanField(default=False)
     answer8 = models.BooleanField(default=False)
     answer9 = models.BooleanField(default=False)
     answer10 = models.BooleanField(default=False)
-    answer11 = models.BooleanField(default=False)
 
 class Tabla_resultados_procesos(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
