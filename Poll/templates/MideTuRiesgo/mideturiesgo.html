@@ -34,7 +34,7 @@
     </div>
 
     <div class="inicio">
-      <b>P1.</b> Datos de contacto
+      <b>P1.</b> Datos generales de la empresa
       <div>
         <br>
       </div>
@@ -43,26 +43,50 @@
           <tbody>
             <tr>
               <td class="nombreCampo">
-                Nombre
+                Razón Social
               </td>
               <td class="campos">
-                <input type="text" name="nombre" id="nombre">
+                <input type="text" name="razon" id="razon" required>
               </td>
             </tr>
             <tr>
               <td class="nombreCampo">
-                Correo Electronico
+                RUT
               </td>
               <td class="campos">
-                <input type="text" name="email" id="email">
+                <input type="text" name="rut" id="rut" required>
               </td>
             </tr>
             <tr>
               <td class="nombreCampo">
-                Teléfono
+                Antigüedad de la empresa (años)
               </td>
               <td class="campos">
-                <input type="text" name="telefono" id="telefono">
+                <input type="text" name="experiencia" id="experiencia" required>
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Dirección
+              </td>
+              <td class="campos">
+                <input type="text" name="direccion" id="direccion" required>
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Comuna
+              </td>
+              <td class="campos">
+                <input type="text" name="comuna" id="comuna" required>
+              </td>
+            </tr>
+            <tr>
+              <td class="nombreCampo">
+                Ciudad
+              </td>
+              <td class="campos">
+                <input type="text" name="ciudad" id="ciudad" required>
               </td>
             </tr>
           </tbody>
@@ -77,7 +101,7 @@
     </div>
 
     <div class="inicio">
-      <b>P2.</b> Datos generales de la empresa
+      <b>P2.</b> Datos de contacto
       <div>
         <br>
       </div>
@@ -86,50 +110,26 @@
           <tbody>
             <tr>
               <td class="nombreCampo">
-                Razón Social
+                Nombre
               </td>
               <td class="campos">
-                <input type="text" name="razon" id="razon">
+                <input type="text" name="nombre" id="nombre" required>
               </td>
             </tr>
             <tr>
               <td class="nombreCampo">
-                RUT
+                Correo Electronico
               </td>
               <td class="campos">
-                <input type="text" name="rut" id="rut">
+                <input type="text" name="email" id="email" required>
               </td>
             </tr>
             <tr>
               <td class="nombreCampo">
-                Antigüedad de la empresa (años)
+                Teléfono
               </td>
               <td class="campos">
-                <input type="text" name="experiencia" id="experiencia">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Dirección
-              </td>
-              <td class="campos">
-                <input type="text" name="direccion" id="direccion">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Comuna
-              </td>
-              <td class="campos">
-                <input type="text" name="comuna" id="comuna">
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Ciudad
-              </td>
-              <td class="campos">
-                <input type="text" name="ciudad" id="ciudad">
+                <input type="text" name="telefono" id="telefono" required>
               </td>
             </tr>
           </tbody>
@@ -149,19 +149,19 @@
           <br>
         </div>
       <div class="input-radio">
-        <input type="radio" id="minimo" name="ventas" value="minimo">
+        <input type="radio" id="minimo" name="ventas" value="minimo" required>
         <label for="minimo" class="unselectable">De UF 0 a UF 2.400</label>
       </div>
       <div class="input-radio">
-        <input type="radio" id="intermedio" name="ventas" value="intermedio">
+        <input type="radio" id="intermedio" name="ventas" value="intermedio" required>
         <label for="intermedio" class="unselectable">De UF 2.400 a UF 25.000</label>
       </div>
       <div class="input-radio">
-        <input type="radio" name="ventas" id="maximo" value="maximo">
+        <input type="radio" name="ventas" id="maximo" value="maximo" required>
         <label for="maximo">De UF 25.000 a UF 100.000</label>
       </div>
       <div class="input-radio">
-        <input type="radio" name="ventas" id="mas" value="mas">
+        <input type="radio" name="ventas" id="mas" value="mas" required>
         <label for="mas" class="unselectable">Más de UF 100.000</label>
       </div>
       <div>
@@ -185,7 +185,7 @@
                 Cantidad de empleados contratados
               </td>
               <td class="campos">
-                <input type="text" name="empContratados" id="empContratados">
+                <input type="text" name="empContratados" id="empContratados" required>
               </td>
             </tr>
             <tr>
@@ -193,7 +193,7 @@
                 Cantidad de empleados contratistas
               </td>
               <td class="campos">
-                <input type="text" name="empContratistas" id="empContratistas">
+                <input type="text" name="empContratistas" id="empContratistas" required>
               </td>
             </tr>
             <tr>
@@ -201,7 +201,7 @@
                 Cantidad de vehículos comerciales livianos de la empresa
               </td>
               <td class="campos">
-                <input type="text" name="vehLivianos" id="vehLivianos">
+                <input type="text" name="vehLivianos" id="vehLivianos" required>
               </td>
             </tr>
             <tr>
@@ -209,7 +209,7 @@
                 Cantidad de vehículos comerciales de contratistas
               </td>
               <td class="campos">
-                <input type="text" name="vehContratistas" id="vehContratistas">
+                <input type="text" name="vehContratistas" id="vehContratistas" required>
               </td>
             </tr>
             <tr>
@@ -217,7 +217,7 @@
                 Cantidad de vehículos comerciales pesados de la empresa
               </td>
               <td class="campos">
-                <input type="text" name="vehPesados" id="vehPesados">
+                <input type="text" name="vehPesados" id="vehPesados" required>
               </td>
             </tr>
             <tr>
@@ -225,7 +225,7 @@
                 Cantidad de vehículos comerciales pesados de contratistas
               </td>
               <td class="campos">
-                <input type="text" name="vehPesadosContratistas" id="vehPesadosContratistas">
+                <input type="text" name="vehPesadosContratistas" id="vehPesadosContratistas" required>
               </td>
             </tr>
             <tr>
@@ -233,7 +233,7 @@
                 Cantidad de maquinaria pesada de la empresa
               </td>
               <td class="campos">
-                <input type="text" name="maqEmpresa" id="maqEmpresa">
+                <input type="text" name="maqEmpresa" id="maqEmpresa" required>
               </td>
             </tr>
             <tr>
@@ -241,7 +241,7 @@
                 Cantidad de maquinaria pesada de contratista
               </td>
               <td class="campos">
-                <input type="text" name="marContratista" id="marContratista">
+                <input type="text" name="marContratista" id="marContratista" required>
               </td>
             </tr>
           </tbody>
@@ -261,19 +261,19 @@
           <br>
         </div>
       <div class="input-radio">
-        <input type="checkbox" id="construccion" name="construccion" value="construccion">
+        <input type="checkbox" id="construccion" name="construccion" value="construccion" required>
         <label for="construccion" class="unselectable">Construcción</label>
       </div>
       <div class="input-radio">
-        <input type="checkbox" id="manufactura" name="manufactura" value="manufactura">
+        <input type="checkbox" id="manufactura" name="manufactura" value="manufactura" required>
         <label for="manufactura" class="unselectable">Manufactura</label>
       </div>
       <div class="input-radio">
-        <input type="checkbox" name="transporte" id="transporte" value="transporte">
+        <input type="checkbox" name="transporte" id="transporte" value="transporte" required>
         <label for="transporte" class="unselectable">Transporte terreste</label>
       </div>
       <div class="input-radio">
-        <input type="checkbox" name="servicio" id="servicio" value="servicio">
+        <input type="checkbox" name="servicio" id="servicio" value="servicio" required>
         <label for="servicio" class="unselectable">Servicios generales</label>
       </div>
     </div>
