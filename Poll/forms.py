@@ -31,7 +31,8 @@ class FormDefault(forms.Form):
 
 class Form_datosPersonales(forms.Form):
     attrs_nombre = {
-        'class': 'form-control'
+        'class': 'form-control',
+        'id': 'form-texbox'
     }
 
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput(attrs=attrs_nombre))

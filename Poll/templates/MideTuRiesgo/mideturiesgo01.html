@@ -13,7 +13,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Document</title>
+    <title>Mide Tu Riesgo (Test)</title>
 </head>
 <body>
     <div id="azul"></div>
@@ -36,28 +36,20 @@
     </div>
     <div class="inicio" style="display:flex; align-items: start">
         <form method="POST">
+            <span>
+                <b>P1. </b>Datos del Contacto
+            </span>
+
             <table>
-                <th>
-                    <span>
-                        <b>P1.</b>Datos del Contacto
-                    </span>
-                </th>
                 {% csrf_token %}{{ datos_personales.as_table }}
-                <th>
-                    <hr>
-                </th>
-                <td>
-                    <hr>
-                </td>
-                {% csrf_token %}{{ datos_empresa.as_table }}
-                <th>
-                    <hr>
-                </th>
-                <td>
-                    <hr>
-                </td>
             </table>
-            {% csrf_token %}{{ ventas_empresa.as_table }}
+            <hr>
+            <span>
+                <b>P2. </b>Datos del Contacto
+            </span>
+            <table>
+                {% csrf_token %}{{ datos_empresa.as_table }}
+            </table>
             <button type="submit" value="Submit" id="next" style="width: 200px">→</button>
         </form>
     </div>

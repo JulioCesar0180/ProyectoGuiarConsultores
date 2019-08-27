@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Tabla_perfil_usuario(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, primary_key=True, unique=True, on_delete=models.CASCADE)
     nombre_empresa = models.CharField(max_length=100, default="")
     rut_empresa = models.CharField(max_length=15, default="")
     direccion_empresa = models.CharField(max_length=100, default="")
@@ -17,8 +17,9 @@ class Tabla_perfil_usuario(models.Model):
     razon_social_empresa = models.CharField(max_length=100, default="")
     ventas_anuales_empresa = models.CharField(max_length=50, default="")
 
+
 class Tabla_resultados_transporte(models.Model):
-    empresa = models.ForeignKey(User, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(User, primary_key=True, unique=True, on_delete=models.CASCADE)
     answer1 = models.BooleanField(default=False)
     answer2 = models.BooleanField(default=False)
     answer3 = models.BooleanField(default=False)
