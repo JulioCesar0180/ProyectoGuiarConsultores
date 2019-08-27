@@ -84,5 +84,4 @@ def page_one_poll(request):
         {'datos_personales': form1,
          'datos_empresa': form2,
          }
-
     return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
