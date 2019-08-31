@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -9,21 +11,25 @@ from django.contrib.auth import login, authenticate
 from .forms import *
 from Poll.models import *
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMultiAlternatives
 
+from django.template.loader import render_to_string
+
+#rut
+from django import template
 
 def home(request):
     count = User.objects.count()
     return render(request, 'home.html', {
         'count': count
     })
-
-
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
+            username = rut_format(username, ".")
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
@@ -36,6 +42,14 @@ def signup(request):
 def denunciar(request):
     return render(request, 'Navbar/denunciar.html')
 
+
+def resetPassword():
+    subject, from_email, to = 'hello', 'jdm006@alumnos.ucn.cl', 'juliocesardm93@gmail.com'
+    text_content = 'This is an important message.'
+    html_content = '<p>This is an <strong>important</strong> message.</p>'
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
 @login_required
 def page_one_poll(request):
@@ -85,3 +99,31 @@ def page_one_poll(request):
          'datos_empresa': form2,
          }
     return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
+
+
+def rut_format(value, separator=","):
+
+    # Unformat the RUT
+    value = rut_unformat(value)
+
+    rut, verifier_digit = value[:-1], value[-1]
+
+    try:
+        # Add thousands separator
+        rut = "{0:,}".format(int(rut))
+
+        # If you specified another thousands separator instead of ','
+        if separator != ",":
+            # Apply the custom thousands separator
+            rut = rut.replace(",", separator)
+
+        return "%s-%s" % (rut, verifier_digit)
+
+    except ValueError:
+        # If the RUT cannot be converted to Int
+        raise template.TemplateSyntaxError("RUT must be numeric, in order to be formatted")
+
+
+def rut_unformat(value):
+
+    return value.replace("-", "").replace(".", "").replace(",", "")
