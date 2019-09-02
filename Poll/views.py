@@ -51,6 +51,33 @@ def resetPassword():
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
+def rut_format(value, separator=","):
+
+    # Unformat the RUT
+    value = rut_unformat(value)
+
+    rut, verifier_digit = value[:-1], value[-1]
+
+    try:
+        # Add thousands separator
+        rut = "{0:,}".format(int(rut))
+
+        # If you specified another thousands separator instead of ','
+        if separator != ",":
+            # Apply the custom thousands separator
+            rut = rut.replace(",", separator)
+
+        return "%s-%s" % (rut, verifier_digit)
+
+    except ValueError:
+        # If the RUT cannot be converted to Int
+        raise template.TemplateSyntaxError("RUT must be numeric, in order to be formatted")
+
+
+def rut_unformat(value):
+
+    return value.replace("-", "").replace(".", "").replace(",", "")
+
 @login_required
 def page_one_poll(request):
     form1 = Form_datosPersonales()
@@ -93,37 +120,272 @@ def page_one_poll(request):
 
             #Volver a la pagina de Inicio por el momento
             return render(request, "home/home.html")
-
+    else:
+        # Error de metodo
+        e = "Operacion Invalida"
     context = \
         {'datos_personales': form1,
          'datos_empresa': form2,
          }
     return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
 
+@login_required
+def polltwo(request):
+    if request.method == 'POST':
+        form1 = Form_elementosRiesgo(request.POST)
+        form2 = Form_actManufaturas(request.POST)
+        form3 = Form_tipoCargas(request.POST)
+        form4 = Form_serviciosGenerales(request.POST)
+        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
+            estructura = form1.cleaned_data['estructura']
+            gruesa = form1.cleaned_data['gruesa']
+            instalaciones = form1.cleaned_data['instalaciones']
+            menores = form1.cleaned_data['menores']
+            tuberias = form1.cleaned_data['tuberias']
+            refuerzos = form1.cleaned_data['refuerzos']
+            otraConst = form1.cleaned_data['otraConst'] # Aca se especifica texto, puede dar errores
+            construccion = Tabla_resultados_construccion(
+                empresa=1,
+                answer1=estructura,
+                answer2=gruesa,
+                answer3=instalaciones,
+                answer4=menores,
+                answer5=tuberias,
+                answer6=refuerzos,
+                answer7=otraConst
+            )
+            construccion.save()
+            # return HttpResponseRedirect('/thanks/')
+            produccion = form2.cleaned_data['produccion']
+            confeccion = form2.cleaned_data['confeccion']
+            tornerias = form2.cleaned_data['tornerias']
+            pvc = form2.cleaned_data['pvc']
+            muebles = form2.cleaned_data['muebles']
+            prototipos = form2.cleaned_data['prototipos']
+            otraManufac = form2.cleaned_data['otraManufac'] # Aca se especifica texto, puede dar errores
+            manufactura= Tabla_resultados_manufactura(
+                empresa=1,
+                answer1=produccion,
+                answer2=confeccion,
+                answer3=tornerias,
+                answer4=pvc,
+                answer5=muebles,
+                answer6=prototipos,
+                answer7=otraManufac
+            )
+            manufactura.save()
+            # return HttpResponseRedirect('/thanks/')
+            materiales = form3.cleaned_data['materiales']
+            personas = form3.cleaned_data['personas']
+            maquinaria = form3.cleaned_data['maquinaria']
+            mercaderia = form3.cleaned_data['mercaderia']
+            granel = form3.cleaned_data['granel']
+            solidos = form3.cleaned_data['solidos']
+            corrosivo = form3.cleaned_data['corrosivo']
+            aceite = form3.cleaned_data['aceite']
+            carga = form3.cleaned_data['carga']
+            otraTerr = form3.cleaned_data['otraTerr'] # Aca se especifica texto, puede dar errores
+            transporte = Tabla_resultados_transporte(
+                empresa=1,
+                answer1=materiales,
+                answer2=personas,
+                answer3=maquinaria,
+                answer4=mercaderia,
+                answer5=granel,
+                answer6=solidos,
+                answer7=corrosivo,
+                answer8=aceite,
+                answer9=carga,
+                answer10=otraTerr
+            )
+            transporte.save()
+            # return HttpResponseRedirect('/thanks/')
+            maestranza = form4.cleaned_data['maestranza']
+            reparacion = form4.cleaned_data['reparacion']
+            electricos = form4.cleaned_data['electricos']
+            generador = form4.cleaned_data['generador']
+            repuesto = form4.cleaned_data['repuesto']
+            hidraulico = form4.cleaned_data['hidraulico']
+            computacional = form4.cleaned_data['computacional']
+            lavenderia = form4.cleaned_data['lavenderia']
+            movimiento = form4.cleaned_data['movimiento']
+            arriendo = form4.cleaned_data['arriendo']
+            ferreteria = form4.cleaned_data['ferreteria']
+            carretera = form4.cleaned_data['carretera']
+            izaje = form4.cleaned_data['izaje']
+            garage = form4.cleaned_data['garage']
+            servicios = Tabla_resultados_servicios(
+                empresa=1,
+                answer1=maestranza,
+                answer2=reparacion,
+                answer3=electricos,
+                answer4=generador,
+                answer5=repuesto,
+                answer6=hidraulico,
+                answer7=computacional,
+                answer8=lavenderia,
+                answer9=movimiento,
+                answer10=arriendo,
+                answer11=ferreteria,
+                answer12=carretera,
+                answer13=izaje,
+                answer14=garage
+            )
+            servicios.save()
+            # Volver a la pagina de Inicio por el momento
+            return render(request, "home/home.html")
+        else:
+            # hay problemas con los Forms
+            e = "Operacion Invalida"
+    else:
+        # Error de metodo
+        e = "Operacion Invalida"
+    context = \
+        {'resultados_construccion':form1,
+         'resultados_manufactura':form2,
+         'resultados_transporte':form3,
+         'resultados_servicios':form4
+         }
+    return render(request, "MideTuRiesgo/mideturiesgo2.html", context)
 
-def rut_format(value, separator=","):
+@login_required
+def pollthree(request):
+    if request.method == 'POST':
+        form1 = Form_certificacionesEmpresa(request.POST)
+        form2 = Form_elementosManejoRiesgos(request.POST)
+        form3 = Form_jornadaPrevencionista(request.POST)
+        if form1.is_valid() and form2.is_valid() and form3.is_valid():
+            iso9001 = form1.cleaned_data['iso9001']
+            iso14001 = form1.cleaned_data['iso14001']
+            ohsas18001 = form1.cleaned_data['ohsas18001']
+            otraCert = form1.cleaned_data['otraCert'] # requiere texto por lo que puede dar errores
+            procedimiento = form2.cleaned_data['procedimiento']
+            asesoria = form2.cleaned_data['asesoria']
+            gerencia = form2.cleaned_data['gerencia']
+            tiempoCompleto = form3.cleaned_data['tiempoCompleto']
+            tiempoParcial = form3.cleaned_data['tiempoParcial']
+            proyectos = form3.cleaned_data['proyectos']
+            noTiene = form3.cleaned_data['noTiene']
+            gestion = Tabla_resultados_gestion(
+                empresa=1,
+                answer1=iso9001,
+                answer2=iso14001,
+                answer3=ohsas18001,
+                answer4=otraCert,
+                answer5=procedimiento,
+                answer6=asesoria,
+                answer7=gerencia,
+                answer8=tiempoCompleto,
+                answer9=tiempoParcial,
+                answer10=proyectos,
+                answer11=noTiene
+            )
+            gestion.save()
+        else:
+            # hay problemas con los Forms
+            e = "Operacion Invalida"
+    else:
+        # Error de metodo
+        e = "Operacion Invalida"
+    context = \
+        {'resultados_gestion_certificaciones':form1,
+         'resultados_gestion_elementos':form2,
+         'resultados_gestion_jornada':form3
+         }
+    return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
 
-    # Unformat the RUT
-    value = rut_unformat(value)
+@login_required
+def pollfour(request):
+    if request.method == 'POST':
+        form1 = FormDefault(request.POST)
+        form2 = FormDefault(request.POST)
+        form3 = FormDefault(request.POST)
+        form4 = FormDefault(request.POST)
+        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
+            inscripcion = form1.cleaned_data['inscripcion']
+            certificado = form1.cleaned_data['certificado']
+            personal = form1.cleaned_data['personal']
+            polvorin = form1.cleaned_data['polvorin']
+            procedimientos = form1.cleaned_data['procedimientos']
+            dispositivos = form1.cleaned_data['dispositivos']
+            explosivos = Tabla_resultados_explosivos(
+                empresa=1,
+                answer1=inscripcion,
+                answer2=certificado,
+                answer3=personal,
+                answer4=polvorin,
+                answer5=procedimientos,
+                answer6=dispositivos
+            )
+            explosivos.save()
+            # return HttpResponseRedirect('/thanks/')
+            apertura = form2.cleaned_data['apertura']
+            encaramiento = form2.cleaned_data['encaramiento']
+            ausencia = form2.cleaned_data['ausencia']
+            tierra = form2.cleaned_data['tierra']
+            delimitacion = form2.cleaned_data['delimitacion']
+            electricidad = Tabla_resultados_electricidad(
+                empresa=1,
+                answer1=apertura,
+                answer2=encaramiento,
+                answer3=ausencia,
+                answer4=tierra,
+                answer5=delimitacion
+            )
+            electricidad.save()
+            # return HttpResponseRedirect('/thanks/')
+            distintivos = form3.cleaned_data['distintivos']
+            tacografo = form3.cleaned_data['tacografo']
+            antiguedad = form3.cleaned_data['antiguedad']
+            transporte = form3.cleaned_data['transporte']
+            embalaje = form3.cleaned_data['embalaje']
+            carga = form3.cleaned_data['carga']
+            tipoA = form3.cleaned_data['tipoA']
+            tipoB = form3.cleaned_data['tipoB']
+            tipoC = form3.cleaned_data['tipoC']
+            sustancias_peligrosas = Tabla_resultados_sustancias_peligrosas(
+                empresa=1,
+                answer1=distintivos,
+                answer2=tacografo,
+                answer3=antiguedad,
+                answer4=transporte,
+                answer5=embalaje,
+                answer6=carga,
+                answer7=tipoA,
+                answer8=tipoB,
+                answer9=tipoC
+            )
+            sustancias_peligrosas.save()
+            # return HttpResponseRedirect('/thanks/')
+            norma = form4.cleaned_data['norma']
+            supervisor = form4.cleaned_data['supervisor']
+            proteccion = form4.cleaned_data['proteccion']
+            equipamiento = form4.cleaned_data['equipamiento']
+            altura = Tabla_resultados_altura(
+                empresa=1,
+                answer1=norma,
+                answer2=supervisor,
+                answer3=proteccion,
+                answer4=equipamiento)
+            altura.save()
+        else:
+            # hay problemas con los Forms
+            e = "Operacion Invalida"
+    else:
+        # Error de metodo
+        e = "Operacion Invalida"
+    context = \
+        {'resultados_explosivos':form1,
+         'resultados_electricidad':form2,
+         'resultados_sustancias_peligrosas':form3,
+         'resultados_altura':form4
+         }
+    return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
 
-    rut, verifier_digit = value[:-1], value[-1]
-
-    try:
-        # Add thousands separator
-        rut = "{0:,}".format(int(rut))
-
-        # If you specified another thousands separator instead of ','
-        if separator != ",":
-            # Apply the custom thousands separator
-            rut = rut.replace(",", separator)
-
-        return "%s-%s" % (rut, verifier_digit)
-
-    except ValueError:
-        # If the RUT cannot be converted to Int
-        raise template.TemplateSyntaxError("RUT must be numeric, in order to be formatted")
-
-
-def rut_unformat(value):
-
-    return value.replace("-", "").replace(".", "").replace(",", "")
+def page_four_poll(request):
+    if request.method == 'GET':
+        a = "placeholder"
+    else:
+        # Error de metodo
+        e = "Operacion Invalida"
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html")
