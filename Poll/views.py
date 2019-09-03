@@ -18,11 +18,14 @@ from django.template.loader import render_to_string
 #rut
 from django import template
 
+
 def home(request):
     count = User.objects.count()
     return render(request, 'home.html', {
         'count': count
     })
+
+
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -50,6 +53,7 @@ def resetPassword():
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
     msg.attach_alternative(html_content, "text/html")
     msg.send()
+
 
 def rut_format(value, separator=","):
 
@@ -130,7 +134,7 @@ def page_one_poll(request):
     return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
 
 @login_required
-def polltwo(request):
+def page_two_poll(request):
     if request.method == 'POST':
         form1 = Form_elementosRiesgo(request.POST)
         form2 = Form_actManufaturas(request.POST)
@@ -249,7 +253,7 @@ def polltwo(request):
     return render(request, "MideTuRiesgo/mideturiesgo2.html", context)
 
 @login_required
-def pollthree(request):
+def page_three_poll(request):
     if request.method == 'POST':
         form1 = Form_certificacionesEmpresa(request.POST)
         form2 = Form_elementosManejoRiesgos(request.POST)
@@ -281,6 +285,7 @@ def pollthree(request):
                 answer11=noTiene
             )
             gestion.save()
+            return render(request, "home/home.html")
         else:
             # hay problemas con los Forms
             e = "Operacion Invalida"
@@ -295,7 +300,7 @@ def pollthree(request):
     return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
 
 @login_required
-def pollfour(request):
+def page_four_poll(request):
     if request.method == 'POST':
         form1 = FormDefault(request.POST)
         form2 = FormDefault(request.POST)
@@ -368,6 +373,7 @@ def pollfour(request):
                 answer3=proteccion,
                 answer4=equipamiento)
             altura.save()
+            return render(request, "home/home.html")
         else:
             # hay problemas con los Forms
             e = "Operacion Invalida"
@@ -382,7 +388,8 @@ def pollfour(request):
          }
     return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
 
-def page_four_poll(request):
+
+def page_results(request):
     if request.method == 'GET':
         a = "placeholder"
     else:

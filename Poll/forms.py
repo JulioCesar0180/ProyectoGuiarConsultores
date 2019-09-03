@@ -11,6 +11,7 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'nombre_de_empresa', 'last_name', 'email', 'password1', 'password2', )
 
+
 class FormInicial(forms.Form):
     nombre = forms.CharField(max_length=100)
     email = forms.EmailField()
@@ -91,10 +92,33 @@ class Form_ventasEmpresa(forms.Form):
 
 
 class Form_dotacionEmpresa(forms.Form):
-    empContratados = forms.IntegerField()
-    empContratistas = forms.IntegerField()
-    vehLivianos = forms.IntegerField()
-    vehContratistas = forms.IntegerField()
+    empContratados = forms.CharField(
+        label='Cantidad de empleados contratados',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'autocomplete': 'off'
+        })
+    )
+
+    empContratistas = forms.CharField(
+        label='Cantidad de empleados contratistas',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'autocomplete': 'off'
+        })
+    )
+
+    vehLivianos = forms.CharField(
+        label='Cantidad de vehículos comerciales livianos de la empresa',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+
+        })
+    )
+
+    vehContratistas = forms.CharField(
+        label='Cantidad de vehículos comerciales de contratistas'
+    )
     vehPesados = forms.IntegerField()
     vehPesadosContratistas = forms.IntegerField()
     maqEmpresa = forms.IntegerField()
@@ -176,7 +200,6 @@ class Form_serviciosGenerales(forms.Form):
               ('12', 'Servicios de fabricación e instalación de señaleticas en carreteras y/o caminos privados'),
               ('13', 'Servicios de izajes, manipulación de cargas y equipos'),
               ('14', 'Servicios de mantención, reparación, garage, desabollada, vehículos, multi-marca')]
-
 
 
 class Form_certificacionesEmpresa(forms.Form):

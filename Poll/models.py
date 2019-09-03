@@ -30,6 +30,7 @@ class Tabla_resultados_transporte(models.Model):
     answer8 = models.BooleanField(default=False)
     answer9 = models.BooleanField(default=False)
 
+
 class Tabla_resultados_construccion(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.BooleanField(default=False)
@@ -39,6 +40,7 @@ class Tabla_resultados_construccion(models.Model):
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
 
+
 class Tabla_resultados_manufactura(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.BooleanField(default=False)
@@ -47,6 +49,7 @@ class Tabla_resultados_manufactura(models.Model):
     answer4 = models.BooleanField(default=False)
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
+
 
 class Tabla_resultados_servicios(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -65,6 +68,7 @@ class Tabla_resultados_servicios(models.Model):
     answer13 = models.BooleanField(default=False)
     answer14 = models.BooleanField(default=False)
 
+
 class Tabla_resultados_dotacion(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.CharField(max_length=10, default="")
@@ -75,6 +79,7 @@ class Tabla_resultados_dotacion(models.Model):
     answer6 = models.CharField(max_length=10, default="")
     answer7 = models.CharField(max_length=10, default="")
     answer8 = models.CharField(max_length=10, default="")
+
 
 class Tabla_resultados_gestion(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -89,6 +94,7 @@ class Tabla_resultados_gestion(models.Model):
     answer9 = models.BooleanField(default=False)
     answer10 = models.BooleanField(default=False)
 
+
 class Tabla_resultados_procesos(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.BooleanField(default=False)
@@ -96,6 +102,7 @@ class Tabla_resultados_procesos(models.Model):
     answer3 = models.BooleanField(default=False)
     answer4 = models.BooleanField(default=False)
     answer5 = models.BooleanField(default=False)
+
 
 class Tabla_resultados_explosivos(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -106,6 +113,7 @@ class Tabla_resultados_explosivos(models.Model):
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
 
+
 class Tabla_resultados_electricidad(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.BooleanField(default=False)
@@ -113,6 +121,7 @@ class Tabla_resultados_electricidad(models.Model):
     answer3 = models.BooleanField(default=False)
     answer4 = models.BooleanField(default=False)
     answer5 = models.BooleanField(default=False)
+
 
 class Tabla_resultados_sustancias_peligrosas(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -126,12 +135,14 @@ class Tabla_resultados_sustancias_peligrosas(models.Model):
     answer8 = models.BooleanField(default=False)
     answer9 = models.BooleanField(default=False)
 
+
 class Tabla_resultados_altura(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
     answer1 = models.BooleanField(default=False)
     answer2 = models.BooleanField(default=False)
     answer3 = models.BooleanField(default=False)
     answer4 = models.BooleanField(default=False)
+
 
 class Tabla_resultados_finales(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -146,6 +157,7 @@ class Tabla_resultados_finales(models.Model):
     riesgo_electricidad = models.CharField(max_length=3, default="")
     riesgo_sustancias_peligrosas = models.CharField(max_length=3, default="")
     riesgo_altura = models.CharField(max_length=3, default="")
+
 
 class Tabla_priorizacion_riesgos(models.Model):
     empresa = models.ForeignKey(User, on_delete=models.CASCADE)
