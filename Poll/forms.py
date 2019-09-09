@@ -31,6 +31,7 @@ class FormDefault(forms.Form):
 
 
 class Form_datosPersonales(forms.Form):
+    # Nombre del Usuario #
     attrs_nombre = {
         'class': 'form-control',
         'id': 'form-texbox'
@@ -38,11 +39,13 @@ class Form_datosPersonales(forms.Form):
 
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput(attrs=attrs_nombre))
 
+    # Email del Usuario #
     attrs_email = {
         'class': 'form-control'
     }
     email = forms.EmailField(label='Correo Electronico', widget=forms.EmailInput(attrs=attrs_email))
 
+    # Telefono del Usuario #
     attrs_telefono = {
         'class': 'form-control'
     }
@@ -50,32 +53,48 @@ class Form_datosPersonales(forms.Form):
 
 
 class Form_datosEmpresa(forms.Form):
+
+    # Razon Social de la empresa #
     attrs_razon = {
         'class': 'form-control'
     }
     razon = forms.CharField(label='Razón Social', widget=forms.TextInput(attrs=attrs_razon))
 
+    # Rut de la empresa #
     attrs_rut = {
         'class': 'form-control'
     }
     rut = forms.CharField(label='Rut', widget=forms.TextInput(attrs=attrs_rut))
 
+    # Representante de la empresa #
+    attrs_nombre_contacto_empresa = {
+        'class': 'form-control'
+    }
+    nombre_contacto_empresa = forms.CharField(label='Nombre del Representante',
+                                              widget=forms.TextInput(
+                                                  attrs=attrs_nombre_contacto_empresa)
+                                              )
+
+    # Años de Experiencia de la empresa #
     attrs_experiencia = {
         'class': 'form-control'
     }
     experiencia = forms.IntegerField(label='Antigüedad de la empresa (años)',
             widget=forms.TextInput(attrs=attrs_experiencia))
 
+    # Direccion de la empresa #
     attrs_direccion = {
         'class': 'form-control'
     }
     direccion = forms.CharField(label='Dirección', widget=forms.TextInput(attrs=attrs_direccion))
 
+    # Comuna de la empresa #
     attrs_comuna = {
         'class': 'form-control'
     }
     comuna = forms.CharField(label='Comuna', widget=forms.TextInput(attrs=attrs_comuna))
 
+    # Ciudad de la empresa #
     attrs_ciudad = {
         'class': 'form-control'
     }
