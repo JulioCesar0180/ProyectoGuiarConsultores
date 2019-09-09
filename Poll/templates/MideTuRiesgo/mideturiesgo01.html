@@ -79,6 +79,9 @@
                     <hr>
                 </div>
             </div>
+            <table>
+                {% csrf_token %}{{ dotacion_empresa.as_table }}
+            </table>
             <div class="inicio">
                 <b>P5.</b> Indique el o los rubros en que participa la empresa
                 <div>

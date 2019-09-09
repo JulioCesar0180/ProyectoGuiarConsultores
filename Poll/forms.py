@@ -119,10 +119,18 @@ class Form_dotacionEmpresa(forms.Form):
     vehContratistas = forms.CharField(
         label='Cantidad de vehículos comerciales de contratistas'
     )
-    vehPesados = forms.IntegerField()
-    vehPesadosContratistas = forms.IntegerField()
-    maqEmpresa = forms.IntegerField()
-    marContratista = forms.IntegerField()
+    vehPesados = forms.IntegerField(
+        label='-'
+    )
+    vehPesadosContratistas = forms.IntegerField(
+        label='-'
+    )
+    maqEmpresa = forms.IntegerField(
+        label='-'
+    )
+    marContratista = forms.IntegerField(
+        label='-'
+    )
 
 
 class Form_rubroEmpresa(forms.Form):

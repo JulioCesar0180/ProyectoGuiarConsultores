@@ -86,10 +86,11 @@ def rut_unformat(value):
 def page_one_poll(request):
     form1 = Form_datosPersonales()
     form2 = Form_datosEmpresa()
+    form3 = Form_dotacionEmpresa()
     if request.method == 'POST':
         form1 = Form_datosPersonales(request.POST)
         form2 = Form_datosEmpresa(request.POST)
-        if form1.is_valid() and form2.is_valid():
+        if form1.is_valid() and form2.is_valid() and form3.is_valid():
 
             #obtener datos de Datos Personales
             nombre = form1.cleaned_data['nombre']
@@ -103,6 +104,15 @@ def page_one_poll(request):
             direccion = form2.cleaned_data['direccion']
             comuna = form2.cleaned_data['comuna']
             ciudad = form2.cleaned_data['ciudad']
+
+            empContratados = form3.cleaned_data['empContratados']
+            empContratistas = form3.cleaned_data['empContratistas']
+            vehLivianos = form3.cleaned_data['vehLivianos']
+            vehContratistas = form3.cleaned_data['vehContratistas']
+            vehPesados = form3.cleaned_data['vehPesados']
+            vehPesadosContratistas = form3.cleaned_data['vehPesadosContratistas']
+            maqEmpresa = form3.cleaned_data['maqEmpresa']
+            marContratista = form3.cleaned_data['marContratista']
 
             #Se crea el objeto
             datosPersonales = Tabla_perfil_usuario(
@@ -120,7 +130,9 @@ def page_one_poll(request):
                 ventas_anuales_empresa="15.000"
             )
 
-            datosPersonales.save()
+
+
+
 
             #Volver a la pagina de Inicio por el momento
             return render(request, "home/home.html")
@@ -130,6 +142,7 @@ def page_one_poll(request):
     context = \
         {'datos_personales': form1,
          'datos_empresa': form2,
+         'dotacion_empresa': form3
          }
     return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
