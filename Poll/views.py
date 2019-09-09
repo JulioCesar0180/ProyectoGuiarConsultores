@@ -110,6 +110,15 @@ def page_one_poll(request):
             ciudad = form2.cleaned_data['ciudad']
             ventas = form3.cleaned_data['ventas']
 
+            empContratados = form3.cleaned_data['empContratados']
+            empContratistas = form3.cleaned_data['empContratistas']
+            vehLivianos = form3.cleaned_data['vehLivianos']
+            vehContratistas = form3.cleaned_data['vehContratistas']
+            vehPesados = form3.cleaned_data['vehPesados']
+            vehPesadosContratistas = form3.cleaned_data['vehPesadosContratistas']
+            maqEmpresa = form3.cleaned_data['maqEmpresa']
+            marContratista = form3.cleaned_data['marContratista']
+
             #Se crea el objeto
             datosPersonales = Tabla_perfil_usuario(
                 user_id=request.user.id,
@@ -159,7 +168,7 @@ def page_one_poll(request):
          'ventas_empresa': form3,
          'dotacion_empresa': form4
          }
-    return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
+    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 @login_required
 def page_two_poll(request):
