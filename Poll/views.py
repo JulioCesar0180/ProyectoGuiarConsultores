@@ -144,7 +144,7 @@ def page_one_poll(request):
          'datos_empresa': form2,
          'dotacion_empresa': form3
          }
-    return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
+    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 @login_required
 def page_two_poll(request):
