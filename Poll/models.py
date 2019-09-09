@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Tabla_perfil_usuario(models.Model):
+class Tabla_perfil_empresa(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre_empresa = models.CharField(max_length=100, default="")
     rut_empresa = models.CharField(max_length=15, default="")
@@ -12,11 +12,15 @@ class Tabla_perfil_usuario(models.Model):
     experiencia_empresa = models.CharField(max_length=10, default="")
     ciudad_empresa = models.CharField(max_length=20, default="")
     comuna_empresa = models.CharField(max_length=20, default="")
-    nombre_contacto_empresa = models.CharField(max_length=100, default="")
-    telefono_empresa = models.CharField(max_length=20, default="")
-    email_empresa = models.CharField(max_length=100, default="")
     razon_social_empresa = models.CharField(max_length=100, default="")
     ventas_anuales_empresa = models.CharField(max_length=50, default="")
+
+
+class Tabla_perfil_usuario(models.Model):
+    empresa = models.ForeignKey(Tabla_perfil_empresa, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=50, default="")
+    email = models.EmailField(max_length=50, default="")
+    telefono = models.CharField(max_length=15, default="")
 
 
 class Tabla_resultados_transporte(models.Model):

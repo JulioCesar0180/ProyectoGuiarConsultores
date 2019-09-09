@@ -54,6 +54,12 @@ class Form_datosPersonales(forms.Form):
 
 class Form_datosEmpresa(forms.Form):
 
+    # Nombre de la empresa #
+    attrs_nombre = {
+        'class': 'form-control'
+    }
+    nombre = forms.CharField(label='Nombre Empresa', widget=forms.TextInput(attrs=attrs_nombre))
+
     # Razon Social de la empresa #
     attrs_razon = {
         'class': 'form-control'
@@ -65,15 +71,6 @@ class Form_datosEmpresa(forms.Form):
         'class': 'form-control'
     }
     rut = forms.CharField(label='Rut', widget=forms.TextInput(attrs=attrs_rut))
-
-    # Representante de la empresa #
-    attrs_nombre_contacto_empresa = {
-        'class': 'form-control'
-    }
-    nombre_contacto_empresa = forms.CharField(label='Nombre del Representante',
-                                              widget=forms.TextInput(
-                                                  attrs=attrs_nombre_contacto_empresa)
-                                              )
 
     # Años de Experiencia de la empresa #
     attrs_experiencia = {

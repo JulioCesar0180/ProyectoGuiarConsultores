@@ -94,22 +94,22 @@ def page_one_poll(request):
         form3 = Form_ventasEmpresa(request.POST)
         form4 = Form_dotacionEmpresa(request.POST)
         if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
-
-            #obtener datos de Datos Personales
-            nombre = form1.cleaned_data['nombre']
-            email = form1.cleaned_data['email']
-            telefono = form1.cleaned_data['telefono']
-
             #obtener datos de la Empresa
+            nombreEmpresa = form2.cleaned_data['nombre']
             razon_social = form2.cleaned_data['razon']
             rut = form2.cleaned_data['rut']
-            representante = form2.cleaned_data['nombre_representante']
             experiencia = form2.cleaned_data['experiencia']
             direccion = form2.cleaned_data['direccion']
             comuna = form2.cleaned_data['comuna']
             ciudad = form2.cleaned_data['ciudad']
             ventas = form3.cleaned_data['ventas']
 
+            # obtener datos de Datos Personales
+            nombre = form1.cleaned_data['nombre']
+            email = form1.cleaned_data['email']
+            telefono = form1.cleaned_data['telefono']
+
+            # obtener los datos que reflejan la dotacion de la empresa
             empContratados = form3.cleaned_data['empContratados']
             empContratistas = form3.cleaned_data['empContratistas']
             vehLivianos = form3.cleaned_data['vehLivianos']
@@ -120,33 +120,31 @@ def page_one_poll(request):
             marContratista = form3.cleaned_data['marContratista']
 
             #Se crea el objeto
-            datosPersonales = Tabla_perfil_usuario(
+            datosEmpresa = Tabla_perfil_empresa(
                 user_id=request.user.id,
-                nombre_empresa=nombre,
+                nombre_empresa=nombreEmpresa,
                 rut_empresa=rut,
                 direccion_empresa=direccion,
                 experiencia_empresa=experiencia,
                 ciudad_empresa=ciudad,
                 comuna_empresa=comuna,
-                nombre_contacto_empresa=representante,
-                telefono_empresa=telefono,
-                email_empresa=email,
                 razon_social_empresa=razon_social,
                 ventas_anuales_empresa=ventas
             )
+            datosEmpresa.save()
+
+            # leer el id de la empresa agregada recientemente
+            id_empresa = "1"
+            datosPersonales = Tabla_perfil_usuario(
+                empresa=id_empresa,
+                nombre=nombre,
+                email=email,
+                telefono=telefono
+            )
             datosPersonales.save()
 
-            # obtener los datos que reflejan la dotacion de la empresa
-            empContratados = form4.cleaned_data['empContratados']
-            empContratistas = form4.cleaned_data['empContratistas']
-            vehLivianos = form4.cleaned_data['vehLivianos']
-            vehContratistas = form4.cleaned_data['vehContratistas']
-            vehPesados = form4.cleaned_data['vehPesados']
-            vehPesadosContratistas = form4.cleaned_data['vehPesadosContratistas']
-            maqEmpresa = form4.cleaned_data['maqEmpresa']
-            marContratista = form4.cleaned_data['marContratista']
             dotacion = Tabla_resultados_dotacion(
-                user=1,
+                user=id_empresa,
                 empContratados=empContratados,
                 empContratistas=empContratistas,
                 vehLivianos=vehLivianos,
@@ -184,8 +182,10 @@ def page_two_poll(request):
             menores = form1.cleaned_data['menores']
             tuberias = form1.cleaned_data['tuberias']
             refuerzos = form1.cleaned_data['refuerzos']
+            # leer el id de la empresa agregada recientemente
+            id_empresa = "1"
             construccion = Tabla_resultados_construccion(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=estructura,
                 answer2=gruesa,
                 answer3=instalaciones,
@@ -202,7 +202,7 @@ def page_two_poll(request):
             muebles = form2.cleaned_data['muebles']
             prototipos = form2.cleaned_data['prototipos']
             manufactura= Tabla_resultados_manufactura(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=produccion,
                 answer2=confeccion,
                 answer3=tornerias,
@@ -222,7 +222,7 @@ def page_two_poll(request):
             aceite = form3.cleaned_data['aceite']
             carga = form3.cleaned_data['carga']
             transporte = Tabla_resultados_transporte(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=materiales,
                 answer2=personas,
                 answer3=maquinaria,
@@ -250,7 +250,7 @@ def page_two_poll(request):
             izaje = form4.cleaned_data['izaje']
             garage = form4.cleaned_data['garage']
             servicios = Tabla_resultados_servicios(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=maestranza,
                 answer2=reparacion,
                 answer3=electricos,
@@ -300,8 +300,10 @@ def page_three_poll(request):
             tiempoParcial = form3.cleaned_data['tiempoParcial']
             proyectos = form3.cleaned_data['proyectos']
             noTiene = form3.cleaned_data['noTiene']
+            # leer el id de la empresa agregada recientemente
+            id_empresa = "1"
             gestion = Tabla_resultados_gestion(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=iso9001,
                 answer2=iso14001,
                 answer3=ohsas18001,
@@ -342,8 +344,10 @@ def page_four_poll(request):
             polvorin = form1.cleaned_data['polvorin']
             procedimientos = form1.cleaned_data['procedimientos']
             dispositivos = form1.cleaned_data['dispositivos']
+            # leer el id de la empresa agregada recientemente
+            id_empresa = "1"
             explosivos = Tabla_resultados_explosivos(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=inscripcion,
                 answer2=certificado,
                 answer3=personal,
@@ -359,7 +363,7 @@ def page_four_poll(request):
             tierra = form2.cleaned_data['tierra']
             delimitacion = form2.cleaned_data['delimitacion']
             electricidad = Tabla_resultados_electricidad(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=apertura,
                 answer2=encaramiento,
                 answer3=ausencia,
@@ -378,7 +382,7 @@ def page_four_poll(request):
             tipoB = form3.cleaned_data['tipoB']
             tipoC = form3.cleaned_data['tipoC']
             sustancias_peligrosas = Tabla_resultados_sustancias_peligrosas(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=distintivos,
                 answer2=tacografo,
                 answer3=antiguedad,
@@ -396,7 +400,7 @@ def page_four_poll(request):
             proteccion = form4.cleaned_data['proteccion']
             equipamiento = form4.cleaned_data['equipamiento']
             altura = Tabla_resultados_altura(
-                empresa=1,
+                empresa=id_empresa,
                 answer1=norma,
                 answer2=supervisor,
                 answer3=proteccion,
