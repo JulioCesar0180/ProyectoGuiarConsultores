@@ -86,10 +86,14 @@ def rut_unformat(value):
 def page_one_poll(request):
     form1 = Form_datosPersonales()
     form2 = Form_datosEmpresa()
+    form3 = Form_ventasEmpresa()
+    form4 = Form_dotacionEmpresa()
     if request.method == 'POST':
         form1 = Form_datosPersonales(request.POST)
         form2 = Form_datosEmpresa(request.POST)
-        if form1.is_valid() and form2.is_valid():
+        form3 = Form_ventasEmpresa(request.POST)
+        form4 = Form_dotacionEmpresa(request.POST)
+        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
 
             #obtener datos de Datos Personales
             nombre = form1.cleaned_data['nombre']
@@ -99,10 +103,12 @@ def page_one_poll(request):
             #obtener datos de la Empresa
             razon_social = form2.cleaned_data['razon']
             rut = form2.cleaned_data['rut']
+            representante = form2.cleaned_data['nombre_representante']
             experiencia = form2.cleaned_data['experiencia']
             direccion = form2.cleaned_data['direccion']
             comuna = form2.cleaned_data['comuna']
             ciudad = form2.cleaned_data['ciudad']
+            ventas = form3.cleaned_data['ventas']
 
             #Se crea el objeto
             datosPersonales = Tabla_perfil_usuario(
@@ -113,15 +119,35 @@ def page_one_poll(request):
                 experiencia_empresa=experiencia,
                 ciudad_empresa=ciudad,
                 comuna_empresa=comuna,
-                nombre_contacto_empresa="NULL",
+                nombre_contacto_empresa=representante,
                 telefono_empresa=telefono,
                 email_empresa=email,
                 razon_social_empresa=razon_social,
-                ventas_anuales_empresa="15.000"
+                ventas_anuales_empresa=ventas
             )
-
             datosPersonales.save()
 
+            # obtener los datos que reflejan la dotacion de la empresa
+            empContratados = form4.cleaned_data['empContratados']
+            empContratistas = form4.cleaned_data['empContratistas']
+            vehLivianos = form4.cleaned_data['vehLivianos']
+            vehContratistas = form4.cleaned_data['vehContratistas']
+            vehPesados = form4.cleaned_data['vehPesados']
+            vehPesadosContratistas = form4.cleaned_data['vehPesadosContratistas']
+            maqEmpresa = form4.cleaned_data['maqEmpresa']
+            marContratista = form4.cleaned_data['marContratista']
+            dotacion = Tabla_resultados_dotacion(
+                user=1,
+                empContratados=empContratados,
+                empContratistas=empContratistas,
+                vehLivianos=vehLivianos,
+                vehContratistas=vehContratistas,
+                vehPesados=vehPesados,
+                vehPesadosContratistas=vehPesadosContratistas,
+                maqEmpresa=maqEmpresa,
+                marContratista=marContratista
+            )
+            dotacion.save()
             #Volver a la pagina de Inicio por el momento
             return render(request, "home/home.html")
     else:
@@ -130,6 +156,8 @@ def page_one_poll(request):
     context = \
         {'datos_personales': form1,
          'datos_empresa': form2,
+         'ventas_empresa': form3,
+         'dotacion_empresa': form4
          }
     return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
 
@@ -147,7 +175,6 @@ def page_two_poll(request):
             menores = form1.cleaned_data['menores']
             tuberias = form1.cleaned_data['tuberias']
             refuerzos = form1.cleaned_data['refuerzos']
-            otraConst = form1.cleaned_data['otraConst'] # Aca se especifica texto, puede dar errores
             construccion = Tabla_resultados_construccion(
                 empresa=1,
                 answer1=estructura,
@@ -155,8 +182,7 @@ def page_two_poll(request):
                 answer3=instalaciones,
                 answer4=menores,
                 answer5=tuberias,
-                answer6=refuerzos,
-                answer7=otraConst
+                answer6=refuerzos
             )
             construccion.save()
             # return HttpResponseRedirect('/thanks/')
@@ -166,7 +192,6 @@ def page_two_poll(request):
             pvc = form2.cleaned_data['pvc']
             muebles = form2.cleaned_data['muebles']
             prototipos = form2.cleaned_data['prototipos']
-            otraManufac = form2.cleaned_data['otraManufac'] # Aca se especifica texto, puede dar errores
             manufactura= Tabla_resultados_manufactura(
                 empresa=1,
                 answer1=produccion,
@@ -174,8 +199,7 @@ def page_two_poll(request):
                 answer3=tornerias,
                 answer4=pvc,
                 answer5=muebles,
-                answer6=prototipos,
-                answer7=otraManufac
+                answer6=prototipos
             )
             manufactura.save()
             # return HttpResponseRedirect('/thanks/')
@@ -188,7 +212,6 @@ def page_two_poll(request):
             corrosivo = form3.cleaned_data['corrosivo']
             aceite = form3.cleaned_data['aceite']
             carga = form3.cleaned_data['carga']
-            otraTerr = form3.cleaned_data['otraTerr'] # Aca se especifica texto, puede dar errores
             transporte = Tabla_resultados_transporte(
                 empresa=1,
                 answer1=materiales,
@@ -199,8 +222,7 @@ def page_two_poll(request):
                 answer6=solidos,
                 answer7=corrosivo,
                 answer8=aceite,
-                answer9=carga,
-                answer10=otraTerr
+                answer9=carga
             )
             transporte.save()
             # return HttpResponseRedirect('/thanks/')
@@ -262,7 +284,6 @@ def page_three_poll(request):
             iso9001 = form1.cleaned_data['iso9001']
             iso14001 = form1.cleaned_data['iso14001']
             ohsas18001 = form1.cleaned_data['ohsas18001']
-            otraCert = form1.cleaned_data['otraCert'] # requiere texto por lo que puede dar errores
             procedimiento = form2.cleaned_data['procedimiento']
             asesoria = form2.cleaned_data['asesoria']
             gerencia = form2.cleaned_data['gerencia']
@@ -275,14 +296,13 @@ def page_three_poll(request):
                 answer1=iso9001,
                 answer2=iso14001,
                 answer3=ohsas18001,
-                answer4=otraCert,
-                answer5=procedimiento,
-                answer6=asesoria,
-                answer7=gerencia,
-                answer8=tiempoCompleto,
-                answer9=tiempoParcial,
-                answer10=proyectos,
-                answer11=noTiene
+                answer4=procedimiento,
+                answer5=asesoria,
+                answer6=gerencia,
+                answer7=tiempoCompleto,
+                answer8=tiempoParcial,
+                answer9=proyectos,
+                answer10=noTiene
             )
             gestion.save()
             return render(request, "home/home.html")
