@@ -74,8 +74,8 @@ CREATE DATABASE guiarconsultores CHARACTER SET utf8mb4;
   * user: admin
   * password: root
 ```sql
-CREATE USER admin@localhost IDENTIFIED BY 'root';
-GRANT ALL PRIVILEGES ON guiarconsultores.* TO admin@localhost;
+CREATE USER useradmin@localhost IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON guiarconsultores.* TO useradmin@localhost;
 FLUSH PRIVILEGES;
 ```
 
