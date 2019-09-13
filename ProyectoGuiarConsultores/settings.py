@@ -143,4 +143,4 @@ LOGOUT_REDIRECT_URL = 'homeGC'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-AUTH_USER_MODEL = "Poll.Tabla_perfil_usuario"
+AUTH_USER_MODEL = "Poll.UserGuiar"

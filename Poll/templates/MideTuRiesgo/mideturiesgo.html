@@ -277,7 +277,7 @@
         <label for="servicio" class="unselectable">Servicios generales</label>
       </div>
     </div>
-    <form method="post" action="/MideTuRiesgo/2/" class="siguiente">
+    <form method="post" action="{% url 'pagina2' %}" class="siguiente">
       {% csrf_token %}
       {{ FormInicial }}
       <button type="submit" value="Submit" id="next">→</button>

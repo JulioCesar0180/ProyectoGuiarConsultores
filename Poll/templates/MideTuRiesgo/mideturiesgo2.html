@@ -218,10 +218,10 @@
     </div>
 
     <div class="direccion">
-      <form action="/MideTuRiesgo" class="anterior">{% csrf_token %}
+      <form action="{% url 'encuesta' %}" class="anterior">{% csrf_token %}
         <button type="submit" value="Submit" id="previous">←</button>
       </form>
-      <form action="/MideTuRiesgo/3" class="siguiente">{% csrf_token %}
+      <form action="{% url 'pagina3' %}" class="siguiente">{% csrf_token %}
         <button type="submit" value="Submit" id="next">→</button>
       </form>
     </div>

@@ -32,6 +32,7 @@ class FormDefault(forms.Form):
 
 
 class Form_datosPersonales(forms.Form):
+    # Nombre del Usuario #
     attrs_nombre = {
         'class': 'form-control',
         'id': 'form-texbox'
@@ -39,11 +40,13 @@ class Form_datosPersonales(forms.Form):
 
     nombre = forms.CharField(label='Nombre', widget=forms.TextInput(attrs=attrs_nombre))
 
+    # Email del Usuario #
     attrs_email = {
         'class': 'form-control'
     }
     email = forms.EmailField(label='Correo Electronico', widget=forms.EmailInput(attrs=attrs_email))
 
+    # Telefono del Usuario #
     attrs_telefono = {
         'class': 'form-control'
     }
@@ -51,32 +54,45 @@ class Form_datosPersonales(forms.Form):
 
 
 class Form_datosEmpresa(forms.Form):
+
+    # Nombre de la empresa #
+    attrs_nombre = {
+        'class': 'form-control'
+    }
+    nombre = forms.CharField(label='Nombre Empresa', widget=forms.TextInput(attrs=attrs_nombre))
+
+    # Razon Social de la empresa #
     attrs_razon = {
         'class': 'form-control'
     }
     razon = forms.CharField(label='Razón Social', widget=forms.TextInput(attrs=attrs_razon))
 
+    # Rut de la empresa #
     attrs_rut = {
         'class': 'form-control'
     }
     rut = forms.CharField(label='Rut', widget=forms.TextInput(attrs=attrs_rut))
 
+    # Años de Experiencia de la empresa #
     attrs_experiencia = {
         'class': 'form-control'
     }
     experiencia = forms.IntegerField(label='Antigüedad de la empresa (años)',
             widget=forms.TextInput(attrs=attrs_experiencia))
 
+    # Direccion de la empresa #
     attrs_direccion = {
         'class': 'form-control'
     }
     direccion = forms.CharField(label='Dirección', widget=forms.TextInput(attrs=attrs_direccion))
 
+    # Comuna de la empresa #
     attrs_comuna = {
         'class': 'form-control'
     }
     comuna = forms.CharField(label='Comuna', widget=forms.TextInput(attrs=attrs_comuna))
 
+    # Ciudad de la empresa #
     attrs_ciudad = {
         'class': 'form-control'
     }
@@ -120,10 +136,18 @@ class Form_dotacionEmpresa(forms.Form):
     vehContratistas = forms.CharField(
         label='Cantidad de vehículos comerciales de contratistas'
     )
-    vehPesados = forms.IntegerField()
-    vehPesadosContratistas = forms.IntegerField()
-    maqEmpresa = forms.IntegerField()
-    marContratista = forms.IntegerField()
+    vehPesados = forms.IntegerField(
+        label='-'
+    )
+    vehPesadosContratistas = forms.IntegerField(
+        label='-'
+    )
+    maqEmpresa = forms.IntegerField(
+        label='-'
+    )
+    marContratista = forms.IntegerField(
+        label='-'
+    )
 
 
 class Form_rubroEmpresa(forms.Form):

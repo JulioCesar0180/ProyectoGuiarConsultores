@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .forms import SignUpForm
-from .models import Tabla_perfil_usuario
+from .models import UserGuiar
 
-@admin.register(Tabla_perfil_usuario)
-class UserGcAdmin(UserAdmin):
+
+@admin.register(UserGuiar)
+class UserGuiarAdmin(UserAdmin):
     #add_form = SignUpForm
-    model = Tabla_perfil_usuario
+    model = UserGuiar
     list_display = ['rut', 'name']
     list_filter = ['is_admin', 'name', 'address']
     ordering = ['rut']

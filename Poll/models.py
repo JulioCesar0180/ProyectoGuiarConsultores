@@ -3,11 +3,12 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 # Create your models here.
 
+
 #Manager
-class UsuarioManager(BaseUserManager):
+class UserGuiarManager(BaseUserManager):
     use_in_migrations = True
 
-    def create_user(self,rut, password, **extra_fields):
+    def create_user(self, rut, password, **extra_fields):
         if not rut:
             raise ValueError('Error')
         user = self.model(rut=rut, **extra_fields)
@@ -24,13 +25,13 @@ class UsuarioManager(BaseUserManager):
 
 
 #Auth
-class Tabla_perfil_usuario(AbstractBaseUser, PermissionsMixin):
-    rut = models.CharField(max_length=12, verbose_name="Rut", unique=True, default="")
+class UserGuiar(AbstractBaseUser, PermissionsMixin):
+    rut = models.CharField(max_length=12, verbose_name="Rut Empresa", unique=True, default="")
     name = models.CharField(max_length=100, verbose_name="Nombre", default="")
     address = models.CharField(max_length=100, verbose_name="Direccion", default="")
     is_admin = models.BooleanField(default=False)
     #password = models.CharField(max_length=10, verbose_name="Contraseña", default="")
-    objects = UsuarioManager()
+    objects = UserGuiarManager()
     USERNAME_FIELD = 'rut'
     REQUIRED_FIELDS = ['name']
 
