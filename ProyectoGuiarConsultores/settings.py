@@ -80,7 +80,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'guiarconsultores',
-        'USER': 'admin',
+        'USER': 'admins',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '3306',
@@ -142,3 +142,5 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'homeGC'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTH_USER_MODEL = "Poll.Tabla_perfil_usuario"

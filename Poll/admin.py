@@ -1,22 +1,15 @@
 from django.contrib import admin
-from .models import *
+from django.contrib.auth.admin import UserAdmin
+from .forms import SignUpForm
+from .models import Tabla_perfil_usuario
 
-# Register your models here.
-
-admin.site.register(Tabla_perfil_usuario)
-admin.site.register(Tabla_resultados_transporte)
-admin.site.register(Tabla_resultados_construccion)
-admin.site.register(Tabla_resultados_manufactura)
-admin.site.register(Tabla_resultados_servicios)
-admin.site.register(Tabla_resultados_dotacion)
-admin.site.register(Tabla_resultados_gestion)
-admin.site.register(Tabla_resultados_procesos)
-admin.site.register(Tabla_resultados_explosivos)
-admin.site.register(Tabla_resultados_electricidad)
-admin.site.register(Tabla_resultados_sustancias_peligrosas)
-admin.site.register(Tabla_resultados_altura)
-admin.site.register(Tabla_resultados_finales)
-admin.site.register(Tabla_priorizacion_riesgos)
+@admin.register(Tabla_perfil_usuario)
+class UserGcAdmin(UserAdmin):
+    #add_form = SignUpForm
+    model = Tabla_perfil_usuario
+    list_display = ['rut', 'name']
+    list_filter = ['is_admin', 'name', 'address']
+    ordering = ['rut']
 
 
 admin.site.site_header = "MideTuRiesgo"
