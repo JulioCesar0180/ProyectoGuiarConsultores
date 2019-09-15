@@ -190,7 +190,7 @@ class TablaResultadosFinales(models.Model):
     riesgo_sustancias_peligrosas = models.CharField(max_length=3, default="")
     riesgo_altura = models.CharField(max_length=3, default="")
 
-
+"""
 class TablaPriorizacionRiesgos(models.Model):
     rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     resultados = models.ForeignKey(TablaResultadosFinales, on_delete=models.CASCADE)
@@ -200,3 +200,4 @@ class TablaPriorizacionRiesgos(models.Model):
     vehiculos_comerciales_livianos = models.BooleanField(default=False)
     vehiculos_comerciales_pesados = models.BooleanField(default=False)
     accidentes_personales = models.BooleanField(default=False)
+"""

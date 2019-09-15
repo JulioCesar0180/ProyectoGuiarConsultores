@@ -15,7 +15,8 @@ class UserGuiarAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('rut', 'name', 'address', 'password1', 'password2',)}),
+            'fields': ('rut', 'name', 'address', 'password1', 'password2',)
+        }),
     )
 
     fieldsets = (
@@ -26,6 +27,7 @@ class UserGuiarAdmin(UserAdmin):
 
 
 admin.site.register(TablaResultadosTransporte)
+
 admin.site.register(TablaResultadosContruccion)
 admin.site.register(TablaResultadosManufactura)
 admin.site.register(TablaResultadosServicios)
@@ -37,8 +39,9 @@ admin.site.register(TablaResultadosElectricidad)
 admin.site.register(TablaResultadosSustanciasPeligrosas)
 admin.site.register(TablaResultadosRiesgoAltura)
 admin.site.register(TablaResultadosFinales)
+"""
 admin.register(TablaPriorizacionRiesgos)
-
+"""
 admin.site.site_header = "MideTuRiesgo"
 admin.site.site_index = "GuiarConsultores"
 admin.site.site_title = "MideTuRiesgo"
