@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .forms import SignUpForm
-from .models import UserGuiar
+from .models import *
 
 
 @admin.register(UserGuiar)
@@ -24,6 +24,20 @@ class UserGuiarAdmin(UserAdmin):
         ('Permisos', {'fields': ('is_admin',)})
     )
 
+
+admin.site.register(TablaResultadosTransporte)
+admin.site.register(TablaResultadosContruccion)
+admin.site.register(TablaResultadosManufactura)
+admin.site.register(TablaResultadosServicios)
+admin.site.register(TablaResultadosDotacion)
+admin.site.register(TablaResultadosGestion)
+admin.site.register(TablaResultadosProcesos)
+admin.site.register(TablaResultadosExplosivos)
+admin.site.register(TablaResultadosElectricidad)
+admin.site.register(TablaResultadosSustanciasPeligrosas)
+admin.site.register(TablaResultadosRiesgoAltura)
+admin.site.register(TablaResultadosFinales)
+admin.register(TablaPriorizacionRiesgos)
 
 admin.site.site_header = "MideTuRiesgo"
 admin.site.site_index = "GuiarConsultores"
