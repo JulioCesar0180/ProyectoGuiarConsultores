@@ -1,16 +1,24 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from .models import UserGuiar
 
 
 #Arreglarlo
 class SignUpForm(UserCreationForm):
-    rut = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    address = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    rut = forms.CharField(
+        max_length=30, required=False,
+        help_text='required', label="Rut Empresa")
+
+    name = forms.CharField(
+        max_length=30, required=False,
+        help_text='Optional.', label='Nombre Empresa')
+
+    address = forms.CharField(
+        max_length=254, label="Dirección")
+
     class Meta:
-        model = User
-        fields = ('rut', 'name', 'address', 'password1', 'password2', )
+        model = UserGuiar
+        fields = ('rut', 'name', 'address')
 
 
 class FormInicial(forms.Form):

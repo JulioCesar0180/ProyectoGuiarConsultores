@@ -6,11 +6,23 @@ from .models import UserGuiar
 
 @admin.register(UserGuiar)
 class UserGuiarAdmin(UserAdmin):
-    #add_form = SignUpForm
+    add_form = SignUpForm
     model = UserGuiar
-    list_display = ['rut', 'name']
+    list_display = ['rut', 'name', 'address', 'is_admin']
     list_filter = ['is_admin', 'name', 'address']
     ordering = ['rut']
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('rut', 'name', 'address', 'password1', 'password2',)}),
+    )
+
+    fieldsets = (
+        (None, {'fields': ('rut', 'password')}),
+        ('Informacion', {'fields': ('name', 'address')}),
+        ('Permisos', {'fields': ('is_admin',)})
+    )
 
 
 admin.site.site_header = "MideTuRiesgo"

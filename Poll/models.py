@@ -27,13 +27,13 @@ class UserGuiarManager(BaseUserManager):
 #Auth
 class UserGuiar(AbstractBaseUser, PermissionsMixin):
     rut = models.CharField(max_length=12, verbose_name="Rut Empresa", unique=True, default="")
-    name = models.CharField(max_length=100, verbose_name="Nombre", default="")
+    name = models.CharField(max_length=100, verbose_name="Nombre Empresa", default="")
     address = models.CharField(max_length=100, verbose_name="Direccion", default="")
     is_admin = models.BooleanField(default=False)
     #password = models.CharField(max_length=10, verbose_name="Contraseña", default="")
     objects = UserGuiarManager()
     USERNAME_FIELD = 'rut'
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = ['name', 'address', 'is_admin']
 
     class Meta:
         verbose_name = "Usuario"
@@ -48,3 +48,17 @@ class UserGuiar(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class TablaResultadosTransporte(models.Model):
+    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    answer1 = models.BooleanField(default=False)
+    answer2 = models.BooleanField(default=False)
+    answer3 = models.BooleanField(default=False)
+    answer4 = models.BooleanField(default=False)
+    answer5 = models.BooleanField(default=False)
+    answer6 = models.BooleanField(default=False)
+    answer7 = models.BooleanField(default=False)
+    answer8 = models.BooleanField(default=False)
+    answer9 = models.BooleanField(default=False)
+    
