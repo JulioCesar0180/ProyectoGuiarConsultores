@@ -120,7 +120,7 @@ def page_one_poll(request):
             marContratista = form3.cleaned_data['marContratista']
 
             #Se crea el objeto
-            datosEmpresa = Tabla_perfil_empresa(
+            datosEmpresa = TablaPerfilEmpresa(
                 user_id=request.user.id,
                 nombre_empresa=nombreEmpresa,
                 rut_empresa=rut,
@@ -135,7 +135,7 @@ def page_one_poll(request):
 
             # leer el id de la empresa agregada recientemente
             id_empresa = "1"
-            datosPersonales = Tabla_perfil_usuario(
+            datosPersonales = TablaPerfilUsuario(
                 empresa=id_empresa,
                 nombre=nombre,
                 email=email,
@@ -143,7 +143,7 @@ def page_one_poll(request):
             )
             datosPersonales.save()
 
-            dotacion = Tabla_resultados_dotacion(
+            dotacion = TablaResultadosDotacion(
                 user=id_empresa,
                 empContratados=empContratados,
                 empContratistas=empContratistas,
@@ -170,6 +170,10 @@ def page_one_poll(request):
 
 @login_required
 def page_two_poll(request):
+    form1 = Form_elementosRiesgo()
+    form2 = Form_actManufaturas()
+    form3 = Form_tipoCargas()
+    form4 = Form_serviciosGenerales()
     if request.method == 'POST':
         form1 = Form_elementosRiesgo(request.POST)
         form2 = Form_actManufaturas(request.POST)
@@ -184,7 +188,7 @@ def page_two_poll(request):
             refuerzos = form1.cleaned_data['refuerzos']
             # leer el id de la empresa agregada recientemente
             id_empresa = "1"
-            construccion = Tabla_resultados_construccion(
+            construccion = TablaResultadosContruccion(
                 empresa=id_empresa,
                 answer1=estructura,
                 answer2=gruesa,
@@ -201,7 +205,7 @@ def page_two_poll(request):
             pvc = form2.cleaned_data['pvc']
             muebles = form2.cleaned_data['muebles']
             prototipos = form2.cleaned_data['prototipos']
-            manufactura= Tabla_resultados_manufactura(
+            manufactura= TablaResultadosManufactura(
                 empresa=id_empresa,
                 answer1=produccion,
                 answer2=confeccion,
@@ -221,7 +225,7 @@ def page_two_poll(request):
             corrosivo = form3.cleaned_data['corrosivo']
             aceite = form3.cleaned_data['aceite']
             carga = form3.cleaned_data['carga']
-            transporte = Tabla_resultados_transporte(
+            transporte = TablaResultadosTransporte(
                 empresa=id_empresa,
                 answer1=materiales,
                 answer2=personas,
@@ -249,7 +253,7 @@ def page_two_poll(request):
             carretera = form4.cleaned_data['carretera']
             izaje = form4.cleaned_data['izaje']
             garage = form4.cleaned_data['garage']
-            servicios = Tabla_resultados_servicios(
+            servicios = TablaResultadosServicios(
                 empresa=id_empresa,
                 answer1=maestranza,
                 answer2=reparacion,
@@ -285,6 +289,9 @@ def page_two_poll(request):
 
 @login_required
 def page_three_poll(request):
+    form1 = Form_certificacionesEmpresa()
+    form2 = Form_elementosManejoRiesgos()
+    form3 = Form_jornadaPrevencionista()
     if request.method == 'POST':
         form1 = Form_certificacionesEmpresa(request.POST)
         form2 = Form_elementosManejoRiesgos(request.POST)
@@ -302,7 +309,7 @@ def page_three_poll(request):
             noTiene = form3.cleaned_data['noTiene']
             # leer el id de la empresa agregada recientemente
             id_empresa = "1"
-            gestion = Tabla_resultados_gestion(
+            gestion = TablaResultadosGestion(
                 empresa=id_empresa,
                 answer1=iso9001,
                 answer2=iso14001,
@@ -332,6 +339,10 @@ def page_three_poll(request):
 
 @login_required
 def page_four_poll(request):
+    form1 = FormDefault()
+    form2 = FormDefault()
+    form3 = FormDefault()
+    form4 = FormDefault()
     if request.method == 'POST':
         form1 = FormDefault(request.POST)
         form2 = FormDefault(request.POST)
@@ -346,7 +357,7 @@ def page_four_poll(request):
             dispositivos = form1.cleaned_data['dispositivos']
             # leer el id de la empresa agregada recientemente
             id_empresa = "1"
-            explosivos = Tabla_resultados_explosivos(
+            explosivos = TablaResultadosExplosivos(
                 empresa=id_empresa,
                 answer1=inscripcion,
                 answer2=certificado,
@@ -362,7 +373,7 @@ def page_four_poll(request):
             ausencia = form2.cleaned_data['ausencia']
             tierra = form2.cleaned_data['tierra']
             delimitacion = form2.cleaned_data['delimitacion']
-            electricidad = Tabla_resultados_electricidad(
+            electricidad = TablaResultadosElectricidad(
                 empresa=id_empresa,
                 answer1=apertura,
                 answer2=encaramiento,
@@ -381,7 +392,7 @@ def page_four_poll(request):
             tipoA = form3.cleaned_data['tipoA']
             tipoB = form3.cleaned_data['tipoB']
             tipoC = form3.cleaned_data['tipoC']
-            sustancias_peligrosas = Tabla_resultados_sustancias_peligrosas(
+            sustancias_peligrosas = TablaResultadosSustanciasPeligrosas(
                 empresa=id_empresa,
                 answer1=distintivos,
                 answer2=tacografo,
@@ -399,7 +410,7 @@ def page_four_poll(request):
             supervisor = form4.cleaned_data['supervisor']
             proteccion = form4.cleaned_data['proteccion']
             equipamiento = form4.cleaned_data['equipamiento']
-            altura = Tabla_resultados_altura(
+            altura = TablaResultadosRiesgoAltura(
                 empresa=id_empresa,
                 answer1=norma,
                 answer2=supervisor,
