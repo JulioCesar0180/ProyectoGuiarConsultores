@@ -80,7 +80,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'guiarconsultores',
-        'USER': 'admins',
+        'USER': 'useradmin',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '3306',
