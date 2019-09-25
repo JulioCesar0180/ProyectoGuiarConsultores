@@ -30,7 +30,6 @@ class UserGuiar(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100, verbose_name="Nombre Empresa", default="")
     address = models.CharField(max_length=100, verbose_name="Direccion", default="")
     is_admin = models.BooleanField(default=False)
-    #password = models.CharField(max_length=10, verbose_name="Contraseña", default="")
     objects = UserGuiarManager()
     USERNAME_FIELD = 'rut'
     REQUIRED_FIELDS = ['name', 'address']
@@ -48,6 +47,20 @@ class UserGuiar(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
+
+class TablaPerfilEmpresa(models.Model):
+    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE)
+    nombre_empresa = models.CharField(max_length=100, default="")
+    direccion_empresa = models.CharField(max_length=100, default="")
+    experiencia_empresa = models.CharField(max_length=10, default="")
+    ciudad_empresa = models.CharField(max_length=20, default="")
+    comuna_empresa = models.CharField(max_length=20, default="")
+    razon_social_empresa = models.CharField(max_length=100, default="")
+    ventas_anuales_empresa = models.CharField(max_length=50, default="")
+    nombre_representante = models.CharField(max_length=50, default="")
+    email_representante = models.EmailField(max_length=50, default="")
+    telefono_representante = models.CharField(max_length=15, default="")
 
 
 class TablaResultadosTransporte(models.Model):
