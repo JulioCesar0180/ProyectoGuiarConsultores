@@ -39,6 +39,8 @@ admin.site.register(TablaResultadosElectricidad)
 admin.site.register(TablaResultadosSustanciasPeligrosas)
 admin.site.register(TablaResultadosRiesgoAltura)
 admin.site.register(TablaResultadosFinales)
+admin.site.register(Tabla_perfil_usuario)
+admin.site.register(Tabla_perfil_empresa)
 """
 admin.register(TablaPriorizacionRiesgos)
 """

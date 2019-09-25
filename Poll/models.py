@@ -50,6 +50,24 @@ class UserGuiar(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
+class Tabla_perfil_empresa(models.Model):
+    user = models.ForeignKey(UserGuiar, on_delete=models.CASCADE)
+    nombre_empresa = models.CharField(max_length=100, default="")
+    rut_empresa = models.CharField(max_length=15, default="")
+    direccion_empresa = models.CharField(max_length=100, default="")
+    experiencia_empresa = models.CharField(max_length=10, default="")
+    ciudad_empresa = models.CharField(max_length=20, default="")
+    comuna_empresa = models.CharField(max_length=20, default="")
+    razon_social_empresa = models.CharField(max_length=100, default="")
+    ventas_anuales_empresa = models.CharField(max_length=50, default="")
+
+
+class Tabla_perfil_usuario(models.Model):
+    empresa = models.ForeignKey(Tabla_perfil_empresa, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=50, default="")
+    email = models.EmailField(max_length=50, default="")
+    telefono = models.CharField(max_length=15, default="")
+
 class TablaResultadosTransporte(models.Model):
     rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     answer1 = models.BooleanField(default=False)

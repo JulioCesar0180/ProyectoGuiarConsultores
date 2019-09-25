@@ -120,7 +120,7 @@ def page_one_poll(request):
             marContratista = form3.cleaned_data['marContratista']
 
             #Se crea el objeto
-            datosEmpresa = TablaPerfilEmpresa(
+            datosEmpresa = Tabla_perfil_empresa(
                 user_id=request.user.id,
                 nombre_empresa=nombreEmpresa,
                 rut_empresa=rut,
@@ -135,7 +135,7 @@ def page_one_poll(request):
 
             # leer el id de la empresa agregada recientemente
             id_empresa = "1"
-            datosPersonales = TablaPerfilUsuario(
+            datosPersonales = Tabla_perfil_usuario(
                 empresa=id_empresa,
                 nombre=nombre,
                 email=email,
