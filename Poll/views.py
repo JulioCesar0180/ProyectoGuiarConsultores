@@ -82,6 +82,7 @@ def rut_unformat(value):
 
     return value.replace("-", "").replace(".", "").replace(",", "")
 
+
 @login_required
 def page_one_poll(request):
     form1 = Form_datosPersonales()
@@ -118,44 +119,6 @@ def page_one_poll(request):
             vehPesadosContratistas = form3.cleaned_data['vehPesadosContratistas']
             maqEmpresa = form3.cleaned_data['maqEmpresa']
             marContratista = form3.cleaned_data['marContratista']
-
-            #Se crea el objeto
-            datosEmpresa = Tabla_perfil_empresa(
-                user_id=request.user.id,
-                nombre_empresa=nombreEmpresa,
-                rut_empresa=rut,
-                direccion_empresa=direccion,
-                experiencia_empresa=experiencia,
-                ciudad_empresa=ciudad,
-                comuna_empresa=comuna,
-                razon_social_empresa=razon_social,
-                ventas_anuales_empresa=ventas
-            )
-            datosEmpresa.save()
-
-            # leer el id de la empresa agregada recientemente
-            id_empresa = "1"
-            datosPersonales = Tabla_perfil_usuario(
-                empresa=id_empresa,
-                nombre=nombre,
-                email=email,
-                telefono=telefono
-            )
-            datosPersonales.save()
-
-            dotacion = Tabla_resultados_dotacion(
-                user=id_empresa,
-                empContratados=empContratados,
-                empContratistas=empContratistas,
-                vehLivianos=vehLivianos,
-                vehContratistas=vehContratistas,
-                vehPesados=vehPesados,
-                vehPesadosContratistas=vehPesadosContratistas,
-                maqEmpresa=maqEmpresa,
-                marContratista=marContratista
-            )
-            dotacion.save()
-            #Volver a la pagina de Inicio por el momento
             return render(request, "home/home.html")
     else:
         # Error de metodo
@@ -166,7 +129,8 @@ def page_one_poll(request):
          'ventas_empresa': form3,
          'dotacion_empresa': form4
          }
-    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
+    return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
+
 
 @login_required
 def page_two_poll(request):

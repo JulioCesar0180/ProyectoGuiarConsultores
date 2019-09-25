@@ -142,19 +142,38 @@ class Form_dotacionEmpresa(forms.Form):
     )
 
     vehContratistas = forms.CharField(
-        label='Cantidad de vehículos comerciales de contratistas'
+        label='Cantidad de vehículos comerciales de contratistas',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
     )
+
     vehPesados = forms.IntegerField(
-        label='-'
+        label='Cantidad de vehículos comerciales pesados de la empresa',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
     )
+
     vehPesadosContratistas = forms.IntegerField(
-        label='-'
+        label='Cantidad de vehículos comerciales pesados de contratistas',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
     )
+
     maqEmpresa = forms.IntegerField(
-        label='-'
+        label='Cantidad de maquinaria pesada de la empresa',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
     )
+
     marContratista = forms.IntegerField(
-        label='-'
+        label='Cantidad de maquinaria pesada de contratista',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control'
+        })
     )
 
 

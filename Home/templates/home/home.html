@@ -1,84 +1,422 @@
 {% extends 'home/base.html' %}
-{% load staticfiles %}
-{% block head %}
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-{% endblock %}
+{% load static %}
+
 {% block content %}
-  <div class="row">
-    <div class="col">{% include 'home/carousel.html' %}</div>
-    <div class="w-100"></div>
-    <div id="container-section" class="col">
-        <section id="empresa">
-            <div class="container-fluid">
-                <h2>Bienvenidos a Guiar Consultores en Riesgos y Seguros</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div class="row">
-                    <div class="col">
-                        <img src="{% static 'images/building-2762342_1920.jpg' %}" style="height: 300px; width: 300px">
-                    </div>
-                    <div class="col">
-                    </div>
+    <!-- ============== start home section  ============== -->
+<section id="home">
+    <div id="home-slider" class="carousel slide in" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li class="active" data-slide-to="0" data-target="#home-slider"></li>
+            <li data-slide-to="1" data-target="#home-slider" class=""></li>
+            <li data-slide-to="2" data-target="#home-slider" class=""></li>
+        </ol>
+
+        <div class="carousel-inner">
+            <div class="item active" style="background-image: url({% static 'images/img_carousel/carousel-1.jpg' %})">
+                <div class="col-sm-offset-1 caption caption-wide">
+                    <h1 class="main-title wow fadeInUp" data-wow-delay=".25s">Expertos<br/>En<br/>Seguridad</h1>
+
+                    <a class="btn btn-start wow fadeInUp" href="#features" data-scroll data-wow-delay=".85s">Ver más</a>
+                </div>
+            </div><!-- //item -->
+            <div class="item" style="background-image: url({% static 'images/img_carousel/carousel-2.jpg' %})">
+                <div class="col-sm-offset-1 caption caption-wide">
+                    <h1 class="main-title wow fadeInUp" data-wow-delay=".25s">Mide<br/>tu riesgo <br/>con <br/>MideTuRiesgo App</h1>
+                    <a class="btn btn-start wow fadeInUp" href="#features" data-scroll data-wow-delay=".85s">Comenzar</a>
+                </div>
+            </div><!-- //item -->
+            <div class="item" style="background-image: url({% static 'images/img_carousel/carousel-3.jpg' %})">
+                <div class="col-sm-offset-1 caption">
+                    <h1 class="main-title wow fadeInUp" data-wow-delay=".25s">Confiabilidad<br/>y Seriedad</h1>
+                    <p class="sub-title wow fadeInUp" data-wow-delay=".55s">Contactanos</p>
+                    <a class="btn btn-start wow fadeInUp" href="#features" data-scroll data-wow-delay=".85s">Llamanos</a>
+                </div>
+            </div><!-- //item -->
+        </div>
+    </div>
+</section>
+<!-- ========= //End home section ========= -->
+
+
+<!-- ============== Start features section ============== -->
+<section id="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 feature-item">
+                <div class="content wow fadeInDown" data-wow-delay=".15s">
+                    <p class="icon text-center"><i class="fas fa-user-tie"></i></p>
+                    <h5 class="title text-center">Crea tu Cuenta</h5>
+                    <p class="info">
+                        Para utilizar la app Mideturiesgo, primero debes crear una cuenta registrando los datos de la empresa
+                    </p>
                 </div>
             </div>
-            <div id="servicios-prev-link"></div>
-        </section>
+            <div class="col-md-4 feature-item" href="{% url 'encuesta' %}">
+                <div class="content wow fadeInDown" data-wow-delay=".35s">
+                    <p class="icon text-center"><i class="fas fa-vote-yea"></i></p>
+                    <h5 class="title text-center">Encuesta</h5>
+                    <p class="info">
+                        Deberás responder a una serie de preguntas, de esta manera MideTuRiesgo sabrá cual es la mejor opcion para ti
+                </div>
+            </div>
+            <div class="col-md-4 feature-item">
+                <div class="content wow fadeInDown" data-wow-delay=".55s">
+                    <p class="icon text-center"><i class="fas fa-phone"></i></p>
+                    <h5 class="title text-center">Contacto</h5>
+                    <p class="info">
+                        Al finalizar, uno de nuestros ejecutivos te llamará si así lo quieres.
+                    </p>
+                </div>
+            </div>
+        </div> <!-- //row -->
+    </div> <!-- //container -->
+</section>
+<!-- ========= //End features section ========= -->
 
-        <section id="servicios">
-            <div class="container-fluid">
-                <h2 style="text-align: center">Servicios</h2>
-                <p style="text-align: center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div class="row">
-                    <div class="col">
-                        <img src="{% static 'images/building-2762342_1920.jpg' %}" style="height: 300px; width: 300px">
-                    </div>
-                    <div class="col">
 
+<!-- ============== Start courses section ============== -->
+<section id="courses">
+    <div class="color-overlay ptb100">
+        <div class="container">
+            <h3 class="section-title wow fadeInDown">Bienvenidos a Guiar Consultores en Riesgos y Seguros</h3>
+            <div class="row">
+                <div class="col-md-8 info-part">
+                    <div class="first-courses each-courses">
+
+                        <h4 class="title">Descripcion</h4>
+                        <p class="info">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                            incididunt ut labore et dolore magna aliqua.
+                        </p>
                     </div>
                 </div>
-              </div>
-            <div id="aliadas-prev-link"></div>
-        </section>
 
-        <section id="aliadas">
-            <div class="container-fluid">
-                <h2 style="text-align: center">Alianzas</h2>
-                <p style="text-align: center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div class="row">
-                    <div class="col">
-                        <img src="{% static 'images/building-2762342_1920.jpg' %}" style="height: 300px; width: 300px">
-                    </div>
-                    <div class="col">
-
-                    </div>
-                </div>
-              </div>
-            <div id="contacto-prev-link"></div>
-        </section>
-
-        <section id="contacto">
-            <div class="container-fluid">
-                <h2 style="text-align: center">Contacto</h2>
-                <p style="text-align: center">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <div class="row">
-                    <div class="col">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                    <div class="col">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2583.6709617234965!2d-70.4093684598801!3d-23.680874183705185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2scl!4v1563829805591!5m2!1ses-419!2scl" width="100%" height="380" style="border: 4px; border-color: rgb(255,255,255); border-style: solid" frameborder="0"  allowfullscreen></iframe>
-                    </div>
-                </div>
-              </div>
-        </section>
+            </div> <!-- //row -->
+        </div> <!-- //container -->
     </div>
-  </div>
+</section>
+<!-- ========= //End courses section ========= -->
+
+
+<!-- ============== Start portfolio section ============== -->
+<section id="portfolio" class="mtb100">
+    <div class="container">
+        <h3 class="section-title wow fadeInDown">Servicios</h3>
+        <p class="section-info col-sm-8 col-sm-offset-2 wow fadeInDown" data-wow-delay=".25s">
+            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words.
+        </p>
+        <div class="clearfix"></div>
+
+        <div class="portfolio-content">
+            <div class="portfolio-items">
+                <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item festival wedding">
+                    <figure class="content wow fadeIn" data-wow-delay=".15s">
+                        <img src="img/portfolio/01.jpg" class="img-100p" alt="Servicio 1">
+                        <figcaption class="overflow-content-full">
+                            <p class="icon horizontal-vertical-center">
+                                <a data-lightbox="portfolio" href="img/portfolio/main-01.jpg"><i class="fa fa-search-plus"></i></a>
+                            </p>
+                            <div class="caption text-center">
+                                <p class="title">Seguros</p>
+                                <p class="info">Lorem Ipsum is simply dummy text of the printing industry. </p>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item festival birthday">
+                    <figure class="content wow fadeIn" data-wow-delay=".25s">
+                        <img src="img/portfolio/02.jpg" class="img-100p" alt="Servicio 2">
+                        <figcaption class="overflow-content-full">
+                            <p class="icon horizontal-vertical-center">
+                                <a data-lightbox="portfolio" href="img/portfolio/main-02.jpg"><i class="fa fa-search-plus"></i></a>
+                            </p>
+                            <div class="caption text-center">
+                                <p class="title">Seguros</p>
+                                <p class="info">Lorem Ipsum is simply dummy text of the printing industry. </p>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item engagement">
+                    <figure class="content wow fadeIn" data-wow-delay=".35s">
+                        <img src="img/portfolio/03.jpg" class="img-100p" alt="Servicio 3">
+                        <figcaption class="overflow-content-full">
+                            <p class="icon horizontal-vertical-center">
+                                <a data-lightbox="portfolio" href="img/portfolio/main-03.jpg"><i class="fa fa-search-plus"></i></a>
+                            </p>
+                            <div class="caption text-center">
+                                <p class="title">Seguros</p>
+                                <p class="info">Lorem Ipsum is simply dummy text of the printing industry. </p>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item engagement">
+                    <figure class="content wow fadeIn" data-wow-delay=".35s">
+                        <img src="img/portfolio/03.jpg" class="img-100p" alt="Servicio 4">
+                        <figcaption class="overflow-content-full">
+                            <p class="icon horizontal-vertical-center">
+                                <a data-lightbox="portfolio" href="img/portfolio/main-03.jpg"><i class="fa fa-search-plus"></i></a>
+                            </p>
+                            <div class="caption text-center">
+                                <p class="title">Seguros</p>
+                                <p class="info">Lorem Ipsum is simply dummy text of the printing industry. </p>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div> <!-- // container -->
+</section>
+<!-- ========= //End portfolio section ========= -->
+
+
+<!-- ============== Start counter ============== -->
+<section id="count-down" class="text-center">
+    <div class="color-overlay ptb100">
+        <div class="container">
+            <h3 class="section-title wow fadeInDown">Contamos...</h3>
+            <div class="row">
+                <div class="counter-content">
+                    <div class="col-sm-4 each-counter wow zoomIn">
+                        <span class="counter count1">230</span>
+                        <p class="title">Clientes</p>
+                    </div>
+                    <div class="col-sm-4 each-counter wow zoomIn">
+                        <span class="counter count2">87</span>
+                        <p class="title">Usuarios Mideturiesgo</p>
+                    </div>
+                    <div class="col-sm-4 each-counter wow zoomIn">
+                        <span class="counter count3">206</span>
+                        <p class="title">Soluciones para tu empresa</p>
+                    </div>
+                </div>
+            </div> <!-- //row -->
+        </div> <!-- //container -->
+    </div>
+</section>
+		<!-- ========= //End counter ========= -->
+
+
+<!-- ============== Start latest-blog ============== -->
+<section id="latest-blog" class="mtb100">
+    <div class="container">
+        <h3 class="section-title wow fadeInDown">Novedades</h3>
+        <p class="section-info col-sm-8 col-sm-offset-2 wow fadeInDown" data-wow-delay=".25s">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+        </p>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <!-- start each speech -->
+            <div class="col-sm-4 each-post wow fadeIn" data-wow-delay=".25s">
+                <div class="content">
+                    <div class="blog-img">
+                        <a href="javascript:"><img src="img/blog/01.jpg" class="img-100p" alt="img 1"></a>
+                    </div>
+                    <div class="info">
+                        <p class="date">11 de Septiembre</p>
+                        <h4 class="headline">
+                            <a href="javascript:">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a>
+                        </h4>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        </p>
+                    </div>
+                </div>
+            </div> <!-- //end each speech -->
+            <!-- start each speech -->
+            <div class="col-sm-4 each-post wow fadeIn" data-wow-delay=".45s">
+                <div class="content">
+                    <div class="blog-img">
+                        <a href="javascript:"><img src="img/blog/02.jpg" class="img-100p" alt="img 2"></a>
+                    </div>
+                    <div class="info">
+                        <p class="date">16 de Septiembre</p>
+                        <h4 class="headline">
+                            <a href="javascript:">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a>
+                        </h4>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        </p>
+                    </div>
+                </div>
+            </div> <!-- //end each speech -->
+            <!-- start each speech -->
+            <div class="col-sm-4 each-post wow fadeIn" data-wow-delay=".65s">
+                <div class="content">
+                    <div class="blog-img">
+                        <a href="javascript:"><img src="img/blog/03.jpg" class="img-100p" alt="img 3"></a>
+                    </div>
+                    <div class="info">
+                        <p class="date">21 de Septiembre</p>
+                        <h4 class="headline">
+                            <a href="javascript:">Lorem ipsum dolor sit amet, consectetur adipiscing elit</a>
+                        </h4>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        </p>
+                    </div>
+                </div>
+            </div> <!-- //end each speech -->
+            <div class="col-sm-12 read-more-button wow zoomIn">
+                <p class="text-uppercase text-center"><a href="javascript:">Ver más</a></p>
+            </div>
+        </div> <!-- //row -->
+    </div> <!-- //container -->
+</section>
+<!-- ========= //End latest-blog ========= -->
+
+
+<!-- ============== Start client-feedback ============== -->
+<section id="client-feedback">
+    <div class="color-overlay ptb100">
+        <div class="container">
+            <h3 class="section-title wow fadeInDown" style="color: white">Happy Clients</h3>
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="custom-control">
+                        <p><span id="slider-prev"></span> <span id="slider-next"></span></p>
+                    </div>
+                    <ul class="bx-slider main-content">
+                        <li>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                            <p class="client-name"><a href="#">Bárbara Hormazabal</a></p>
+                        </li>
+                        <li>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                            <p class="client-name"><a href="#">Julio Diaz</a></p>
+                        </li>
+                        <li>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                            <p class="client-name"><a href="#">Pablo Julio</a></p>
+                        </li>
+                        <li>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                            <p class="client-name"><a href="#">Manuel Zuleta</a></p>
+                        </li>
+                    </ul>
+                </div>
+            </div> <!-- //row -->
+        </div> <!-- //container -->
+    </div>
+</section>
+<!-- ========= //End client-feedback ========= -->
+
+
+<!-- ============== Start client section ============== -->
+<section id="our-clients" class="mtb100">
+    <div class="container">
+        <h3 class="section-title wow fadeInDown">Alianzas</h3>
+        <p class="section-info col-sm-8 col-sm-offset-2 wow fadeInDown" data-wow-delay=".25s">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+        </p>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="list-inline text-center">
+                    <li class="each-client"><a href="#"><img src="img/clients/logo-01.png" alt="client"></a></li>
+                    <li class="each-client"><a href="#"><img src="img/clients/logo-02.png" alt="client"></a></li>
+                    <li class="each-client"><a href="#"><img src="img/clients/logo-03.png" alt="client"></a></li>
+                    <li class="each-client"><a href="#"><img src="img/clients/logo-04.png" alt="client"></a></li>
+                    <li class="each-client"><a href="#"><img src="img/clients/logo-05.png" alt="client"></a></li>
+                </ul>
+            </div>
+        </div> <!-- //row -->
+    </div> <!-- //container -->
+</section>
+<!-- ========= //End client section ========= -->
+
+
+<!-- ============== Start contact section ============== -->
+<section id="contact">
+    <div class="map-content">
+        <div id="gmap">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14615.493334304421!2d-70.40791800308837!3d-23.680487360421278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2scl!4v1569308627074!5m2!1ses!2scl" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </div>
+    </div>
+    <div class="color-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-offset-2 form-content ptb100">
+                    <h3 class="section-title wow fadeInDown">Lorem ipsum dolor sit amet, consectetur adipiscing elit</h3>
+                    <p class="section-info wow fadeInDown" data-wow-delay=".25s">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                    </p>
+                    <div class="clearfix"></div>
+                </div>
+            </div> <!-- //row -->
+        </div> <!-- //container -->
+    </div>
+</section>
+<!-- ========= //End contact section ========= -->
+
+
+<!-- ============== Start footer ============== -->
+<section id="footer">
+    <div class="container bottom-part">
+        <div class="row">
+            <div class="col-sm-4 left-part">
+                <p class="footer-logo "><img src="{% static 'images/logoGC.png' %}" alt="logo"></p><br/>
+                <p>This free website template is the first step to get you started with your personal photography website. Learn the game and get some fame. Don't restrict your photography viewership to your close circle. Go beyond and make it public on your photography website. </p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-4">
+                <ul class="social-icon-footer list-inline mtb50">
+                    <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
+                    <li><a href="#"><i class="fa fa-vimeo-square"></i></a></li>
+                    <li><a href="#"><i class="fa fa-youtube-square"></i></a></li>
+                    <li><a href="#"><i class="fa fa-tumblr-square"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+                </ul>
+            </div>
+        </div> <!-- //row -->
+    </div> <!-- //container -->
+
+    <!-- copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-4">
+                    <p class="info">
+                        &copy; <a href="https://www.frittt.com/" target="_blank">Los Barbaricos</a>. Dedicado a Glenn
+                    </p>
+                </div>
+            </div> <!-- //row -->
+        </div> <!-- //container -->
+    </div> <!-- //end copyright -->
+</section>
+<!-- ========= //End footer ========= -->
 {% endblock %}
 
-{% block script %}
+{% block script_js %}
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <!-- loader -->
+  <script src="{% static 'js/loader.min.js' %}"></script>
+  <script src="{% static 'js/preloader.js' %}"></script>
+  <!-- animation effects -->
+  <script src="{% static 'js/wow.min.js' %}"></script>
+  <!-- count-down -->
+  <script src="{% static 'js/jquery.inview.min.js' %}"></script>
+  <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+  <!-- content slider -->
+  <script src="{% static 'js/jquery.bxslider.min.js' %}"></script>
+  <!-- google maps -->
+  <!-- pushmenu -->
+  <script src="{% static 'js/jPushMenu.js' %}"></script>
+  <!-- smooth navigation -->
+  <script src="{% static 'js/mousescroll.js' %}"></script>
+  <script src="{% static 'js/jquery.nav.js' %}"></script>
+  <!-- filter portfolio & lightbox -->
+  <script src="{% static 'js/jquery.isotope.min.js' %}"></script>
+  <script src="{% static 'js/lightbox.min.js' %}"></script>
+  <!-- smooth scrool -->
+  <script src="{% static 'js/smoothscroll.js' %}"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/app.js' %}"></script>
 {% endblock %}
-
-
