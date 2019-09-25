@@ -3,6 +3,16 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import UserGuiar
 
 
+class LogInForm(forms.Form):
+    rut = forms.CharField(label='rut', widget=forms.TextInput(attrs={'placeholder': 'Rut de Empresa'}))
+    password = forms.CharField(label='password', max_length=30, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))
+
+    class Meta:
+        model = UserGuiar
+        fields = ('rut', 'password')
+
+
+
 #Arreglarlo
 class SignUpForm(UserCreationForm):
     rut = forms.CharField(
