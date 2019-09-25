@@ -35,7 +35,13 @@
         <nav id="main-navigation" class="nav-menu nav-menu-vertical nav-menu-right">
             <ul class="list-inline">
                 <li class="current"><a href="#home">Inicio</a></li>
-                <li><a href="{% url 'MTRlogin' %}">MideTuRiesgo</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'home' %}" >MideTuRiesgo</a>
+                    {% else %}
+                        <a href="{% url 'MTRlogin' %}">MideTuRiesgo</a>
+                    {% endif %}
+                </li>
 				<li><a href="#courses">Servicios</a></li>
 				<li><a href="#portfolio">Acerca de</a></li>
 				<li><a href="#client-feedback">Nuestros Clientes</a></li>
