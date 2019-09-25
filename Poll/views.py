@@ -82,6 +82,7 @@ def rut_unformat(value):
 
     return value.replace("-", "").replace(".", "").replace(",", "")
 
+
 @login_required
 def page_one_poll(request):
     form1 = Form_datosPersonales()
@@ -166,7 +167,8 @@ def page_one_poll(request):
          'ventas_empresa': form3,
          'dotacion_empresa': form4
          }
-    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
+    return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
+
 
 @login_required
 def page_two_poll(request):
