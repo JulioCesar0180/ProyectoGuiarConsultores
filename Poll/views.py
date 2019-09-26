@@ -14,6 +14,8 @@ from django.core.mail import EmailMultiAlternatives
 
 from django.template.loader import render_to_string
 
+from django.contrib import messages
+
 #rut
 from django import template
 
@@ -25,6 +27,28 @@ def home(request):
         'count': count, 'name': name
     })
 
+
+def MTR_login(request):
+
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = LogInForm(request.POST)
+        if form.is_valid():
+            rut = form.cleaned_data['rut']
+            password = form.cleaned_data["password"]
+            user = authenticate(username=rut, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, 'No existen registros de este usuario')
+        else:
+            return render(request, 'vips/login.html', {'form': form})
+
+    form = LogInForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 def signup(request):
     if request.method == 'POST':
