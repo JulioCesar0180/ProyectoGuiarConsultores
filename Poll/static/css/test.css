@@ -108,3 +108,58 @@ input[type=radio] + label{
     font-size: 16px;
     width:100%;
   }
+  .siguiente{
+    margin-left: 40%
+  }
+  #next, #previous{
+    color:white;
+    background-color:blue;
+    border: blue;
+    border-radius: 5px;
+    width: 25%
+  }
+  #resultado{
+    color:white;
+    background-color:orange;
+    border: blue;
+    border-radius: 5px;
+    width: 210%
+  }
+  .anterior{
+    margin-left: 21%
+  }
+  .campo{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d;
+    height: auto;
+    width: auto;
+}
+
+.campo:focus{
+    outline: none;
+    border: 2px solid black;
+}
+
+.campos input{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d;
+    height: 40%;
+    width: 100%
+}
+
+.campos input{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d;
+    height: 40%;
+    width: 100%
+}
+.campos input:focus{
+    outline: none;
+    border: 2px solid black;
+}

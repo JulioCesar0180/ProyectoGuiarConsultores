@@ -1,0 +1,265 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{% static 'css/test.css' %}">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Mide Tu Riesgo (Test)</title>
+    </head>
+    <body>
+        <div id="azul"></div>
+        <div id="blanco"></div>
+        <div id="plomo"></div>
+        <div id="head"></div>
+        <div class="inicio">
+            Bienvenido a nuestro evaluador de riesgo de negocio. Este formulario tiene como objetivo saber de las características de su empresa, de tal manera de mostrarle sus principales oportunidades para disminuir su riesgo de operación, de tal manera de proteger su patrimonio y transferir el riesgo no deseado.
+            <div>
+                <br>
+            </div>
+            Este formulario consta de 4 secciones, cada una personalizada en base a sus respuestas.
+            <div>
+                <br>
+            </div>
+            A continuación realizaremos una serie de preguntas que permitirá identificar estas oportunidades.
+            <div>
+                <hr>
+            </div>
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="inicio">
+                <b>P1.</b> Datos de contacto
+                <div>
+                    <br>
+                </div>
+                <div class="datos">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Nombre
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="representante" id="representante" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Correo Electronico
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="email" id="email" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Teléfono
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="telefono" id="telefono" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <br>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="inicio">
+                <b>P2.</b> Datos generales de la empresa
+                <div>
+                    <br>
+                </div>
+                <div class="datos">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Nombre de la Empresa
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="nombre" id="nombre" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Razón Social
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="razon" id="razon" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    RUT
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="rut" id="rut" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Antigüedad de la empresa (años)
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="experiencia" id="experiencia" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Dirección
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="direccion" id="direccion" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Comuna
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="comuna" id="comuna" required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo">
+                                    Ciudad
+                                </td>
+                                <td class="campos">
+                                    <input type="text" name="ciudad" id="ciudad" required>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <br>
+                </div>
+            </div>
+            <div>
+                <hr>
+            </div>
+            <div class="inicio">
+                <b>P3.</b> Ventas anuales de la empresa
+                <div>
+                    <br>
+                </div>
+                <div class="input-radio">
+                    <input type="radio" id="minimo" name="ventas" value="minimo">
+                    <label for="minimo" class="unselectable">De UF 0 a UF 2.400</label>
+                    <input type="radio" id="intermedio" name="ventas" value="intermedio">
+                    <label for="intermedio" class="unselectable">De UF 2.400 a UF 25.000</label>
+                    <input type="radio" name="ventas" id="maximo" value="maximo" required>
+                    <label for="maximo" class="unselectable">De UF 25.000 a UF 100.000</label>
+                    <input type="radio" name="ventas" id="mas" value="mas" required>
+                    <label for="mas" class="unselectable">Más de UF 100.000</label>
+                </div>
+                <div>
+                    <br>
+                </div>
+                <div>
+                    <hr>
+                </div>
+            </div>
+            <div class="inicio">
+              <b>P4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
+              <div>
+                  <br>
+              </div>
+              <div class="datos">
+                  <table>
+                      <tbody>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de empleados contratados
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="empContratados" id="empContratados" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de empleados contratistas
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="empContratistas" id="empContratistas" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de vehículos comerciales livianos de la empresa
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="vehLivianos" id="vehLivianos" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de vehículos comerciales de contratistas
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="vehContratistas" id="vehContratistas" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de vehículos comerciales pesados de la empresa
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="vehPesados" id="vehPesados" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de vehículos comerciales pesados de contratistas
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="vehPesadosContratistas" id="vehPesadosContratistas" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de maquinaria pesada de la empresa
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="maqEmpresa" id="maqEmpresa" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="nombreCampo">
+                                Cantidad de maquinaria pesada de contratista
+                            </td>
+                            <td class="campos">
+                                <input type="text" name="marContratista" id="marContratista" required>
+                            </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                  <div>
+                    <br>
+                  </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+            </div>
+            <div class="siguiente">
+                <button type="submit" value="Submit" id="next">→</button>
+            </div>
+        </form>
+    </body>
+</html>

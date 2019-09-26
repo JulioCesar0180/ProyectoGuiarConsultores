@@ -48,7 +48,6 @@ class UserGuiar(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_admin
 
-
 class TablaPerfilEmpresa(models.Model):
     rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE)
     nombre_empresa = models.CharField(max_length=100, default="")

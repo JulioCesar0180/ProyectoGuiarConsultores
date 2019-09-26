@@ -9,6 +9,7 @@ urlpatterns = [
     path('3', views.page_three_poll, name="pagina3"),
     path('4', views.page_four_poll, name="pagina4"),
     path('resultado', views.page_results, name="resultado"),
+    path('test', views.get_name, name="test"),
 
     path('registrarse', views.signup, name='signup'),
 
