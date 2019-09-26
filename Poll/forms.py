@@ -34,3 +34,15 @@ class FormPageOne(forms.Form):
     nombre = forms.CharField(label="Nombre", widget=forms.TextInput(attrs={
         'class': 'form-control'
     }))
+    direccion = forms.CharField(label="Direccion", widget=forms.TextInput(attrs={
+        'class': 'form-control'
+    }))
+
+class FormPageTwo(forms.Form):
+    campo1 = ""
+
+class FormPageThree(forms.Form):
+    campo1 = ""
+
+class FormPageFour(forms.Form):
+    campo1 = ""
