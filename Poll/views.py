@@ -110,77 +110,11 @@ def rut_unformat(value):
 
 @login_required
 def page_one_poll(request):
-    form1 = Form_datosPersonales()
-    form2 = Form_datosEmpresa()
-    form3 = Form_ventasEmpresa()
-    form4 = Form_dotacionEmpresa()
-    print(request.method)
-    if request.method == 'POST':
-        form1 = Form_datosPersonales(request.POST)
-        form2 = Form_datosEmpresa(request.POST)
-        form3 = Form_ventasEmpresa(request.POST)
-        form4 = Form_dotacionEmpresa(request.POST)
-        print(form2.is_valid())
-        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
-            #obtener datos de la Empresa
-            # leer el id de la empresa agregada recientemente
-            id_empresa = request.user.id
+    form_page_one = FormPageOne()
+    id_empresa = UserGuiar.objects.get(rut='123')
+    form_page_one.nombre = id_empresa.rut
 
-            empresa = TablaPerfilEmpresa.objects.get(rut_empresa=id_empresa)
-            # cheese_blog = Blog.objects.get(name="Cheddar Talk")
-            # entry.blog = cheese_blog
-            # entry.save()
-
-            # obtener los datos que reflejan la dotacion de la empresa
-            empContratados = form3.cleaned_data['empContratados']
-            empContratistas = form3.cleaned_data['empContratistas']
-            vehLivianos = form3.cleaned_data['vehLivianos']
-            vehContratistas = form3.cleaned_data['vehContratistas']
-            vehPesados = form3.cleaned_data['vehPesados']
-            vehPesadosContratistas = form3.cleaned_data['vehPesadosContratistas']
-            maqEmpresa = form3.cleaned_data['maqEmpresa']
-            marContratista = form3.cleaned_data['marContratista']
-
-            #Se crea el objeto
-            datosEmpresa = TablaPerfilEmpresa(
-                rut_empresa=id_empresa,
-                nombre_empresa=empresa.nombre_empresa,
-                direccion_empresa=empresa.direccion_empresa,
-                experiencia_empresa=empresa.experiencia_empresa,
-                ciudad_empresa=empresa.ciudad_empresa,
-                comuna_empresa=empresa.comuna_empresa,
-                razon_social_empresa=empresa.razon_social_empresa,
-                ventas_anuales_empresa=empresa.ventas_anuales_empresa,
-                nombre_representante=empresa.nombre_representante,
-                email_representante=empresa.email_representante,
-                telefono_representante=empresa.telefono_representante
-            )
-            datosEmpresa.save()
-
-            dotacion = TablaResultadosDotacion(
-                user=id_empresa,
-                answer1=empContratados,
-                answer2=empContratistas,
-                answer3=vehLivianos,
-                answer4=vehContratistas,
-                answer5=vehPesados,
-                answer6=vehPesadosContratistas,
-                answer7=maqEmpresa,
-                answer8=marContratista
-            )
-            dotacion.save()
-            #Volver a la pagina de Inicio por el momento
-            return render(request, "home/home.html")
-    else:
-        # Error de metodo
-        e = "Operacion Invalida"
-    context = \
-        {'datos_personales': form1,
-         'datos_empresa': form2,
-         'ventas_empresa': form3,
-         'dotacion_empresa': form4
-         }
-    return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
+    return render(request, 'MideTuRiesgo/mideturiesgo01.html', {'form_page_one': form_page_one, 'user': id_empresa})
 
 
 @login_required
