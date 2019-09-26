@@ -123,19 +123,13 @@ def page_one_poll(request):
         print(form2.is_valid())
         if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
             #obtener datos de la Empresa
-            nombreEmpresa = form2.cleaned_data['nombre']
-            razon_social = form2.cleaned_data['razon']
-            rut = form2.cleaned_data['rut']
-            experiencia = form2.cleaned_data['experiencia']
-            direccion = form2.cleaned_data['direccion']
-            comuna = form2.cleaned_data['comuna']
-            ciudad = form2.cleaned_data['ciudad']
-            ventas = form3.cleaned_data['ventas']
+            # leer el id de la empresa agregada recientemente
+            id_empresa = request.user.id
 
-            # obtener datos de Datos Personales
-            nombre = form1.cleaned_data['nombre']
-            email = form1.cleaned_data['email']
-            telefono = form1.cleaned_data['telefono']
+            empresa = TablaPerfilEmpresa.objects.get(rut_empresa=id_empresa)
+            # cheese_blog = Blog.objects.get(name="Cheddar Talk")
+            # entry.blog = cheese_blog
+            # entry.save()
 
             # obtener los datos que reflejan la dotacion de la empresa
             empContratados = form3.cleaned_data['empContratados']
@@ -149,38 +143,30 @@ def page_one_poll(request):
 
             #Se crea el objeto
             datosEmpresa = TablaPerfilEmpresa(
-                user_id=request.user.id,
-                nombre_empresa=nombreEmpresa,
-                rut_empresa=rut,
-                direccion_empresa=direccion,
-                experiencia_empresa=experiencia,
-                ciudad_empresa=ciudad,
-                comuna_empresa=comuna,
-                razon_social_empresa=razon_social,
-                ventas_anuales_empresa=ventas
+                rut_empresa=id_empresa,
+                nombre_empresa=empresa.nombre_empresa,
+                direccion_empresa=empresa.direccion_empresa,
+                experiencia_empresa=empresa.experiencia_empresa,
+                ciudad_empresa=empresa.ciudad_empresa,
+                comuna_empresa=empresa.comuna_empresa,
+                razon_social_empresa=empresa.razon_social_empresa,
+                ventas_anuales_empresa=empresa.ventas_anuales_empresa,
+                nombre_representante=empresa.nombre_representante,
+                email_representante=empresa.email_representante,
+                telefono_representante=empresa.telefono_representante
             )
             datosEmpresa.save()
 
-            # leer el id de la empresa agregada recientemente
-            id_empresa = "1"
-            datosPersonales = Tabla_perfil_usuario(
-                empresa=id_empresa,
-                nombre=nombre,
-                email=email,
-                telefono=telefono
-            )
-            datosPersonales.save()
-
             dotacion = TablaResultadosDotacion(
                 user=id_empresa,
-                empContratados=empContratados,
-                empContratistas=empContratistas,
-                vehLivianos=vehLivianos,
-                vehContratistas=vehContratistas,
-                vehPesados=vehPesados,
-                vehPesadosContratistas=vehPesadosContratistas,
-                maqEmpresa=maqEmpresa,
-                marContratista=marContratista
+                answer1=empContratados,
+                answer2=empContratistas,
+                answer3=vehLivianos,
+                answer4=vehContratistas,
+                answer5=vehPesados,
+                answer6=vehPesadosContratistas,
+                answer7=maqEmpresa,
+                answer8=marContratista
             )
             dotacion.save()
             #Volver a la pagina de Inicio por el momento
