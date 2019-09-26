@@ -41,14 +41,13 @@
             </span>
 
             <table>
-                {% csrf_token %}{{ datos_personales.as_table }}
+                {% csrf_token %}{{ form_page_one.as_table }}
             </table>
             <hr>
             <span>
                 <b>P2. </b>Datos del Contacto
             </span>
             <table>
-                {% csrf_token %}{{ datos_empresa.as_table }}
             </table>
 
             <div class="inicio">
@@ -80,7 +79,7 @@
                 </div>
             </div>
             <table>
-                {% csrf_token %}{{ dotacion_empresa.as_table }}
+                {{ user.rut }}
             </table>
             <div class="inicio">
         <b>P5.</b> Indique el o los rubros en que participa la empresa

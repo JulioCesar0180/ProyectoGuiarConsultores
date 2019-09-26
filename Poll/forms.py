@@ -11,7 +11,6 @@ class LogInForm(forms.Form):
         fields = ('rut', 'password')
 
 
-
 #Arreglarlo
 class SignUpForm(UserCreationForm):
     rut = forms.CharField(
