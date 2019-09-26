@@ -123,12 +123,25 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            #form.save()
-            username = form.cleaned_data.get('username')
-            #username = rut_format(username, ".")
-            raw_password = form.cleaned_data.get('password1')
-            #user = authenticate(username=username, password=raw_password)
             user = form.save()
+
+            rut_empresa = form.cleaned_data['rut']
+            nombre_empresa = form.cleaned_data['name']
+            direccion_empresa = form.cleaned_data['address']
+            nombre_representante = form.cleaned_data['nombre_representante']
+            email_representante = form.cleaned_data['email_representante']
+            telefono_representante = form.cleaned_data['telefono_representante']
+
+            perfil_empresa = TablaPerfilEmpresa(
+                rut_empresa=user,
+                nombre_empresa=nombre_empresa,
+                direccion_empresa=direccion_empresa,
+                nombre_representante=nombre_representante,
+                email_representante=email_representante,
+                telefono_representante=telefono_representante
+            )
+            perfil_empresa.save()
+
             login(request, user)
             return redirect('home')
     else:
@@ -196,37 +209,37 @@ def page_one_poll(request):
             ciudad = form2.cleaned_data['ciudad']
             ventas = form3.cleaned_data['ventas']
 
-    answer1 = ""
-    answer2 = ""
-    answer3 = ""
-    answer4 = ""
-    answer5 = ""
-    answer6 = ""
-    answer7 = ""
-    answer8 = ""
+            answer1 = ""
+            answer2 = ""
+            answer3 = ""
+            answer4 = ""
+            answer5 = ""
+            answer6 = ""
+            answer7 = ""
+            answer8 = ""
 
-    dotacion = TablaResultadosDotacion(
-        empresa=id_empresa,
-        answer1=answer1,
-        answer2=answer2,
-        answer3=answer3,
-        answer4=answer4,
-        answer5=answer5,
-        answer6=answer6,
-        answer7=answer7,
-        answer8=answer8
-    )
-    dotacion.save()
+            dotacion = TablaResultadosDotacion(
+                empresa=id_empresa,
+                answer1=answer1,
+                answer2=answer2,
+                answer3=answer3,
+                answer4=answer4,
+                answer5=answer5,
+                answer6=answer6,
+                answer7=answer7,
+                answer8=answer8
+            )
+            dotacion.save()
 
-    answer1 = ""
-    answer2 = ""
-    answer3 = ""
-    answer4 = ""
-    answer5 = ""
+            answer1 = ""
+            answer2 = ""
+            answer3 = ""
+            answer4 = ""
+            answer5 = ""
 
             # leer el id de la empresa agregada recientemente
             id_empresa = "1"
-            datosPersonales = TablaPerfilUsuario(
+            datosPersonales = TablaPerfilEmpresa(
                 empresa=id_empresa,
                 nombre=nombre,
                 email=email,
