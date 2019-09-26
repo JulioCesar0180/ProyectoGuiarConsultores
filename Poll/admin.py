@@ -27,7 +27,6 @@ class UserGuiarAdmin(UserAdmin):
 
 
 admin.site.register(TablaResultadosTransporte)
-
 admin.site.register(TablaResultadosContruccion)
 admin.site.register(TablaResultadosManufactura)
 admin.site.register(TablaResultadosServicios)
