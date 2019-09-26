@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserGuiar
+from .models import TablaPerfilEmpresa
 
 
 class LogInForm(forms.Form):
@@ -25,10 +26,15 @@ class SignUpForm(UserCreationForm):
     address = forms.CharField(
         max_length=254, label="Dirección")
 
+    nombre_representante = forms.CharField(max_length=254, label="Nombre Representante")
+
+    email_representante = forms.EmailField(max_length=40, label="Email Representante")
+
+    telefono_representante = forms.CharField(max_length=9, label="Telefono Representante")
+
     class Meta:
         model = UserGuiar
         fields = ('rut', 'name', 'address')
-
 
 class FormPageOne(forms.Form):
     nombre = forms.CharField(label="Nombre", widget=forms.TextInput(attrs={
