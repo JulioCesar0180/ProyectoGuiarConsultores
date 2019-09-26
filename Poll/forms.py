@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserGuiar
 
-
 class LogInForm(forms.Form):
     rut = forms.CharField(label='rut', widget=forms.TextInput(attrs={'placeholder': 'Rut de Empresa'}))
     password = forms.CharField(label='password', max_length=30, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))
@@ -49,30 +48,7 @@ class FormDefault(forms.Form):
     placeholder = forms.CharField()
 
 
-class Form_datosPersonales(forms.Form):
-    # Nombre del Usuario #
-    attrs_nombre = {
-        'class': 'form-control',
-        'id': 'form-texbox'
-    }
-
-    nombre = forms.CharField(label='Nombre', widget=forms.TextInput(attrs=attrs_nombre))
-
-    # Email del Usuario #
-    attrs_email = {
-        'class': 'form-control'
-    }
-    email = forms.EmailField(label='Correo Electronico', widget=forms.EmailInput(attrs=attrs_email))
-
-    # Telefono del Usuario #
-    attrs_telefono = {
-        'class': 'form-control'
-    }
-    telefono = forms.CharField(label='Teléfono', widget=forms.TextInput(attrs=attrs_telefono))
-
-
-class Form_datosEmpresa(forms.Form):
-
+class FormPag1(forms.Form):
     # Nombre de la empresa #
     attrs_nombre = {
         'class': 'form-control'
@@ -96,7 +72,7 @@ class Form_datosEmpresa(forms.Form):
         'class': 'form-control'
     }
     experiencia = forms.IntegerField(label='Antigüedad de la empresa (años)',
-            widget=forms.TextInput(attrs=attrs_experiencia))
+                                     widget=forms.TextInput(attrs=attrs_experiencia))
 
     # Direccion de la empresa #
     attrs_direccion = {
@@ -115,76 +91,18 @@ class Form_datosEmpresa(forms.Form):
         'class': 'form-control'
     }
     ciudad = forms.CharField(label='Ciudad', widget=forms.TextInput(attrs=attrs_ciudad))
-
-
-class Form_ventasEmpresa(forms.Form):
-    CHOICE = [('1', 'De UF 0 a UF 2.400'),
-              ('2', 'De UF 2.400 a UF 25.000'),
-              ('3', 'De UF 25.000 a UF 100.000'),
-              ('4', 'Más de UF 100.000')]
-    attrs_ventas = {'class': 'form-check-input'}
-    ventas = forms.MultipleChoiceField(choices=CHOICE, widget=forms.CheckboxInput())
-
-
-class Form_dotacionEmpresa(forms.Form):
-    empContratados = forms.CharField(
-        label='Cantidad de empleados contratados',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'autocomplete': 'off'
-        })
-    )
-
-    empContratistas = forms.CharField(
-        label='Cantidad de empleados contratistas',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'autocomplete': 'off'
-        })
-    )
-
-    vehLivianos = forms.CharField(
-        label='Cantidad de vehículos comerciales livianos de la empresa',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-
-        })
-    )
-
-    vehContratistas = forms.CharField(
-        label='Cantidad de vehículos comerciales de contratistas',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control'
-        })
-    )
-
-    vehPesados = forms.IntegerField(
-        label='Cantidad de vehículos comerciales pesados de la empresa',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control'
-        })
-    )
-
-    vehPesadosContratistas = forms.IntegerField(
-        label='Cantidad de vehículos comerciales pesados de contratistas',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control'
-        })
-    )
-
-    maqEmpresa = forms.IntegerField(
-        label='Cantidad de maquinaria pesada de la empresa',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control'
-        })
-    )
-
-    marContratista = forms.IntegerField(
-        label='Cantidad de maquinaria pesada de contratista',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control'
-        })
-    )
+    representante = forms.CharField(label='Representante', max_length=100)
+    email = forms.CharField(label='Correo', max_length=100)
+    telefono = forms.CharField(label='Telefono', max_length=100)
+    ventas = forms.CharField(label="Ventas", max_length=100)
+    empContratados = forms.IntegerField(label="Cantidad de empleados contratados")
+    empContratistas = forms.IntegerField(label="Cantidad de empleados contratistas")
+    vehLivianos = forms.IntegerField(label="Cantidad de vehiculos livianos")
+    vehContratistas = forms.IntegerField(label='Cantidad de vehículos comerciales de contratistas')
+    vehPesados = forms.IntegerField(label='Cantidad de vehículos comerciales pesados de la empresa')
+    vehPesadosContratistas = forms.IntegerField(label='Cantidad de vehículos comerciales pesados de contratistas')
+    maqEmpresa = forms.IntegerField(label='Cantidad de maquinaria pesada de la empresa')
+    marContratista = forms.IntegerField(label='Cantidad de maquinaria pesada de contratista')
 
 
 class Form_rubroEmpresa(forms.Form):

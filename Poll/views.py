@@ -19,6 +19,75 @@ from django.contrib import messages
 #rut
 from django import template
 
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+
+def get_name(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = FormPag1(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            empresa = UserGuiar.objects.get(rut='12345678-5')
+            #Datos del usuario
+            nombreUser = form.cleaned_data['representante']
+            correo = form.cleaned_data['email']
+            fono = form.cleaned_data['telefono']
+            #Datos de la empresa
+            nombreEmpresa = form.cleaned_data['nombre']
+            razonEmpresa = form.cleaned_data['razon']
+            rutEmpresa = form.cleaned_data['rut']
+            experienciaEmpresa = form.cleaned_data['experiencia']
+            direccionEmpresa = form.cleaned_data['direccion']
+            comunaEmpresa = form.cleaned_data['comuna']
+            ciudadEmpresa = form.cleaned_data['ciudad']
+            #Datos ganancias
+            ganancia = form.cleaned_data['ventas']
+            #Datos dotación empresa
+            empleadosCont = form.cleaned_data['empContratados']
+            empleadosContra = form.cleaned_data['empContratistas']
+            vehiculosLiv = form.cleaned_data['vehLivianos']
+            vehiculosCont = form.cleaned_data['vehContratistas']
+            vehiculosPes = form.cleaned_data['vehPesados']
+            vehiculosPesCont = form.cleaned_data['vehPesadosContratistas']
+            maquinariaEmpr = form.cleaned_data['maqEmpresa']
+            maquinariaCont = form.cleaned_data['marContratista']
+            datoDotacion = TablaResultadosDotacion(
+                rut_empresa_id = empresa,
+                answer1 = empleadosCont,
+                answer2 = empleadosContra,
+                answer3 = vehiculosLiv,
+                answer4 = vehiculosCont,
+                answer5 = vehiculosPes,
+                answer6 = vehiculosPesCont,
+                answer7 = maquinariaEmpr,
+                answer8 = maquinariaCont,
+            )
+            datoNombre = TablaPerfilEmpresa(
+                nombre_empresa = nombreEmpresa,
+                razon_social_empresa = razonEmpresa,
+                rut_empresa = empresa,
+                experiencia_empresa = experienciaEmpresa,
+                direccion_empresa = direccionEmpresa,
+                comuna_empresa = comunaEmpresa,
+                ciudad_empresa = ciudadEmpresa,
+                nombre_representante = nombreUser,
+                email_representante = correo,
+                telefono_representante = fono,
+                ventas_anuales_empresa = ganancia
+            )
+            datoNombre.save()
+            datoDotacion.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect('2')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = FormPag1()
+
+    return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
 def home(request):
     count = UserGuiar.objects.count()
@@ -110,11 +179,6 @@ def rut_unformat(value):
 
 @login_required
 def page_one_poll(request):
-    form1 = Form_datosPersonales()
-    form2 = Form_datosEmpresa()
-    form3 = Form_ventasEmpresa()
-    form4 = Form_dotacionEmpresa()
-    print(request.method)
     if request.method == 'POST':
         form1 = Form_datosPersonales(request.POST)
         form2 = Form_datosEmpresa(request.POST)
@@ -163,7 +227,7 @@ def page_one_poll(request):
 
             # leer el id de la empresa agregada recientemente
             id_empresa = "1"
-            datosPersonales = Tabla_perfil_usuario(
+            datosPersonales = TablaPerfilUsuario(
                 empresa=id_empresa,
                 nombre=nombre,
                 email=email,
@@ -186,6 +250,10 @@ def page_one_poll(request):
             #Volver a la pagina de Inicio por el momento
             return render(request, "home/home.html")
     else:
+        form1 = Form_datosPersonales()
+        form2 = Form_datosEmpresa()
+        form3 = Form_ventasEmpresa()
+        form4 = Form_dotacionEmpresa()
         # Error de metodo
         e = "Operacion Invalida"
     context = \
