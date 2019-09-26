@@ -89,11 +89,13 @@ def page_one_poll(request):
     form2 = Form_datosEmpresa()
     form3 = Form_ventasEmpresa()
     form4 = Form_dotacionEmpresa()
+    print(request.method)
     if request.method == 'POST':
         form1 = Form_datosPersonales(request.POST)
         form2 = Form_datosEmpresa(request.POST)
         form3 = Form_ventasEmpresa(request.POST)
         form4 = Form_dotacionEmpresa(request.POST)
+        print(form2.is_valid())
         if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
             #obtener datos de la Empresa
             nombreEmpresa = form2.cleaned_data['nombre']
@@ -121,7 +123,7 @@ def page_one_poll(request):
             marContratista = form3.cleaned_data['marContratista']
 
             #Se crea el objeto
-            datosEmpresa = Tabla_perfil_empresa(
+            datosEmpresa = TablaPerfilEmpresa(
                 user_id=request.user.id,
                 nombre_empresa=nombreEmpresa,
                 rut_empresa=rut,

@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="inicio" style="display:flex; align-items: start">
-        <form method="POST">
+        <form method="POST" action="{% url 'pagina2' %}">
             <span>
                 <b>P1. </b>Datos del Contacto
             </span>
@@ -83,31 +83,37 @@
                 {% csrf_token %}{{ dotacion_empresa.as_table }}
             </table>
             <div class="inicio">
-                <b>P5.</b> Indique el o los rubros en que participa la empresa
-                <div>
-                    <br>
-                </div>
-                <div class="input-radio">
-                    <input type="checkbox" id="construccion" name="construccion" value="construccion" required>
-                    <label for="construccion" class="unselectable">Construcción</label>
-                </div>
-                <div class="input-radio">
-                    <input type="checkbox" id="manufactura" name="manufactura" value="manufactura" required>
-                    <label for="manufactura" class="unselectable">Manufactura</label>
-                </div>
-                <div class="input-radio">
-                    <input type="checkbox" name="transporte" id="transporte" value="transporte" required>
-                    <label for="transporte" class="unselectable">Transporte terreste</label>
-                </div>
-                <div class="input-radio">
-                    <input type="checkbox" name="servicio" id="servicio" value="servicio" required>
-                    <label for="servicio" class="unselectable">Servicios generales</label>
-                </div>
+        <b>P5.</b> Indique el o los rubros en que participa la empresa
+            <div>
+              <br>
             </div>
-            <button type="submit" value="Submit" id="next" style="width: 200px">→</button>
+          <div class="input-radio">
+            <input type="checkbox" id="construccion" name="rubro[]" value="construccion">
+            <label for="construccion" class="unselectable">Construcción</label>
+            <input type="checkbox" id="manufactura" name="rubro[]" value="manufactura">
+            <label for="manufactura" class="unselectable">Manufactura</label>
+            <input type="checkbox" name="rubro[]" id="transporte" value="transporte">
+            <label for="transporte" class="unselectable">Transporte terreste</label>
+            <input type="checkbox" name="rubro[]" id="servicio" value="servicio">
+            <label for="servicio" class="unselectable">Servicios generales</label>
+          </div>
+    </div>
+            <input type="submit" value="→" id="next" style="width: 200px">
         </form>
     </div>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#next').click(function() {
+      checked = $("input[type=checkbox]:checked").length;
 
+      if(!checked) {
+        alert("Debes seleccionar al menos un rubro");
+        return false;
+      }
+
+    });
+});
+</script>
 </body>
 </html>
 
