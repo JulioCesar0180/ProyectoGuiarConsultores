@@ -35,28 +35,8 @@ class SignUpForm(UserCreationForm):
         model = UserGuiar
         fields = ('rut', 'name', 'address')
 
-
-class FormInicial(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    telefono = forms.CharField(max_length=100)
-    razon = forms.CharField(max_length=100)
-    rut = forms.CharField(max_length=100)
-    experiencia = forms.CharField(max_length=100)
-    direccion = forms.CharField(max_length=100)
-    comuna = forms.CharField(max_length=100)
-    ciudad = forms.CharField(max_length=100)
-    # ventas = forms.BooleanField(required=False)
-    message = forms.CharField(widget=forms.Textarea)
-
-
-class FormDefault(forms.Form):
-    placeholder = forms.CharField()
-
-
-class FormPag1(forms.Form):
-    # Nombre de la empresa #
-    attrs_nombre = {
+class FormPageOne(forms.Form):
+    nombre = forms.CharField(label="Nombre", widget=forms.TextInput(attrs={
         'class': 'form-control'
     }
     nombre = forms.CharField(label='Nombre Empresa', widget=forms.TextInput(attrs=attrs_nombre))

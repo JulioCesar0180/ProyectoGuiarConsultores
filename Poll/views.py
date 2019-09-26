@@ -120,6 +120,9 @@ def MTR_login(request):
     return render(request, 'registration/login.html', {'form': form})
 
 def signup(request):
+
+
+
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -147,10 +150,6 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
-
-
-def denunciar(request):
-    return render(request, 'Navbar/denunciar.html')
 
 
 def resetPassword():
