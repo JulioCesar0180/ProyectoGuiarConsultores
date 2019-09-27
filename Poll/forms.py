@@ -36,7 +36,7 @@ class SignUpForm(UserCreationForm):
         fields = ('rut', 'name', 'address')
 
 class FormPageOne(forms.Form):
-    nombre = forms.CharField(label="Nombre", widget=forms.TextInput(attrs={
+    attrs_nombre = {
         'class': 'form-control'
     }
     nombre = forms.CharField(label='Nombre Empresa', widget=forms.TextInput(attrs=attrs_nombre))
