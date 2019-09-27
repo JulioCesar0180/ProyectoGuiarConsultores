@@ -7,20 +7,18 @@
 {% endblock %}
 
 {% block content %}
-    <div class="center" style="margin-top: 10%">
+    <div class="center">
         <div class="container">
             <div class="d-flex justify-content-center h-100">
-                <div class="card">
+                <div class="card2">
+
                     <div class="card-body">
                         <font color="white">
                         <h2>Iniciar Sesión</h2>
                             <form method="post">
                                 {% csrf_token %}
-                                <label for="rut">Rut de Empresa: </label>
-                                <input id="rut" type="text" name="rut" value="">
-                                <label for="password">Contraseña: </label>
-                                <input id="password" type="password" name="password" value="">
-                                <center><button type="submit" class="btn login_btn">Iniciar Sesión</button></center>
+                                {{ form|crispy }}
+                                <center><button type="submit" class="btn login_btn">Crear Cuenta</button></center>
                             </form>
                         </font>
                         <div class="d-flex justify-content-center links">
@@ -30,12 +28,12 @@
                             <a href="{% url 'password_reset' %}"> ¿Olvidó su contraseña? </a>
                         </div>
                     </div>
+
                     <div class="card-footer">
                         <div align="center">
                             <a href="{% url 'homeGC' %}"> Regresar </a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

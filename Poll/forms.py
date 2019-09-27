@@ -3,9 +3,56 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import UserGuiar
 from .models import TablaPerfilEmpresa
 
+
+#datos para el drop down
+Ciudad_CHOICES= [
+    ('antofagasta', 'Antofagasta'),
+    ('calama', 'Calama'),
+    ('mejillones', 'Mejillones'),
+    ('tocopilla', 'Tocopilla'),
+    ]
+
+Comuna_CHOICES= [
+    ('antofagasta', 'Antofagasta'),
+    ('el loa', 'El Loa'),
+    ('mejillones', 'Mejillones'),
+    ('tocopilla', 'Tocopilla'),
+    ]
+
+class UpdateForm(forms.Form):
+    rut = forms.CharField(
+        max_length=30, required=True,
+        help_text='Obligatorio', label="Rut Empresa")
+
+    name = forms.CharField(
+        max_length=30, required=True,
+        help_text='Obligatorio.', label='Nombre Empresa')
+
+    address = forms.CharField(
+        max_length=254, label="Dirección")
+
+    nombre_representante = forms.CharField(max_length=254, required=True, label="Nombre Representante")
+
+    email_representante = forms.EmailField(max_length=40, required=True, help_text='Obligatorio.', label="Email Representante")
+
+    telefono_representante = forms.CharField(max_length=9, required=True, help_text='Obligatorio.', label="Telefono Representante")
+
+    ciudad_empresa = forms.CharField(label='Ciudad de la Empresa',
+                                     widget=forms.Select(choices=Ciudad_CHOICES))
+
+    comuna_empresa = forms.CharField(label='Ciudad de la Empresa',
+                                     widget=forms.Select(choices=Ciudad_CHOICES))
+
+    razon_social_empresa = forms.CharField(max_length=254, label="Razón Social de la Empresa")
+
+    ventas_anuales_empresa = forms.CharField(max_length=254, label="Ventas Anuales de la Empresa")
+
+    experiencia_empresa = forms.CharField(max_length=254, label="Experiencia de la Empresa")
+
+
 class LogInForm(forms.Form):
-    rut = forms.CharField(label='rut', widget=forms.TextInput(attrs={'placeholder': 'Rut de Empresa'}))
-    password = forms.CharField(label='password', max_length=30, widget=forms.PasswordInput(attrs={'placeholder': 'Contraseña'}))
+    rut = forms.CharField(label='Rut Empresa', widget=forms.TextInput(attrs={'placeholder': 'Ingrese Rut de Empresa'}))
+    password = forms.CharField(label='Contraseña', max_length=30, widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese Contraseña'}))
 
     class Meta:
         model = UserGuiar
@@ -15,11 +62,11 @@ class LogInForm(forms.Form):
 #Arreglarlo
 class SignUpForm(UserCreationForm):
     rut = forms.CharField(
-        max_length=30, required=False,
+        max_length=30, required=True,
         help_text='required', label="Rut Empresa")
 
     name = forms.CharField(
-        max_length=30, required=False,
+        max_length=30, required=True,
         help_text='Optional.', label='Nombre Empresa')
 
     address = forms.CharField(

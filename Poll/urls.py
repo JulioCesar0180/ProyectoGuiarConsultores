@@ -11,8 +11,9 @@ urlpatterns = [
     path('resultado', views.page_results, name="resultado"),
     path('test', views.get_name, name="test"),
 
-    path('registrarse', views.signup, name='signup'),
+    path('signup', views.signup, name='signup'),
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('login', views.MTR_login, name='MTRlogin'),
+    path('profile', views.Perfil, name='perfil')
 ]

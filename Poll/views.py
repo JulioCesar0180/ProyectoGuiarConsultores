@@ -97,6 +97,17 @@ def home(request):
     })
 
 
+def Perfil(request):
+    if request.method == 'POST':
+        form = UpdateForm(request.POST)
+        if form.is_valid():
+            return redirect('home')
+    else:
+        form = UpdateForm()
+    #return render(request, 'u_perfil.html', {'form': form})
+    return render(request, 'perfil.html', {'form': form})
+
+
 def MTR_login(request):
 
     if request.user.is_authenticated:
@@ -114,14 +125,12 @@ def MTR_login(request):
             else:
                 messages.error(request, 'No existen registros de este usuario')
         else:
-            return render(request, 'vips/login.html', {'form': form})
+            return render(request, 'registration/login.html', {'form': form})
 
     form = LogInForm()
     return render(request, 'registration/login.html', {'form': form})
 
 def signup(request):
-
-
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)

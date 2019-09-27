@@ -19,70 +19,69 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
 {% if user.is_authenticated %}
-<body class="home">
-    <div class="container-fluid display-table" style="height:100vh">
-        <div class="row display-table-row">
-            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
-                <div class="navi">
-                    <ul>
-                        <li class="active"><a href="#"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
-                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
-                        <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
-                        <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Agendar</span></a></li>
-                        <div class="dropdown">
-                            <a class="hidden-xs hidden-sm" type="button" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i><font color="white">Configuración</font><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url 'password_change' %}">Cambiar Contraseña</a></li>
-                                <li><a href="#">CSS</a></li>
-                                <li><a href="#">JavaScript</a></li>
-                            </ul>
-                        </div>
-                        <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cerrar Sesión</span></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-10 col-sm-11 display-table-cell v-align">
-                <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
-                <div class="row">
-                    <div class="col-md-7">
-                        <nav class="navbar-default pull-left">
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>
+    <body class="home">
+        <div class="container-fluid display-table" style="height:100vh">
+            <div class="row display-table-row">
+                <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                    <div class="navi">
+                        <ul>
+                            <li class="active"><a href="{% url 'home' %}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
+                            <li><a href="{% url 'perfil' %}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
+                            <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
+                            <li><a href="#"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Agendar</span></a></li>
+                            <div class="dropdown">
+                                <a class="hidden-xs hidden-sm" type="button" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i><font color="white">Configuración</font><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'password_change' %}">Cambiar Contraseña</a></li>
+                                    <li><a href="#">Opcion 2</a></li>
+                                    <li><a href="#">Opcion 3</a></li>
+                                </ul>
                             </div>
-                        </nav>
+                            <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cerrar Sesión</span></a></li>
+                        </ul>
                     </div>
                 </div>
-                <center>
-                    <div class="w3-container">
-                        <div class="w3-card-4" style="width:69%;">
-                            <header class="w3-container w3-blue">
-                                <h2>Bienvenido(a) a MideTuRiesgo, {{ name }}!</h2>
-                            </header>
-
-                            <div class="w3-container" >
-                                    <p>
-                                    <div class="row">
-                                        <img src="{% static 'images/mideturiesgo.png' %}">
-                                        <a id="btn-button" href="{% url 'encuesta' %}" class="button">Comenzar</a>
-                                    </div>
-                                    <p>
-                            </div>
-                            <footer class="w3-container w3-blue">
-                                <p>
-                            </footer>
+                <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <nav class="navbar-default pull-left">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                            </nav>
                         </div>
                     </div>
-                </center>
+                    <center>
+                        <div class="w3-container">
+                            <div class="w3-card-4" style="width:69%;">
+                                <header class="w3-container w3-blue">
+                                    <h2>Bienvenido(a) a MideTuRiesgo, {{ name }}!</h2>
+                                </header>
 
+                                <div class="w3-container" >
+                                        <p>
+                                        <div class="row">
+                                            <img src="{% static 'images/mideturiesgo.png' %}">
+                                            <a id="btn-button" href="{% url 'encuesta' %}" class="button">Comenzar</a>
+                                        </div>
+                                        <p>
+                                </div>
+                                <footer class="w3-container w3-blue">
+                                    <p>
+                                </footer>
+                            </div>
+                        </div>
+                    </center>
+
+                </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 {% else %}
 
     <meta http-equiv="REFRESH" content="0;url={% url 'login' %}">
