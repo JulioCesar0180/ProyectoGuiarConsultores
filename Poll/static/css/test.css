@@ -128,6 +128,9 @@ input[type=radio] + label{
   .anterior{
     margin-left: 21%
   }
+  .direccion{
+    margin-left: 30%
+  }
   .campo{
     border: 2px solid #d2d2d6;
     font-family: Grotesque,Arial,sans-serif;
