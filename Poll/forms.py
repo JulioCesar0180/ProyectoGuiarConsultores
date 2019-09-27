@@ -202,3 +202,15 @@ class Form_jornadaPrevencionista(forms.Form):
               ('2', 'Tiempo Parcial o Part-time'),
               ('3', 'Para proyectos específicos'),
               ('4', 'No cuenta con prevencionista de riesgos')]
+
+class FormPageOne(forms.Form):
+    campo1 = ""
+
+class FormPageTwo(forms.Form):
+    campo1 = ""
+
+class FormPageThree(forms.Form):
+    campo1 = ""
+
+class FormPageFour(forms.Form):
+    campo1 = ""

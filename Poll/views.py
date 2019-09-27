@@ -30,7 +30,8 @@ def get_name(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            empresa = UserGuiar.objects.get(rut='12345678-5')
+            rutEmpresa = form.cleaned_data['rut']
+            empresa = UserGuiar.objects.get(rut=rutEmpresa)
             #Datos del usuario
             nombreUser = form.cleaned_data['representante']
             correo = form.cleaned_data['email']
@@ -38,7 +39,6 @@ def get_name(request):
             #Datos de la empresa
             nombreEmpresa = form.cleaned_data['nombre']
             razonEmpresa = form.cleaned_data['razon']
-            rutEmpresa = form.cleaned_data['rut']
             experienciaEmpresa = form.cleaned_data['experiencia']
             direccionEmpresa = form.cleaned_data['direccion']
             comunaEmpresa = form.cleaned_data['comuna']
@@ -55,7 +55,7 @@ def get_name(request):
             maquinariaEmpr = form.cleaned_data['maqEmpresa']
             maquinariaCont = form.cleaned_data['marContratista']
             datoDotacion = TablaResultadosDotacion(
-                rut_empresa_id = empresa,
+                rut_empresa = empresa,
                 answer1 = empleadosCont,
                 answer2 = empleadosContra,
                 answer3 = vehiculosLiv,
@@ -179,22 +179,8 @@ def rut_unformat(value):
 
 @login_required
 def page_one_poll(request):
-    if request.method == 'POST':
-        form1 = Form_datosPersonales(request.POST)
-        form2 = Form_datosEmpresa(request.POST)
-        form3 = Form_ventasEmpresa(request.POST)
-        form4 = Form_dotacionEmpresa(request.POST)
-        print(form2.is_valid())
-        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
-            #obtener datos de la Empresa
-            nombreEmpresa = form2.cleaned_data['nombre']
-            razon_social = form2.cleaned_data['razon']
-            rut = form2.cleaned_data['rut']
-            experiencia = form2.cleaned_data['experiencia']
-            direccion = form2.cleaned_data['direccion']
-            comuna = form2.cleaned_data['comuna']
-            ciudad = form2.cleaned_data['ciudad']
-            ventas = form3.cleaned_data['ventas']
+    form_page_one = FormPageOne()
+    id_empresa = UserGuiar.objects.get(rut='12345678-5')
 
     answer1 = ""
     answer2 = ""
@@ -205,18 +191,6 @@ def page_one_poll(request):
     answer7 = ""
     answer8 = ""
 
-    dotacion = TablaResultadosDotacion(
-        empresa=id_empresa,
-        answer1=answer1,
-        answer2=answer2,
-        answer3=answer3,
-        answer4=answer4,
-        answer5=answer5,
-        answer6=answer6,
-        answer7=answer7,
-        answer8=answer8
-    )
-    dotacion.save()
 
     answer1 = ""
     answer2 = ""
@@ -224,44 +198,7 @@ def page_one_poll(request):
     answer4 = ""
     answer5 = ""
 
-            # leer el id de la empresa agregada recientemente
-            id_empresa = "1"
-            datosPersonales = TablaPerfilUsuario(
-                empresa=id_empresa,
-                nombre=nombre,
-                email=email,
-                telefono=telefono
-            )
-            datosPersonales.save()
-
-            dotacion = TablaResultadosDotacion(
-                user=id_empresa,
-                empContratados=empContratados,
-                empContratistas=empContratistas,
-                vehLivianos=vehLivianos,
-                vehContratistas=vehContratistas,
-                vehPesados=vehPesados,
-                vehPesadosContratistas=vehPesadosContratistas,
-                maqEmpresa=maqEmpresa,
-                marContratista=marContratista
-            )
-            dotacion.save()
-            #Volver a la pagina de Inicio por el momento
-            return render(request, "home/home.html")
-    else:
-        form1 = Form_datosPersonales()
-        form2 = Form_datosEmpresa()
-        form3 = Form_ventasEmpresa()
-        form4 = Form_dotacionEmpresa()
-        # Error de metodo
-        e = "Operacion Invalida"
-    context = \
-        {'datos_personales': form1,
-         'datos_empresa': form2,
-         'ventas_empresa': form3,
-         'dotacion_empresa': form4
-         }
-    return render(request, "MideTuRiesgo/mideturiesgo01.html", context)
+    return render(request, "MideTuRiesgo/mideturiesgo01.html", {'form_page_one': form_page_one})
 
 
 @login_required
@@ -275,7 +212,7 @@ def page_two_poll(request):
     menores = ""
     tuberias = ""
     refuerzos = ""
-
+    '''
     construccion = TablaResultadosContruccion(
         empresa=id_empresa,
         answer1=estructura,
@@ -286,14 +223,14 @@ def page_two_poll(request):
         answer6=refuerzos
     )
     construccion.save()
-
+    '''
     produccion = ""
     confeccion = ""
     tornerias = ""
     pvc = ""
     muebles = ""
     prototipos = ""
-
+    '''
     manufactura= TablaResultadosManufactura(
         empresa=id_empresa,
         answer1=produccion,
@@ -304,7 +241,7 @@ def page_two_poll(request):
         answer6=prototipos
     )
     manufactura.save()
-
+    '''
     materiales = ""
     personas = ""
     maquinaria = ""
@@ -314,7 +251,7 @@ def page_two_poll(request):
     corrosivo = ""
     aceite = ""
     carga = ""
-
+    '''
     transporte = TablaResultadosTransporte(
         empresa=id_empresa,
         answer1=materiales,
@@ -328,7 +265,7 @@ def page_two_poll(request):
         answer9=carga
     )
     transporte.save()
-
+    '''
     maestranza = ""
     reparacion = ""
     electricos = ""
@@ -343,7 +280,7 @@ def page_two_poll(request):
     carretera = ""
     izaje = ""
     garage = ""
-
+    '''
     servicios = TablaResultadosServicios(
         empresa=id_empresa,
         answer1=maestranza,
@@ -362,7 +299,7 @@ def page_two_poll(request):
         answer14=garage
     )
     servicios.save()
-
+    '''
     return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form_page_two': form_page_two})
 
 @login_required
