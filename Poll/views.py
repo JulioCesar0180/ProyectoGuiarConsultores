@@ -452,24 +452,34 @@ def page_three_poll(request):
                 iso14001 = True
             elif x == "ohsas18001":
                 ohsas18001 = True
-
-        print(iso9001)
-        print(iso14001)
-        print(ohsas18001)
-        print("")
-        print(iso)
         '''
-        iso9001 = form.cleaned_data["iso9001"]
-        iso14001 = form.cleaned_data["iso14001"]
-        ohsas18001 = form.cleaned_data["ohsas18001"]
-        procedimiento = form.cleaned_data["procedimiento"]
-        asesoria = form.cleaned_data["asesoria"]
-        gerencia = form.cleaned_data["gerencia"]
-        tiempoCompleto = form.cleaned_data["tiempoCompleto"]
-        tiempoParcial = form.cleaned_data["tiempoParcial"]
-        proyectos = form.cleaned_data["proyectos"]
-        noTiene = form.cleaned_data["noTiene"]
-    
+        manejoRiesgo = request.POST.getlist('manejoRiesgo[]')
+        procedimiento = False
+        asesoria = False
+        gerencia = False
+        for x in manejoRiesgo:
+            if x == "procedimiento":
+                procedimiento = True
+            elif x == "asesoria":
+                asesoria = True
+            elif x == "gerencia":
+                gerencia = True
+        
+        prevensionista = request.POST.getlist('prevensionista[]')
+        tiempoCompleto = False
+        tiempoParcial = False
+        proyectos = False
+        noTiene = False
+        for x in prevensionista:
+            if x == "tiempoCompleto":
+                tiempoCompleto = True
+            elif x == "tiempoParcial":
+                tiempoParcial = True
+            elif x == "proyectos":
+                proyectos = True
+            elif x == "noTiene":
+                noTiene = True
+        
         gestion = TablaResultadosGestion(
             empresa=empresa,
             answer1=iso9001,
