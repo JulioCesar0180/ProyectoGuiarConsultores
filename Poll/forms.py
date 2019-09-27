@@ -190,14 +190,11 @@ class Form_jornadaPrevencionista(forms.Form):
               ('3', 'Para proyectos específicos'),
               ('4', 'No cuenta con prevencionista de riesgos')]
 
-class FormPageOne(forms.Form):
-    campo1 = ""
-
 class FormPageTwo(forms.Form):
-    campo1 = ""
+    campo1 = forms.CharField(label='Placeholder', max_length=100)
 
 class FormPageThree(forms.Form):
-    campo1 = ""
+    campo1 = forms.CharField(label='Placeholder', max_length=100)
 
 class FormPageFour(forms.Form):
-    campo1 = ""
+    campo1 = forms.CharField(label='Placeholder', max_length=100)

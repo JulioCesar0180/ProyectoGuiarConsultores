@@ -215,18 +215,18 @@ def page_one_poll(request):
 
 @login_required
 def page_two_poll(request):
-    form_page_two = FormPageTwo()
-    id_empresa = UserGuiar.objects.get(rut='12345678-5')
-
-    estructura = ""
-    gruesa = ""
-    instalaciones = ""
-    menores = ""
-    tuberias = ""
-    refuerzos = ""
+    form = FormPageTwo()
+    empresa = UserGuiar.objects.get(rut='12345678-5')
     '''
+    estructura = form.cleaned_data[""]
+    gruesa = form.cleaned_data[""]
+    instalaciones = form.cleaned_data[""]
+    menores = form.cleaned_data[""]
+    tuberias = form.cleaned_data[""]
+    refuerzos = form.cleaned_data[""]
+
     construccion = TablaResultadosContruccion(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=estructura,
         answer2=gruesa,
         answer3=instalaciones,
@@ -235,16 +235,16 @@ def page_two_poll(request):
         answer6=refuerzos
     )
     construccion.save()
-    '''
-    produccion = ""
-    confeccion = ""
-    tornerias = ""
-    pvc = ""
-    muebles = ""
-    prototipos = ""
-    '''
+
+    produccion = form.cleaned_data[""]
+    confeccion = form.cleaned_data[""]
+    tornerias = form.cleaned_data[""]
+    pvc = form.cleaned_data[""]
+    muebles = form.cleaned_data[""]
+    prototipos = form.cleaned_data[""]
+
     manufactura= TablaResultadosManufactura(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=produccion,
         answer2=confeccion,
         answer3=tornerias,
@@ -253,19 +253,19 @@ def page_two_poll(request):
         answer6=prototipos
     )
     manufactura.save()
-    '''
-    materiales = ""
-    personas = ""
-    maquinaria = ""
-    mercaderia = ""
-    granel = ""
-    solidos = ""
-    corrosivo = ""
-    aceite = ""
-    carga = ""
-    '''
+
+    materiales = form.cleaned_data[""]
+    personas = form.cleaned_data[""]
+    maquinaria = form.cleaned_data[""]
+    mercaderia = form.cleaned_data[""]
+    granel = form.cleaned_data[""]
+    solidos = form.cleaned_data[""]
+    corrosivo = form.cleaned_data[""]
+    aceite = form.cleaned_data[""]
+    carga = form.cleaned_data[""]
+
     transporte = TablaResultadosTransporte(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=materiales,
         answer2=personas,
         answer3=maquinaria,
@@ -277,24 +277,24 @@ def page_two_poll(request):
         answer9=carga
     )
     transporte.save()
-    '''
-    maestranza = ""
-    reparacion = ""
-    electricos = ""
-    generador = ""
-    repuesto = ""
-    hidraulico = ""
-    computacional = ""
-    lavenderia = ""
-    movimiento = ""
-    arriendo = ""
-    ferreteria = ""
-    carretera = ""
-    izaje = ""
-    garage = ""
-    '''
+
+    maestranza = form.cleaned_data[""]
+    reparacion = form.cleaned_data[""]
+    electricos = form.cleaned_data[""]
+    generador = form.cleaned_data[""]
+    repuesto = form.cleaned_data[""]
+    hidraulico = form.cleaned_data[""]
+    computacional = form.cleaned_data[""]
+    lavenderia = form.cleaned_data[""]
+    movimiento = form.cleaned_data[""]
+    arriendo = form.cleaned_data[""]
+    ferreteria = form.cleaned_data[""]
+    carretera = form.cleaned_data[""]
+    izaje = form.cleaned_data[""]
+    garage = form.cleaned_data[""]
+
     servicios = TablaResultadosServicios(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=maestranza,
         answer2=reparacion,
         answer3=electricos,
@@ -312,26 +312,26 @@ def page_two_poll(request):
     )
     servicios.save()
     '''
-    return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form_page_two': form_page_two})
+    return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form_page_two': form})
 
 @login_required
 def page_three_poll(request):
-    form_page_three = FormPageThree()
-    id_empresa = UserGuiar.objects.get(rut='12345678-5')
-
-    iso9001 = ""
-    iso14001 = ""
-    ohsas18001 = ""
-    procedimiento = ""
-    asesoria = ""
-    gerencia = ""
-    tiempoCompleto = ""
-    tiempoParcial = ""
-    proyectos = ""
-    noTiene = ""
+    form = FormPageThree()
+    empresa = UserGuiar.objects.get(rut='12345678-5')
+    '''
+    iso9001 = form.cleaned_data[""]
+    iso14001 = form.cleaned_data[""]
+    ohsas18001 = form.cleaned_data[""]
+    procedimiento = form.cleaned_data[""]
+    asesoria = form.cleaned_data[""]
+    gerencia = form.cleaned_data[""]
+    tiempoCompleto = form.cleaned_data[""]
+    tiempoParcial = form.cleaned_data[""]
+    proyectos = form.cleaned_data[""]
+    noTiene = form.cleaned_data[""]
 
     gestion = TablaResultadosGestion(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=iso9001,
         answer2=iso14001,
         answer3=ohsas18001,
@@ -344,23 +344,23 @@ def page_three_poll(request):
         answer10=noTiene
     )
     gestion.save()
-
-    return render(request, "MideTuRiesgo/mideturiesgo3.html", {'form_page_three': form_page_three})
+    '''
+    return render(request, "MideTuRiesgo/mideturiesgo3.html", {'form_page_three': form})
 
 @login_required
 def page_four_poll(request):
-    form_page_four = FormPageFour()
-    id_empresa = UserGuiar.objects.get(rut='12345678-5')
-
-    inscripcion = ""
-    certificado = ""
-    personal = ""
-    polvorin = ""
-    procedimientos = ""
-    dispositivos = ""
+    form = FormPageFour()
+    empresa = UserGuiar.objects.get(rut='12345678-5')
+    '''
+    inscripcion = form.cleaned_data[""]
+    certificado = form.cleaned_data[""]
+    personal = form.cleaned_data[""]
+    polvorin = form.cleaned_data[""]
+    procedimientos = form.cleaned_data[""]
+    dispositivos = form.cleaned_data[""]
 
     explosivos = TablaResultadosExplosivos(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=inscripcion,
         answer2=certificado,
         answer3=personal,
@@ -370,14 +370,14 @@ def page_four_poll(request):
     )
     explosivos.save()
 
-    apertura = ""
-    encaramiento = ""
-    ausencia = ""
-    tierra = ""
-    delimitacion = ""
+    apertura = form.cleaned_data[""]
+    encaramiento = form.cleaned_data[""]
+    ausencia = form.cleaned_data[""]
+    tierra = form.cleaned_data[""]
+    delimitacion = form.cleaned_data[""]
 
     electricidad = TablaResultadosElectricidad(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=apertura,
         answer2=encaramiento,
         answer3=ausencia,
@@ -386,18 +386,18 @@ def page_four_poll(request):
     )
     electricidad.save()
 
-    distintivos = ""
-    tacografo = ""
-    antiguedad = ""
-    transporte = ""
-    embalaje = ""
-    carga = ""
-    tipoA = ""
-    tipoB = ""
-    tipoC = ""
+    distintivos = form.cleaned_data[""]
+    tacografo = form.cleaned_data[""]
+    antiguedad = form.cleaned_data[""]
+    transporte = form.cleaned_data[""]
+    embalaje = form.cleaned_data[""]
+    carga = form.cleaned_data[""]
+    tipoA = form.cleaned_data[""]
+    tipoB = form.cleaned_data[""]
+    tipoC = form.cleaned_data[""]
 
     sustancias_peligrosas = TablaResultadosSustanciasPeligrosas(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=distintivos,
         answer2=tacografo,
         answer3=antiguedad,
@@ -410,20 +410,20 @@ def page_four_poll(request):
     )
     sustancias_peligrosas.save()
 
-    norma = ""
-    supervisor = ""
-    proteccion = ""
-    equipamiento = ""
+    norma = form.cleaned_data[""]
+    supervisor = form.cleaned_data[""]
+    proteccion = form.cleaned_data[""]
+    equipamiento = form.cleaned_data[""]
 
     altura = TablaResultadosRiesgoAltura(
-        empresa=id_empresa,
+        empresa=empresa,
         answer1=norma,
         answer2=supervisor,
         answer3=proteccion,
         answer4=equipamiento)
     altura.save()
-
-    return render(request, "MideTuRiesgo/mideturiesgo4.html", {'form_page_four': form_page_four})
+    '''
+    return render(request, "MideTuRiesgo/mideturiesgo4.html", {'form_page_four': form})
 
 
 def page_results(request):
