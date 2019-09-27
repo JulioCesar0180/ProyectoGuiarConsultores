@@ -27,6 +27,7 @@ def get_name(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = FormPageOne(request.POST)
+        rubro = request.POST.getlist('rubro[]')
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
@@ -78,25 +79,29 @@ def get_name(request):
                 telefono_representante = fono,
                 ventas_anuales_empresa = ganancia
             )
-            datoNombre.save()
-            datoDotacion.save()
-            '''
-            construccion = form.cleaned_data['construccion']
-            manufactura = form.cleaned_data['manufactura']
-            transporte = form.cleaned_data['transporte']
-            servicios = form.cleaned_data['servicios']
-            otro = form.cleaned_data['otro']
-            
-            rubro = TablaResultadosProcesos(
-                empresa=empresa,
+            construccion = False
+            manufactura = False
+            transporte = False
+            servicios = False
+            for x in rubro:
+                if x == "construccion":
+                    construccion = True
+                elif x == "manufactura":
+                    manufactura = True
+                elif x == "transporte":
+                    transporte = True
+                elif x == "servicios":
+                    servicios = True
+            datoRubro = TablaResultadosProcesos(
+                rut_empresa = empresa,
                 answer1=construccion,
                 answer2=manufactura,
                 answer3=transporte,
-                answer4=servicios,
-                answer5=otro # este ultimo podria guardar informacion inutil mientras tanto
+                answer4=servicios
             )
-            rubro.save()
-            '''
+            datoDotacion.save()
+            datoRubro.save()
+            datoNombre.save()
             # redirect to a new URL:
             return HttpResponseRedirect('2')
 
@@ -234,6 +239,8 @@ def page_one_poll(request):
 def page_two_poll(request):
     form = FormPageTwo()
     empresa = UserGuiar.objects.get(rut='12345678-5')
+    respuestas = TablaResultadosProcesos.objects.filter(rut_empresa=empresa)
+    print(respuestas)
     '''
     estructura = form.cleaned_data[""]
     gruesa = form.cleaned_data[""]

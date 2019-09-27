@@ -91,23 +91,6 @@ class FormPageOne(forms.Form):
     marContratista = forms.IntegerField(label='Cantidad de maquinaria pesada de contratista')
 
 
-class Form_rubroEmpresa(forms.Form):
-    CHOICE = [('1', 'Contrucción'),
-              ('2', 'Manufactura'),
-              ('3', 'Transporte terrestre'),
-              ('4', 'Servicios Generales'),
-              ('5', 'Otro (por favor especifique')]
-    rubro = forms.ChoiceField(widget=forms.RadioSelect(choices=CHOICE))
-
-"""
-
-    
-    rubro = forms.MultipleChoiceField(choices=CHOICE, widget=forms.RadioSelect())
-
-    attrs_otro = {'class': 'form-control'}
-    otro = forms.CharField(widget=forms.TextInput(attrs=attrs_otro))
-    """
-
 
 class Form_elementosRiesgo(forms.Form):
     CHOICE = [('1', 'Ingeniería, contrucción o fabricación de estructuras metálicas'),
