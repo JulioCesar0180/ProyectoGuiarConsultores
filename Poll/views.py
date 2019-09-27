@@ -80,6 +80,23 @@ def get_name(request):
             )
             datoNombre.save()
             datoDotacion.save()
+            '''
+            construccion = form.cleaned_data['construccion']
+            manufactura = form.cleaned_data['manufactura']
+            transporte = form.cleaned_data['transporte']
+            servicios = form.cleaned_data['servicios']
+            otro = form.cleaned_data['otro']
+            
+            rubro = TablaResultadosProcesos(
+                empresa=empresa,
+                answer1=construccion,
+                answer2=manufactura,
+                answer3=transporte,
+                answer4=servicios,
+                answer5=otro # este ultimo podria guardar informacion inutil mientras tanto
+            )
+            rubro.save()
+            '''
             # redirect to a new URL:
             return HttpResponseRedirect('2')
 
