@@ -503,13 +503,28 @@ def page_four_poll(request):
     form = FormPageFour()
     empresa = UserGuiar.objects.get(rut='12345678-5')
     '''
-    inscripcion = form.cleaned_data["inscripcion"]
-    certificado = form.cleaned_data["certificado"]
-    personal = form.cleaned_data["personal"]
-    polvorin = form.cleaned_data["polvorin"]
-    procedimientos = form.cleaned_data["procedimientos"]
-    dispositivos = form.cleaned_data["dispositivos"]
-
+    explosivos = request.POST.getlist('explosivos[]')
+    
+    inscripcion = False
+    certificado = False
+    personal = False
+    polvorin = False
+    procedimientos = False
+    dispositivos = False
+    for x in explosivos:
+        if x == "inscripcion":
+            inscripcion = True
+        elif x == "certificado":
+            certificado = True
+        elif x == "personal":
+            personal = True
+        elif x == "polvorin":
+            polvorin = True
+        elif x == "procedimientos":
+            procedimientos = True
+        elif x == "dispositivos":
+            dispositivos = True
+            
     explosivos = TablaResultadosExplosivos(
         empresa=empresa,
         answer1=inscripcion,
@@ -521,12 +536,25 @@ def page_four_poll(request):
     )
     explosivos.save()
 
-    apertura = form.cleaned_data["apertura"]
-    encaramiento = form.cleaned_data["encaramiento"]
-    ausencia = form.cleaned_data["ausencia"]
-    tierra = form.cleaned_data["tierra"]
-    delimitacion = form.cleaned_data["delimitacion"]
-
+    electricidad = request.POST.getlist('electricidad[]')
+    
+    apertura = False
+    encaramiento = False
+    ausencia = False
+    tierra = False
+    delimitacion = False
+    for x in electricidad:
+        if x == "apertura":
+            apertura = True
+        elif x == "encaramiento":
+            encaramiento = True
+        elif x == "ausencia":
+            ausencia = True
+        elif x == "tierra":
+            tierra = True
+        elif x == "delimitacion":
+            delimitacion = True
+    
     electricidad = TablaResultadosElectricidad(
         empresa=empresa,
         answer1=apertura,
@@ -537,16 +565,37 @@ def page_four_poll(request):
     )
     electricidad.save()
 
-    distintivos = form.cleaned_data["distintivos"]
-    tacografo = form.cleaned_data["tacografo"]
-    antiguedad = form.cleaned_data["antiguedad"]
-    transporte = form.cleaned_data["transporte"]
-    embalaje = form.cleaned_data["embalaje"]
-    carga = form.cleaned_data["carga"]
-    tipoA = form.cleaned_data["tipoA"]
-    tipoB = form.cleaned_data["tipoB"]
-    tipoC = form.cleaned_data["tipoC"]
-
+    sustancias_peligrosas = request.POST.getlist('sustancias_peligrosas[]')
+    
+    distintivos = False
+    tacografo = False
+    antiguedad = False
+    transporte = False
+    embalaje = False
+    carga = False
+    tipoA = False
+    tipoB = False
+    tipoC = False
+    for x in sustancias_peligrosas:
+        if x == "distintivos":
+            distintivos = True
+        elif x == "tacografo":
+            tacografo = True
+        elif x == "antiguedad":
+            antiguedad = True
+        elif x == "transporte":
+            transporte = True
+        elif x == "embalaje":
+            embalaje = True
+        elif x == "carga":
+            carga = True
+        elif x == "tipoA":
+            tipoA = True
+        elif x == "tipoB":
+            tipoB = True
+        elif x == "tipoC":
+            tipoC = True
+            
     sustancias_peligrosas = TablaResultadosSustanciasPeligrosas(
         empresa=empresa,
         answer1=distintivos,
@@ -561,11 +610,22 @@ def page_four_poll(request):
     )
     sustancias_peligrosas.save()
 
-    norma = form.cleaned_data["norma"]
-    supervisor = form.cleaned_data["supervisor"]
-    proteccion = form.cleaned_data["proteccion"]
-    equipamiento = form.cleaned_data["equipamiento"]
-
+    altura = request.POST.getlist('altura[]')
+    
+    norma = False
+    supervisor = False
+    proteccion = False
+    equipamiento = False
+    for x in altura:
+        if x == "norma":
+            norma = True
+        elif x == "supervisor":
+            supervisor = True
+        elif x == "proteccion":
+            proteccion = True
+        elif x == "equipamiento":
+            equipamiento = True
+            
     altura = TablaResultadosRiesgoAltura(
         empresa=empresa,
         answer1=norma,
