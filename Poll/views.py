@@ -353,34 +353,56 @@ def page_two_poll(request):
 @login_required
 def page_three_poll(request):
     form = FormPageThree()
-    empresa = UserGuiar.objects.get(rut='12345678-5')
-    '''
-    iso9001 = form.cleaned_data["iso9001"]
-    iso14001 = form.cleaned_data["iso14001"]
-    ohsas18001 = form.cleaned_data["ohsas18001"]
-    procedimiento = form.cleaned_data["procedimiento"]
-    asesoria = form.cleaned_data["asesoria"]
-    gerencia = form.cleaned_data["gerencia"]
-    tiempoCompleto = form.cleaned_data["tiempoCompleto"]
-    tiempoParcial = form.cleaned_data["tiempoParcial"]
-    proyectos = form.cleaned_data["proyectos"]
-    noTiene = form.cleaned_data["noTiene"]
+    if request.method == 'POST':
 
-    gestion = TablaResultadosGestion(
-        empresa=empresa,
-        answer1=iso9001,
-        answer2=iso14001,
-        answer3=ohsas18001,
-        answer4=procedimiento,
-        answer5=asesoria,
-        answer6=gerencia,
-        answer7=tiempoCompleto,
-        answer8=tiempoParcial,
-        answer9=proyectos,
-        answer10=noTiene
-    )
-    gestion.save()
-    '''
+        empresa = UserGuiar.objects.get(rut='12345678-5')
+
+        iso = request.POST.getlist('iso[]')
+
+        iso9001 = False
+        iso14001 = False
+        ohsas18001 = False
+        for x in iso:
+            if x == "iso9001":
+                iso9001 = True
+            elif x == "iso14001":
+                iso14001 = True
+            elif x == "ohsas18001":
+                ohsas18001 = True
+
+        print(iso9001)
+        print(iso14001)
+        print(ohsas18001)
+        print("")
+        print(iso)
+        '''
+        iso9001 = form.cleaned_data["iso9001"]
+        iso14001 = form.cleaned_data["iso14001"]
+        ohsas18001 = form.cleaned_data["ohsas18001"]
+        procedimiento = form.cleaned_data["procedimiento"]
+        asesoria = form.cleaned_data["asesoria"]
+        gerencia = form.cleaned_data["gerencia"]
+        tiempoCompleto = form.cleaned_data["tiempoCompleto"]
+        tiempoParcial = form.cleaned_data["tiempoParcial"]
+        proyectos = form.cleaned_data["proyectos"]
+        noTiene = form.cleaned_data["noTiene"]
+    
+        gestion = TablaResultadosGestion(
+            empresa=empresa,
+            answer1=iso9001,
+            answer2=iso14001,
+            answer3=ohsas18001,
+            answer4=procedimiento,
+            answer5=asesoria,
+            answer6=gerencia,
+            answer7=tiempoCompleto,
+            answer8=tiempoParcial,
+            answer9=proyectos,
+            answer10=noTiene
+        )
+        gestion.save()
+        '''
+        return HttpResponseRedirect('4')
     return render(request, "MideTuRiesgo/mideturiesgo3.html", {'form_page_three': form})
 
 @login_required

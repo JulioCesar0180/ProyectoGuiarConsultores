@@ -33,15 +33,11 @@
           <br>
         </div>
         <div class="input-radio">
-          <input type="checkbox" id="iso9001" name="iso9001" value="iso9001" required>
+          <input type="checkbox" id="iso9001" name="iso[]" value="iso9001">
           <label for="iso9001" class="unselectable">ISO 9.001</label>
-        </div>
-        <div class="input-radio">
-          <input type="checkbox" id="iso14001" name="iso14001" value="iso14001" required>
+          <input type="checkbox" id="iso14001" name="iso[]" value="iso14001">
           <label for="iso14001" class="unselectable">ISO 14.001</label>
-        </div>
-        <div class="input-radio">
-          <input type="checkbox" name="ohsas18001" id="ohsas18001" value="ohsas18001" required>
+          <input type="checkbox" id="ohsas18001" name="iso[]" value="ohsas18001">
           <label for="ohsas18001" class="unselectable">OHSAS 18.001</label>
         </div>
           <div>
@@ -100,13 +96,9 @@
         </div>
       </div>
 
-      <div class="direccion">
-        <form action="{% url 'pagina2' %}" class="anterior">
-          <button type="submit" value="Submit" id="previous">←</button>
-        </form>
-        <form action="{% url 'pagina4' %}" class="siguiente">
+
+      <div class="siguiente">
           <button type="submit" value="Submit" id="next">→</button>
-        </form>
       </div>
       <div>
         <br>
