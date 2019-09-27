@@ -248,15 +248,18 @@ def page_one_poll(request):
 def page_two_poll(request):
     form = FormPageTwo()
     empresa = UserGuiar.objects.get(rut='12345678-5')
-    respuestas = TablaResultadosProcesos.objects.filter(rut_empresa=empresa)
-    print(respuestas)
+    respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
+    print(respuestas.answer1)
+    print(respuestas.answer2)
+    print(respuestas.answer3)
+    print(respuestas.answer4)
     '''
-    estructura = form.cleaned_data[""]
-    gruesa = form.cleaned_data[""]
-    instalaciones = form.cleaned_data[""]
-    menores = form.cleaned_data[""]
-    tuberias = form.cleaned_data[""]
-    refuerzos = form.cleaned_data[""]
+    estructura = form.cleaned_data["estructura"]
+    gruesa = form.cleaned_data["gruesa"]
+    instalaciones = form.cleaned_data["instalaciones"]
+    menores = form.cleaned_data["menores"]
+    tuberias = form.cleaned_data["tuberias"]
+    refuerzos = form.cleaned_data["refuerzos"]
 
     construccion = TablaResultadosContruccion(
         empresa=empresa,
@@ -269,12 +272,12 @@ def page_two_poll(request):
     )
     construccion.save()
 
-    produccion = form.cleaned_data[""]
-    confeccion = form.cleaned_data[""]
-    tornerias = form.cleaned_data[""]
-    pvc = form.cleaned_data[""]
-    muebles = form.cleaned_data[""]
-    prototipos = form.cleaned_data[""]
+    produccion = form.cleaned_data["produccion"]
+    confeccion = form.cleaned_data["confeccion"]
+    tornerias = form.cleaned_data["tornerias"]
+    pvc = form.cleaned_data["pvc"]
+    muebles = form.cleaned_data["muebles"]
+    prototipos = form.cleaned_data["prototipos"]
 
     manufactura= TablaResultadosManufactura(
         empresa=empresa,
@@ -287,15 +290,15 @@ def page_two_poll(request):
     )
     manufactura.save()
 
-    materiales = form.cleaned_data[""]
-    personas = form.cleaned_data[""]
-    maquinaria = form.cleaned_data[""]
-    mercaderia = form.cleaned_data[""]
-    granel = form.cleaned_data[""]
-    solidos = form.cleaned_data[""]
-    corrosivo = form.cleaned_data[""]
-    aceite = form.cleaned_data[""]
-    carga = form.cleaned_data[""]
+    materiales = form.cleaned_data["materiales"]
+    personas = form.cleaned_data["personas"]
+    maquinaria = form.cleaned_data["maquinaria"]
+    mercaderia = form.cleaned_data["mercaderia"]
+    granel = form.cleaned_data["granel"]
+    solidos = form.cleaned_data["solidos"]
+    corrosivo = form.cleaned_data["corrosivo"]
+    aceite = form.cleaned_data["aceite"]
+    carga = form.cleaned_data["carga"]
 
     transporte = TablaResultadosTransporte(
         empresa=empresa,
@@ -311,20 +314,20 @@ def page_two_poll(request):
     )
     transporte.save()
 
-    maestranza = form.cleaned_data[""]
-    reparacion = form.cleaned_data[""]
-    electricos = form.cleaned_data[""]
-    generador = form.cleaned_data[""]
-    repuesto = form.cleaned_data[""]
-    hidraulico = form.cleaned_data[""]
-    computacional = form.cleaned_data[""]
-    lavenderia = form.cleaned_data[""]
-    movimiento = form.cleaned_data[""]
-    arriendo = form.cleaned_data[""]
-    ferreteria = form.cleaned_data[""]
-    carretera = form.cleaned_data[""]
-    izaje = form.cleaned_data[""]
-    garage = form.cleaned_data[""]
+    maestranza = form.cleaned_data["maestranza"]
+    reparacion = form.cleaned_data["reparacion"]
+    electricos = form.cleaned_data["electricos"]
+    generador = form.cleaned_data["generador"]
+    repuesto = form.cleaned_data["repuesto"]
+    hidraulico = form.cleaned_data["hidraulico"]
+    computacional = form.cleaned_data["computacional"]
+    lavenderia = form.cleaned_data["lavenderia"]
+    movimiento = form.cleaned_data["movimiento"]
+    arriendo = form.cleaned_data["arriendo"]
+    ferreteria = form.cleaned_data["ferreteria"]
+    carretera = form.cleaned_data["carretera"]
+    izaje = form.cleaned_data["izaje"]
+    garage = form.cleaned_data["garage"]
 
     servicios = TablaResultadosServicios(
         empresa=empresa,
@@ -352,16 +355,16 @@ def page_three_poll(request):
     form = FormPageThree()
     empresa = UserGuiar.objects.get(rut='12345678-5')
     '''
-    iso9001 = form.cleaned_data[""]
-    iso14001 = form.cleaned_data[""]
-    ohsas18001 = form.cleaned_data[""]
-    procedimiento = form.cleaned_data[""]
-    asesoria = form.cleaned_data[""]
-    gerencia = form.cleaned_data[""]
-    tiempoCompleto = form.cleaned_data[""]
-    tiempoParcial = form.cleaned_data[""]
-    proyectos = form.cleaned_data[""]
-    noTiene = form.cleaned_data[""]
+    iso9001 = form.cleaned_data["iso9001"]
+    iso14001 = form.cleaned_data["iso14001"]
+    ohsas18001 = form.cleaned_data["ohsas18001"]
+    procedimiento = form.cleaned_data["procedimiento"]
+    asesoria = form.cleaned_data["asesoria"]
+    gerencia = form.cleaned_data["gerencia"]
+    tiempoCompleto = form.cleaned_data["tiempoCompleto"]
+    tiempoParcial = form.cleaned_data["tiempoParcial"]
+    proyectos = form.cleaned_data["proyectos"]
+    noTiene = form.cleaned_data["noTiene"]
 
     gestion = TablaResultadosGestion(
         empresa=empresa,
@@ -385,12 +388,12 @@ def page_four_poll(request):
     form = FormPageFour()
     empresa = UserGuiar.objects.get(rut='12345678-5')
     '''
-    inscripcion = form.cleaned_data[""]
-    certificado = form.cleaned_data[""]
-    personal = form.cleaned_data[""]
-    polvorin = form.cleaned_data[""]
-    procedimientos = form.cleaned_data[""]
-    dispositivos = form.cleaned_data[""]
+    inscripcion = form.cleaned_data["inscripcion"]
+    certificado = form.cleaned_data["certificado"]
+    personal = form.cleaned_data["personal"]
+    polvorin = form.cleaned_data["polvorin"]
+    procedimientos = form.cleaned_data["procedimientos"]
+    dispositivos = form.cleaned_data["dispositivos"]
 
     explosivos = TablaResultadosExplosivos(
         empresa=empresa,
@@ -403,11 +406,11 @@ def page_four_poll(request):
     )
     explosivos.save()
 
-    apertura = form.cleaned_data[""]
-    encaramiento = form.cleaned_data[""]
-    ausencia = form.cleaned_data[""]
-    tierra = form.cleaned_data[""]
-    delimitacion = form.cleaned_data[""]
+    apertura = form.cleaned_data["apertura"]
+    encaramiento = form.cleaned_data["encaramiento"]
+    ausencia = form.cleaned_data["ausencia"]
+    tierra = form.cleaned_data["tierra"]
+    delimitacion = form.cleaned_data["delimitacion"]
 
     electricidad = TablaResultadosElectricidad(
         empresa=empresa,
@@ -419,15 +422,15 @@ def page_four_poll(request):
     )
     electricidad.save()
 
-    distintivos = form.cleaned_data[""]
-    tacografo = form.cleaned_data[""]
-    antiguedad = form.cleaned_data[""]
-    transporte = form.cleaned_data[""]
-    embalaje = form.cleaned_data[""]
-    carga = form.cleaned_data[""]
-    tipoA = form.cleaned_data[""]
-    tipoB = form.cleaned_data[""]
-    tipoC = form.cleaned_data[""]
+    distintivos = form.cleaned_data["distintivos"]
+    tacografo = form.cleaned_data["tacografo"]
+    antiguedad = form.cleaned_data["antiguedad"]
+    transporte = form.cleaned_data["transporte"]
+    embalaje = form.cleaned_data["embalaje"]
+    carga = form.cleaned_data["carga"]
+    tipoA = form.cleaned_data["tipoA"]
+    tipoB = form.cleaned_data["tipoB"]
+    tipoC = form.cleaned_data["tipoC"]
 
     sustancias_peligrosas = TablaResultadosSustanciasPeligrosas(
         empresa=empresa,
@@ -443,10 +446,10 @@ def page_four_poll(request):
     )
     sustancias_peligrosas.save()
 
-    norma = form.cleaned_data[""]
-    supervisor = form.cleaned_data[""]
-    proteccion = form.cleaned_data[""]
-    equipamiento = form.cleaned_data[""]
+    norma = form.cleaned_data["norma"]
+    supervisor = form.cleaned_data["supervisor"]
+    proteccion = form.cleaned_data["proteccion"]
+    equipamiento = form.cleaned_data["equipamiento"]
 
     altura = TablaResultadosRiesgoAltura(
         empresa=empresa,
