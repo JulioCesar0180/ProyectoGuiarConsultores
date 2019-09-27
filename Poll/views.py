@@ -254,13 +254,28 @@ def page_two_poll(request):
     print(respuestas.answer3)
     print(respuestas.answer4)
     '''
-    estructura = form.cleaned_data["estructura"]
-    gruesa = form.cleaned_data["gruesa"]
-    instalaciones = form.cleaned_data["instalaciones"]
-    menores = form.cleaned_data["menores"]
-    tuberias = form.cleaned_data["tuberias"]
-    refuerzos = form.cleaned_data["refuerzos"]
+    construccion = request.POST.getlist('construccion[]')
 
+    estructura = False
+    gruesa = False
+    instalaciones = False
+    menores = False
+    tuberias = False
+    refuerzos = False
+    for x in construccion:
+        if x == "estructura":
+            estructura = True
+        if x == "gruesa":
+            gruesa = True
+        if x == "instalaciones":
+            instalaciones = True
+        if x == "menores":
+            menores = True
+        if x == "tuberias":
+            tuberias = True
+        if x == "refuerzos":
+            refuerzos = True
+            
     construccion = TablaResultadosContruccion(
         empresa=empresa,
         answer1=estructura,
@@ -272,13 +287,28 @@ def page_two_poll(request):
     )
     construccion.save()
 
-    produccion = form.cleaned_data["produccion"]
-    confeccion = form.cleaned_data["confeccion"]
-    tornerias = form.cleaned_data["tornerias"]
-    pvc = form.cleaned_data["pvc"]
-    muebles = form.cleaned_data["muebles"]
-    prototipos = form.cleaned_data["prototipos"]
+    manufactura = request.POST.getlist('manufactura[]')
 
+    produccion = False
+    confeccion = False
+    tornerias = False
+    pvc = False
+    muebles = False
+    prototipos = False
+    for x in manufactura:
+        if x == "produccion":
+            produccion = True
+        if x == "confeccion":
+            confeccion = True
+        if x == "tornerias":
+            tornerias = True
+        if x == "pvc":
+            pvc = True
+        if x == "muebles":
+            muebles = True
+        if x == "prototipos":
+            prototipos = True
+            
     manufactura= TablaResultadosManufactura(
         empresa=empresa,
         answer1=produccion,
@@ -290,15 +320,37 @@ def page_two_poll(request):
     )
     manufactura.save()
 
-    materiales = form.cleaned_data["materiales"]
-    personas = form.cleaned_data["personas"]
-    maquinaria = form.cleaned_data["maquinaria"]
-    mercaderia = form.cleaned_data["mercaderia"]
-    granel = form.cleaned_data["granel"]
-    solidos = form.cleaned_data["solidos"]
-    corrosivo = form.cleaned_data["corrosivo"]
-    aceite = form.cleaned_data["aceite"]
-    carga = form.cleaned_data["carga"]
+    transporte = request.POST.getlist('transporte[]')
+
+    materiales = False
+    personas = False
+    maquinaria = False
+    mercaderia = False
+    granel = False
+    solidos = False
+    corrosivo = False
+    aceite = False
+    carga = False
+    for x in transporte:
+        if x == "materiales":
+            materiales = True
+        if x == "personas":
+            personas = True
+        if x == "maquinaria":
+            maquinaria = True
+        if x == "mercaderia":
+            mercaderia = True
+        if x == "granel":
+            granel = True
+        if x == "solidos":
+            solidos = True
+        if x == "corrosivo":
+            corrosivo = True
+        if x == "aceite":
+            aceite = True
+        if x == "carga":
+            carga = True
+
 
     transporte = TablaResultadosTransporte(
         empresa=empresa,
@@ -314,20 +366,51 @@ def page_two_poll(request):
     )
     transporte.save()
 
-    maestranza = form.cleaned_data["maestranza"]
-    reparacion = form.cleaned_data["reparacion"]
-    electricos = form.cleaned_data["electricos"]
-    generador = form.cleaned_data["generador"]
-    repuesto = form.cleaned_data["repuesto"]
-    hidraulico = form.cleaned_data["hidraulico"]
-    computacional = form.cleaned_data["computacional"]
-    lavenderia = form.cleaned_data["lavenderia"]
-    movimiento = form.cleaned_data["movimiento"]
-    arriendo = form.cleaned_data["arriendo"]
-    ferreteria = form.cleaned_data["ferreteria"]
-    carretera = form.cleaned_data["carretera"]
-    izaje = form.cleaned_data["izaje"]
-    garage = form.cleaned_data["garage"]
+    servicios = request.POST.getlist('servicios[]')
+    
+    maestranza = False
+    reparacion = False
+    electricos = False
+    generador = False
+    repuesto = False
+    hidraulico = False
+    computacional = False
+    lavenderia = False
+    movimiento = False
+    arriendo = False
+    ferreteria = False
+    carretera = False
+    izaje = False
+    garage = False
+    for x in transporte:
+        if x == "maestranza":
+            maestranza = True
+        if x == "reparacion":
+            reparacion = True
+        if x == "electricos":
+            electricos = True
+        if x == "generador":
+            generador = True
+        if x == "repuesto":
+            repuesto = True
+        if x == "hidraulico":
+            hidraulico = True
+        if x == "computacional":
+            computacional = True
+        if x == "lavenderia":
+            lavenderia = True
+        if x == "movimiento":
+            movimiento = True
+        if x == "arriendo":
+            arriendo = True
+        if x == "ferreteria":
+            ferreteria = True
+        if x == "carretera":
+            carretera = True
+        if x == "izaje":
+            izaje = True
+        if x == "garage":
+            garage = True
 
     servicios = TablaResultadosServicios(
         empresa=empresa,
