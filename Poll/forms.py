@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserGuiar
+from .models import TablaPerfilEmpresa
 
 class LogInForm(forms.Form):
     rut = forms.CharField(label='rut', widget=forms.TextInput(attrs={'placeholder': 'Rut de Empresa'}))
@@ -24,32 +25,18 @@ class SignUpForm(UserCreationForm):
     address = forms.CharField(
         max_length=254, label="Dirección")
 
+    nombre_representante = forms.CharField(max_length=254, label="Nombre Representante")
+
+    email_representante = forms.EmailField(max_length=40, label="Email Representante")
+
+    telefono_representante = forms.CharField(max_length=9, label="Telefono Representante")
+
     class Meta:
         model = UserGuiar
         fields = ('rut', 'name', 'address')
 
-
-class FormInicial(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    telefono = forms.CharField(max_length=100)
-    razon = forms.CharField(max_length=100)
-    rut = forms.CharField(max_length=100)
-    experiencia = forms.CharField(max_length=100)
-    direccion = forms.CharField(max_length=100)
-    comuna = forms.CharField(max_length=100)
-    ciudad = forms.CharField(max_length=100)
-    # ventas = forms.BooleanField(required=False)
-    message = forms.CharField(widget=forms.Textarea)
-
-
-class FormDefault(forms.Form):
-    placeholder = forms.CharField()
-
-
-class FormPag1(forms.Form):
-    # Nombre de la empresa #
-    attrs_nombre = {
+class FormPageOne(forms.Form):
+    nombre = forms.CharField(label="Nombre", widget=forms.TextInput(attrs={
         'class': 'form-control'
     }
     nombre = forms.CharField(label='Nombre Empresa', widget=forms.TextInput(attrs=attrs_nombre))

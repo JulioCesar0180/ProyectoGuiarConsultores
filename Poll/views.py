@@ -120,24 +120,36 @@ def MTR_login(request):
     return render(request, 'registration/login.html', {'form': form})
 
 def signup(request):
+
+
+
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            #form.save()
-            username = form.cleaned_data.get('username')
-            #username = rut_format(username, ".")
-            raw_password = form.cleaned_data.get('password1')
-            #user = authenticate(username=username, password=raw_password)
             user = form.save()
+
+            rut_empresa = form.cleaned_data['rut']
+            nombre_empresa = form.cleaned_data['name']
+            direccion_empresa = form.cleaned_data['address']
+            nombre_representante = form.cleaned_data['nombre_representante']
+            email_representante = form.cleaned_data['email_representante']
+            telefono_representante = form.cleaned_data['telefono_representante']
+
+            perfil_empresa = TablaPerfilEmpresa(
+                rut_empresa=user,
+                nombre_empresa=nombre_empresa,
+                direccion_empresa=direccion_empresa,
+                nombre_representante=nombre_representante,
+                email_representante=email_representante,
+                telefono_representante=telefono_representante
+            )
+            perfil_empresa.save()
+
             login(request, user)
             return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
-
-
-def denunciar(request):
-    return render(request, 'Navbar/denunciar.html')
 
 
 def resetPassword():
@@ -182,21 +194,21 @@ def page_one_poll(request):
     form_page_one = FormPageOne()
     id_empresa = UserGuiar.objects.get(rut='12345678-5')
 
-    answer1 = ""
-    answer2 = ""
-    answer3 = ""
-    answer4 = ""
-    answer5 = ""
-    answer6 = ""
-    answer7 = ""
-    answer8 = ""
+            answer1 = ""
+            answer2 = ""
+            answer3 = ""
+            answer4 = ""
+            answer5 = ""
+            answer6 = ""
+            answer7 = ""
+            answer8 = ""
 
 
-    answer1 = ""
-    answer2 = ""
-    answer3 = ""
-    answer4 = ""
-    answer5 = ""
+            answer1 = ""
+            answer2 = ""
+            answer3 = ""
+            answer4 = ""
+            answer5 = ""
 
     return render(request, "MideTuRiesgo/mideturiesgo01.html", {'form_page_one': form_page_one})
 
