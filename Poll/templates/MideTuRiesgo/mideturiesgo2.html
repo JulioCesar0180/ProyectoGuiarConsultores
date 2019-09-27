@@ -24,35 +24,43 @@
         <hr>
       </div>
     </div>
-    <form action="" method="post">
-      {% csrf_token %}
-      <div class="inicio">
-        <b>Pn.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
-        <div>
-            <br>
-        </div>
-        <div class="input-radio">
-            <input type="checkbox" id="estructura" name="estructura" value="estructura">
-            <label for="estructura" class="unselectable">Ingeniería, construcción o fabricación de estructuras metálicas</label>
-            <input type="checkbox" id="gruesa" name="gruesa" value="gruesa">
-            <label for="gruesa" class="unselectable">Ingeniería o construcción de edificios, obra gruesa, concreto, carreteras</label>
-            <input type="checkbox" name="instalaciones" id="instalaciones" value="instalaciones">
-            <label for="instalaciones" class="unselectable">Ingeniería, construcción o montaje de obras e instalaciones privadas o públicas</label>
-            <input type="checkbox" id="menores" name="menores" value="menores">
-            <label for="menores" class="unselectable">Obras menores de construcción, contratistas, albañería, carpintería, climatización</label>
-            <input type="checkbox" id="tuberias" name="tuberias" value="tuberias" >
-            <label for="tuberias" class="unselectable">Instalación de tuberías y construcción de alcantarillado, base de concreto y obras de cimentación, excavación</label>
-            <input type="checkbox" name="refuerzos" id="refuerzos" value="refuerzos" >
-            <label for="refuerzos" class="unselectable">Refuerzos, reparación y protección de estructuras de acero, reparación de estanques, impermeabilización, protección catódica</label>
-        </div>
+
+    <div class="inicio">
+      <b>Pn.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
+       <div>
+        <br>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="estructura" name="estructura" value="estructura" required>
+        <label for="estructura" class="unselectable">Ingeniería, construcción o fabricación de estructuras metálicas</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="gruesa" name="gruesa" value="gruesa" required>
+        <label for="gruesa" class="unselectable">Ingeniería o construcción de edificios, obra gruesa, concreto, carreteras</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="instalaciones" id="instalaciones" value="instalaciones" required>
+        <label for="instalaciones" class="unselectable">Ingeniería, construcción o montaje de obras e instalaciones privadas o públicas</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="menores" name="menores" value="menores" required>
+        <label for="menores" class="unselectable">Obras menores de construcción, contratistas, albañería, carpintería, climatización</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" id="tuberias" name="tuberias" value="tuberias" required>
+        <label for="tuberias" class="unselectable">Instalación de tuberías y construcción de alcantarillado, base de concreto y obras de cimentación, excavación</label>
+      </div>
+      <div class="input-radio">
+        <input type="checkbox" name="refuerzos" id="refuerzos" value="refuerzos" required>
+        <label for="refuerzos" class="unselectable">Refuerzos, reparación y protección de estructuras de acero, reparación de estanques, impermeabilización, protección catódica</label>
+      </div>
         <div>
           <br>
         </div>
-        <div>
-          <hr>
-        </div>
+      <div>
+        <hr>
       </div>
-    </form>
+    </div>
 
     <div class="inicio">
       <b>Pn.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
@@ -210,8 +218,12 @@
     </div>
 
     <div class="direccion">
+      <form action="{% url 'test' %}" class="anterior">{% csrf_token %}
         <button type="submit" value="Submit" id="previous">←</button>
+      </form>
+      <form action="{% url 'pagina3' %}" class="siguiente">{% csrf_token %}
         <button type="submit" value="Submit" id="next">→</button>
+      </form>
     </div>
     <div>
       <br>
