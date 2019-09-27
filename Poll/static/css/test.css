@@ -46,13 +46,19 @@ table{
     padding-top: 2%;
 }
 
-.inicio{
+.inicio, #explosivos, #explosivosNext, #electricidad, #electricidadNext, #sustancias, #sustanciasNext, #altura, #alturaNext{
     font-size: 16px;
     color: #43464d;
     padding: 20px;
     line-height: 1.5em;
     margin-left: 20%;
     margin-right: 20%;
+}
+
+#explosivosNext, #electricidadNext, #sustanciasNext, #alturaNext{
+    width:100%;
+    margin-left:0;
+    margin-right:0;
 }
 
 .input-radio{
@@ -116,14 +122,12 @@ input[type=radio] + label{
     background-color:blue;
     border: blue;
     border-radius: 5px;
-    width: 25%
   }
   #resultado{
     color:white;
     background-color:orange;
     border: blue;
     border-radius: 5px;
-    width: 210%
   }
   .anterior{
     margin-left: 21%
@@ -166,3 +170,4 @@ input[type=radio] + label{
     outline: none;
     border: 2px solid black;
 }
+

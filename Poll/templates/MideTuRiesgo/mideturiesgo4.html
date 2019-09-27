@@ -8,7 +8,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{% static 'css/mideturiesgo.css'%}">
+    <link rel="stylesheet" href="{% static 'css/test.css'%}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -19,8 +19,8 @@
     <div id="blanco"></div>
     <div id="plomo"></div>
     <div id="head"></div>
-    <form action="" method="post">
-      {% csrf_token %}
+    <!--<form action="" method="post">
+      {% csrf_token %}-->
       <div class="inicio">
         Por último realizaremos algunas preguntas sobre el manejo de riesgos en las actividades que realiza la empresa a ser evaluada.
         <div>
@@ -113,12 +113,8 @@
       </div>
 
       <div class="direccion">
-        <form action="{% url 'pagina3' %}" class="anterior">
-          <button type="submit" value="Submit" id="previous">←</button>
-        </form>
-        <form action="{% url 'resultado' %}" class="siguiente">{% csrf_token %}
-          <button type="submit" value="Submit" id="resultado">Terminar</button>
-        </form>
+        <button type="submit" onclick="redirectTo('http://127.0.0.1:8000/MideTuRiesgo/3')" value="Submit" id="previous">←</button>
+        <button type="submit" onclick="redirectTo('http://127.0.0.1:8000/MideTuRiesgo/resultado')" value="Submit" id="resultado">Terminar</button>
       </div>
       <div>
         <br>
@@ -129,8 +125,15 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <script src="{% static 'js/mideturiesgo.js'%}"></script>
-    </form>
+    <!--</form>-->
   </body>
+<script type="text/javascript">
+<!--
+function redirectTo(sUrl) {
+window.location = sUrl
+}
+//-->
+</script>
 </html>
 
 {% endblock %}

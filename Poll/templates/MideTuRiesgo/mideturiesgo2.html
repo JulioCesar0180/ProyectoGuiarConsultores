@@ -7,7 +7,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{% static 'css/mideturiesgo.css'%}">
+    <link rel="stylesheet" href="{% static 'css/test.css'%}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -219,12 +219,8 @@
       </div>
 
       <div class="direccion">
-        <form action="{% url 'test' %}" class="anterior">{% csrf_token %}
-          <button type="submit" value="Submit" id="previous">←</button>
-        </form>
-        <form action="{% url 'pagina3' %}" class="siguiente">{% csrf_token %}
-          <button type="submit" value="Submit" id="next">→</button>
-        </form>
+        <button type="submit" onclick="redirectTo('http://127.0.0.1:8000/MideTuRiesgo/encuesta')" value="Submit" id="previous">←</button>
+        <button type="submit" onclick="redirectTo('http://127.0.0.1:8000/MideTuRiesgo/3')" value="Submit" id="next">→</button>
       </div>
       <div>
         <br>
@@ -236,5 +232,12 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </form>
   </body>
+<script type="text/javascript">
+<!--
+function redirectTo(sUrl) {
+window.location = sUrl
+}
+//-->
+</script>
 </html>
 {% endblock %}
