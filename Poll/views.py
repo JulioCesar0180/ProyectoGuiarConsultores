@@ -90,8 +90,9 @@ def get_name(request):
                     manufactura = True
                 elif x == "transporte":
                     transporte = True
-                elif x == "servicios":
+                elif x == "servicio":
                     servicios = True
+
             datoRubro = TablaResultadosProcesos(
                 rut_empresa = empresa,
                 answer1=construccion,
@@ -246,196 +247,206 @@ def page_one_poll(request):
 
 @login_required
 def page_two_poll(request):
-    form = FormPageTwo()
-    empresa = UserGuiar.objects.get(rut='12345678-5')
-    respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
-    print(respuestas.answer1)
-    print(respuestas.answer2)
-    print(respuestas.answer3)
-    print(respuestas.answer4)
-    '''
-    construccion = request.POST.getlist('construccion[]')
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        construccion = request.POST.getlist('construccion[]')
+        manufactura = request.POST.getlist('manufactura[]')
+        transporte = request.POST.getlist('transporte[]')
+        servicios = request.POST.getlist('servicios[]')
+        # check whether it's valid:
+        empresa = UserGuiar.objects.get(rut='12345678-5')
 
-    estructura = False
-    gruesa = False
-    instalaciones = False
-    menores = False
-    tuberias = False
-    refuerzos = False
-    for x in construccion:
-        if x == "estructura":
-            estructura = True
-        if x == "gruesa":
-            gruesa = True
-        if x == "instalaciones":
-            instalaciones = True
-        if x == "menores":
-            menores = True
-        if x == "tuberias":
-            tuberias = True
-        if x == "refuerzos":
-            refuerzos = True
-            
-    construccion = TablaResultadosContruccion(
-        empresa=empresa,
-        answer1=estructura,
-        answer2=gruesa,
-        answer3=instalaciones,
-        answer4=menores,
-        answer5=tuberias,
-        answer6=refuerzos
-    )
-    construccion.save()
+        #Construccion
 
-    manufactura = request.POST.getlist('manufactura[]')
+        estructura = False
+        gruesa = False
+        instalaciones = False
+        menores = False
+        tuberias = False
+        refuerzos = False
+        for x in construccion:
+            if x == "estructura":
+                estructura = True
+            if x == "gruesa":
+                gruesa = True
+            if x == "instalaciones":
+                instalaciones = True
+            if x == "menores":
+                menores = True
+            if x == "tuberias":
+                tuberias = True
+            if x == "refuerzos":
+                refuerzos = True
 
-    produccion = False
-    confeccion = False
-    tornerias = False
-    pvc = False
-    muebles = False
-    prototipos = False
-    for x in manufactura:
-        if x == "produccion":
-            produccion = True
-        if x == "confeccion":
-            confeccion = True
-        if x == "tornerias":
-            tornerias = True
-        if x == "pvc":
-            pvc = True
-        if x == "muebles":
-            muebles = True
-        if x == "prototipos":
-            prototipos = True
-            
-    manufactura= TablaResultadosManufactura(
-        empresa=empresa,
-        answer1=produccion,
-        answer2=confeccion,
-        answer3=tornerias,
-        answer4=pvc,
-        answer5=muebles,
-        answer6=prototipos
-    )
-    manufactura.save()
+        construccion = TablaResultadosContruccion(
+            rut_empresa=empresa,
+            answer1=estructura,
+            answer2=gruesa,
+            answer3=instalaciones,
+            answer4=menores,
+            answer5=tuberias,
+            answer6=refuerzos
+        )
 
-    transporte = request.POST.getlist('transporte[]')
+        #Manufactura
 
-    materiales = False
-    personas = False
-    maquinaria = False
-    mercaderia = False
-    granel = False
-    solidos = False
-    corrosivo = False
-    aceite = False
-    carga = False
-    for x in transporte:
-        if x == "materiales":
-            materiales = True
-        if x == "personas":
-            personas = True
-        if x == "maquinaria":
-            maquinaria = True
-        if x == "mercaderia":
-            mercaderia = True
-        if x == "granel":
-            granel = True
-        if x == "solidos":
-            solidos = True
-        if x == "corrosivo":
-            corrosivo = True
-        if x == "aceite":
-            aceite = True
-        if x == "carga":
-            carga = True
+        produccion = False
+        confeccion = False
+        tornerias = False
+        pvc = False
+        muebles = False
+        prototipos = False
+        for x in manufactura:
+            if x == "produccion":
+                produccion = True
+            if x == "confeccion":
+                confeccion = True
+            if x == "tornerias":
+                tornerias = True
+            if x == "pvc":
+                pvc = True
+            if x == "muebles":
+                muebles = True
+            if x == "prototipos":
+                prototipos = True
+
+        manufactura= TablaResultadosManufactura(
+            rut_empresa=empresa,
+            answer1=produccion,
+            answer2=confeccion,
+            answer3=tornerias,
+            answer4=pvc,
+            answer5=muebles,
+            answer6=prototipos
+        )
+
+        #Transporte
+
+        materiales = False
+        personas = False
+        maquinaria = False
+        mercaderia = False
+        granel = False
+        solidos = False
+        corrosivo = False
+        aceite = False
+        carga = False
+        for x in transporte:
+            if x == "materiales":
+                materiales = True
+            if x == "personas":
+                personas = True
+            if x == "maquinaria":
+                maquinaria = True
+            if x == "mercaderia":
+                mercaderia = True
+            if x == "granel":
+                granel = True
+            if x == "solidos":
+                solidos = True
+            if x == "corrosivo":
+                corrosivo = True
+            if x == "aceite":
+                aceite = True
+            if x == "carga":
+                carga = True
 
 
-    transporte = TablaResultadosTransporte(
-        empresa=empresa,
-        answer1=materiales,
-        answer2=personas,
-        answer3=maquinaria,
-        answer4=mercaderia,
-        answer5=granel,
-        answer6=solidos,
-        answer7=corrosivo,
-        answer8=aceite,
-        answer9=carga
-    )
-    transporte.save()
+        transporte = TablaResultadosTransporte(
+            rut_empresa=empresa,
+            answer1=materiales,
+            answer2=personas,
+            answer3=maquinaria,
+            answer4=mercaderia,
+            answer5=granel,
+            answer6=solidos,
+            answer7=corrosivo,
+            answer8=aceite,
+            answer9=carga
+        )
 
-    servicios = request.POST.getlist('servicios[]')
-    
-    maestranza = False
-    reparacion = False
-    electricos = False
-    generador = False
-    repuesto = False
-    hidraulico = False
-    computacional = False
-    lavenderia = False
-    movimiento = False
-    arriendo = False
-    ferreteria = False
-    carretera = False
-    izaje = False
-    garage = False
-    for x in transporte:
-        if x == "maestranza":
-            maestranza = True
-        if x == "reparacion":
-            reparacion = True
-        if x == "electricos":
-            electricos = True
-        if x == "generador":
-            generador = True
-        if x == "repuesto":
-            repuesto = True
-        if x == "hidraulico":
-            hidraulico = True
-        if x == "computacional":
-            computacional = True
-        if x == "lavenderia":
-            lavenderia = True
-        if x == "movimiento":
-            movimiento = True
-        if x == "arriendo":
-            arriendo = True
-        if x == "ferreteria":
-            ferreteria = True
-        if x == "carretera":
-            carretera = True
-        if x == "izaje":
-            izaje = True
-        if x == "garage":
-            garage = True
+        #Servicios
 
-    servicios = TablaResultadosServicios(
-        empresa=empresa,
-        answer1=maestranza,
-        answer2=reparacion,
-        answer3=electricos,
-        answer4=generador,
-        answer5=repuesto,
-        answer6=hidraulico,
-        answer7=computacional,
-        answer8=lavenderia,
-        answer9=movimiento,
-        answer10=arriendo,
-        answer11=ferreteria,
-        answer12=carretera,
-        answer13=izaje,
-        answer14=garage
-    )
-    servicios.save()
-    '''
-    return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form_page_two': form})
+        maestranza = False
+        reparacion = False
+        electricos = False
+        generador = False
+        repuesto = False
+        hidraulico = False
+        computacional = False
+        lavenderia = False
+        movimiento = False
+        arriendo = False
+        ferreteria = False
+        carretera = False
+        izaje = False
+        garage = False
+        for x in servicios:
+            if x == "maestranza":
+                maestranza = True
+            if x == "reparacion":
+                reparacion = True
+            if x == "electricos":
+                electricos = True
+            if x == "generador":
+                generador = True
+            if x == "repuesto":
+                repuesto = True
+            if x == "hidraulico":
+                hidraulico = True
+            if x == "computacional":
+                computacional = True
+            if x == "lavenderia":
+                lavenderia = True
+            if x == "movimiento":
+                movimiento = True
+            if x == "arriendo":
+                arriendo = True
+            if x == "ferreteria":
+                ferreteria = True
+            if x == "carretera":
+                carretera = True
+            if x == "izaje":
+                izaje = True
+            if x == "garage":
+                garage = True
+
+        servicios = TablaResultadosServicios(
+            rut_empresa=empresa,
+            answer1=maestranza,
+            answer2=reparacion,
+            answer3=electricos,
+            answer4=generador,
+            answer5=repuesto,
+            answer6=hidraulico,
+            answer7=computacional,
+            answer8=lavenderia,
+            answer9=movimiento,
+            answer10=arriendo,
+            answer11=ferreteria,
+            answer12=carretera,
+            answer13=izaje,
+            answer14=garage
+        )
+
+        construccion.save()
+        manufactura.save()
+        transporte.save()
+        servicios.save()
+        return HttpResponseRedirect('3')
+
+    else:
+        form = FormPageTwo()
+        empresa = UserGuiar.objects.get(rut='12345678-5')
+        respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
+        constru = respuestas.answer1
+        manu = respuestas.answer2
+        trans = respuestas.answer3
+        serv = respuestas.answer4
+        return render(request, "MideTuRiesgo/mideturiesgo2.html", {'constru':constru, 'manu': manu, 'trans': trans, 'serv': serv})
 
 @login_required
 def page_three_poll(request):
-    form = FormPageThree()
     if request.method == 'POST':
 
         empresa = UserGuiar.objects.get(rut='12345678-5')
@@ -452,7 +463,6 @@ def page_three_poll(request):
                 iso14001 = True
             elif x == "ohsas18001":
                 ohsas18001 = True
-        '''
         manejoRiesgo = request.POST.getlist('manejoRiesgo[]')
         procedimiento = False
         asesoria = False
@@ -481,7 +491,7 @@ def page_three_poll(request):
                 noTiene = True
         
         gestion = TablaResultadosGestion(
-            empresa=empresa,
+            rut_empresa=empresa,
             answer1=iso9001,
             answer2=iso14001,
             answer3=ohsas18001,
@@ -493,10 +503,27 @@ def page_three_poll(request):
             answer9=proyectos,
             answer10=noTiene
         )
+
         gestion.save()
-        '''
+
         return HttpResponseRedirect('4')
-    return render(request, "MideTuRiesgo/mideturiesgo3.html", {'form_page_three': form})
+    else:
+        cont = 5
+        empresa = UserGuiar.objects.get(rut='12345678-5')
+        respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
+        constru = respuestas.answer1
+        manu = respuestas.answer2
+        trans = respuestas.answer3
+        serv = respuestas.answer4
+        if constru:
+            cont += 1
+        if manu:
+            cont += 1
+        if trans:
+            cont += 1
+        if serv:
+            cont += 1
+    return render(request, "MideTuRiesgo/mideturiesgo3.html", {'cont': cont})
 
 @login_required
 def page_four_poll(request):

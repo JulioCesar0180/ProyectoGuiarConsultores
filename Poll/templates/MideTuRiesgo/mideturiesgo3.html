@@ -5,7 +5,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+    <!-- meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{% static 'css/test.css'%}">
@@ -28,7 +28,7 @@
     <form action="" method="post">
       {% csrf_token %}
       <div class="inicio">
-        <b>Pn.</b> Indique todas las certificaciones con las que cuenta la empresa a ser evaluada
+        <b>P{{cont| add:"1"}}.</b> Indique todas las certificaciones con las que cuenta la empresa a ser evaluada
         <div>
           <br>
         </div>
@@ -49,20 +49,20 @@
       </div>
 
       <div class="inicio">
-        <b>Pn.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
+        <b>P{{cont|add:"2"}}.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
          <div>
           <br>
         </div>
         <div class="input-radio">
-          <input type="checkbox" id="procedimiento" name="procedimiento" value="procedimiento" required>
+          <input type="checkbox" id="procedimiento" name="manejoRiesgo[]" value="procedimiento">
           <label for="procedimiento" class="unselectable">Procedimiento de autocuidado, trabajo seguro, medidas preventivas y/o correctivas</label>
         </div>
         <div class="input-radio">
-          <input type="checkbox" id="asesoria" name="asesoria" value="asesoria" required>
+          <input type="checkbox" id="asesoria" name="manejoRiesgo[]" value="asesoria">
           <label for="asesoria" class="unselectable">Asesoría de mutualidades</label>
         </div>
         <div class="input-radio">
-          <input type="checkbox" name="gerencia" id="gerencia" value="gerencia" required>
+          <input type="checkbox" name="manejoRiesgo[]" id="gerencia" value="gerencia">
           <label for="gerencia" class="unselectable">Gerencia / Administración de riesgos (ISO 31.000:2009)</label>
         </div>
           <div>
@@ -74,32 +74,31 @@
       </div>
 
       <div class="inicio">
-          <b>Pn.</b> La empresa cuenta con prevencionista de riesgos
+          <b>P{{cont|add:"3"}}.</b> La empresa cuenta con prevencionista de riesgos
           <div>
             <br>
           </div>
         <div class="input-radio">
-          <input type="radio" id="tiempoCompleto" name="tiempo" value="tiempoCompleto" required>
+          <input type="radio" id="tiempoCompleto" name="prevensionista[]" value="tiempoCompleto">
           <label for="tiempoCompleto" class="unselectable">Tiempo completo</label>
         </div>
         <div class="input-radio">
-          <input type="radio" id="tiempoParcial" name="tiempo" value="tiempoParcial" required>
+          <input type="radio" id="tiempoParcial" name="prevensionista[]" value="tiempoParcial">
           <label for="tiempoParcial" class="unselectable">Tiempo parcial o Part-time</label>
         </div>
         <div class="input-radio">
-          <input type="radio" name="tiempo" id="proyectos" value="proyectos" required>
+          <input type="radio" name="prevensionista[]" id="proyectos" value="proyectos">
           <label for="proyectos">Para proyectos específicos</label>
         </div>
         <div class="input-radio">
-          <input type="radio" name="tiempo" id="noTiene" value="noTiene" required>
+          <input type="radio" name="prevensionista[]" id="noTiene" value="noTiene">
           <label for="noTiene" class="unselectable">No cuenta con provencionista de riesgos</label>
         </div>
       </div>
 
 
-      <div class="direccion">
-        <button type="submit" onclick="redirectTo('http://127.0.0.1:8000/MideTuRiesgo/2')" value="Submit" id="previous">←</button>
-        <button type="submit" onclick="redirectTo('http://127.0.0.1:8000/MideTuRiesgo/4')" value="Submit" id="next">→</button>
+      <div class="siguiente">
+        <button type="submit" value="Submit" id="next">→</button>
       </div>
       <div>
         <br>
