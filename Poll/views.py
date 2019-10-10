@@ -90,8 +90,9 @@ def get_name(request):
                     manufactura = True
                 elif x == "transporte":
                     transporte = True
-                elif x == "servicios":
+                elif x == "servicio":
                     servicios = True
+
             datoRubro = TablaResultadosProcesos(
                 rut_empresa = empresa,
                 answer1=construccion,
@@ -276,196 +277,206 @@ def page_one_poll(request):
 
 @login_required
 def page_two_poll(request):
-    form = FormPageTwo()
-    empresa = UserGuiar.objects.get(rut='12345678-5')
-    respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
-    print(respuestas.answer1)
-    print(respuestas.answer2)
-    print(respuestas.answer3)
-    print(respuestas.answer4)
-    '''
-    construccion = request.POST.getlist('construccion[]')
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        construccion = request.POST.getlist('construccion[]')
+        manufactura = request.POST.getlist('manufactura[]')
+        transporte = request.POST.getlist('transporte[]')
+        servicios = request.POST.getlist('servicios[]')
+        # check whether it's valid:
+        empresa = UserGuiar.objects.get(rut='12345678-5')
 
-    estructura = False
-    gruesa = False
-    instalaciones = False
-    menores = False
-    tuberias = False
-    refuerzos = False
-    for x in construccion:
-        if x == "estructura":
-            estructura = True
-        if x == "gruesa":
-            gruesa = True
-        if x == "instalaciones":
-            instalaciones = True
-        if x == "menores":
-            menores = True
-        if x == "tuberias":
-            tuberias = True
-        if x == "refuerzos":
-            refuerzos = True
-            
-    construccion = TablaResultadosContruccion(
-        empresa=empresa,
-        answer1=estructura,
-        answer2=gruesa,
-        answer3=instalaciones,
-        answer4=menores,
-        answer5=tuberias,
-        answer6=refuerzos
-    )
-    construccion.save()
+        #Construccion
 
-    manufactura = request.POST.getlist('manufactura[]')
+        estructura = False
+        gruesa = False
+        instalaciones = False
+        menores = False
+        tuberias = False
+        refuerzos = False
+        for x in construccion:
+            if x == "estructura":
+                estructura = True
+            if x == "gruesa":
+                gruesa = True
+            if x == "instalaciones":
+                instalaciones = True
+            if x == "menores":
+                menores = True
+            if x == "tuberias":
+                tuberias = True
+            if x == "refuerzos":
+                refuerzos = True
 
-    produccion = False
-    confeccion = False
-    tornerias = False
-    pvc = False
-    muebles = False
-    prototipos = False
-    for x in manufactura:
-        if x == "produccion":
-            produccion = True
-        if x == "confeccion":
-            confeccion = True
-        if x == "tornerias":
-            tornerias = True
-        if x == "pvc":
-            pvc = True
-        if x == "muebles":
-            muebles = True
-        if x == "prototipos":
-            prototipos = True
-            
-    manufactura= TablaResultadosManufactura(
-        empresa=empresa,
-        answer1=produccion,
-        answer2=confeccion,
-        answer3=tornerias,
-        answer4=pvc,
-        answer5=muebles,
-        answer6=prototipos
-    )
-    manufactura.save()
+        construccion = TablaResultadosContruccion(
+            rut_empresa=empresa,
+            answer1=estructura,
+            answer2=gruesa,
+            answer3=instalaciones,
+            answer4=menores,
+            answer5=tuberias,
+            answer6=refuerzos
+        )
 
-    transporte = request.POST.getlist('transporte[]')
+        #Manufactura
 
-    materiales = False
-    personas = False
-    maquinaria = False
-    mercaderia = False
-    granel = False
-    solidos = False
-    corrosivo = False
-    aceite = False
-    carga = False
-    for x in transporte:
-        if x == "materiales":
-            materiales = True
-        if x == "personas":
-            personas = True
-        if x == "maquinaria":
-            maquinaria = True
-        if x == "mercaderia":
-            mercaderia = True
-        if x == "granel":
-            granel = True
-        if x == "solidos":
-            solidos = True
-        if x == "corrosivo":
-            corrosivo = True
-        if x == "aceite":
-            aceite = True
-        if x == "carga":
-            carga = True
+        produccion = False
+        confeccion = False
+        tornerias = False
+        pvc = False
+        muebles = False
+        prototipos = False
+        for x in manufactura:
+            if x == "produccion":
+                produccion = True
+            if x == "confeccion":
+                confeccion = True
+            if x == "tornerias":
+                tornerias = True
+            if x == "pvc":
+                pvc = True
+            if x == "muebles":
+                muebles = True
+            if x == "prototipos":
+                prototipos = True
+
+        manufactura= TablaResultadosManufactura(
+            rut_empresa=empresa,
+            answer1=produccion,
+            answer2=confeccion,
+            answer3=tornerias,
+            answer4=pvc,
+            answer5=muebles,
+            answer6=prototipos
+        )
+
+        #Transporte
+
+        materiales = False
+        personas = False
+        maquinaria = False
+        mercaderia = False
+        granel = False
+        solidos = False
+        corrosivo = False
+        aceite = False
+        carga = False
+        for x in transporte:
+            if x == "materiales":
+                materiales = True
+            if x == "personas":
+                personas = True
+            if x == "maquinaria":
+                maquinaria = True
+            if x == "mercaderia":
+                mercaderia = True
+            if x == "granel":
+                granel = True
+            if x == "solidos":
+                solidos = True
+            if x == "corrosivo":
+                corrosivo = True
+            if x == "aceite":
+                aceite = True
+            if x == "carga":
+                carga = True
 
 
-    transporte = TablaResultadosTransporte(
-        empresa=empresa,
-        answer1=materiales,
-        answer2=personas,
-        answer3=maquinaria,
-        answer4=mercaderia,
-        answer5=granel,
-        answer6=solidos,
-        answer7=corrosivo,
-        answer8=aceite,
-        answer9=carga
-    )
-    transporte.save()
+        transporte = TablaResultadosTransporte(
+            rut_empresa=empresa,
+            answer1=materiales,
+            answer2=personas,
+            answer3=maquinaria,
+            answer4=mercaderia,
+            answer5=granel,
+            answer6=solidos,
+            answer7=corrosivo,
+            answer8=aceite,
+            answer9=carga
+        )
 
-    servicios = request.POST.getlist('servicios[]')
-    
-    maestranza = False
-    reparacion = False
-    electricos = False
-    generador = False
-    repuesto = False
-    hidraulico = False
-    computacional = False
-    lavenderia = False
-    movimiento = False
-    arriendo = False
-    ferreteria = False
-    carretera = False
-    izaje = False
-    garage = False
-    for x in transporte:
-        if x == "maestranza":
-            maestranza = True
-        if x == "reparacion":
-            reparacion = True
-        if x == "electricos":
-            electricos = True
-        if x == "generador":
-            generador = True
-        if x == "repuesto":
-            repuesto = True
-        if x == "hidraulico":
-            hidraulico = True
-        if x == "computacional":
-            computacional = True
-        if x == "lavenderia":
-            lavenderia = True
-        if x == "movimiento":
-            movimiento = True
-        if x == "arriendo":
-            arriendo = True
-        if x == "ferreteria":
-            ferreteria = True
-        if x == "carretera":
-            carretera = True
-        if x == "izaje":
-            izaje = True
-        if x == "garage":
-            garage = True
+        #Servicios
 
-    servicios = TablaResultadosServicios(
-        empresa=empresa,
-        answer1=maestranza,
-        answer2=reparacion,
-        answer3=electricos,
-        answer4=generador,
-        answer5=repuesto,
-        answer6=hidraulico,
-        answer7=computacional,
-        answer8=lavenderia,
-        answer9=movimiento,
-        answer10=arriendo,
-        answer11=ferreteria,
-        answer12=carretera,
-        answer13=izaje,
-        answer14=garage
-    )
-    servicios.save()
-    '''
-    return render(request, "MideTuRiesgo/mideturiesgo2.html", {'form_page_two': form})
+        maestranza = False
+        reparacion = False
+        electricos = False
+        generador = False
+        repuesto = False
+        hidraulico = False
+        computacional = False
+        lavenderia = False
+        movimiento = False
+        arriendo = False
+        ferreteria = False
+        carretera = False
+        izaje = False
+        garage = False
+        for x in servicios:
+            if x == "maestranza":
+                maestranza = True
+            if x == "reparacion":
+                reparacion = True
+            if x == "electricos":
+                electricos = True
+            if x == "generador":
+                generador = True
+            if x == "repuesto":
+                repuesto = True
+            if x == "hidraulico":
+                hidraulico = True
+            if x == "computacional":
+                computacional = True
+            if x == "lavenderia":
+                lavenderia = True
+            if x == "movimiento":
+                movimiento = True
+            if x == "arriendo":
+                arriendo = True
+            if x == "ferreteria":
+                ferreteria = True
+            if x == "carretera":
+                carretera = True
+            if x == "izaje":
+                izaje = True
+            if x == "garage":
+                garage = True
+
+        servicios = TablaResultadosServicios(
+            rut_empresa=empresa,
+            answer1=maestranza,
+            answer2=reparacion,
+            answer3=electricos,
+            answer4=generador,
+            answer5=repuesto,
+            answer6=hidraulico,
+            answer7=computacional,
+            answer8=lavenderia,
+            answer9=movimiento,
+            answer10=arriendo,
+            answer11=ferreteria,
+            answer12=carretera,
+            answer13=izaje,
+            answer14=garage
+        )
+
+        construccion.save()
+        manufactura.save()
+        transporte.save()
+        servicios.save()
+        return HttpResponseRedirect('3')
+
+    else:
+        form = FormPageTwo()
+        empresa = UserGuiar.objects.get(rut='12345678-5')
+        respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
+        constru = respuestas.answer1
+        manu = respuestas.answer2
+        trans = respuestas.answer3
+        serv = respuestas.answer4
+        return render(request, "MideTuRiesgo/mideturiesgo2.html", {'constru':constru, 'manu': manu, 'trans': trans, 'serv': serv})
 
 @login_required
 def page_three_poll(request):
-    form = FormPageThree()
     if request.method == 'POST':
 
         empresa = UserGuiar.objects.get(rut='12345678-5')
@@ -482,7 +493,6 @@ def page_three_poll(request):
                 iso14001 = True
             elif x == "ohsas18001":
                 ohsas18001 = True
-        '''
         manejoRiesgo = request.POST.getlist('manejoRiesgo[]')
         procedimiento = False
         asesoria = False
@@ -511,7 +521,7 @@ def page_three_poll(request):
                 noTiene = True
         
         gestion = TablaResultadosGestion(
-            empresa=empresa,
+            rut_empresa=empresa,
             answer1=iso9001,
             answer2=iso14001,
             answer3=ohsas18001,
@@ -523,154 +533,517 @@ def page_three_poll(request):
             answer9=proyectos,
             answer10=noTiene
         )
+
         gestion.save()
-        '''
+
         return HttpResponseRedirect('4')
-    return render(request, "MideTuRiesgo/mideturiesgo3.html", {'form_page_three': form})
+    else:
+        cont = 5
+        empresa = UserGuiar.objects.get(rut='12345678-5')
+        respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
+        constru = respuestas.answer1
+        manu = respuestas.answer2
+        trans = respuestas.answer3
+        serv = respuestas.answer4
+        if constru:
+            cont += 1
+        if manu:
+            cont += 1
+        if trans:
+            cont += 1
+        if serv:
+            cont += 1
+    return render(request, "MideTuRiesgo/mideturiesgo3.html", {'cont': cont})
 
 @login_required
 def page_four_poll(request):
-    form = FormPageFour()
-    empresa = UserGuiar.objects.get(rut='12345678-5')
-    '''
-    explosivos = request.POST.getlist('explosivos[]')
-    
-    inscripcion = False
-    certificado = False
-    personal = False
-    polvorin = False
-    procedimientos = False
-    dispositivos = False
-    for x in explosivos:
-        if x == "inscripcion":
-            inscripcion = True
-        elif x == "certificado":
-            certificado = True
-        elif x == "personal":
-            personal = True
-        elif x == "polvorin":
-            polvorin = True
-        elif x == "procedimientos":
-            procedimientos = True
-        elif x == "dispositivos":
-            dispositivos = True
-            
-    explosivos = TablaResultadosExplosivos(
-        empresa=empresa,
-        answer1=inscripcion,
-        answer2=certificado,
-        answer3=personal,
-        answer4=polvorin,
-        answer5=procedimientos,
-        answer6=dispositivos
-    )
-    explosivos.save()
+    if request.method == 'POST':
+        empresa = UserGuiar.objects.get(rut='12345678-5')
 
-    electricidad = request.POST.getlist('electricidad[]')
-    
-    apertura = False
-    encaramiento = False
-    ausencia = False
-    tierra = False
-    delimitacion = False
-    for x in electricidad:
-        if x == "apertura":
-            apertura = True
-        elif x == "encaramiento":
-            encaramiento = True
-        elif x == "ausencia":
-            ausencia = True
-        elif x == "tierra":
-            tierra = True
-        elif x == "delimitacion":
-            delimitacion = True
-    
-    electricidad = TablaResultadosElectricidad(
-        empresa=empresa,
-        answer1=apertura,
-        answer2=encaramiento,
-        answer3=ausencia,
-        answer4=tierra,
-        answer5=delimitacion
-    )
-    electricidad.save()
+        explosivos = request.POST.getlist('explosivos[]')
 
-    sustancias_peligrosas = request.POST.getlist('sustancias_peligrosas[]')
-    
-    distintivos = False
-    tacografo = False
-    antiguedad = False
-    transporte = False
-    embalaje = False
-    carga = False
-    tipoA = False
-    tipoB = False
-    tipoC = False
-    for x in sustancias_peligrosas:
-        if x == "distintivos":
-            distintivos = True
-        elif x == "tacografo":
-            tacografo = True
-        elif x == "antiguedad":
-            antiguedad = True
-        elif x == "transporte":
-            transporte = True
-        elif x == "embalaje":
-            embalaje = True
-        elif x == "carga":
-            carga = True
-        elif x == "tipoA":
-            tipoA = True
-        elif x == "tipoB":
-            tipoB = True
-        elif x == "tipoC":
-            tipoC = True
-            
-    sustancias_peligrosas = TablaResultadosSustanciasPeligrosas(
-        empresa=empresa,
-        answer1=distintivos,
-        answer2=tacografo,
-        answer3=antiguedad,
-        answer4=transporte,
-        answer5=embalaje,
-        answer6=carga,
-        answer7=tipoA,
-        answer8=tipoB,
-        answer9=tipoC
-    )
-    sustancias_peligrosas.save()
+        inscripcion = False
+        certificado = False
+        personal = False
+        polvorin = False
+        procedimientos = False
+        dispositivos = False
+        for x in explosivos:
+            if x == "inscripcion":
+                inscripcion = True
+            elif x == "certificado":
+                certificado = True
+            elif x == "personal":
+                personal = True
+            elif x == "polvorin":
+                polvorin = True
+            elif x == "procedimientos":
+                procedimientos = True
+            elif x == "dispositivos":
+                dispositivos = True
 
-    altura = request.POST.getlist('altura[]')
-    
-    norma = False
-    supervisor = False
-    proteccion = False
-    equipamiento = False
-    for x in altura:
-        if x == "norma":
-            norma = True
-        elif x == "supervisor":
-            supervisor = True
-        elif x == "proteccion":
-            proteccion = True
-        elif x == "equipamiento":
-            equipamiento = True
-            
-    altura = TablaResultadosRiesgoAltura(
-        empresa=empresa,
-        answer1=norma,
-        answer2=supervisor,
-        answer3=proteccion,
-        answer4=equipamiento)
-    altura.save()
-    '''
-    return render(request, "MideTuRiesgo/mideturiesgo4.html", {'form_page_four': form})
+        explosivos = TablaResultadosExplosivos(
+            rut_empresa=empresa,
+            answer1=inscripcion,
+            answer2=certificado,
+            answer3=personal,
+            answer4=polvorin,
+            answer5=procedimientos,
+            answer6=dispositivos
+        )
+        explosivos.save()
 
+        electricidad = request.POST.getlist('electricidad[]')
+
+        apertura = False
+        encaramiento = False
+        ausencia = False
+        tierra = False
+        delimitacion = False
+        for x in electricidad:
+            if x == "apertura":
+                apertura = True
+            elif x == "encaramiento":
+                encaramiento = True
+            elif x == "ausencia":
+                ausencia = True
+            elif x == "tierra":
+                tierra = True
+            elif x == "delimitacion":
+                delimitacion = True
+
+        electricidad = TablaResultadosElectricidad(
+            rut_empresa=empresa,
+            answer1=apertura,
+            answer2=encaramiento,
+            answer3=ausencia,
+            answer4=tierra,
+            answer5=delimitacion
+        )
+        electricidad.save()
+
+        sustancias_peligrosas = request.POST.getlist('sustancias_peligrosas[]')
+
+        distintivos = False
+        tacografo = False
+        antiguedad = False
+        transporte = False
+        embalaje = False
+        carga = False
+        tipoA = False
+        tipoB = False
+        tipoC = False
+        for x in sustancias_peligrosas:
+            if x == "distintivos":
+                distintivos = True
+            elif x == "tacografo":
+                tacografo = True
+            elif x == "antiguedad":
+                antiguedad = True
+            elif x == "transporte":
+                transporte = True
+            elif x == "embalaje":
+                embalaje = True
+            elif x == "carga":
+                carga = True
+            elif x == "tipoA":
+                tipoA = True
+            elif x == "tipoB":
+                tipoB = True
+            elif x == "tipoC":
+                tipoC = True
+
+        sustancias_peligrosas = TablaResultadosSustanciasPeligrosas(
+            rut_empresa=empresa,
+            answer1=distintivos,
+            answer2=tacografo,
+            answer3=antiguedad,
+            answer4=transporte,
+            answer5=embalaje,
+            answer6=carga,
+            answer7=tipoA,
+            answer8=tipoB,
+            answer9=tipoC
+        )
+        sustancias_peligrosas.save()
+
+        altura = request.POST.getlist('altura[]')
+
+        norma = False
+        supervisor = False
+        proteccion = False
+        equipamiento = False
+        for x in altura:
+            if x == "norma":
+                norma = True
+            elif x == "supervisor":
+                supervisor = True
+            elif x == "proteccion":
+                proteccion = True
+            elif x == "equipamiento":
+                equipamiento = True
+
+        altura = TablaResultadosRiesgoAltura(
+            rut_empresa=empresa,
+            answer1=norma,
+            answer2=supervisor,
+            answer3=proteccion,
+            answer4=equipamiento)
+        altura.save()
+        return HttpResponseRedirect('resultado')
+
+    else:
+        cont = 8
+        empresa = UserGuiar.objects.get(rut='12345678-5')
+        respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
+        constru = respuestas.answer1
+        manu = respuestas.answer2
+        trans = respuestas.answer3
+        serv = respuestas.answer4
+        if constru:
+            cont += 1
+        if manu:
+            cont += 1
+        if trans:
+            cont += 1
+        if serv:
+            cont += 1
+        return render(request, "MideTuRiesgo/mideturiesgo4.html", {'cont': cont})
 
 def page_results(request):
     if request.method == 'GET':
-        a = "placeholder"
+        empresa = UserGuiar.objects.get(rut='12345678-5')
+        transporte = TablaResultadosTransporte.objects.get(rut_empresa=empresa)
+        construccion = TablaResultadosContruccion.objects.get(rut_empresa=empresa)
+        manufactura = TablaResultadosManufactura.objects.get(rut_empresa=empresa)
+        servicios = TablaResultadosServicios.objects.get(rut_empresa=empresa)
+        dotacion = TablaResultadosDotacion.objects.get(rut_empresa=empresa)
+        gestion = TablaResultadosGestion.objects.get(rut_empresa=empresa)
+        procesos = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
+        explosivos = TablaResultadosExplosivos.objects.get(rut_empresa=empresa)
+        electricidad = TablaResultadosElectricidad.objects.get(rut_empresa=empresa)
+        sustancias = TablaResultadosSustanciasPeligrosas.objects.get(rut_empresa=empresa)
+        altura = TablaResultadosRiesgoAltura.objects.get(rut_empresa=empresa)
+
+        fin_procesos = 0
+        fin_construccion = 0
+        fin_manufactura = 0
+        fin_transporte = 0
+        fin_servicios = 0
+        fin_dotacion = 0
+        fin_gestion = 0
+        fin_explosivos = 0
+        fin_electricidad = 0
+        fin_sustancias = 0
+        fin_altura = 0
+        total = 0
+        minimo = 0
+        resultado = 0
+        constru = procesos.answer1
+        manu = procesos.answer2
+        trans = procesos.answer3
+        serv = procesos.answer4
+        if constru:
+            fin_procesos += 5
+            if construccion.answer1:
+                fin_construccion += 2
+            if construccion.answer2:
+                fin_construccion += 2
+            if construccion.answer3:
+                fin_construccion += 2
+            if construccion.answer4:
+                fin_construccion += 3
+            if construccion.answer5:
+                fin_construccion += 1
+            if construccion.answer6:
+                fin_construccion += 1
+            resultado += fin_construccion
+            total += 16
+            minimo += 6
+
+        if manu:
+            fin_procesos += 3
+            if manufactura.answer1:
+                fin_manufactura += 2
+            if manufactura.answer2:
+                fin_manufactura += 2
+            if manufactura.answer3:
+                fin_manufactura += 3
+            if manufactura.answer4:
+                fin_manufactura += 3
+            if manufactura.answer5:
+                fin_manufactura += 1
+            if manufactura.answer6:
+                fin_manufactura += 1
+            resultado += fin_manufactura
+            total += 15
+            minimo += 4
+
+
+        if trans:
+            fin_procesos += 4
+            if transporte.answer1:
+                fin_transporte += 1
+            if transporte.answer2:
+                fin_transporte += 3
+            if transporte.answer3:
+                fin_transporte += 2
+            if transporte.answer4:
+                fin_transporte += 1
+            if transporte.answer5:
+                fin_transporte += 1
+            if transporte.answer6:
+                fin_transporte += 1
+            if transporte.answer7:
+                fin_transporte += 4
+            if transporte.answer8:
+                fin_transporte += 2
+            if transporte.answer9:
+                fin_transporte += 2
+            resultado += fin_transporte
+            total += 21
+            minimo += 5
+
+        if serv:
+            fin_procesos += 2
+            if servicios.answer1:
+                fin_servicios += 2
+            if servicios.answer2:
+                fin_servicios += 3
+            if servicios.answer3:
+                fin_servicios += 3
+            if servicios.answer4:
+                fin_servicios += 5
+            if servicios.answer5:
+                fin_servicios += 3
+            if servicios.answer6:
+                fin_servicios += 3
+            if servicios.answer7:
+                fin_servicios += 1
+            if servicios.answer8:
+                fin_servicios += 1
+            if servicios.answer9:
+                fin_servicios += 3
+            if servicios.answer10:
+                fin_servicios += 3
+            if servicios.answer11:
+                fin_servicios += 1
+            if servicios.answer12:
+                fin_servicios += 2
+            if servicios.answer13:
+                fin_servicios += 3
+            if servicios.answer14:
+                fin_servicios += 2
+            resultado += fin_servicios
+            total += 38
+            minimo += 3
+        resultado += fin_procesos
+
+
+        if int(dotacion.answer1) < 50:
+            fin_dotacion += 1
+        elif int(dotacion.answer1) >= 50 and int(dotacion.answer1) < 125:
+            fin_dotacion += 2
+        elif int(dotacion.answer1) >= 125 and int(dotacion.answer1) < 200:
+            fin_dotacion += 3
+        else:
+            fin_dotacion += 4
+
+        if int(dotacion.answer2) < 50:
+            fin_dotacion += 1
+        elif int(dotacion.answer2) >= 50 and int(dotacion.answer2) < 125:
+            fin_dotacion += 2
+        elif int(dotacion.answer2) >= 125 and int(dotacion.answer2) < 200:
+            fin_dotacion += 3
+        else:
+            fin_dotacion += 5
+
+        if int(dotacion.answer3) < 20:
+            fin_dotacion += 1
+        elif int(dotacion.answer3) >= 20 and int(dotacion.answer3) < 30:
+            fin_dotacion += 3
+        elif int(dotacion.answer3) >= 30 and int(dotacion.answer3) < 40:
+            fin_dotacion += 5
+        elif int(dotacion.answer3) >= 40 and int(dotacion.answer3) < 50:
+            fin_dotacion += 6
+        else:
+            fin_dotacion += 7
+
+        if int(dotacion.answer4) < 20:
+            fin_dotacion += 1
+        elif int(dotacion.answer4) >= 20 and int(dotacion.answer4) < 30:
+            fin_dotacion += 3
+        elif int(dotacion.answer4) >= 30 and int(dotacion.answer4) < 40:
+            fin_dotacion += 5
+        elif int(dotacion.answer4) >= 40 and int(dotacion.answer4) < 50:
+            fin_dotacion += 6
+        else:
+            fin_dotacion += 7
+
+        if int(dotacion.answer5) < 20:
+            fin_dotacion += 3
+        elif int(dotacion.answer5) >= 20 and int(dotacion.answer5) < 30:
+            fin_dotacion += 6
+        elif int(dotacion.answer5) >= 30 and int(dotacion.answer5) < 40:
+            fin_dotacion += 9
+        elif int(dotacion.answer5) >= 40 and int(dotacion.answer5) < 50:
+            fin_dotacion += 12
+        else:
+            fin_dotacion += 15
+
+        if int(dotacion.answer6) < 20:
+            fin_dotacion += 3
+        elif int(dotacion.answer6) >= 20 and int(dotacion.answer6) < 30:
+            fin_dotacion += 6
+        elif int(dotacion.answer6) >= 30 and int(dotacion.answer6) < 40:
+            fin_dotacion += 9
+        elif int(dotacion.answer6) >= 40 and int(dotacion.answer6) < 50:
+            fin_dotacion += 12
+        else:
+            fin_dotacion += 15
+
+        if int(dotacion.answer7) < 20:
+            fin_dotacion += 1
+        elif int(dotacion.answer7) >= 20 and int(dotacion.answer7) < 30:
+            fin_dotacion += 3
+        elif int(dotacion.answer7) >= 30 and int(dotacion.answer7) < 40:
+            fin_dotacion += 5
+        elif int(dotacion.answer7) >= 40 and int(dotacion.answer7) < 50:
+            fin_dotacion += 6
+        else:
+            fin_dotacion += 7
+
+        if int(dotacion.answer8) < 20:
+            fin_dotacion += 1
+        elif int(dotacion.answer8) >= 20 and int(dotacion.answer8) < 30:
+            fin_dotacion += 3
+        elif int(dotacion.answer8) >= 30 and int(dotacion.answer8) < 40:
+            fin_dotacion += 5
+        elif int(dotacion.answer8) >= 40 and int(dotacion.answer8) < 50:
+            fin_dotacion += 6
+        else:
+            fin_dotacion += 7
+        resultado += fin_dotacion
+        total += 57
+        minimo += 12
+
+        if gestion.answer1:
+            fin_gestion += 1
+        if gestion.answer2:
+            fin_gestion += 2
+        if gestion.answer3:
+            fin_gestion += 3
+        if gestion.answer4:
+            fin_gestion += 2
+        if gestion.answer5:
+            fin_gestion += 1
+        if gestion.answer6:
+            fin_gestion += 2
+        if gestion.answer7:
+            fin_gestion += 4
+        if gestion.answer8:
+            fin_gestion += 2
+        if gestion.answer9:
+            fin_gestion += 3
+        if gestion.answer10:
+            fin_gestion += 1
+        resultado -= fin_gestion
+        total -= 3
+        minimo += 15
+
+        if explosivos.answer1:
+            fin_explosivos += 2
+        if construccion.answer2:
+            fin_explosivos += 2
+        if explosivos.answer3:
+            fin_explosivos += 2
+        if explosivos.answer4:
+            fin_explosivos += 3
+        if explosivos.answer5:
+            fin_explosivos += 1
+        if explosivos.answer6:
+            fin_explosivos += 1
+        if explosivos.answer1 or explosivos.answer2 or explosivos.answer3 or explosivos.answer4 or explosivos.answer5 or explosivos.answer6:
+            total += 11
+            minimo += 1
+            resultado += fin_explosivos
+
+        if electricidad.answer1:
+            fin_electricidad += 2
+        if electricidad.answer2:
+            fin_electricidad += 2
+        if electricidad.answer3:
+            fin_electricidad += 2
+        if electricidad.answer4:
+            fin_electricidad += 3
+        if electricidad.answer5:
+            fin_electricidad += 1
+        if electricidad.answer1 or electricidad.answer2 or electricidad.answer3 or electricidad.answer4 or electricidad.answer5:
+            total += 10
+            minimo += 1
+            resultado += fin_electricidad
+
+        if sustancias.answer1:
+            fin_sustancias += 1
+        if sustancias.answer2:
+            fin_sustancias += 2
+        if sustancias.answer3:
+            fin_sustancias += 3
+        if sustancias.answer4:
+            fin_sustancias += 2
+        if sustancias.answer5:
+            fin_sustancias += 1
+        if sustancias.answer6:
+            fin_sustancias += 2
+        if sustancias.answer7:
+            fin_sustancias += 4
+        if sustancias.answer8:
+            fin_sustancias += 2
+        if sustancias.answer9:
+            fin_sustancias += 3
+        if sustancias.answer1 or sustancias.answer2 or sustancias.answer3 or sustancias.answer4 or sustancias.answer5 or sustancias.answer6 or sustancias.answer7 or sustancias.answer8 or sustancias.answer9:
+            total += 15
+            minimo += 3
+            resultado += fin_sustancias
+
+        if altura.answer1:
+            fin_altura += 1
+        if altura.answer2:
+            fin_altura += 2
+        if altura.answer3:
+            fin_altura += 3
+        if altura.answer4:
+            fin_altura += 2
+        if altura.answer1 or altura.answer2 or altura.answer3 or altura.answer4:
+            total += 8
+            minimo += 1
+            resultado += fin_altura
+
+        final = TablaResultadosFinales(
+            rut_empresa = empresa,
+            riesgo_transporte=fin_transporte,
+            riesgo_construccion=fin_construccion,
+            riesgo_manufactura=fin_manufactura,
+            riesgo_servicios=fin_servicios,
+            riesgo_dotacion=fin_dotacion,
+            riesgo_gestion=fin_gestion,
+            riesgo_procesos=fin_procesos,
+            riesgo_explosivos=fin_explosivos,
+            riesgo_electricidad=fin_electricidad,
+            riesgo_sustancias_peligrosas=fin_sustancias,
+            riesgo_altura=fin_altura
+        )
+        final.save()
+        res_por = (total-minimo)/100*resultado
+        res_img = (380+19)*res_por/100
+        res_fin = (380+19) - res_img
+        res_fin = int(res_fin)
+        print(res_fin)
+        print(total)
+        print(minimo)
+        print(resultado)
+
     else:
         # Error de metodo
         e = "Operacion Invalida"
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html")
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total':total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin})
