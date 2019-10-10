@@ -122,7 +122,7 @@ a:focus{
 	margin-top: 100px;
 	margin-bottom: 50px;
 	text-align: center;
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 .section-info{
 	margin-bottom: 60px;
@@ -175,7 +175,7 @@ a:focus{
 }
 
 .loader .loader-progress { 
-	background-color: rgb(14,41,75);
+	background-color: darkblue;
 	position: fixed;
 	z-index: 2000;
 	top: 50%;
@@ -219,7 +219,7 @@ a:focus{
 	top: 20px !important;
 }
 .main-nav-change{
-	background: white;/* #F0394C*/;
+	background: darkblue;/* #F0394C*/;
 	height: 80px;
 }
 .logo-left{
@@ -236,7 +236,6 @@ a:focus{
 	text-align: right;
 	top: 50px;
 	z-index: 16;
-	width: 50px;
 	-webkit-transition: top .5s ease-in-out, left .5s;
 	transition: top .5s ease-in-out, left .5s;
 }
@@ -253,9 +252,8 @@ a:focus{
 	outline: none;
 }
 .nav-menu {
-  background: rgb(14,41,75) none repeat 0 0;
+  background: #171717 none repeat scroll 0 0;
   padding-top: 50px;
-	overflow: hidden;
 }
 .nav-menu li{
 	display: block;
@@ -271,7 +269,7 @@ a:focus{
 .nav-menu a:hover,
 .nav-menu .current a{
   color: #fff;
-  background-color: rgb(14,41,75);
+  background-color:darkblue;
   text-decoration:none;
 }
 /*-----  End of menu  ------*/
@@ -326,7 +324,7 @@ a:focus{
   overflow: hidden;
 }
 .caption .btn-start:hover{
-	color: rgb(14,41,75);
+	color: darkblue;
 	background:#fff;
 	}
 
@@ -384,18 +382,18 @@ a:focus{
 }
 .feature-item .content .icon{
 	font-size: 80px;
-	color: rgb(14,41,75);
+	color: darkblue;
 	margin-bottom: 30px;
 	line-height: 100%;
 }
 .feature-item .content .title{
 	font-size: 20px;
-	color: rgb(14,41,75);
+	color: darkblue;
 	margin-bottom: 40px;
 	text-transform: uppercase;	
 }
 .feature-item .content:hover{
-	background-color: rgb(14,41,75);
+	background-color: darkblue;
 	-webkit-transform: translateY(-10px);
 	transform: translateY(-10px);
 }
@@ -462,7 +460,7 @@ a:focus{
 	cursor: pointer;
 }
 .each-courses:hover .title{
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 .each-courses:hover .info{
 	color: #fff;
@@ -482,7 +480,7 @@ a:focus{
 .content-part .active-image img{
 	width: 420px;
 	height: 420px;
-	border: 5px solid rgb(14,41,75);
+	border: 5px solid darkblue;
 	border-radius: 100%;
 }
 .content-part .active-image p{
@@ -497,7 +495,7 @@ a:focus{
 	width: 100%;
 	height: 100%;
 	border-radius: 100%;
-	border: 1px solid rgb(14,41,75);
+	border: 1px solid darkblue;
 }
 .content-part .active-thumb img{
 	opacity: 1 !important;
@@ -505,7 +503,7 @@ a:focus{
 .content-part .thumb-img img{
 	width: 140px;
 	height: 140px;
-	border: 5px solid rgb(14,41,75);
+	border: 5px solid darkblue;
 	border-radius: 100%;
 	opacity: .2;
 	-webkit-transition: all .3s;
@@ -565,11 +563,11 @@ a:focus{
 	margin-top: 20px;
 }
 .portfolio-filter li .active{
-	color: rgb(14,41,75);
+	color: darkblue;
 	text-decoration: none;
 }
 .portfolio-filter li a:hover{
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 .portfolio-item{
 	margin-bottom: 30px;
@@ -580,7 +578,7 @@ a:focus{
 	transition: all .3s;	
 }
 .portfolio-item .content figcaption{
-	background-color: rgb(14,41,75, 0.8);
+	background-color: darkblue;
 	color: #fff;
 	opacity: 0;
 	-webkit-transition: all .3s;
@@ -674,7 +672,7 @@ a:focus{
 #count-down .color-overlay{
 	width: 100%;
 	height: 100%;
-	background: rgb(14,41,75,0.7);
+	background: darkblue;
 }
 #count-down .section-title,
 #count-down .counter-content p,
@@ -708,7 +706,7 @@ a:focus{
 	overflow: hidden;
 }
 .team-member .caption .color-overlay{
-	background: rgb(14,41,75,0.7);
+	background: darkblue;
 	left: 100%;
 	opacity: 0;
 	-webkit-transition: all .3s;
@@ -755,8 +753,6 @@ a:focus{
 }
 /*-----  End of teams  ------*/
 
-
-
 /*===================================
 =            latest-blog            =
 ===================================*/
@@ -774,7 +770,7 @@ a:focus{
 	color: #454545;
 }
 .each-post .headline a:hover{
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 .read-more-button{
 	margin-top: 80px;
@@ -787,7 +783,7 @@ a:focus{
 }
 
 .read-more-button a:hover{
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 
 /*-----  End of latest-blog  ------*/
@@ -946,8 +942,8 @@ a:focus{
 }
 #latest-blog .pagination>li:hover a,
 #latest-blog .pagination>li.active a{
-	background-color: rgb(14,41,75);
-	border-color: rgb(14,41,75);
+	background-color: darkblue;
+	border-color: darkblue;
 	color: #fff;
 }
 /*-----  End of latest-blog-page  ------*/
@@ -977,7 +973,7 @@ a:focus{
 	color: #999999;
 }
 #blog-details a:hover{
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 /*comments content*/
 .comments{
@@ -1025,7 +1021,7 @@ a:focus{
 }
 .comments-form form input:focus,
 .comments-form form textarea:focus{
-	border-color: rgb(14,41,75);
+	border-color: darkblue;
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
@@ -1033,7 +1029,7 @@ a:focus{
 	margin: 20px 0;
 }
 .submit-button .btn-primary{
-	background-color: rgb(14,41,75);
+	background-color: darkblue;
 	border: none;
 	padding: 15px 20px;
 }
@@ -1061,7 +1057,7 @@ a:focus{
 	background-color: rgba(255,255,255,.9);
 }
 .join-btn a{
-	background-color: rgb(14,41,75);
+	background-color: darkblue;
 	text-transform: uppercase;
 	border: none;
 	border-radius: 0;
@@ -1126,10 +1122,10 @@ a:focus{
 #contact .form input:focus,
 #contact .form textarea:focus{
 	box-shadow: none;
-	border-color: rgb(14,41,75);
+	border-color: darkblue;
 }
 #contact .form .btn-submit{
-	background: rgb(14,41,75);
+	background: darkblue;
 	color: #fff;
 	padding: 12px;
 }
@@ -1164,7 +1160,7 @@ a:focus{
 	font-size: 30px;
 }
 .social-icon-footer li a:hover{
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 .subscribe-form p{
 	color: #999999;
@@ -1182,7 +1178,7 @@ a:focus{
 .subscribe-form input:focus{
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	border-color: rgb(14,41,75);
+	border-color: darkblue;
 }
 .subscribe-form input::-webkit-input-placeholder {
    color: #666666;
@@ -1205,7 +1201,7 @@ a:focus{
 	font-size: 12px;
 }
 .copyright .info a:hover{
-	color: rgb(14,41,75);
+	color: darkblue;
 }
 /*-----  End of footer  ------*/
 
