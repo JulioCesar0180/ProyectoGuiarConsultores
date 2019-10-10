@@ -178,7 +178,7 @@ input[type=radio] + label{
     width: 100px;
     height: 400px;
     border:1px solid #000;
-    background-image:linear-gradient(red,yellow,green);
+    background-image:linear-gradient(green,yellow,red);
   }
 
   #triangulo{
@@ -187,8 +187,9 @@ input[type=radio] + label{
 	border-top: 20px solid transparent;
 	border-left: 30px solid #555;
 	border-bottom: 20px solid transparent;
-	/*Maximo margin-bottom 134%*/
-	margin-bottom:134%;
+	/*Maximo margin-bottom 380px*/
+	/*Minimo margin-bottom -19px*/
+	margin-bottom: -19px;
 }
 #rectangulo, #triangulo{
     display:inline-block;
