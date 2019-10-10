@@ -120,14 +120,44 @@ def home(request):
 
 
 def Perfil(request):
+    form = UpdateForm(request.POST)
+    idEmpresa = str(request.user.id)
+    empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
+
+    nombre_representante = request.user.name
+    email_representante = empresa.email_representante
+    #email_representante = "julio@gmail.com"
+    numero_representante = "988886981"
+
+    rut = request.user.rut
+    experiencia_empresa = "10"
+    razon_social_empresa = "razon social"
+    ventas_anuales_empresa = "1000"
+    address = request.user.address
+    print(address)
+    comuna_empresa = "Antofa"
+    ciudad_empresa = "Antofagasta"
+
+
     if request.method == 'POST':
         form = UpdateForm(request.POST)
         if form.is_valid():
             return redirect('home')
     else:
         form = UpdateForm()
-    #return render(request, 'u_perfil.html', {'form': form})
-    return render(request, 'perfil.html', {'form': form})
+    return render(request, 'perfil.html', {
+        'form': form,
+        'nombre_representante': nombre_representante,
+        'email_representante': email_representante,
+        'numero_representante': numero_representante,
+        'rut': rut,
+        'experiencia_empresa': experiencia_empresa,
+        'razon_social_empresa': razon_social_empresa,
+        'ventas_anuales_empresa': ventas_anuales_empresa,
+        'address': address,
+        'comuna_empresa': comuna_empresa,
+        'ciudad_empresa': ciudad_empresa
+    })
 
 
 def MTR_login(request):
