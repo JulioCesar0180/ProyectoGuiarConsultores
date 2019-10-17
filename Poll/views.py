@@ -126,33 +126,48 @@ def Perfil(request):
     idEmpresa = str(request.user.id)
     empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
 
-    nombre_representante = request.user.name
+    nombre_representante = empresa.nombre_representante
     email_representante = empresa.email_representante
-    #email_representante = "julio@gmail.com"
-    numero_representante = "988886981"
+    numero_representante = empresa.telefono_representante
 
     rut = request.user.rut
-    experiencia_empresa = "10"
-    razon_social_empresa = "razon social"
-    ventas_anuales_empresa = "1000"
+    nombre_empresa = request.user.name
+    experiencia_empresa = empresa.experiencia_empresa
+    razon_social_empresa = empresa.razon_social_empresa
+    ventas_anuales_empresa = empresa.ventas_anuales_empresa
     address = request.user.address
-    print(address)
-    comuna_empresa = "Antofa"
-    ciudad_empresa = "Antofagasta"
-
+    comuna_empresa = empresa.comuna_empresa
+    ciudad_empresa = empresa.ciudad_empresa
 
     if request.method == 'POST':
         form = UpdateForm(request.POST)
         if form.is_valid():
-            return redirect('home')
+
+            """Datos de contacto de la empresa"""
+            nombre_representante_new = form.cleaned_data['nombre_representante']
+            email_representante_new = form.cleaned_data['email_representante']
+            telefono_representante_new = form.cleaned_data['telefono_representante']
+
+            """Informacion general de la empresa Empresa"""
+            nombre_empresa_new = form.cleaned_data['name']
+            experiencia_empresa_new = form.cleaned_data['nombre_empresa']
+            razon_social_empresa_new = form.cleaned_data['razon_social_empresa']
+            ventas_anuales_empresa_new = form.cleaned_data['ventas_anuales_empresa']
+            address_new = form.cleaned_data['address']
+            comuna_empresa_new = form.cleaned_data['comuna_empresa']
+            ciudad_empresa_new = form.cleaned_data['ciudad_empresa']
+
+            """TablaPerfilEmpresa.objects.filter(pk=rut).update(nombre_representante='nombre_representante_new')"""
     else:
         form = UpdateForm()
+
     return render(request, 'perfil.html', {
         'form': form,
         'nombre_representante': nombre_representante,
         'email_representante': email_representante,
         'numero_representante': numero_representante,
         'rut': rut,
+        'nombre_empresa': nombre_empresa,
         'experiencia_empresa': experiencia_empresa,
         'razon_social_empresa': razon_social_empresa,
         'ventas_anuales_empresa': ventas_anuales_empresa,
@@ -189,6 +204,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+
             user = form.save()
 
             rut_empresa = form.cleaned_data['rut']
