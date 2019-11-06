@@ -122,58 +122,34 @@ def home(request):
 
 
 def Perfil(request):
-    form = UpdateForm(request.POST)
     idEmpresa = str(request.user.id)
-    empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
 
-    nombre_representante = empresa.nombre_representante
-    email_representante = empresa.email_representante
-    numero_representante = empresa.telefono_representante
-
-    rut = request.user.rut
-    nombre_empresa = request.user.name
-    experiencia_empresa = empresa.experiencia_empresa
-    razon_social_empresa = empresa.razon_social_empresa
-    ventas_anuales_empresa = empresa.ventas_anuales_empresa
-    address = request.user.address
-    comuna_empresa = empresa.comuna_empresa
-    ciudad_empresa = empresa.ciudad_empresa
+    """Esto tira error si en la consulta no encuentra alguna coincidencia, no se si es necesario
+    validarlo pero te aviso por si no lo sabias. Yo creo que en este caso, no es necesario"""
+    Obj_empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
 
     if request.method == 'POST':
-        form = UpdateForm(request.POST)
-        if form.is_valid():
+        """Datos de contacto de la Obj_empresa"""
 
-            """Datos de contacto de la empresa"""
-            nombre_representante_new = form.cleaned_data['nombre_representante']
-            email_representante_new = form.cleaned_data['email_representante']
-            telefono_representante_new = form.cleaned_data['telefono_representante']
+        """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
+         validar el ingreso de texto en blanco"""
 
-            """Informacion general de la empresa Empresa"""
-            nombre_empresa_new = form.cleaned_data['name']
-            experiencia_empresa_new = form.cleaned_data['nombre_empresa']
-            razon_social_empresa_new = form.cleaned_data['razon_social_empresa']
-            ventas_anuales_empresa_new = form.cleaned_data['ventas_anuales_empresa']
-            address_new = form.cleaned_data['address']
-            comuna_empresa_new = form.cleaned_data['comuna_empresa']
-            ciudad_empresa_new = form.cleaned_data['ciudad_empresa']
+        """Cada linea de este codigo, modifica los campos correpondientes"""
+        Obj_empresa.nombre_representante = request.POST['nombre_representante']
+        Obj_empresa.email_representante = request.POST['email_representante']
+        Obj_empresa.telefono_representante = request.POST['telefono_representante']
+        Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
+        Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
+        Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
+        Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
+        Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
 
-            """TablaPerfilEmpresa.objects.filter(pk=rut).update(nombre_representante='nombre_representante_new')"""
-    else:
-        form = UpdateForm()
+        """ Actualiza la base de datos"""
+        Obj_empresa.save()
 
+    """ Revisa el perfil.html ya que hice pequeños cambios"""
     return render(request, 'perfil.html', {
-        'form': form,
-        'nombre_representante': nombre_representante,
-        'email_representante': email_representante,
-        'numero_representante': numero_representante,
-        'rut': rut,
-        'nombre_empresa': nombre_empresa,
-        'experiencia_empresa': experiencia_empresa,
-        'razon_social_empresa': razon_social_empresa,
-        'ventas_anuales_empresa': ventas_anuales_empresa,
-        'address': address,
-        'comuna_empresa': comuna_empresa,
-        'ciudad_empresa': ciudad_empresa
+        'Obj_empresa': Obj_empresa,
     })
 
 

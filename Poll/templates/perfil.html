@@ -63,7 +63,9 @@
             <center>
                 <h1>Perfil de Usuario</h1>
                 <br/>
-                <form id="edit-profile" class="form-horizontal">
+
+                <form id="edit-profile" class="form-horizontal" method="POST">
+                    {% csrf_token %}
                     <fieldset>
                         <div class="w3-container">
                             <div class="w3-card-4" style="width:69%;">
@@ -76,7 +78,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="nombre_representante">Nombre del Contacto</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="nombre_representante" value={{ nombre_representante }}>
+                                            <input name="nombre_representante" type="text" class="input-medium disabled" id="nombre_representante" value={{ Obj_empresa.nombre_representante }}>
                                         </div>
                                     </div>
 
@@ -84,7 +86,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="email_representante">Email del Contacto</label>
                                         <div class="controls">
-                                            <input type="text" class="input-large" id="email_representante" value={{ email_representante }}>
+                                            <input name="email_representante" type="text" class="input-large" id="email_representante" value={{ Obj_empresa.email_representante }}>
                                         </div>
                                     </div>
 
@@ -92,7 +94,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="numero_representante">Teléfono del Contacto</label>
                                         <div class="controls">
-                                            <input type="text" class="input-large" id="numero_representante" value={{ numero_representante }}>
+                                            <input name="telefono_representante" type="text" class="input-large" id="numero_representante" value={{ Obj_empresa.telefono_representante }}>
                                         </div>
                                     </div>
 
@@ -117,7 +119,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="rut">Rut de Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="rut" value={{ rut }} disabled>
+                                            <input type="text" class="input-medium disabled" id="rut" value={{ request.user.rut }} disabled>
                                         </div>
                                     </div>
 
@@ -126,7 +128,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="rut">Nombre de la Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="nombre_empresa" value={{ nombre_empresa }}>
+                                            <input type="text" class="input-medium disabled" id="nombre_empresa" value={{ request.user.name }}>
                                         </div>
                                     </div>
 
@@ -135,7 +137,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="experiencia_empresa">Años de Experiencia</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="experiencia_empresa" value={{ experiencia_empresa }}>
+                                            <input name="experiencia_empresa" type="text" class="input-medium disabled" id="experiencia_empresa" value={{ Obj_empresa.experiencia_empresa }}>
                                         </div>
                                     </div>
 
@@ -143,7 +145,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="razon_social_empresa">Razón Social de la Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="razon_social_empresa" value={{ razon_social_empresa }}>
+                                            <input name="razon_social_empresa" type="text" class="input-medium disabled" id="razon_social_empresa" value={{ Obj_empresa.razon_social_empresa }}>
                                         </div>
                                     </div>
 
@@ -151,7 +153,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="ventas_anuales_empresa">Ventas Anuales de la Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="ventas_anuales_empresa" value={{ ventas_anuales_empresa }}>
+                                            <input name="ventas_anuales_empresa" type="text" class="input-medium disabled" id="ventas_anuales_empresa" value={{ Obj_empresa.ventas_anuales_empresa }}>
                                         </div>
                                     </div>
 
@@ -159,7 +161,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="address">Dirección de la Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium" id="address" value={{ address }}>
+                                            <input type="text" class="input-medium" id="address" value={{ request.user.address }}>
                                         </div>
                                     </div>
 
@@ -167,7 +169,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="comuna_empresa">Comuna</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium" id="comuna_empresa" value={{ comuna_empresa }}>
+                                            <input name="comuna_empresa" type="text" class="input-medium" id="comuna_empresa" value={{ Obj_empresa.comuna_empresa }}>
                                         </div>
                                     </div>
 
@@ -175,7 +177,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="ciudad_empresa">Ciudad</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium" id="ciudad_empresa" value={{ ciudad_empresa }}>
+                                            <input name="ciudad_empresa" type="text" class="input-medium" id="ciudad_empresa" value={{ Obj_empresa.ciudad_empresa }}>
                                         </div>
                                     </div>
                                     <p>
@@ -192,6 +194,7 @@
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </fieldset>
+
                 </form>
             </center>
         </div>
