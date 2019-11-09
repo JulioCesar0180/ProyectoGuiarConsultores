@@ -246,26 +246,33 @@ def rut_unformat(value):
 
 @login_required
 def page_one_poll(request):
-    form_page_one = FormPageOne()
-    id_empresa = UserGuiar.objects.get(rut='12345678-5')
-
-    answer1 = ""
-    answer2 = ""
-    answer3 = ""
-    answer4 = ""
-    answer5 = ""
-    answer6 = ""
-    answer7 = ""
-    answer8 = ""
-
-
-    answer1 = ""
-    answer2 = ""
-    answer3 = ""
-    answer4 = ""
-    answer5 = ""
-
-    return render(request, "MideTuRiesgo/mideturiesgo01.html", {'form_page_one': form_page_one})
+    empresa = TablaPerfilEmpresa.objects.get(rut_empresa=request.user.id)
+    if request.method == "POST":
+        form = FormPageOne(request.POST)
+        if form.is_valid():
+            return render(request, 'MideTuRiesgo/mideturiesgo2.html')
+        else:
+            context = {'form': form, 'empresa': empresa}
+            return render(request, 'MideTuRiesgo/mideturiesgo.html', context=context)
+    else:
+        # Visualizar los datos en el formulario
+        data = {
+            # Datos de la empresa
+            'razon_social': empresa.razon_social_empresa,
+            'rut': empresa.rut_empresa,
+            'experiencia': empresa.experiencia_empresa,
+            'direccion': empresa.direccion_empresa,
+            'comuna': empresa.comuna_empresa,
+            'ciudad': empresa.ciudad_empresa,
+            # Datos del representante
+            'nombre_representante': empresa.nombre_representante,
+            'email_representante': empresa.email_representante,
+            'telefono_representante': empresa.telefono_representante
+        }
+        form = FormPageOne(data=data)
+        
+    context = {'form': form, 'empresa': empresa}
+    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 
 @login_required

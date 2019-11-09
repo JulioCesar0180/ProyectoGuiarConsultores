@@ -3,21 +3,21 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import UserGuiar
 from .models import TablaPerfilEmpresa
 
-
-#datos para el drop down
-Ciudad_CHOICES= [
+# datos para el drop down
+Ciudad_CHOICES = [
     ('antofagasta', 'Antofagasta'),
     ('calama', 'Calama'),
     ('mejillones', 'Mejillones'),
     ('tocopilla', 'Tocopilla'),
-    ]
+]
 
-Comuna_CHOICES= [
+Comuna_CHOICES = [
     ('antofagasta', 'Antofagasta'),
     ('el loa', 'El Loa'),
     ('mejillones', 'Mejillones'),
     ('tocopilla', 'Tocopilla'),
-    ]
+]
+
 
 class UpdateForm(forms.Form):
     rut = forms.CharField(
@@ -33,9 +33,11 @@ class UpdateForm(forms.Form):
 
     nombre_representante = forms.CharField(max_length=254, required=True, label="Nombre Representante")
 
-    email_representante = forms.EmailField(max_length=40, required=True, help_text='Obligatorio.', label="Email Representante")
+    email_representante = forms.EmailField(max_length=40, required=True, help_text='Obligatorio.',
+                                           label="Email Representante")
 
-    telefono_representante = forms.CharField(max_length=9, required=True, help_text='Obligatorio.', label="Telefono Representante")
+    telefono_representante = forms.CharField(max_length=9, required=True, help_text='Obligatorio.',
+                                             label="Telefono Representante")
 
     ciudad_empresa = forms.CharField(label='Ciudad de la Empresa',
                                      widget=forms.Select(choices=Ciudad_CHOICES))
@@ -52,14 +54,15 @@ class UpdateForm(forms.Form):
 
 class LogInForm(forms.Form):
     rut = forms.CharField(label='Rut Empresa', widget=forms.TextInput(attrs={'placeholder': 'Ingrese Rut de Empresa'}))
-    password = forms.CharField(label='Contraseña', max_length=30, widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese Contraseña'}))
+    password = forms.CharField(label='Contraseña', max_length=30,
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese Contraseña'}))
 
     class Meta:
         model = UserGuiar
         fields = ('rut', 'password')
 
 
-#Arreglarlo
+# Arreglarlo
 class SignUpForm(UserCreationForm):
     rut = forms.CharField(
         max_length=30, required=True,
@@ -82,60 +85,151 @@ class SignUpForm(UserCreationForm):
         model = UserGuiar
         fields = ('rut', 'name', 'address')
 
+
+""" 
+---------------------------------------------------------------------------------------------------
+FormPageOne 
+-------------------------------------------------------------------------------------------------------
+"""
+""" Formulario de la primera pagina de la encuesta de la aplicacion """
+
+
 class FormPageOne(forms.Form):
-    attrs_nombre = {
-        'class': 'form-control'
-    }
-    nombre = forms.CharField(label='Nombre Empresa', widget=forms.TextInput(attrs=attrs_nombre))
+    """
+    Datos de la empresa
+    """
+    """
+    Razon social de la empresa, por ejemplo: GuiarConsultores S.A
+    """
+    razon_social = forms.CharField(
+        # validations
+        max_length=50,
+        required=True,
+        widget=forms.TextInput(
+            # attributes HTML
+            attrs={
+                'id': 'razon_social'
+            }
+        ))
+    """
+    Rut de la empresa, por ejemplo 12345678-5
+    """
+    rut = forms.CharField(
+        # validations
+        max_length=15,
+        required=True,
+        widget=forms.TextInput(
+            # attributes HTML
+            attrs={
+                'id': 'rut'
+            }
+        )
+    )
+    """
+    Años de experiencia de la empresa, por ejemplo: 10
+    """
+    experiencia = forms.IntegerField(
+        # validations
+        max_value=1000,
+        min_value=0,
+        required=True,
+        # attribute HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'experiencia'
+            }
+        )
+    )
+    """
+    Direccion de la empresa, por ejemplo: Avenida Angamos 0610
+    """
+    direccion = forms.CharField(
+        # validations
+        max_length=100,
+        required=True,
+        # attributes HTML
+        widget=forms.TextInput(
+            attrs={
+                'id': 'direccion'
+            }
+        )
+    )
+    """
+    Comuna donde se ubica la empresa, por ejemplo: Providencia
+    """
+    comuna = forms.CharField(
+        # validations
+        max_length=50,
+        required=True,
+        # attributes HTML
+        widget=forms.TextInput(
+            attrs={
+                'id': 'comuna'
+            }
+        )
+    )
+    """
+    Ciudad donde se ubica la empresa, por ejemplo: Santiago
+    """
+    ciudad = forms.CharField(
+        # validations
+        max_length=50,
+        required=True,
+        # attributes HTML
+        widget=forms.TextInput(
+            attrs={
+                'id': 'ciudad'
+            }
+        )
+    )
 
-    # Razon Social de la empresa #
-    attrs_razon = {
-        'class': 'form-control'
-    }
-    razon = forms.CharField(label='Razón Social', widget=forms.TextInput(attrs=attrs_razon))
+    """
+    Datos del representante
+    """
 
-    # Rut de la empresa #
-    attrs_rut = {
-        'class': 'form-control'
-    }
-    rut = forms.CharField(label='Rut', widget=forms.TextInput(attrs=attrs_rut))
-
-    # Años de Experiencia de la empresa #
-    attrs_experiencia = {
-        'class': 'form-control'
-    }
-    experiencia = forms.IntegerField(label='Antigüedad de la empresa (años)',
-                                     widget=forms.TextInput(attrs=attrs_experiencia))
-
-    # Direccion de la empresa #
-    attrs_direccion = {
-        'class': 'form-control'
-    }
-    direccion = forms.CharField(label='Dirección', widget=forms.TextInput(attrs=attrs_direccion))
-
-    # Comuna de la empresa #
-    attrs_comuna = {
-        'class': 'form-control'
-    }
-    comuna = forms.CharField(label='Comuna', widget=forms.TextInput(attrs=attrs_comuna))
-
-    # Ciudad de la empresa #
-    attrs_ciudad = {
-        'class': 'form-control'
-    }
-    ciudad = forms.CharField(label='Ciudad', widget=forms.TextInput(attrs=attrs_ciudad))
-    representante = forms.CharField(label='Representante', max_length=100)
-    email = forms.CharField(label='Correo', max_length=100)
-    telefono = forms.CharField(label='Telefono', max_length=100)
-    ventas = forms.CharField(label="Ventas", max_length=100)
-    empContratados = forms.IntegerField(label="Cantidad de empleados contratados")
-    empContratistas = forms.IntegerField(label="Cantidad de empleados contratistas")
-    vehLivianos = forms.IntegerField(label="Cantidad de vehiculos livianos")
-    vehContratistas = forms.IntegerField(label='Cantidad de vehículos comerciales de contratistas')
-    vehPesados = forms.IntegerField(label='Cantidad de vehículos comerciales pesados de la empresa')
-    vehPesadosContratistas = forms.IntegerField(label='Cantidad de vehículos comerciales pesados de contratistas')
-    maqEmpresa = forms.IntegerField(label='Cantidad de maquinaria pesada de la empresa')
-    marContratista = forms.IntegerField(label='Cantidad de maquinaria pesada de contratista')
+    """
+    Nombre del representante, por ejemplo: Diego Cuevas
+    """
+    nombre_representante = forms.CharField(
+        # validations
+        max_length=50,
+        required=True,
+        # attributes HTML
+        widget=forms.TextInput(
+            attrs={
+                'id': 'nombre'
+            }
+        )
+    )
+    """
+    Email del representante, por ejemplo: JoanTello@GuiarConsultores.cl
+    """
+    email_representante = forms.EmailField(
+        # validations
+        max_length=50,
+        required=True,
+        # attributes HTML
+        widget=forms.EmailInput(
+            attrs={
+                'id': 'email'
+            }
+        )
+    )
+    """
+    Telefono de contacto con el representante, por ejemplo: 994512290
+    """
+    telefono_representante = forms.CharField(
+        # validations
+        max_length=9,
+        min_length=9,
+        required=True,
+        # attributes
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'telefono'
+            }
+        )
+    )
 
 
 
@@ -144,8 +238,10 @@ class Form_elementosRiesgo(forms.Form):
               ('2', 'Ingeniería o construcción de edificios, obra gruesa, concreto, carreteras'),
               ('3', 'Ingeniería, construcción o montaje de obras e instalaciones privadas o públicas'),
               ('4', 'Obras menores de construcción, contratistas, albañería, carpintería, climatización'),
-              ('5', 'Instalación de tuberías y construcción de alcantarrillado, base de concreto y obras de cimentación, exacavación'),
-              ('6', 'Refuerzos, reparación y protección de estructuras de acero, reparación de estanques, impermeabilización, protección catódica'),
+              ('5',
+               'Instalación de tuberías y construcción de alcantarrillado, base de concreto y obras de cimentación, exacavación'),
+              ('6',
+               'Refuerzos, reparación y protección de estructuras de acero, reparación de estanques, impermeabilización, protección catódica'),
               ('7', 'Otros')]
 
     attrs_otro = {'class': 'form-control'}
@@ -185,14 +281,17 @@ class Form_serviciosGenerales(forms.Form):
     CHOICE = [('1', 'Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor'),
               ('2', 'Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras'),
               ('3', 'Mantención y reparación de componentes eléctricos'),
-              ('4', 'Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas'),
-              ('5', 'Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial'),
+              (
+              '4', 'Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas'),
+              ('5',
+               'Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial'),
               ('6', 'Mantención, reparación y montaje de sistemas hidráulicos, válvulas, compresores, bombas, otros'),
               ('7', 'Mantención, reparación y venta de equipos computacionales, software, adware'),
               ('8', 'Servicio de lavandería industrial y afines'),
               ('9', 'Servicio de movimiento de tierras, perforaciones, mecánicas de rocas'),
               ('10', 'Servicio y arriendo de equipo minero, perforaciones, movimiento de tierras, maquinaria pesada'),
-              ('11', 'Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción'),
+              ('11',
+               'Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción'),
               ('12', 'Servicios de fabricación e instalación de señaleticas en carreteras y/o caminos privados'),
               ('13', 'Servicios de izajes, manipulación de cargas y equipos'),
               ('14', 'Servicios de mantención, reparación, garage, desabollada, vehículos, multi-marca')]
@@ -220,11 +319,14 @@ class Form_jornadaPrevencionista(forms.Form):
               ('3', 'Para proyectos específicos'),
               ('4', 'No cuenta con prevencionista de riesgos')]
 
+
 class FormPageTwo(forms.Form):
     campo1 = forms.CharField(label='Placeholder', max_length=100)
 
+
 class FormPageThree(forms.Form):
     campo1 = forms.CharField(label='Placeholder', max_length=100)
+
 
 class FormPageFour(forms.Form):
     campo1 = forms.CharField(label='Placeholder', max_length=100)
