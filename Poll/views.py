@@ -439,7 +439,6 @@ def page_two_poll(request):
             if x == "carga":
                 carga = True
 
-
         transporte = TablaResultadosTransporte(
             rut_empresa=empresa,
             answer1=materiales,

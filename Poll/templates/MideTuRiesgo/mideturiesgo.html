@@ -32,6 +32,7 @@
     </div>
     <form method="POST" class="siguiente" style="margin: 0">
         {% csrf_token %}
+
         <!-- Datos Generales de la empresa -->
         <div class="inicio">
             <b>P1.</b> Datos generales de la empresa
@@ -100,22 +101,12 @@
         <div class="inicio">
             <b>P3.</b> Ventas anuales de la empresa
             <div><br></div>
-            <div class="input-radio">
-                <input type="radio" id="minimo" name="ventas" value="minimo">
-                <label for="minimo" class="unselectable">De UF 0 a UF 2.400</label>
-            </div>
-            <div class="input-radio">
-                <input type="radio" id="intermedio" name="ventas" value="intermedio">
-                <label for="intermedio" class="unselectable">De UF 2.400 a UF 25.000</label>
-            </div>
-            <div class="input-radio">
-                <input type="radio" name="ventas" id="maximo" value="maximo">
-                <label for="maximo" class="unselectable">De UF 25.000 a UF 100.000</label>
-            </div>
-            <div class="input-radio">
-                <input type="radio" name="ventas" id="mas" value="mas">
-                <label for="mas" class="unselectable">Más de UF 100.000</label>
-            </div>
+            {% for radio in form.ventas_anuales %}
+                <div class="input-radio">
+                    {{ radio.tag }}
+                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                </div>
+            {% endfor %}
             <div><br></div>
             <div><hr></div>
         </div>
@@ -149,7 +140,7 @@
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="vehPesadosContratistas">Cantidad de vehículos comerciales pesados de contratistas</label></td>
-                        <td class="campos">{{ form.vehContratistas }}</td>
+                        <td class="campos">{{ form.vehPesadosContratistas }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="maqEmpresa">Cantidad de maquinaria pesada de la empresa</label></td>
@@ -167,26 +158,17 @@
         </div>
 
         <!-- Rubros de participacion de una empresa - Seleccion Multiple (Checkbox) -->
-        <div class="inicio">
+           <div class="inicio">
             <b>P5.</b> Indique el o los rubros en que participa la empresa
             <div><br></div>
-            <div class="input-radio">
-                <input type="checkbox" id="construccion" name="construccion" value="construccion">
-                <label for="construccion" class="unselectable">Construcción</label>
-            </div>
-            <div class="input-radio">
-                <input type="checkbox" id="manufactura" name="manufactura" value="manufactura">
-                <label for="manufactura" class="unselectable">Manufactura</label>
-            </div>
-            <div class="input-radio">
-                <input type="checkbox" name="transporte" id="transporte" value="transporte">
-                <label for="transporte" class="unselectable">Transporte terreste</label>
-            </div>
-            <div class="input-radio">
-                <input type="checkbox" name="servicio" id="servicio" value="servicio">
-                <label for="servicio" class="unselectable">Servicios generales</label>
-            </div>
+            {% for rubro in form.rubro_empresa %}
+                <div class="input-radio">
+                    {{ rubro.tag }}
+                    <label for="{{ rubro.id_for_label }}" class="unselectable">{{ rubro.choice_label }}</label>
+                </div>
+            {% endfor %}
         </div>
+
         <button type="submit" value="Submit" id="next">→</button>
     </form>
     <div><br></div>

@@ -239,7 +239,18 @@ class FormPageOne(forms.Form):
             }
         )
     )
+    """
+    Ventas anuales empresa
+    """
+    # Radio
+    CHOICES_VENTAS_ANUALES = [
+        ('minimo', 'De UF 0 a UF 2.400'),
+        ('intermedio', 'De UF 2.400 a UF 25.000'),
+        ('maximo', 'De UF 25.000 a UF 100.000'),
+        ('extra_maximo', 'Más de UF 100.000')
+    ]
 
+    ventas_anuales = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES_VENTAS_ANUALES)
     """
     Dotacion Empresa
     """
@@ -371,6 +382,18 @@ class FormPageOne(forms.Form):
             }
         )
     )
+    """
+    Rubro de la empresa
+    """
+    # Checkbox (una o mas de una)
+    CHOICES_RUBRO = [
+        ('construccion', 'contruccion'),
+        ('manufactura', 'manufactura'),
+        ('transporte terrestre', 'transporte_terrestre'),
+        ('servicios generales', 'servicios generales')
+    ]
+
+    rubro_empresa = forms.ChoiceField(widget=forms.CheckboxSelectMultiple, choices=CHOICES_RUBRO)
 
 
 class Form_elementosRiesgo(forms.Form):
