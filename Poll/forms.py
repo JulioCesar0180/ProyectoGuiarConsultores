@@ -108,7 +108,8 @@ class FormPageOne(forms.Form):
         widget=forms.TextInput(
             # attributes HTML
             attrs={
-                'id': 'razon_social'
+                'id': 'razon_social',
+                'class': 'form-control',
             }
         ))
     """
@@ -121,7 +122,8 @@ class FormPageOne(forms.Form):
         widget=forms.TextInput(
             # attributes HTML
             attrs={
-                'id': 'rut'
+                'id': 'rut',
+                'class': 'form-control',
             }
         )
     )
@@ -136,7 +138,8 @@ class FormPageOne(forms.Form):
         # attribute HTML
         widget=forms.NumberInput(
             attrs={
-                'id': 'experiencia'
+                'id': 'experiencia',
+                'class': 'form-control',
             }
         )
     )
@@ -150,7 +153,8 @@ class FormPageOne(forms.Form):
         # attributes HTML
         widget=forms.TextInput(
             attrs={
-                'id': 'direccion'
+                'id': 'direccion',
+                'class': 'form-control',
             }
         )
     )
@@ -164,7 +168,8 @@ class FormPageOne(forms.Form):
         # attributes HTML
         widget=forms.TextInput(
             attrs={
-                'id': 'comuna'
+                'id': 'comuna',
+                'class': 'form-control',
             }
         )
     )
@@ -178,7 +183,8 @@ class FormPageOne(forms.Form):
         # attributes HTML
         widget=forms.TextInput(
             attrs={
-                'id': 'ciudad'
+                'id': 'ciudad',
+                'class': 'form-control',
             }
         )
     )
@@ -197,7 +203,8 @@ class FormPageOne(forms.Form):
         # attributes HTML
         widget=forms.TextInput(
             attrs={
-                'id': 'nombre'
+                'id': 'nombre',
+                'class': 'form-control',
             }
         )
     )
@@ -211,7 +218,8 @@ class FormPageOne(forms.Form):
         # attributes HTML
         widget=forms.EmailInput(
             attrs={
-                'id': 'email'
+                'id': 'email',
+                'class': 'form-control'
             }
         )
     )
@@ -226,11 +234,143 @@ class FormPageOne(forms.Form):
         # attributes
         widget=forms.NumberInput(
             attrs={
-                'id': 'telefono'
+                'id': 'telefono',
+                'class': 'form-control',
             }
         )
     )
 
+    """
+    Dotacion Empresa
+    """
+    """
+    Cantidad de empleados contratados, por ejemplo: 10
+    """
+    empContratados = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'empContratados',
+                'class': 'form-control',
+            }
+        )
+    )
+    """
+    Cantidad de empleados contratistas, por ejemplo: 10
+    """
+    empContratistas = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'empContratistas',
+                'class': 'form-control',
+            }
+        )
+    )
+    """
+    Cantidad de vehiculos comerciales livianos de la empresa, por ejemplo: 10
+    """
+    vehLivianos = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'vehLivianos',
+                'class': 'form-control',
+            }
+        )
+    )
+    """
+    Cantidad de vehiculos comerciales de contratistas, por ejemplo: 10
+    """
+    vehContratistas = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'vehContratistas',
+                'class': 'form-control',
+            }
+        )
+    )
+    """
+    Cantidad de vehiculos comerciales pesados de la empresa, por ejemplo: 10
+    """
+    vehPesados = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'vehPesados',
+                'class': 'form-control',
+            }
+        )
+    )
+    """
+    Cantidad de vehiculos comerciales pesados de contratistas, por ejemplo: 10
+    """
+    vehPesadosContratistas = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'vehPesadosContratistas',
+                'class': 'form-control',
+            }
+        )
+    )
+    """
+    Cantidad de maquinaria pesada de la empresa, por ejemplo: 10
+    """
+    maqEmpresa = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'maqEmpresa',
+                'class': 'form-control',
+            }
+        )
+    )
+    """
+    Cantidad de maquinaria pesada de contratista
+    """
+    maqContratista = forms.IntegerField(
+        # validations
+        min_value=0,
+        max_value=10000000,
+        required=True,
+        # attributes HTML
+        widget=forms.NumberInput(
+            attrs={
+                'id': 'maqContratista',
+                'class': 'form-control',
+            }
+        )
+    )
 
 
 class Form_elementosRiesgo(forms.Form):
