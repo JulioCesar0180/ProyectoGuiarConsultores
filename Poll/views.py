@@ -22,7 +22,7 @@ from django import template
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-@login_required
+@login_required(login_url='MTRlogin')
 def get_name(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -114,13 +114,18 @@ def get_name(request):
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
 def home(request):
-    empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id = request.user.id)
+    try:
+        empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id = request.user.id)
 
-    count = UserGuiar.objects.count()
-    name = empresa.nombre_representante
-    return render(request, 'home.html', {
-        'count': count, 'name': name
-    })
+        count = UserGuiar.objects.count()
+        name = empresa.nombre_representante
+        return render(request, 'home.html', {
+            'count': count, 'name': name
+        })
+    except:
+        return render(request, 'home.html', {
+            'name': "contacto"
+        })
 
 
 def Perfil(request):
@@ -180,7 +185,7 @@ def MTR_login(request):
                 login(request, user)
                 return redirect('home')
             else:
-                messages.error(request, 'No existen registros de este usuario')
+                messages.error(request, 'El RUN o la clave ingresada no son correctos.')
         else:
             return render(request, 'registration/login.html', {'form': form})
 
