@@ -1,6 +1,5 @@
 # encoding: utf-8
 
-from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
@@ -114,55 +113,90 @@ def get_name(request):
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
 def home(request):
-    empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id = request.user.id)
 
-    count = UserGuiar.objects.count()
-    name = empresa.nombre_representante
-    return render(request, 'home.html', {
-        'count': count, 'name': name
-    })
+    try:
+        empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id = request.user.id)
+        name = empresa.nombre_representante
+        return render(request, 'home.html', {
+            'name': name
+        })
+    except:
+        return render(request, 'home.html', {
+            'name': "Contacto"
+        })
 
 
 def Perfil(request):
-    idEmpresa = str(request.user.id)
-    """Esto tira error si en la consulta no encuentra alguna coincidencia, no se si es necesario
-    validarlo pero te aviso por si no lo sabias. Yo creo que en este caso, no es necesario"""
-    Obj_empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
+
     Obj_user = request.user
+    idEmpresa = str(request.user.id)
+    try:
+        Obj_empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
 
-    if request.method == 'POST':
+        if request.method == 'POST':
 
-        """Datos de contacto de la Obj_empresa"""
+            """Datos de contacto de la Obj_empresa"""
 
-        """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
-         validar el ingreso de texto en blanco"""
+            """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
+             validar el ingreso de texto en blanco"""
 
-        """Cada linea de este codigo, modifica los campos correpondientes"""
-        Obj_empresa.nombre_representante = request.POST['nombre_representante']
-        Obj_empresa.email_representante = request.POST['email_representante']
-        Obj_empresa.telefono_representante = request.POST['telefono_representante']
-        Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
-        Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
-        Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
-        Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
-        Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
+            """Cada linea de este codigo, modifica los campos correpondientes"""
+            Obj_empresa.nombre_representante = request.POST['nombre_representante']
+            Obj_empresa.email_representante = request.POST['email_representante']
+            Obj_empresa.telefono_representante = request.POST['telefono_representante']
+            Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
+            Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
+            Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
+            Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
+            Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
 
-        "Nombre de la empresa se repite en las 2 tablas"
-        Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
+            "Nombre de la empresa se repite en las 2 tablas"
+            Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
+
+            "Datos User Guiar"
+            Obj_user.name = request.POST['nombre_empresa']
+            Obj_user.address = request.POST['address']
+
+            """ Actualiza la base de datos"""
+            Obj_empresa.save()
+            Obj_user.save()
+
+        return render(request, 'perfil.html', {
+            'Obj_empresa': Obj_empresa,
+            'Obj_user': Obj_user,
+        })
+    except:
+        """
+        Todo usuario creado debe tener un perfil de empresa, salvo el super User, solo el deberia
+        pasar por acá
+        
+        if request.method == 'POST':
+        
+            perfil_empresa = TablaPerfilEmpresa(
+                nombre_representante = form.cleaned_data['nombre_representante'],
+                email_representante = form.cleaned_data['email_representante'],
+                telefono_representante = form.cleaned_data['telefono_representante'],
+                experiencia_empresa = form.cleaned_data['experiencia_empresa'],
+                razon_social_empresa = form.cleaned_data['razon_social_empresa'],
+                ventas_anuales_empresa = form.cleaned_data['ventas_anuales_empresa'],
+                comuna_empresa = form.cleaned_data['comuna_empresa'],
+                ciudad_empresa = form.cleaned_data['ciudad_empresa'],
+                nombre_empresa = form.cleaned_data['nombre_empresa'],
+                rut_empresa_id = request.user.id
+            )
+            perfil_empresa.save()
 
         "Datos User Guiar"
         Obj_user.name = request.POST['nombre_empresa']
         Obj_user.address = request.POST['address']
 
-        """ Actualiza la base de datos"""
-        Obj_empresa.save()
         Obj_user.save()
 
-    """ Revisa el perfil.html ya que hice pequeños cambios"""
-    return render(request, 'perfil.html', {
-        'Obj_empresa': Obj_empresa,
-        'Obj_user': Obj_user,
-    })
+        return render(request, 'perfil.html', {
+            'Obj_user': Obj_user,
+        })
+        """
+        return redirect('home')
 
 
 def MTR_login(request):
