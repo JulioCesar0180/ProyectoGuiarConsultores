@@ -1,6 +1,5 @@
 # encoding: utf-8
 
-from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
@@ -22,7 +21,7 @@ from django import template
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-@login_required
+@login_required(login_url='MTRlogin')
 def get_name(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -95,7 +94,7 @@ def get_name(request):
                     servicios = True
 
             datoRubro = TablaResultadosProcesos(
-                rut_empresa = empresa,
+                rut_empresa=empresa,
                 answer1=construccion,
                 answer2=manufactura,
                 answer3=transporte,
@@ -114,43 +113,90 @@ def get_name(request):
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
 def home(request):
-    count = UserGuiar.objects.count()
-    name = request.user.name
-    return render(request, 'home.html', {
-        'count': count, 'name': name
-    })
+
+    try:
+        empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id = request.user.id)
+        name = empresa.nombre_representante
+        return render(request, 'home.html', {
+            'name': name
+        })
+    except:
+        return render(request, 'home.html', {
+            'name': "Contacto"
+        })
 
 
 def Perfil(request):
+
+    Obj_user = request.user
     idEmpresa = str(request.user.id)
+    try:
+        Obj_empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
 
-    """Esto tira error si en la consulta no encuentra alguna coincidencia, no se si es necesario
-    validarlo pero te aviso por si no lo sabias. Yo creo que en este caso, no es necesario"""
-    Obj_empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
+        if request.method == 'POST':
 
-    if request.method == 'POST':
-        """Datos de contacto de la Obj_empresa"""
+            """Datos de contacto de la Obj_empresa"""
 
-        """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
-         validar el ingreso de texto en blanco"""
+            """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
+             validar el ingreso de texto en blanco"""
 
-        """Cada linea de este codigo, modifica los campos correpondientes"""
-        Obj_empresa.nombre_representante = request.POST['nombre_representante']
-        Obj_empresa.email_representante = request.POST['email_representante']
-        Obj_empresa.telefono_representante = request.POST['telefono_representante']
-        Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
-        Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
-        Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
-        Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
-        Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
+            """Cada linea de este codigo, modifica los campos correpondientes"""
+            Obj_empresa.nombre_representante = request.POST['nombre_representante']
+            Obj_empresa.email_representante = request.POST['email_representante']
+            Obj_empresa.telefono_representante = request.POST['telefono_representante']
+            Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
+            Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
+            Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
+            Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
+            Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
 
-        """ Actualiza la base de datos"""
-        Obj_empresa.save()
+            "Nombre de la empresa se repite en las 2 tablas"
+            Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
 
-    """ Revisa el perfil.html ya que hice pequeños cambios"""
-    return render(request, 'perfil.html', {
-        'Obj_empresa': Obj_empresa,
-    })
+            "Datos User Guiar"
+            Obj_user.name = request.POST['nombre_empresa']
+            Obj_user.address = request.POST['address']
+
+            """ Actualiza la base de datos"""
+            Obj_empresa.save()
+            Obj_user.save()
+
+        return render(request, 'perfil.html', {
+            'Obj_empresa': Obj_empresa,
+            'Obj_user': Obj_user,
+        })
+    except:
+        """
+        Todo usuario creado debe tener un perfil de empresa, salvo el super User, solo el deberia
+        pasar por acá
+        
+        if request.method == 'POST':
+        
+            perfil_empresa = TablaPerfilEmpresa(
+                nombre_representante = form.cleaned_data['nombre_representante'],
+                email_representante = form.cleaned_data['email_representante'],
+                telefono_representante = form.cleaned_data['telefono_representante'],
+                experiencia_empresa = form.cleaned_data['experiencia_empresa'],
+                razon_social_empresa = form.cleaned_data['razon_social_empresa'],
+                ventas_anuales_empresa = form.cleaned_data['ventas_anuales_empresa'],
+                comuna_empresa = form.cleaned_data['comuna_empresa'],
+                ciudad_empresa = form.cleaned_data['ciudad_empresa'],
+                nombre_empresa = form.cleaned_data['nombre_empresa'],
+                rut_empresa_id = request.user.id
+            )
+            perfil_empresa.save()
+
+        "Datos User Guiar"
+        Obj_user.name = request.POST['nombre_empresa']
+        Obj_user.address = request.POST['address']
+
+        Obj_user.save()
+
+        return render(request, 'perfil.html', {
+            'Obj_user': Obj_user,
+        })
+        """
+        return redirect('home')
 
 
 def MTR_login(request):
@@ -168,7 +214,7 @@ def MTR_login(request):
                 login(request, user)
                 return redirect('home')
             else:
-                messages.error(request, 'No existen registros de este usuario')
+                messages.error(request, 'El RUN o la clave ingresada no son correctos.')
         else:
             return render(request, 'registration/login.html', {'form': form})
 
@@ -835,7 +881,7 @@ def page_results(request):
             if servicios.answer14:
                 fin_servicios += 2
             resultado += fin_servicios
-            total += 38
+            total += 37
             minimo += 3
         resultado += fin_procesos
 
@@ -924,7 +970,7 @@ def page_results(request):
         else:
             fin_dotacion += 7
         resultado += fin_dotacion
-        total += 57
+        total += 67
         minimo += 12
 
         if gestion.answer1:
@@ -1002,7 +1048,7 @@ def page_results(request):
         if sustancias.answer9:
             fin_sustancias += 3
         if sustancias.answer1 or sustancias.answer2 or sustancias.answer3 or sustancias.answer4 or sustancias.answer5 or sustancias.answer6 or sustancias.answer7 or sustancias.answer8 or sustancias.answer9:
-            total += 15
+            total += 20
             minimo += 3
             resultado += fin_sustancias
 
@@ -1034,16 +1080,27 @@ def page_results(request):
             riesgo_altura=fin_altura
         )
         final.save()
-        res_por = (total-minimo)/100*resultado
-        res_img = (380+19)*res_por/100
-        res_fin = (380+19) - res_img
+        res_por = ((resultado-minimo)/(total-minimo))
+        res_img = (379+19)*res_por
+        res_fin = (379+19) - res_img
         res_fin = int(res_fin)
+        cuartil = (total-minimo)/4
+        if resultado < (minimo + cuartil):
+            color = "VERDE"
+        elif resultado >= (minimo + cuartil) and resultado < (2*cuartil + minimo):
+            color = "AMARILLO"
+        elif resultado >= (2*cuartil + minimo) and resultado <= (3*cuartil + minimo):
+            color = "ANARANJADO"
+        else:
+            color = "ROJO"
         print(res_fin)
         print(total)
         print(minimo)
         print(resultado)
+        print(cuartil)
+        print(cuartil+minimo)
 
     else:
         # Error de metodo
         e = "Operacion Invalida"
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total':total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin})
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total':total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin, 'color':color})

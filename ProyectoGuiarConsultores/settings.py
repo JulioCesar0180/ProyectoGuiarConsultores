@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -33,13 +32,13 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
     'Home.apps.HomeConfig',
     'Poll.apps.PollConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.messages',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +143,4 @@ LOGOUT_REDIRECT_URL = 'homeGC'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = "Poll.UserGuiar"
+

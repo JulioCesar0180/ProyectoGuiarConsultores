@@ -330,6 +330,7 @@
             <input type="checkbox" name="servicios[]" id="garage" value="garage">
             <label for="garage" class="unselectable">Servicios de mantención, reparación, garage, desabollada, vehículos multi-marca</label>
           </div>
+          {% endif %}
           <div>
             <br>
           </div>
@@ -338,13 +339,12 @@
           </div>
         </div>
       {% endif %}
-      {% endif %}
 
       {% if constru and manu or trans %}
       <div class="inicio">
         {% if constru and manu and trans %}
         <b>P8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
-         <div>
+        <div>
           <br>
         </div>
         <div class="input-radio">
@@ -457,7 +457,7 @@
       {% if constru and manu and trans and serv %}
       <div class="inicio">
         <b>P9.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
-         <div>
+        <div>
           <br>
         </div>
         <div class="input-radio">
@@ -516,9 +516,9 @@
           <input type="checkbox" name="servicios[]" id="garage" value="garage">
           <label for="garage" class="unselectable">Servicios de mantención, reparación, garage, desabollada, vehículos multi-marca</label>
         </div>
-          <div>
-            <br>
-          </div>
+        <div>
+          <br>
+        </div>
         <div>
           <hr>
         </div>

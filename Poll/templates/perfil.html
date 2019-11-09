@@ -37,8 +37,8 @@
         <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
             <div class="navi">
                 <ul>
-                    <li class="active"><a href="{% url 'home' %}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
-                    <li><a href="{% url 'perfil' %}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
+                    <li><a href="{% url 'home' %}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
+                    <li class="active" ><a href="{% url 'perfil' %}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
                     <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
                     <li><a href="{% url 'password_change' %}"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cambiar Contraseña</span></a></li>
                     <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cerrar Sesión</span></a></li>
@@ -78,7 +78,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="nombre_representante">Nombre del Contacto</label>
                                         <div class="controls">
-                                            <input name="nombre_representante" type="text" class="input-medium disabled" id="nombre_representante" value={{ Obj_empresa.nombre_representante }}>
+                                            <input name="nombre_representante" type="text" class="input-large" id="nombre_representante" value={{ Obj_empresa.nombre_representante }}>
                                         </div>
                                     </div>
 
@@ -119,7 +119,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="rut">Rut de Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="rut" value={{ request.user.rut }} disabled>
+                                            <input name="rut" type="text" class="input-large" id="rut" value={{ Obj_user.rut }} disabled>
                                         </div>
                                     </div>
 
@@ -128,7 +128,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="rut">Nombre de la Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium disabled" id="nombre_empresa" value={{ request.user.name }}>
+                                            <input name="nombre_empresa" type="text" class="input-large" id="nombre_empresa" value={{ Obj_user.name }}>
                                         </div>
                                     </div>
 
@@ -137,7 +137,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="experiencia_empresa">Años de Experiencia</label>
                                         <div class="controls">
-                                            <input name="experiencia_empresa" type="text" class="input-medium disabled" id="experiencia_empresa" value={{ Obj_empresa.experiencia_empresa }}>
+                                            <input name="experiencia_empresa" type="text" class="input-large" id="experiencia_empresa" value={{ Obj_empresa.experiencia_empresa }}>
                                         </div>
                                     </div>
 
@@ -145,7 +145,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="razon_social_empresa">Razón Social de la Empresa</label>
                                         <div class="controls">
-                                            <input name="razon_social_empresa" type="text" class="input-medium disabled" id="razon_social_empresa" value={{ Obj_empresa.razon_social_empresa }}>
+                                            <input name="razon_social_empresa" type="text" class="input-large" id="razon_social_empresa" value={{ Obj_empresa.razon_social_empresa }}>
                                         </div>
                                     </div>
 
@@ -153,7 +153,14 @@
                                     <div class="control-group">
                                         <label class="control-label" for="ventas_anuales_empresa">Ventas Anuales de la Empresa</label>
                                         <div class="controls">
-                                            <input name="ventas_anuales_empresa" type="text" class="input-medium disabled" id="ventas_anuales_empresa" value={{ Obj_empresa.ventas_anuales_empresa }}>
+                                            <select name="ventas_anuales_empresa" id="ventas_anuales_empresa">
+                                                <option value={{ Obj_empresa.ventas_anuales_empresa }}>{{ Obj_empresa.ventas_anuales_empresa }}</option>
+                                                <option value="0-2400">De UF 0 a UF 2.400</option>
+                                                <option value="2400-25000">De UF2.400 a UF 25.000</option>
+                                                <option value="25000-100000">De UF 25.000 a UF 100.000</option>
+                                                <option value="100000">Mas de UF 100.000</option>
+                                            </select>
+                                            <!--input name="ventas_anuales_empresa" type="text" class="input-large" id="ventas_anuales_empresa" value={{ Obj_empresa.ventas_anuales_empresa }}-->
                                         </div>
                                     </div>
 
@@ -161,7 +168,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="address">Dirección de la Empresa</label>
                                         <div class="controls">
-                                            <input type="text" class="input-medium" id="address" value={{ request.user.address }}>
+                                            <input name="address" type="text" class="input-large" id="address" value={{ Obj_user.address }}>
                                         </div>
                                     </div>
 
@@ -169,7 +176,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="comuna_empresa">Comuna</label>
                                         <div class="controls">
-                                            <input name="comuna_empresa" type="text" class="input-medium" id="comuna_empresa" value={{ Obj_empresa.comuna_empresa }}>
+                                            <input name="comuna_empresa" type="text" class="input-large" id="comuna_empresa" value={{ Obj_empresa.comuna_empresa }}>
                                         </div>
                                     </div>
 
@@ -177,7 +184,7 @@
                                     <div class="control-group">
                                         <label class="control-label" for="ciudad_empresa">Ciudad</label>
                                         <div class="controls">
-                                            <input name="ciudad_empresa" type="text" class="input-medium" id="ciudad_empresa" value={{ Obj_empresa.ciudad_empresa }}>
+                                            <input name="ciudad_empresa" type="text" class="input-large" id="ciudad_empresa" value={{ Obj_empresa.ciudad_empresa }}>
                                         </div>
                                     </div>
                                     <p>

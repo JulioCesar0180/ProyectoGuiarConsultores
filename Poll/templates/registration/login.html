@@ -3,39 +3,48 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/registration.css'%}">
+<link rel="stylesheet" href="{% static 'css/registration.css'%}">
 {% endblock %}
 
 {% block content %}
-    <div class="center">
-        <div class="container">
-            <div class="d-flex justify-content-center h-100">
-                <div class="card2">
-
-                    <div class="card-body">
-                        <font color="white">
-                        <h2>Iniciar Sesión</h2>
-                            <form method="post">
-                                {% csrf_token %}
-                                {{ form|crispy }}
-                                <center><button type="submit" class="btn login_btn">Iniciar Sesión</button></center>
-                            </form>
-                        </font>
-                        <div class="d-flex justify-content-center links">
-                            ¿No tiene una cuenta?<a href="{% url 'signup'%}">Registrarse</a>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <a href="{% url 'password_reset' %}"> ¿Olvidó su contraseña? </a>
-                        </div>
+<div class="center">
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card2">
+                <div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
                     </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
 
-                    <div class="card-footer">
-                        <div align="center">
-                            <a href="{% url 'homeGC' %}"> Regresar </a>
-                        </div>
+                <div class="card-body">
+                    <font color="white">
+                        <h2>Iniciar Sesión</h2>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <center><button type="submit" class="btn login_btn">Iniciar Sesión</button></center>
+                        </form>
+                    </font>
+                    <div class="d-flex justify-content-center links">
+                        ¿No tiene una cuenta?<a href="{% url 'signup'%}">Registrarse</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'password_reset' %}"> ¿Olvidó su contraseña? </a>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div align="center">
+                        <a href="{% url 'homeGC' %}"> Regresar </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
