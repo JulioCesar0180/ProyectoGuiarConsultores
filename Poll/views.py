@@ -21,7 +21,7 @@ from django import template
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-@login_required
+@login_required(login_url='MTRlogin')
 def get_name(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -94,7 +94,7 @@ def get_name(request):
                     servicios = True
 
             datoRubro = TablaResultadosProcesos(
-                rut_empresa = empresa,
+                rut_empresa=empresa,
                 answer1=construccion,
                 answer2=manufactura,
                 answer3=transporte,
@@ -214,7 +214,7 @@ def MTR_login(request):
                 login(request, user)
                 return redirect('home')
             else:
-                messages.error(request, 'No existen registros de este usuario')
+                messages.error(request, 'El RUN o la clave ingresada no son correctos.')
         else:
             return render(request, 'registration/login.html', {'form': form})
 
@@ -874,7 +874,7 @@ def page_results(request):
             if servicios.answer14:
                 fin_servicios += 2
             resultado += fin_servicios
-            total += 38
+            total += 37
             minimo += 3
         resultado += fin_procesos
 
@@ -963,7 +963,7 @@ def page_results(request):
         else:
             fin_dotacion += 7
         resultado += fin_dotacion
-        total += 57
+        total += 67
         minimo += 12
 
         if gestion.answer1:
@@ -1041,7 +1041,7 @@ def page_results(request):
         if sustancias.answer9:
             fin_sustancias += 3
         if sustancias.answer1 or sustancias.answer2 or sustancias.answer3 or sustancias.answer4 or sustancias.answer5 or sustancias.answer6 or sustancias.answer7 or sustancias.answer8 or sustancias.answer9:
-            total += 15
+            total += 20
             minimo += 3
             resultado += fin_sustancias
 
@@ -1073,16 +1073,27 @@ def page_results(request):
             riesgo_altura=fin_altura
         )
         final.save()
-        res_por = (total-minimo)/100*resultado
-        res_img = (380+19)*res_por/100
-        res_fin = (380+19) - res_img
+        res_por = ((resultado-minimo)/(total-minimo))
+        res_img = (379+19)*res_por
+        res_fin = (379+19) - res_img
         res_fin = int(res_fin)
+        cuartil = (total-minimo)/4
+        if resultado < (minimo + cuartil):
+            color = "VERDE"
+        elif resultado >= (minimo + cuartil) and resultado < (2*cuartil + minimo):
+            color = "AMARILLO"
+        elif resultado >= (2*cuartil + minimo) and resultado <= (3*cuartil + minimo):
+            color = "ANARANJADO"
+        else:
+            color = "ROJO"
         print(res_fin)
         print(total)
         print(minimo)
         print(resultado)
+        print(cuartil)
+        print(cuartil+minimo)
 
     else:
         # Error de metodo
         e = "Operacion Invalida"
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total':total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin})
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total':total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin, 'color':color})
