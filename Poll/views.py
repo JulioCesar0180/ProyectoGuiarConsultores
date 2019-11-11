@@ -1,4 +1,6 @@
 # encoding: utf-8
+"""Se utiliza en el rut validator, es para iterar o una especie de foreach"""
+from itertools import cycle
 
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
@@ -226,28 +228,30 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+            """Validar rut"""
+            if rut_validator(form.cleaned_data['rut']):
+                user = form.save()
+                rut_empresa = form.cleaned_data['rut']
+                nombre_empresa = form.cleaned_data['name']
+                direccion_empresa = form.cleaned_data['address']
+                nombre_representante = form.cleaned_data['nombre_representante']
+                email_representante = form.cleaned_data['email_representante']
+                telefono_representante = form.cleaned_data['telefono_representante']
 
-            user = form.save()
+                perfil_empresa = TablaPerfilEmpresa(
+                    rut_empresa=user,
+                    nombre_empresa=nombre_empresa,
+                    direccion_empresa=direccion_empresa,
+                    nombre_representante=nombre_representante,
+                    email_representante=email_representante,
+                    telefono_representante=telefono_representante
+                )
+                perfil_empresa.save()
 
-            rut_empresa = form.cleaned_data['rut']
-            nombre_empresa = form.cleaned_data['name']
-            direccion_empresa = form.cleaned_data['address']
-            nombre_representante = form.cleaned_data['nombre_representante']
-            email_representante = form.cleaned_data['email_representante']
-            telefono_representante = form.cleaned_data['telefono_representante']
-
-            perfil_empresa = TablaPerfilEmpresa(
-                rut_empresa=user,
-                nombre_empresa=nombre_empresa,
-                direccion_empresa=direccion_empresa,
-                nombre_representante=nombre_representante,
-                email_representante=email_representante,
-                telefono_representante=telefono_representante
-            )
-            perfil_empresa.save()
-
-            login(request, user)
-            return redirect('home')
+                login(request, user)
+                return redirect('home')
+            else:
+                messages.error(request, "El formato del Rut ingresado no es válido")
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -261,34 +265,45 @@ def resetPassword():
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
+def rut_validator(rut):
 
-def rut_format(value, separator=","):
+    rut = rut.upper()
+    rut = rut.replace("-", "").replace(".", "")
+    num = rut[:-1]
+    dv = rut[-1:]
 
-    # Unformat the RUT
+    reversed_digits = map(int, reversed(str(num)))
+    factors = cycle(range(2, 8))
+    s = sum(d * f for d, f in zip(reversed_digits, factors))
+    res = (-s) % 11
+
+    if str(res) == dv:
+        return True
+    elif dv == "K" and res == 10:
+        return True
+    else:
+        return False
+
+"""Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
+def rut_format(value, separator=""):
+    # unformat the rut
     value = rut_unformat(value)
-
-    rut, verifier_digit = value[:-1], value[-1]
+    rut, dv = value[:-1], value[-1]
 
     try:
-        # Add thousands separator
         rut = "{0:,}".format(int(rut))
 
-        # If you specified another thousands separator instead of ','
         if separator != ",":
-            # Apply the custom thousands separator
             rut = rut.replace(",", separator)
 
-        return "%s-%s" % (rut, verifier_digit)
+        return "%s-%s" % (rut, dv)
 
     except ValueError:
-        # If the RUT cannot be converted to Int
-        raise template.TemplateSyntaxError("RUT must be numeric, in order to be formatted")
+        raise template.TemplateSyntaxError("El rut debe ser númerico")
 
 
 def rut_unformat(value):
-
     return value.replace("-", "").replace(".", "").replace(",", "")
-
 
 @login_required
 def page_one_poll(request):
