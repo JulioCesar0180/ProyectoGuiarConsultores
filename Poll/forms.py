@@ -387,9 +387,9 @@ class FormPageOne(forms.Form):
     """
     # Checkbox (una o mas de una)
     CHOICES_RUBRO = [
-        ('construccion', 'contruccion'),
+        ('construccion', 'construccion'),
         ('manufactura', 'manufactura'),
-        ('transporte terrestre', 'transporte_terrestre'),
+        ('transporte terrestre', 'transporte terrestre'),
         ('servicios generales', 'servicios generales')
     ]
 
