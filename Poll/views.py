@@ -309,6 +309,7 @@ def rut_unformat(value):
 def page_one_poll(request):
     empresa = TablaPerfilEmpresa.objects.get(rut_empresa=request.user.id)
     dotacion_empresa = TablaResultadosDotacion.objects.get(rut_empresa_id=empresa.pk)
+    empresa_procesos = TablaResultadosProcesos.objects.get(rut_empresa_id=empresa.pk)
     if request.method == "POST":
         form = FormPageOne(request.POST)
         if form.is_valid():
@@ -330,7 +331,8 @@ def page_one_poll(request):
             'nombre_representante': empresa.nombre_representante,
             'email_representante': empresa.email_representante,
             'telefono_representante': empresa.telefono_representante,
-            # (FALTA) Ventas Anuales de la empresa
+            # ventas anuales empresa
+            'ventas_anuales': empresa.ventas_anuales_empresa,
             # Dotacion Empresa
             'empContratados': dotacion_empresa.answer1,
             'empContratistas': dotacion_empresa.answer2,
@@ -339,8 +341,7 @@ def page_one_poll(request):
             'vehPesados': dotacion_empresa.answer5,
             'vehPesadosContratistas': dotacion_empresa.answer6,
             'maqEmpresa': dotacion_empresa.answer7,
-            'maqContratista': dotacion_empresa.answer8
-            # (FALTA) Rubro de la empresa
+            'maqContratista': dotacion_empresa.answer8,
         }
         form = FormPageOne(data=data)
         

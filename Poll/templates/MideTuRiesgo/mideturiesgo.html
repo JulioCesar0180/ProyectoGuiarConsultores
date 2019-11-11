@@ -32,7 +32,9 @@
     </div>
     <form method="POST" class="siguiente" style="margin: 0">
         {% csrf_token %}
-
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+        {% endfor %}
         <!-- Datos Generales de la empresa -->
         <div class="inicio">
             <b>P1.</b> Datos generales de la empresa
