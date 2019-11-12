@@ -5,6 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
+from django.views.generic import CreateView
+
 from .models import UserGuiar
 from .forms import *
 from Poll.models import *
@@ -292,46 +294,31 @@ def rut_unformat(value):
 
 @login_required
 def page_one_poll(request):
-    empresa = TablaPerfilEmpresa.objects.get(rut_empresa=request.user.id)
-    dotacion_empresa = TablaResultadosDotacion.objects.get(rut_empresa_id=empresa.pk)
-    empresa_procesos = TablaResultadosProcesos.objects.get(rut_empresa_id=empresa.pk)
-    if request.method == "POST":
-        form = FormPageOne(request.POST)
-        if form.is_valid():
-            return render(request, 'MideTuRiesgo/mideturiesgo2.html')
-        else:
-            context = {'form': form, 'empresa': empresa}
-            return render(request, 'MideTuRiesgo/mideturiesgo.html', context=context)
+    # Siempre existira un usuario logueado en esta instancia
+    form_user = FormUserGuiar(instance=request.user)
+
+    try:
+        perfil_empresa = TablaPerfilEmpresa.objects.get(id=request.user.id)
+        form_perfil_empresa = FormTablaPerfilEmpresa(instance=perfil_empresa)
+    except:
+        form_perfil_empresa = FormTablaPerfilEmpresa()
+
+    context = {
+        'form_perfil_empresa': form_perfil_empresa,
+        'form_user': form_user,
+    }
+
+    if request.method == 'POST':
+        if form_user.is_valid() and form_perfil_empresa.is_valid():
+
+            if form_user.changed_data():
+                form_user.save()
+
+            if form_perfil_empresa.changed_data():
+                form_perfil_empresa.save()
+        return render(request, "MideTuRiesgo/mideturiesgo.html", context)
     else:
-        # Visualizar los datos en el formulario
-        data = {
-            # Datos de la empresa
-            'razon_social': empresa.razon_social_empresa,
-            'rut': empresa.rut_empresa,
-            'experiencia': empresa.experiencia_empresa,
-            'direccion': empresa.direccion_empresa,
-            'comuna': empresa.comuna_empresa,
-            'ciudad': empresa.ciudad_empresa,
-            # Datos del representante
-            'nombre_representante': empresa.nombre_representante,
-            'email_representante': empresa.email_representante,
-            'telefono_representante': empresa.telefono_representante,
-            # ventas anuales empresa
-            'ventas_anuales': empresa.ventas_anuales_empresa,
-            # Dotacion Empresa
-            'empContratados': dotacion_empresa.answer1,
-            'empContratistas': dotacion_empresa.answer2,
-            'vehLivianos': dotacion_empresa.answer3,
-            'vehContratistas': dotacion_empresa.answer4,
-            'vehPesados': dotacion_empresa.answer5,
-            'vehPesadosContratistas': dotacion_empresa.answer6,
-            'maqEmpresa': dotacion_empresa.answer7,
-            'maqContratista': dotacion_empresa.answer8,
-        }
-        form = FormPageOne(data=data)
-        
-    context = {'form': form, 'empresa': empresa}
-    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
+        return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 
 @login_required

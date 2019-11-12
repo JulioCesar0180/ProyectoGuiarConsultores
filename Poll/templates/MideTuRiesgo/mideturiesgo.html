@@ -44,27 +44,27 @@
                     <tbody>
                     <tr>
                         <td class="nombreCampo"><label for="razon_social">Razon Social</label></td>
-                        <td class="campos">{{ form.razon_social}}</td>
+                        <td class="campos">{{ form_perfil_empresa.razon_social_empresa }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="rut">Rut</label></td>
-                        <td class="campos">{{ form.rut }}</td>
+                        <td class="campos">{{ form_user.rut }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="experiencia">Antigüedad de la empresa (años)</label></td>
-                        <td class="campos">{{ form.experiencia }}</td>
+                        <td class="campos">{{ form_perfil_empresa.experiencia_empresa }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="direccion">Dirección</label></td>
-                        <td class="campos">{{ form.direccion }}</td>
+                        <td class="campos">{{ form_user.address }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="comuna">Comuna</label></td>
-                        <td class="campos">{{ form.comuna }}</td>
+                        <td class="campos">{{ form_perfil_empresa.comuna_empresa }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="ciudad">Ciudad</label></td>
-                        <td class="campos">{{ form.ciudad }}</td>
+                        <td class="campos">{{ form_perfil_empresa.ciudad_empresa }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -82,15 +82,19 @@
                     <tbody>
                     <tr>
                         <td class="nombreCampo"><label for="nombre">Nombre</label></td>
-                        <td class="campos">{{ form.nombre_representante }}</td>
+                        <td class="campos">{{ form_perfil_empresa.nombre_representante }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="rut">Rut</label></td>
+                        <td class="campos">{{ form_perfil_empresa.rut_representante }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="email">Correo electronico</label></td>
-                        <td class="campos">{{ form.email_representante }}</td>
+                        <td class="campos">{{ form_perfil_empresa.email_representante }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="telefono">Teléfono</label></td>
-                        <td class="campos">{{ form.telefono_representante }}</td>
+                        <td class="campos">{{ form_perfil_empresa.telefono_representante }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -103,7 +107,7 @@
         <div class="inicio">
             <b>P3.</b> Ventas anuales de la empresa
             <div><br></div>
-            {% for radio in form.ventas_anuales %}
+            {% for radio in form_perfil_empresa.ventas_anuales_empresa %}
                 <div class="input-radio">
                     {{ radio.tag }}
                     <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>

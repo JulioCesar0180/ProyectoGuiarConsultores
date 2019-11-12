@@ -26,6 +26,9 @@ class UserGuiarAdmin(UserAdmin):
     )
 
 
+admin.site.register(TablaPerfilEmpresa)
+
+"""
 admin.site.register(TablaResultadosTransporte)
 admin.site.register(TablaResultadosContruccion)
 admin.site.register(TablaResultadosManufactura)
@@ -38,6 +41,8 @@ admin.site.register(TablaResultadosElectricidad)
 admin.site.register(TablaResultadosSustanciasPeligrosas)
 admin.site.register(TablaResultadosRiesgoAltura)
 admin.site.register(TablaResultadosFinales)
+
+"""
 """
 admin.register(TablaPriorizacionRiesgos)
 """

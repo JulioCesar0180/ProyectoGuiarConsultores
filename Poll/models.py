@@ -26,7 +26,7 @@ class UserGuiarManager(BaseUserManager):
 
 #Auth
 class UserGuiar(AbstractBaseUser, PermissionsMixin):
-    rut = models.CharField(max_length=12, verbose_name="Rut Empresa", unique=True, default="")
+    rut = models.CharField(max_length=12, verbose_name="Rut Empresa", primary_key=True, default="")
     name = models.CharField(max_length=100, verbose_name="Nombre Empresa", default="")
     address = models.CharField(max_length=100, verbose_name="Direccion", default="")
     is_admin = models.BooleanField(default=False)
@@ -48,168 +48,37 @@ class UserGuiar(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_admin
 
+
+"""
+    Tabla de ventas Anuales de la empresa
+"""
+
+
+class TablaVentasAnuales(models.Model):
+    ventas = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.ventas
+
+
+"""
+    Tabla del perfil de la empresa y su representante
+"""
+
+
 class TablaPerfilEmpresa(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE)
-    nombre_empresa = models.CharField(max_length=100, default="")
-    direccion_empresa = models.CharField(max_length=100, default="")
-    experiencia_empresa = models.CharField(max_length=10, default="")
+    # id generada por Django
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+
+    # Datos complementarios a la empresa
+    experiencia_empresa = models.IntegerField(default=0)
     ciudad_empresa = models.CharField(max_length=20, default="")
     comuna_empresa = models.CharField(max_length=20, default="")
     razon_social_empresa = models.CharField(max_length=100, default="")
-    ventas_anuales_empresa = models.CharField(max_length=50, default="")
+    ventas_anuales_empresa = models.ManyToManyField(TablaVentasAnuales)
+
+    # Datos del representante
     nombre_representante = models.CharField(max_length=50, default="")
+    rut_representante = models.CharField(max_length=12)
     email_representante = models.EmailField(max_length=50, default="")
     telefono_representante = models.CharField(max_length=15, default="")
-
-
-class TablaResultadosTransporte(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-    answer7 = models.BooleanField(default=False)
-    answer8 = models.BooleanField(default=False)
-    answer9 = models.BooleanField(default=False)
-
-
-class TablaResultadosContruccion(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-
-
-class TablaResultadosManufactura(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-
-
-class TablaResultadosServicios(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-    answer7 = models.BooleanField(default=False)
-    answer8 = models.BooleanField(default=False)
-    answer9 = models.BooleanField(default=False)
-    answer10 = models.BooleanField(default=False)
-    answer11 = models.BooleanField(default=False)
-    answer12 = models.BooleanField(default=False)
-    answer13 = models.BooleanField(default=False)
-    answer14 = models.BooleanField(default=False)
-
-
-class TablaResultadosDotacion(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.CharField(max_length=10, default="")
-    answer2 = models.CharField(max_length=10, default="")
-    answer3 = models.CharField(max_length=10, default="")
-    answer4 = models.CharField(max_length=10, default="")
-    answer5 = models.CharField(max_length=10, default="")
-    answer6 = models.CharField(max_length=10, default="")
-    answer7 = models.CharField(max_length=10, default="")
-    answer8 = models.CharField(max_length=10, default="")
-
-
-class TablaResultadosGestion(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-    answer7 = models.BooleanField(default=False)
-    answer8 = models.BooleanField(default=False)
-    answer9 = models.BooleanField(default=False)
-    answer10 = models.BooleanField(default=False)
-
-
-class TablaResultadosProcesos(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-
-
-class TablaResultadosExplosivos(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-
-
-class TablaResultadosElectricidad(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-
-
-class TablaResultadosSustanciasPeligrosas(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-    answer5 = models.BooleanField(default=False)
-    answer6 = models.BooleanField(default=False)
-    answer7 = models.BooleanField(default=False)
-    answer8 = models.BooleanField(default=False)
-    answer9 = models.BooleanField(default=False)
-
-
-class TablaResultadosRiesgoAltura(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    answer1 = models.BooleanField(default=False)
-    answer2 = models.BooleanField(default=False)
-    answer3 = models.BooleanField(default=False)
-    answer4 = models.BooleanField(default=False)
-
-
-class TablaResultadosFinales(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    riesgo_transporte = models.CharField(max_length=3, default="")
-    riesgo_construccion = models.CharField(max_length=3, default="")
-    riesgo_manufactura = models.CharField(max_length=3, default="")
-    riesgo_servicios = models.CharField(max_length=3, default="")
-    riesgo_dotacion = models.CharField(max_length=3, default="")
-    riesgo_gestion = models.CharField(max_length=3, default="")
-    riesgo_procesos = models.CharField(max_length=3, default="")
-    riesgo_explosivos = models.CharField(max_length=3, default="")
-    riesgo_electricidad = models.CharField(max_length=3, default="")
-    riesgo_sustancias_peligrosas = models.CharField(max_length=3, default="")
-    riesgo_altura = models.CharField(max_length=3, default="")
-
-"""
-class TablaPriorizacionRiesgos(models.Model):
-    rut_empresa = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    resultados = models.ForeignKey(TablaResultadosFinales, on_delete=models.CASCADE)
-    responsabilidad_civil_empresa = models.BooleanField(default=False)
-    equipos_moviles = models.BooleanField(default=False)
-    transporte_terrestre = models.BooleanField(default=False)
-    vehiculos_comerciales_livianos = models.BooleanField(default=False)
-    vehiculos_comerciales_pesados = models.BooleanField(default=False)
-    accidentes_personales = models.BooleanField(default=False)
-"""
