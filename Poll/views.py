@@ -144,63 +144,37 @@ def Perfil(request):
 
             """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
              validar el ingreso de texto en blanco"""
+            if(request.POST['nombre_representante'] and request.POST['email_representante'] and request.POST['telefono_representante'] != ""):
+                if (phone_validator(request.POST['telefono_representante'])):
+                    """Cada linea de este codigo, modifica los campos correpondientes"""
+                    Obj_empresa.nombre_representante = request.POST['nombre_representante']
+                    Obj_empresa.email_representante = request.POST['email_representante']
+                    Obj_empresa.telefono_representante = phone_format(request.POST['telefono_representante'])
+                    Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
+                    Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
+                    Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
+                    Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
+                    Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
 
-            """Cada linea de este codigo, modifica los campos correpondientes"""
-            Obj_empresa.nombre_representante = request.POST['nombre_representante']
-            Obj_empresa.email_representante = request.POST['email_representante']
-            Obj_empresa.telefono_representante = request.POST['telefono_representante']
-            Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
-            Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
-            Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
-            Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
-            Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
+                    "Nombre de la empresa se repite en las 2 tablas"
+                    Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
 
-            "Nombre de la empresa se repite en las 2 tablas"
-            Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
+                    "Datos User Guiar"
+                    Obj_user.name = request.POST['nombre_empresa']
+                    Obj_user.address = request.POST['address']
 
-            "Datos User Guiar"
-            Obj_user.name = request.POST['nombre_empresa']
-            Obj_user.address = request.POST['address']
-
-            """ Actualiza la base de datos"""
-            Obj_empresa.save()
-            Obj_user.save()
-
+                    """ Actualiza la base de datos"""
+                    Obj_empresa.save()
+                    Obj_user.save()
+                else:
+                    messages.error(request, "El formato del Número de Celular ingresado no es válido")
+            else:
+                messages.error(request, "Los campos Nombre, Email y Número de contacto no pueden estar vacíos")
         return render(request, 'perfil.html', {
             'Obj_empresa': Obj_empresa,
             'Obj_user': Obj_user,
         })
     except:
-        """
-        Todo usuario creado debe tener un perfil de empresa, salvo el super User, solo el deberia
-        pasar por acá
-        
-        if request.method == 'POST':
-        
-            perfil_empresa = TablaPerfilEmpresa(
-                nombre_representante = form.cleaned_data['nombre_representante'],
-                email_representante = form.cleaned_data['email_representante'],
-                telefono_representante = form.cleaned_data['telefono_representante'],
-                experiencia_empresa = form.cleaned_data['experiencia_empresa'],
-                razon_social_empresa = form.cleaned_data['razon_social_empresa'],
-                ventas_anuales_empresa = form.cleaned_data['ventas_anuales_empresa'],
-                comuna_empresa = form.cleaned_data['comuna_empresa'],
-                ciudad_empresa = form.cleaned_data['ciudad_empresa'],
-                nombre_empresa = form.cleaned_data['nombre_empresa'],
-                rut_empresa_id = request.user.id
-            )
-            perfil_empresa.save()
-
-        "Datos User Guiar"
-        Obj_user.name = request.POST['nombre_empresa']
-        Obj_user.address = request.POST['address']
-
-        Obj_user.save()
-
-        return render(request, 'perfil.html', {
-            'Obj_user': Obj_user,
-        })
-        """
         return redirect('home')
 
 
@@ -306,14 +280,18 @@ def rut_validator(rut):
 
 """valida el numero de celular"""
 def phone_validator(num):
-    if(bool(re.match("9[9876543]\d{7}$", num))):
+    if(bool(re.match("^(\+?56)?(9)[9876543]\d{7}$", num))):
         return True
     return False
 
 """Le da el formato al numero de celular, incluyendo el +56"""
 def phone_format(num):
-    return "%s%s" % ("+56", num)
-
+    if num[0] == "9":
+        return "%s%s" % ("+56", num)
+    elif num[0] == "5":
+        return "%s%s" % ("+", num)
+    elif num[0] == "+":
+        return num
 
 """Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
 def rut_format(value, separator=""):
