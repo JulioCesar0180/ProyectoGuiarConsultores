@@ -2,6 +2,9 @@
 """Se utiliza en el rut validator, es para iterar o una especie de foreach"""
 from itertools import cycle
 
+"""Libreria de expresiones regulares"""
+import re
+
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
@@ -209,14 +212,17 @@ def MTR_login(request):
     if request.method == 'POST':
         form = LogInForm(request.POST)
         if form.is_valid():
-            rut = form.cleaned_data['rut']
-            password = form.cleaned_data["password"]
-            user = authenticate(username=rut, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')
+            if(rut_validator(form.cleaned_data['rut'])):
+                rut = rut_format(form.cleaned_data['rut'])
+                password = form.cleaned_data["password"]
+                user = authenticate(username=rut, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    messages.error(request, 'El RUT o la clave ingresada no son correctos.')
             else:
-                messages.error(request, 'El RUN o la clave ingresada no son correctos.')
+                messages.error(request, "El formato del Rut ingresado no es válido")
         else:
             return render(request, 'registration/login.html', {'form': form})
 
@@ -230,26 +236,36 @@ def signup(request):
         if form.is_valid():
             """Validar rut"""
             if rut_validator(form.cleaned_data['rut']):
-                user = form.save()
-                rut_empresa = form.cleaned_data['rut']
-                nombre_empresa = form.cleaned_data['name']
-                direccion_empresa = form.cleaned_data['address']
-                nombre_representante = form.cleaned_data['nombre_representante']
-                email_representante = form.cleaned_data['email_representante']
-                telefono_representante = form.cleaned_data['telefono_representante']
+                if(phone_validator(form.cleaned_data['telefono_representante'])):
+                    user = form.save()
 
-                perfil_empresa = TablaPerfilEmpresa(
-                    rut_empresa=user,
-                    nombre_empresa=nombre_empresa,
-                    direccion_empresa=direccion_empresa,
-                    nombre_representante=nombre_representante,
-                    email_representante=email_representante,
-                    telefono_representante=telefono_representante
-                )
-                perfil_empresa.save()
+                    """Se leen los demas datos de empresa"""
+                    nombre_empresa = form.cleaned_data['name']
+                    direccion_empresa = form.cleaned_data['address']
+                    nombre_representante = form.cleaned_data['nombre_representante']
+                    email_representante = form.cleaned_data['email_representante']
+                    telefono_representante = phone_format(form.cleaned_data['telefono_representante'])
 
-                login(request, user)
-                return redirect('home')
+                    perfil_empresa = TablaPerfilEmpresa(
+                        rut_empresa=user,
+                        nombre_empresa=nombre_empresa,
+                        direccion_empresa=direccion_empresa,
+                        nombre_representante=nombre_representante,
+                        email_representante=email_representante,
+                        telefono_representante=telefono_representante
+                    )
+                    perfil_empresa.save()
+
+                    login(request, user)
+
+                    """Se corrige el formato del rut"""
+                    Obj_user = request.user
+                    Obj_user.rut = rut_format(form.cleaned_data['rut'])
+                    Obj_user.save()
+
+                    return redirect('home')
+                else:
+                    messages.error(request, "El formato del Número de Celular ingresado no es válido")
             else:
                 messages.error(request, "El formato del Rut ingresado no es válido")
     else:
@@ -265,24 +281,39 @@ def resetPassword():
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
+
 def rut_validator(rut):
+    try:
+        rut = rut.upper()
+        rut = rut.replace("-", "").replace(".", "")
+        num = rut[:-1]
+        dv = rut[-1:]
 
-    rut = rut.upper()
-    rut = rut.replace("-", "").replace(".", "")
-    num = rut[:-1]
-    dv = rut[-1:]
+        reversed_digits = map(int, reversed(str(num)))
+        factors = cycle(range(2, 8))
+        s = sum(d * f for d, f in zip(reversed_digits, factors))
+        res = (-s) % 11
 
-    reversed_digits = map(int, reversed(str(num)))
-    factors = cycle(range(2, 8))
-    s = sum(d * f for d, f in zip(reversed_digits, factors))
-    res = (-s) % 11
-
-    if str(res) == dv:
-        return True
-    elif dv == "K" and res == 10:
-        return True
-    else:
+        if str(res) == dv:
+            return True
+        elif dv == "K" and res == 10:
+            return True
+        else:
+            return False
+    except:
         return False
+
+
+"""valida el numero de celular"""
+def phone_validator(num):
+    if(bool(re.match("9[9876543]\d{7}$", num))):
+        return True
+    return False
+
+"""Le da el formato al numero de celular, incluyendo el +56"""
+def phone_format(num):
+    return "%s%s" % ("+56", num)
+
 
 """Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
 def rut_format(value, separator=""):
@@ -344,7 +375,7 @@ def page_one_poll(request):
             'maqContratista': dotacion_empresa.answer8,
         }
         form = FormPageOne(data=data)
-        
+
     context = {'form': form, 'empresa': empresa}
     return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
@@ -577,7 +608,7 @@ def page_three_poll(request):
                 asesoria = True
             elif x == "gerencia":
                 gerencia = True
-        
+
         prevensionista = request.POST.getlist('prevensionista[]')
         tiempoCompleto = False
         tiempoParcial = False
@@ -592,7 +623,7 @@ def page_three_poll(request):
                 proyectos = True
             elif x == "noTiene":
                 noTiene = True
-        
+
         gestion = TablaResultadosGestion(
             rut_empresa=empresa,
             answer1=iso9001,
