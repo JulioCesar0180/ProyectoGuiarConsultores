@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 from django.contrib.auth.forms import UserCreationForm
+from django.db.transaction import commit
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -294,30 +295,57 @@ def rut_unformat(value):
 
 @login_required
 def page_one_poll(request):
-    # Siempre existira un usuario logueado en esta instancia
-    form_user = FormUserGuiar(instance=request.user)
 
+    # Query por un usuario existente
+    user = UserGuiar.objects.get(rut=request.user)
+
+    # Query por un perfil empresa existente
     try:
-        perfil_empresa = TablaPerfilEmpresa.objects.get(id=request.user.id)
-        form_perfil_empresa = FormTablaPerfilEmpresa(instance=perfil_empresa)
-    except:
-        form_perfil_empresa = FormTablaPerfilEmpresa()
+        perfil_empresa = TablaPerfilEmpresa.objects.get(id=user)
+    except TablaPerfilEmpresa.DoesNotExist:
+        perfil_empresa = TablaPerfilEmpresa(id=user)
+        perfil_empresa.save()
 
-    context = {
-        'form_perfil_empresa': form_perfil_empresa,
-        'form_user': form_user,
-    }
+    # Query por dotacion de la empresa
+    try:
+        dotacion_empresa = TablaResultadosDotacion.objects.get(id=user)
+    except TablaResultadosDotacion.DoesNotExist:
+        dotacion_empresa = TablaResultadosDotacion(id=user)
+        dotacion_empresa.save()
 
     if request.method == 'POST':
-        if form_user.is_valid() and form_perfil_empresa.is_valid():
+        form_user = FormUserGuiar(request.POST, instance=user)
+        form_perfil_empresa = FormTablaPerfilEmpresa(request.POST, instance=perfil_empresa)
+        form_dotacion_empresa = FormTablaResultadosDotacion(request.POST, instance=dotacion_empresa)
 
-            if form_user.changed_data():
-                form_user.save()
+        if form_user.is_valid() and form_perfil_empresa.is_valid() and form_dotacion_empresa.is_valid():
+            myuser = form_user.save(commit=False)
+            myuser.save()
 
-            if form_perfil_empresa.changed_data():
-                form_perfil_empresa.save()
+            form_perfil_empresa.save(commit=False)
+            form_perfil_empresa.save()
+
+            form_dotacion_empresa.save(commit=False)
+            form_dotacion_empresa.save()
+
+        context = {
+            'form_perfil_empresa': form_perfil_empresa,
+            'form_user': form_user,
+            'form_dotacion_empresa': form_dotacion_empresa,
+        }
+
         return render(request, "MideTuRiesgo/mideturiesgo.html", context)
     else:
+        form_user = FormUserGuiar(instance=user)
+        form_perfil_empresa = FormTablaPerfilEmpresa(instance=perfil_empresa)
+        form_dotacion_empresa = FormTablaResultadosDotacion(instance=dotacion_empresa)
+
+        context = {
+            'form_perfil_empresa': form_perfil_empresa,
+            'form_user': form_user,
+            'form_dotacion_empresa': form_dotacion_empresa,
+        }
+
         return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 

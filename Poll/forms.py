@@ -110,6 +110,28 @@ class FormUserGuiar(ModelForm):
             'address': 'Dirección'
         }
 
+        exclude = [
+            'name',
+            'password',
+            'is_admin',
+            'is_superuser',
+            'groups',
+            'last_login',
+            'user_permissions'
+        ]
+
+        widgets = {
+            'rut': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
 
 """ 
 ---------------------------------------------------------------------------------------------------
@@ -120,9 +142,15 @@ FormTablaPerfilEmpresa
 
 
 class FormTablaPerfilEmpresa(ModelForm):
+
+    # Como ventas anuales puede ser null, mediante el formulario se fuerza a tener un valor
+    def __init__(self, *args, **kwargs):
+        super(FormTablaPerfilEmpresa, self).__init__(*args, **kwargs)
+        self.fields['ventas_anuales_empresa'].required = True
+
     class Meta:
         model = TablaPerfilEmpresa
-        fields = [
+        fields = (
             'experiencia_empresa',
             'ciudad_empresa',
             'comuna_empresa',
@@ -131,8 +159,8 @@ class FormTablaPerfilEmpresa(ModelForm):
             'nombre_representante',
             'rut_representante',
             'email_representante',
-            'telefono_representante'
-        ]
+            'telefono_representante',
+        )
 
         labels = {
             'experiencia_empresa': 'Antigüedad de la empresa',
@@ -144,4 +172,91 @@ class FormTablaPerfilEmpresa(ModelForm):
             'rut_representante': 'Rut',
             'email_representante': 'Correo Electronico',
             'telefono_representante': 'Teléfono'
+        }
+
+        exclude = [
+            'id'
+        ]
+
+        widgets = {
+            'experiencia_empresa': forms.NumberInput(attrs={
+                'class': 'form-control',
+            }),
+            'ciudad_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'comuna_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'razon_social_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'ventas_anuales_empresa': forms.RadioSelect,
+            'nombre_representante': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'rut_representante': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'email_representante': forms.EmailInput(attrs={
+                'class': 'form-control',
+            }),
+            'telefono_representante': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+
+class FormTablaResultadosDotacion(ModelForm):
+
+    class Meta:
+        model = TablaResultadosDotacion
+        fields = [
+            'cant_emp_contratados',
+            'cant_emp_contratista',
+            'cant_veh_empresa',
+            'cant_veh_contratista',
+            'cant_veh_empresa_pesado',
+            'cant_veh_contratista_pesado',
+            'cant_maq_pesada_empresa',
+            'cant_maq_pesada_contratista',
+        ]
+        labels = {
+            'cant_emp_contratados': 'Cantidad de empleados contratados',
+            'cant_emp_contratista': 'Cantidad de empleados contratistas',
+            'cant_veh_empresa': 'Cantidad de vehículos comerciales livianos de la empresa',
+            'cant_veh_contratista': 'Cantidad de vehículos comerciales de contratistas',
+            'cant_veh_empresa_pesado': 'Cantidad de vehículos comerciales pesados de la empresa',
+            'cant_veh_contratista_pesado': 'Cantidad de vehículos comerciales pesados de contratistas',
+            'cant_maq_pesada_empresa': 'Cantidad de maquinaria pesada de la empresa',
+            'cant_maq_pesada_contratista': 'Cantidad de maquinaria pesada de contratista',
+        }
+        exclude = [
+            'id'
+        ]
+        widgets = {
+            'cant_emp_contratados': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_emp_contratista': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_empresa': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_contratista': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_empresa_pesado': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_contratista_pesado': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_maq_pesada_empresa': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_maq_pesada_contratista': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
         }

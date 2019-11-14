@@ -32,7 +32,7 @@
     </div>
     <form method="POST" class="siguiente" style="margin: 0">
         {% csrf_token %}
-        {% for field in form.visible_fields %}
+        {% for field in form_perfil_empresa.visible_fields %}
             {{ field.errors }}
         {% endfor %}
         <!-- Datos Generales de la empresa -->
@@ -109,11 +109,14 @@
             <div><br></div>
             {% for radio in form_perfil_empresa.ventas_anuales_empresa %}
                 <div class="input-radio">
-                    {{ radio.tag }}
-                    <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                    {% if radio.choice_label != "---------" %}
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                    {% endif %}
                 </div>
             {% endfor %}
             <div><br></div>
+
             <div><hr></div>
         </div>
 
@@ -126,35 +129,35 @@
                     <tbody>
                     <tr>
                         <td class="nombreCampo"><label for="empContratados"></label>Cantidad de empleados contratados</td>
-                        <td class="campos">{{ form.empContratados }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_emp_contratados }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="empContratistas">Cantidad de empleados contratistas</label></td>
-                        <td class="campos">{{ form.empContratistas }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_emp_contratista }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="vehLivianos">Cantidad de vehículos comerciales livianos de la empresa</label></td>
-                        <td class="campos">{{ form.vehLivianos }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="vehContratistas">Cantidad de vehículos comerciales de contratistas</label></td>
-                        <td class="campos">{{ form.vehContratistas }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="vehPesados">Cantidad de vehículos comerciales pesados de la empresa</label></td>
-                        <td class="campos">{{ form.vehPesados }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa_pesado }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="vehPesadosContratistas">Cantidad de vehículos comerciales pesados de contratistas</label></td>
-                        <td class="campos">{{ form.vehPesadosContratistas }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista_pesado }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="maqEmpresa">Cantidad de maquinaria pesada de la empresa</label></td>
-                        <td class="campos">{{ form.maqEmpresa }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_empresa }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="maqContratista">Cantidad de maquinaria pesada de contratista</label></td>
-                        <td class="campos">{{ form.maqContratista }}</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_contratista }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -174,7 +177,6 @@
                 </div>
             {% endfor %}
         </div>
-
         <button type="submit" value="Submit" id="next">→</button>
     </form>
     <div><br></div>

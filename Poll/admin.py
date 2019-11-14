@@ -27,6 +27,7 @@ class UserGuiarAdmin(UserAdmin):
 
 
 admin.site.register(TablaPerfilEmpresa)
+admin.site.register(TablaVentasAnuales)
 
 """
 admin.site.register(TablaResultadosTransporte)
