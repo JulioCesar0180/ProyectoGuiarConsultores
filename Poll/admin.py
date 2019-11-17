@@ -28,15 +28,17 @@ class UserGuiarAdmin(UserAdmin):
 
 admin.site.register(TablaPerfilEmpresa)
 admin.site.register(TablaVentasAnuales)
-
+admin.site.register(TablaResultadosDotacion)
+admin.site.register(TablaProcesos)
+admin.site.register(TablaResultadosProcesos)
 """
 admin.site.register(TablaResultadosTransporte)
 admin.site.register(TablaResultadosContruccion)
 admin.site.register(TablaResultadosManufactura)
 admin.site.register(TablaResultadosServicios)
-admin.site.register(TablaResultadosDotacion)
+
 admin.site.register(TablaResultadosGestion)
-admin.site.register(TablaResultadosProcesos)
+
 admin.site.register(TablaResultadosExplosivos)
 admin.site.register(TablaResultadosElectricidad)
 admin.site.register(TablaResultadosSustanciasPeligrosas)

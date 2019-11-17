@@ -313,12 +313,19 @@ def page_one_poll(request):
         dotacion_empresa = TablaResultadosDotacion(id=user)
         dotacion_empresa.save()
 
+    try:
+        procesos_empresa = TablaResultadosProcesos.objects.get(id=user)
+    except TablaResultadosProcesos.DoesNotExist:
+        procesos_empresa = TablaResultadosProcesos(id=user)
+        procesos_empresa.save()
+
     if request.method == 'POST':
         form_user = FormUserGuiar(request.POST, instance=user)
         form_perfil_empresa = FormTablaPerfilEmpresa(request.POST, instance=perfil_empresa)
         form_dotacion_empresa = FormTablaResultadosDotacion(request.POST, instance=dotacion_empresa)
+        form_procesos_empresa = FormTablaResultadosProcesos(request.POST, instance=procesos_empresa)
 
-        if form_user.is_valid() and form_perfil_empresa.is_valid() and form_dotacion_empresa.is_valid():
+        if form_user.is_valid() and form_perfil_empresa.is_valid() and form_dotacion_empresa.is_valid() and form_procesos_empresa.is_valid():
             myuser = form_user.save(commit=False)
             myuser.save()
 
@@ -328,22 +335,29 @@ def page_one_poll(request):
             form_dotacion_empresa.save(commit=False)
             form_dotacion_empresa.save()
 
-        context = {
-            'form_perfil_empresa': form_perfil_empresa,
-            'form_user': form_user,
-            'form_dotacion_empresa': form_dotacion_empresa,
-        }
+            form_procesos_empresa.save(commit=False)
+            form_procesos_empresa.save()
 
-        return render(request, "MideTuRiesgo/mideturiesgo.html", context)
+            return render(request, "MideTuRiesgo/mideturiesgo2.html")
+        else:
+            context = {
+                'form_perfil_empresa': form_perfil_empresa,
+                'form_user': form_user,
+                'form_dotacion_empresa': form_dotacion_empresa,
+                'form_procesos_empresa': form_procesos_empresa,
+            }
+            return render(request, "MideTuRiesgo/mideturiesgo.html", context)
     else:
         form_user = FormUserGuiar(instance=user)
         form_perfil_empresa = FormTablaPerfilEmpresa(instance=perfil_empresa)
         form_dotacion_empresa = FormTablaResultadosDotacion(instance=dotacion_empresa)
+        form_procesos_empresa = FormTablaResultadosProcesos(instance=procesos_empresa)
 
         context = {
             'form_perfil_empresa': form_perfil_empresa,
             'form_user': form_user,
             'form_dotacion_empresa': form_dotacion_empresa,
+            'form_procesos_empresa': form_procesos_empresa,
         }
 
         return render(request, "MideTuRiesgo/mideturiesgo.html", context)

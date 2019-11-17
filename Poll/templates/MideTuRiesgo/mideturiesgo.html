@@ -32,7 +32,7 @@
     </div>
     <form method="POST" class="siguiente" style="margin: 0">
         {% csrf_token %}
-        {% for field in form_perfil_empresa.visible_fields %}
+        {% for field in form_procesos_empresa.visible_fields %}
             {{ field.errors }}
         {% endfor %}
         <!-- Datos Generales de la empresa -->
@@ -170,7 +170,7 @@
            <div class="inicio">
             <b>P5.</b> Indique el o los rubros en que participa la empresa
             <div><br></div>
-            {% for rubro in form.rubro_empresa %}
+            {% for rubro in form_procesos_empresa.procesos %}
                 <div class="input-radio">
                     {{ rubro.tag }}
                     <label for="{{ rubro.id_for_label }}" class="unselectable">{{ rubro.choice_label }}</label>

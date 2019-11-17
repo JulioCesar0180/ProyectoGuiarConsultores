@@ -157,7 +157,7 @@ input[type=radio] + label{
     background-color:blue;
     border: blue;
     border-radius: 5px;
-    width: 600%
+    width: 100%
   }
   #resultado{
     color:white;

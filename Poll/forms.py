@@ -260,3 +260,16 @@ class FormTablaResultadosDotacion(ModelForm):
                 'class': 'form-control'
             }),
         }
+
+
+class FormTablaResultadosProcesos(ModelForm):
+
+    class Meta:
+        model = TablaResultadosProcesos
+        fields = [
+            'procesos'
+        ]
+
+        widgets = {
+            'procesos': forms.CheckboxSelectMultiple
+        }

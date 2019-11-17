@@ -86,7 +86,7 @@ class TablaPerfilEmpresa(models.Model):
 
 
 """
-    Tabla del perfil de la empresa y su representante
+    Tabla sobre la dotacion de la empresa
 """
 
 
@@ -100,3 +100,25 @@ class TablaResultadosDotacion(models.Model):
     cant_veh_contratista_pesado = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cant_maq_pesada_empresa = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     cant_maq_pesada_contratista = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+
+
+"""
+Tabla sobre los procesos que puede tener una empresa
+"""
+
+
+class TablaProcesos(models.Model):
+    nombre_proceso = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre_proceso
+
+
+"""
+Tabla sobre los procesos realizados por una empresa
+"""
+
+
+class TablaResultadosProcesos(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    procesos = models.ManyToManyField(TablaProcesos)
