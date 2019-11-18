@@ -1,4 +1,9 @@
 # encoding: utf-8
+"""Se utiliza en el rut validator, es para iterar o una especie de foreach"""
+from itertools import cycle
+
+"""Libreria de expresiones regulares"""
+import re
 
 from django.contrib.auth.forms import UserCreationForm
 from django.db.transaction import commit
@@ -142,63 +147,37 @@ def Perfil(request):
 
             """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
              validar el ingreso de texto en blanco"""
+            if(request.POST['nombre_representante'] and request.POST['email_representante'] and request.POST['telefono_representante'] != ""):
+                if (phone_validator(request.POST['telefono_representante'])):
+                    """Cada linea de este codigo, modifica los campos correpondientes"""
+                    Obj_empresa.nombre_representante = request.POST['nombre_representante']
+                    Obj_empresa.email_representante = request.POST['email_representante']
+                    Obj_empresa.telefono_representante = phone_format(request.POST['telefono_representante'])
+                    Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
+                    Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
+                    Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
+                    Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
+                    Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
 
-            """Cada linea de este codigo, modifica los campos correpondientes"""
-            Obj_empresa.nombre_representante = request.POST['nombre_representante']
-            Obj_empresa.email_representante = request.POST['email_representante']
-            Obj_empresa.telefono_representante = request.POST['telefono_representante']
-            Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
-            Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
-            Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
-            Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
-            Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
+                    "Nombre de la empresa se repite en las 2 tablas"
+                    Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
 
-            "Nombre de la empresa se repite en las 2 tablas"
-            Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
+                    "Datos User Guiar"
+                    Obj_user.name = request.POST['nombre_empresa']
+                    Obj_user.address = request.POST['address']
 
-            "Datos User Guiar"
-            Obj_user.name = request.POST['nombre_empresa']
-            Obj_user.address = request.POST['address']
-
-            """ Actualiza la base de datos"""
-            Obj_empresa.save()
-            Obj_user.save()
-
+                    """ Actualiza la base de datos"""
+                    Obj_empresa.save()
+                    Obj_user.save()
+                else:
+                    messages.error(request, "El formato del Número de Celular ingresado no es válido")
+            else:
+                messages.error(request, "Los campos Nombre, Email y Número de contacto no pueden estar vacíos")
         return render(request, 'perfil.html', {
             'Obj_empresa': Obj_empresa,
             'Obj_user': Obj_user,
         })
     except:
-        """
-        Todo usuario creado debe tener un perfil de empresa, salvo el super User, solo el deberia
-        pasar por acá
-        
-        if request.method == 'POST':
-        
-            perfil_empresa = TablaPerfilEmpresa(
-                nombre_representante = form.cleaned_data['nombre_representante'],
-                email_representante = form.cleaned_data['email_representante'],
-                telefono_representante = form.cleaned_data['telefono_representante'],
-                experiencia_empresa = form.cleaned_data['experiencia_empresa'],
-                razon_social_empresa = form.cleaned_data['razon_social_empresa'],
-                ventas_anuales_empresa = form.cleaned_data['ventas_anuales_empresa'],
-                comuna_empresa = form.cleaned_data['comuna_empresa'],
-                ciudad_empresa = form.cleaned_data['ciudad_empresa'],
-                nombre_empresa = form.cleaned_data['nombre_empresa'],
-                rut_empresa_id = request.user.id
-            )
-            perfil_empresa.save()
-
-        "Datos User Guiar"
-        Obj_user.name = request.POST['nombre_empresa']
-        Obj_user.address = request.POST['address']
-
-        Obj_user.save()
-
-        return render(request, 'perfil.html', {
-            'Obj_user': Obj_user,
-        })
-        """
         return redirect('home')
 
 
@@ -210,14 +189,17 @@ def MTR_login(request):
     if request.method == 'POST':
         form = LogInForm(request.POST)
         if form.is_valid():
-            rut = form.cleaned_data['rut']
-            password = form.cleaned_data["password"]
-            user = authenticate(username=rut, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')
+            if(rut_validator(form.cleaned_data['rut'])):
+                rut = rut_format(form.cleaned_data['rut'])
+                password = form.cleaned_data["password"]
+                user = authenticate(username=rut, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    messages.error(request, 'El RUT o la clave ingresada no son correctos.')
             else:
-                messages.error(request, 'El RUN o la clave ingresada no son correctos.')
+                messages.error(request, "El formato del Rut ingresado no es válido")
         else:
             return render(request, 'registration/login.html', {'form': form})
 
@@ -229,28 +211,40 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+            """Validar rut"""
+            if rut_validator(form.cleaned_data['rut']):
+                if(phone_validator(form.cleaned_data['telefono_representante'])):
+                    user = form.save()
 
-            user = form.save()
+                    """Se leen los demas datos de empresa"""
+                    nombre_empresa = form.cleaned_data['name']
+                    direccion_empresa = form.cleaned_data['address']
+                    nombre_representante = form.cleaned_data['nombre_representante']
+                    email_representante = form.cleaned_data['email_representante']
+                    telefono_representante = phone_format(form.cleaned_data['telefono_representante'])
 
-            rut_empresa = form.cleaned_data['rut']
-            nombre_empresa = form.cleaned_data['name']
-            direccion_empresa = form.cleaned_data['address']
-            nombre_representante = form.cleaned_data['nombre_representante']
-            email_representante = form.cleaned_data['email_representante']
-            telefono_representante = form.cleaned_data['telefono_representante']
+                    perfil_empresa = TablaPerfilEmpresa(
+                        rut_empresa=user,
+                        nombre_empresa=nombre_empresa,
+                        direccion_empresa=direccion_empresa,
+                        nombre_representante=nombre_representante,
+                        email_representante=email_representante,
+                        telefono_representante=telefono_representante
+                    )
+                    perfil_empresa.save()
 
-            perfil_empresa = TablaPerfilEmpresa(
-                rut_empresa=user,
-                nombre_empresa=nombre_empresa,
-                direccion_empresa=direccion_empresa,
-                nombre_representante=nombre_representante,
-                email_representante=email_representante,
-                telefono_representante=telefono_representante
-            )
-            perfil_empresa.save()
+                    login(request, user)
 
-            login(request, user)
-            return redirect('home')
+                    """Se corrige el formato del rut"""
+                    Obj_user = request.user
+                    Obj_user.rut = rut_format(form.cleaned_data['rut'])
+                    Obj_user.save()
+
+                    return redirect('home')
+                else:
+                    messages.error(request, "El formato del Número de Celular ingresado no es válido")
+            else:
+                messages.error(request, "El formato del Rut ingresado no es válido")
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -265,33 +259,63 @@ def resetPassword():
     msg.send()
 
 
-def rut_format(value, separator=","):
+def rut_validator(rut):
+    try:
+        rut = rut.upper()
+        rut = rut.replace("-", "").replace(".", "")
+        num = rut[:-1]
+        dv = rut[-1:]
 
-    # Unformat the RUT
+        reversed_digits = map(int, reversed(str(num)))
+        factors = cycle(range(2, 8))
+        s = sum(d * f for d, f in zip(reversed_digits, factors))
+        res = (-s) % 11
+
+        if str(res) == dv:
+            return True
+        elif dv == "K" and res == 10:
+            return True
+        else:
+            return False
+    except:
+        return False
+
+
+"""valida el numero de celular"""
+def phone_validator(num):
+    if(bool(re.match("^(\+?56)?(9)[9876543]\d{7}$", num))):
+        return True
+    return False
+
+"""Le da el formato al numero de celular, incluyendo el +56"""
+def phone_format(num):
+    if num[0] == "9":
+        return "%s%s" % ("+56", num)
+    elif num[0] == "5":
+        return "%s%s" % ("+", num)
+    elif num[0] == "+":
+        return num
+
+"""Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
+def rut_format(value, separator=""):
+    # unformat the rut
     value = rut_unformat(value)
-
-    rut, verifier_digit = value[:-1], value[-1]
+    rut, dv = value[:-1], value[-1]
 
     try:
-        # Add thousands separator
         rut = "{0:,}".format(int(rut))
 
-        # If you specified another thousands separator instead of ','
         if separator != ",":
-            # Apply the custom thousands separator
             rut = rut.replace(",", separator)
 
-        return "%s-%s" % (rut, verifier_digit)
+        return "%s-%s" % (rut, dv)
 
     except ValueError:
-        # If the RUT cannot be converted to Int
-        raise template.TemplateSyntaxError("RUT must be numeric, in order to be formatted")
+        raise template.TemplateSyntaxError("El rut debe ser númerico")
 
 
 def rut_unformat(value):
-
     return value.replace("-", "").replace(".", "").replace(",", "")
-
 
 @login_required
 def page_one_poll(request):
@@ -397,7 +421,7 @@ def page_three_poll(request):
                 asesoria = True
             elif x == "gerencia":
                 gerencia = True
-        
+
         prevensionista = request.POST.getlist('prevensionista[]')
         tiempoCompleto = False
         tiempoParcial = False
@@ -412,7 +436,7 @@ def page_three_poll(request):
                 proyectos = True
             elif x == "noTiene":
                 noTiene = True
-        
+
         gestion = TablaResultadosGestion(
             rut_empresa=empresa,
             answer1=iso9001,
