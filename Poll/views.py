@@ -117,6 +117,7 @@ def get_name(request):
 
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
+@login_required(login_url='MTRlogin')
 def home(request):
 
     try:
@@ -130,7 +131,7 @@ def home(request):
             'name': "Contacto"
         })
 
-
+@login_required(login_url='MTRlogin')
 def Perfil(request):
 
     Obj_user = request.user
@@ -203,8 +204,8 @@ def MTR_login(request):
     form = LogInForm()
     return render(request, 'registration/login.html', {'form': form})
 
-def signup(request):
 
+def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -287,7 +288,7 @@ def phone_validator(num):
 """Le da el formato al numero de celular, incluyendo el +56"""
 def phone_format(num):
     if num[0] == "9":
-        return "%s%s" % ("+56", num)
+        return "%s%s" % ("+56", um)
     elif num[0] == "5":
         return "%s%s" % ("+", num)
     elif num[0] == "+":
@@ -314,7 +315,7 @@ def rut_format(value, separator=""):
 def rut_unformat(value):
     return value.replace("-", "").replace(".", "").replace(",", "")
 
-@login_required
+@login_required(login_url='MTRlogin')
 def page_one_poll(request):
     empresa = TablaPerfilEmpresa.objects.get(rut_empresa=request.user.id)
     dotacion_empresa = TablaResultadosDotacion.objects.get(rut_empresa_id=empresa.pk)
@@ -358,7 +359,7 @@ def page_one_poll(request):
     return render(request, "MideTuRiesgo/mideturiesgo.html", context)
 
 
-@login_required
+@login_required(login_url='MTRlogin')
 def page_two_poll(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -557,7 +558,7 @@ def page_two_poll(request):
         serv = respuestas.answer4
         return render(request, "MideTuRiesgo/mideturiesgo2.html", {'constru':constru, 'manu': manu, 'trans': trans, 'serv': serv})
 
-@login_required
+@login_required(login_url='MTRlogin')
 def page_three_poll(request):
     if request.method == 'POST':
 
@@ -637,7 +638,7 @@ def page_three_poll(request):
             cont += 1
     return render(request, "MideTuRiesgo/mideturiesgo3.html", {'cont': cont})
 
-@login_required
+@login_required(login_url='MTRlogin')
 def page_four_poll(request):
     if request.method == 'POST':
         empresa = UserGuiar.objects.get(rut='12345678-5')
@@ -792,6 +793,7 @@ def page_four_poll(request):
             cont += 1
         return render(request, "MideTuRiesgo/mideturiesgo4.html", {'cont': cont})
 
+@login_required(login_url='MTRlogin')
 def page_results(request):
     if request.method == 'GET':
         empresa = UserGuiar.objects.get(rut='12345678-5')
