@@ -184,7 +184,7 @@ class TablaResultadosManufactura(models.Model):
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
 '''
-'''
+
 class TablaManufactura(models.Model):
     respuesta_manufactura = models.CharField(max_length=200)
 
@@ -195,7 +195,7 @@ class TablaManufactura(models.Model):
 class TablaResultadosManufactura(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     manufactura = models.ManyToManyField(TablaManufactura)
-'''
+
 '''
 class TablaResultadosServicios(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)

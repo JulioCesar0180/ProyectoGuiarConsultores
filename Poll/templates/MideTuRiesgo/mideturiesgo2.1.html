@@ -24,8 +24,17 @@
                 <div><br></div>
                 {% for construccion in form_construccion.construccion %}
                     <div class="input-radio">
-                        {{ transporte.tag }}
+                        {{ construccion.tag }}
                         <label for="{{ construccion.id_for_label }}" class="unselectable">{{ construccion.choice_label }}</label>
+                    </div>
+                {% endfor %}
+          <div><br></div>
+          <b>P7.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
+                <div><br></div>
+                {% for manufactura in form_manufactura.manufactura %}
+                    <div class="input-radio">
+                        {{ manufactura.tag }}
+                        <label for="{{ manufactura.id_for_label }}" class="unselectable">{{ manufactura.choice_label }}</label>
                     </div>
                 {% endfor %}
           <div><br></div>

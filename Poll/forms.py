@@ -297,3 +297,15 @@ class FormTablaResultadosConstruccion(ModelForm):
         widgets = {
             'construccion': forms.CheckboxSelectMultiple
         }
+
+class FormTablaResultadosManufactura(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManufactura
+        fields = [
+            'manufactura'
+        ]
+
+        widgets = {
+            'manufactura': forms.CheckboxSelectMultiple
+        }
