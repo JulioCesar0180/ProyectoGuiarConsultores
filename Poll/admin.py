@@ -33,6 +33,8 @@ admin.site.register(TablaProcesos)
 admin.site.register(TablaResultadosProcesos)
 admin.site.register(TablaTransporte)
 admin.site.register(TablaResultadosTransporte)
+admin.site.register(TablaConstruccion)
+admin.site.register(TablaResultadosConstruccion)
 """
 admin.site.register(TablaResultadosTransporte)
 admin.site.register(TablaResultadosContruccion)

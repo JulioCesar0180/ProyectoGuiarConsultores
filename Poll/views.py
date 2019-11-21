@@ -392,37 +392,51 @@ def page_two_poll(request):
     # Query por un usuario existente
     user = UserGuiar.objects.get(rut=request.user)
 
-    # Query por un perfil empresa existente
+    # Query por respuestas transporte existentes
     try:
         transporte = TablaResultadosTransporte.objects.get(id=user)
     except TablaResultadosTransporte.DoesNotExist:
         transporte = TablaResultadosTransporte(id=user)
         transporte.save()
 
+    # Query por respuestas construccion existentes
+    try:
+        construccion = TablaResultadosConstruccion.objects.get(id=user)
+    except TablaResultadosConstruccion.DoesNotExist:
+        construccion = TablaResultadosConstruccion(id=user)
+        construccion.save()
+
     if request.method == 'POST':
         form_user = FormUserGuiar(request.POST, instance=user)
         form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
+        form_construccion = FormTablaResultadosConstruccion(request.POST, instance=construccion)
 
-        if form_user.is_valid() and form_transporte.is_valid():
+        if form_user.is_valid() and form_transporte.is_valid() and form_construccion.is_valid():
             myuser = form_user.save(commit=False)
             myuser.save()
 
             form_transporte.save(commit=False)
             form_transporte.save()
 
+            form_construccion.save(commit=False)
+            form_construccion.save()
+
             return redirect('pagina3')
         else:
             context = {
                 'form_transporte': form_transporte,
+                'form_construccion': form_construccion,
                 'form_user': form_user,
             }
             return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
     else:
         form_user = FormUserGuiar(instance=user)
         form_transporte = FormTablaResultadosTransporte(instance=transporte)
+        form_construccion = FormTablaResultadosConstruccion(instance=construccion)
 
         context = {
             'form_transporte': form_transporte,
+            'form_construccion': form_construccion,
             'form_user': form_user,
         }
 

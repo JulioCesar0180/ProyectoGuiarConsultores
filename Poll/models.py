@@ -162,7 +162,7 @@ class TablaResultadosContruccion(models.Model):
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
 '''
-'''
+
 class TablaConstruccion(models.Model):
     respuesta_construccion = models.CharField(max_length=200)
 
@@ -173,7 +173,7 @@ class TablaConstruccion(models.Model):
 class TablaResultadosConstruccion(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     construccion = models.ManyToManyField(TablaConstruccion)
-'''
+
 '''
 class TablaResultadosManufactura(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)

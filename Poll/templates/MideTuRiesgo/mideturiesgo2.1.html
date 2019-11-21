@@ -20,6 +20,15 @@
     <form action="" method="post">
         {% csrf_token %}
         <div class="inicio">
+          <b>P6.</b> Marque todas las actividades de CONSTRUCCION que realiza la empresa a ser evaluada
+                <div><br></div>
+                {% for construccion in form_construccion.construccion %}
+                    <div class="input-radio">
+                        {{ transporte.tag }}
+                        <label for="{{ construccion.id_for_label }}" class="unselectable">{{ construccion.choice_label }}</label>
+                    </div>
+                {% endfor %}
+          <div><br></div>
           <b>P8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
                 <div><br></div>
                 {% for transporte in form_transporte.transporte %}
