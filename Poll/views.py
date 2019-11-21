@@ -362,7 +362,7 @@ def page_one_poll(request):
             form_procesos_empresa.save(commit=False)
             form_procesos_empresa.save()
 
-            return redirect('pagina2')
+            return redirect('pagina2.1')
         else:
             context = {
                 'form_perfil_empresa': form_perfil_empresa,
@@ -389,7 +389,44 @@ def page_one_poll(request):
 
 @login_required
 def page_two_poll(request):
-    return render(request, 'MideTuRiesgo/mideturiesgo2.html')
+    # Query por un usuario existente
+    user = UserGuiar.objects.get(rut=request.user)
+
+    # Query por un perfil empresa existente
+    try:
+        transporte = TablaResultadosTransporte.objects.get(id=user)
+    except TablaResultadosTransporte.DoesNotExist:
+        transporte = TablaResultadosTransporte(id=user)
+        transporte.save()
+
+    if request.method == 'POST':
+        form_user = FormUserGuiar(request.POST, instance=user)
+        form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
+
+        if form_user.is_valid() and form_transporte.is_valid():
+            myuser = form_user.save(commit=False)
+            myuser.save()
+
+            form_transporte.save(commit=False)
+            form_transporte.save()
+
+            return redirect('pagina3')
+        else:
+            context = {
+                'form_transporte': form_transporte,
+                'form_user': form_user,
+            }
+            return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
+    else:
+        form_user = FormUserGuiar(instance=user)
+        form_transporte = FormTablaResultadosTransporte(instance=transporte)
+
+        context = {
+            'form_transporte': form_transporte,
+            'form_user': form_user,
+        }
+
+        return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
 
 
 @login_required

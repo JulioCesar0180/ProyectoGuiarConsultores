@@ -122,3 +122,107 @@ Tabla sobre los procesos realizados por una empresa
 class TablaResultadosProcesos(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     procesos = models.ManyToManyField(TablaProcesos)
+    transporte = models.BooleanField(default=False)
+    construccion = models.BooleanField(default=False)
+    manufactura = models.BooleanField(default=False)
+    servicios = models.BooleanField(default=False)
+
+'''
+class TablaResultadosTransporte(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    answer1 = models.BooleanField(default=False)
+    answer2 = models.BooleanField(default=False)
+    answer3 = models.BooleanField(default=False)
+    answer4 = models.BooleanField(default=False)
+    answer5 = models.BooleanField(default=False)
+    answer6 = models.BooleanField(default=False)
+    answer7 = models.BooleanField(default=False)
+    answer8 = models.BooleanField(default=False)
+    answer9 = models.BooleanField(default=False)
+'''
+
+class TablaTransporte(models.Model):
+    respuesta_transporte = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.respuesta_transporte
+
+
+class TablaResultadosTransporte(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    transporte = models.ManyToManyField(TablaTransporte)
+
+'''
+class TablaResultadosContruccion(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    answer1 = models.BooleanField(default=False)
+    answer2 = models.BooleanField(default=False)
+    answer3 = models.BooleanField(default=False)
+    answer4 = models.BooleanField(default=False)
+    answer5 = models.BooleanField(default=False)
+    answer6 = models.BooleanField(default=False)
+'''
+'''
+class TablaConstruccion(models.Model):
+    respuesta_construccion = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.respuesta_construccion
+
+
+class TablaResultadosConstruccion(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    construccion = models.ManyToManyField(TablaConstruccion)
+'''
+'''
+class TablaResultadosManufactura(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    answer1 = models.BooleanField(default=False)
+    answer2 = models.BooleanField(default=False)
+    answer3 = models.BooleanField(default=False)
+    answer4 = models.BooleanField(default=False)
+    answer5 = models.BooleanField(default=False)
+    answer6 = models.BooleanField(default=False)
+'''
+'''
+class TablaManufactura(models.Model):
+    respuesta_manufactura = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.respuesta_manufactura
+
+
+class TablaResultadosManufactura(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    manufactura = models.ManyToManyField(TablaManufactura)
+'''
+'''
+class TablaResultadosServicios(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    answer1 = models.BooleanField(default=False)
+    answer2 = models.BooleanField(default=False)
+    answer3 = models.BooleanField(default=False)
+    answer4 = models.BooleanField(default=False)
+    answer5 = models.BooleanField(default=False)
+    answer6 = models.BooleanField(default=False)
+    answer7 = models.BooleanField(default=False)
+    answer8 = models.BooleanField(default=False)
+    answer9 = models.BooleanField(default=False)
+    answer10 = models.BooleanField(default=False)
+    answer11 = models.BooleanField(default=False)
+    answer12 = models.BooleanField(default=False)
+    answer13 = models.BooleanField(default=False)
+    answer14 = models.BooleanField(default=False)
+'''
+'''
+class TablaServicios(models.Model):
+    respuesta_servicios = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.respuesta_servicios
+
+
+class TablaResultadosServicios(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    servicios = models.ManyToManyField(TablaServicios)
+'''
