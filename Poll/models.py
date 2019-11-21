@@ -122,3 +122,39 @@ Tabla sobre los procesos realizados por una empresa
 class TablaResultadosProcesos(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     procesos = models.ManyToManyField(TablaProcesos)
+
+
+class TablaCertificaciones(models.Model):
+    nombre_certificado = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre_certificado
+
+
+class TablaResultadosCertificaciones(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    certificaciones = models.ManyToManyField(TablaCertificaciones)
+
+
+class TablaManejoRiesgos(models.Model):
+    manejo_riesgo = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.manejo_riesgo
+
+
+class TablaResultadosManejoRiesgo(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    opciones_manejo = models.ManyToManyField(TablaManejoRiesgos)
+
+
+class TablaTiempoPrevencionista(models.Model):
+    tiempo_prevensionista = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.tiempo_prevensionista
+
+
+class TablaResultadosTiempoPreven(models.Model):
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    opciones_prevencionista_t = models.ForeignKey(TablaTiempoPrevencionista, on_delete=models.CASCADE, null=True)

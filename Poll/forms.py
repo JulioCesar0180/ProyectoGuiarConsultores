@@ -273,3 +273,42 @@ class FormTablaResultadosProcesos(ModelForm):
         widgets = {
             'procesos': forms.CheckboxSelectMultiple
         }
+
+
+class FormTablaResultadosCertificaciones(ModelForm):
+
+    class Meta:
+        model = TablaResultadosCertificaciones
+        fields = [
+            'certificaciones',
+        ]
+
+        widgets = {
+            'certificaciones': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManejoRiesgo(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManejoRiesgo
+        fields = [
+            'opciones_manejo'
+        ]
+
+        widgets = {
+            'opciones_manejo': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosTiempoPreven(ModelForm):
+
+    class Meta:
+        model = TablaResultadosTiempoPreven
+        fields = [
+            'opciones_prevencionista_t'
+        ]
+
+        widgets = {
+            'opciones_prevencionista_t': forms.RadioSelect
+        }

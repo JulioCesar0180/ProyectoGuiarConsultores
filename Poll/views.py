@@ -394,238 +394,56 @@ def page_two_poll(request):
 
 @login_required
 def page_three_poll(request):
-    if request.method == 'POST':
+    # Obtener certificados de la empresa o crear para agregarlas
+    cert_empresa, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
+    man_riesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
+    preven_empresa, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
 
-        empresa = UserGuiar.objects.get(rut='12345678-5')
+    # POST
+    if request.method == "POST":
+        form_cert_empresa = FormTablaResultadosCertificaciones(request.POST, instance=cert_empresa)
+        form_man_riesgo = FormTablaResultadosManejoRiesgo(request.POST, instance=man_riesgo)
+        form_preven_empresa = FormTablaResultadosTiempoPreven(request.POST, instance=preven_empresa)
 
-        iso = request.POST.getlist('iso[]')
+        if form_cert_empresa.is_valid():
 
-        iso9001 = False
-        iso14001 = False
-        ohsas18001 = False
-        for x in iso:
-            if x == "iso9001":
-                iso9001 = True
-            elif x == "iso14001":
-                iso14001 = True
-            elif x == "ohsas18001":
-                ohsas18001 = True
-        manejoRiesgo = request.POST.getlist('manejoRiesgo[]')
-        procedimiento = False
-        asesoria = False
-        gerencia = False
-        for x in manejoRiesgo:
-            if x == "procedimiento":
-                procedimiento = True
-            elif x == "asesoria":
-                asesoria = True
-            elif x == "gerencia":
-                gerencia = True
+            form_cert_empresa.save(commit=False)
+            form_cert_empresa.save()
 
-        prevensionista = request.POST.getlist('prevensionista[]')
-        tiempoCompleto = False
-        tiempoParcial = False
-        proyectos = False
-        noTiene = False
-        for x in prevensionista:
-            if x == "tiempoCompleto":
-                tiempoCompleto = True
-            elif x == "tiempoParcial":
-                tiempoParcial = True
-            elif x == "proyectos":
-                proyectos = True
-            elif x == "noTiene":
-                noTiene = True
+            form_man_riesgo.save(commit=False)
+            form_man_riesgo.save()
 
-        gestion = TablaResultadosGestion(
-            rut_empresa=empresa,
-            answer1=iso9001,
-            answer2=iso14001,
-            answer3=ohsas18001,
-            answer4=procedimiento,
-            answer5=asesoria,
-            answer6=gerencia,
-            answer7=tiempoCompleto,
-            answer8=tiempoParcial,
-            answer9=proyectos,
-            answer10=noTiene
-        )
+            form_preven_empresa.save(commit=False)
+            form_preven_empresa.save()
 
-        gestion.save()
+            return redirect('home')
+        else:
 
-        return HttpResponseRedirect('4')
+            context = {
+                'form_cert_empresa': form_cert_empresa,
+                'form_man_riesgo': form_man_riesgo,
+                'form_preven_empresa': form_preven_empresa,
+            }
+
+            return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
+    # GET
     else:
-        cont = 5
-        empresa = UserGuiar.objects.get(rut='12345678-5')
-        respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
-        constru = respuestas.answer1
-        manu = respuestas.answer2
-        trans = respuestas.answer3
-        serv = respuestas.answer4
-        if constru:
-            cont += 1
-        if manu:
-            cont += 1
-        if trans:
-            cont += 1
-        if serv:
-            cont += 1
-    return render(request, "MideTuRiesgo/mideturiesgo3.html", {'cont': cont})
+        form_cert_empresa = FormTablaResultadosCertificaciones(instance=cert_empresa)
+        form_man_riesgo = FormTablaResultadosManejoRiesgo(instance=man_riesgo)
+        form_preven_empresa = FormTablaResultadosTiempoPreven(instance=preven_empresa)
+
+        context = {
+            'form_cert_empresa': form_cert_empresa,
+            'form_man_riesgo': form_man_riesgo,
+            'form_preven_empresa': form_preven_empresa,
+        }
+
+        return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
+
 
 @login_required
 def page_four_poll(request):
-    if request.method == 'POST':
-        empresa = UserGuiar.objects.get(rut='12345678-5')
-
-        explosivos = request.POST.getlist('explosivos[]')
-
-        inscripcion = False
-        certificado = False
-        personal = False
-        polvorin = False
-        procedimientos = False
-        dispositivos = False
-        for x in explosivos:
-            if x == "inscripcion":
-                inscripcion = True
-            elif x == "certificado":
-                certificado = True
-            elif x == "personal":
-                personal = True
-            elif x == "polvorin":
-                polvorin = True
-            elif x == "procedimientos":
-                procedimientos = True
-            elif x == "dispositivos":
-                dispositivos = True
-
-        explosivos = TablaResultadosExplosivos(
-            rut_empresa=empresa,
-            answer1=inscripcion,
-            answer2=certificado,
-            answer3=personal,
-            answer4=polvorin,
-            answer5=procedimientos,
-            answer6=dispositivos
-        )
-        explosivos.save()
-
-        electricidad = request.POST.getlist('electricidad[]')
-
-        apertura = False
-        encaramiento = False
-        ausencia = False
-        tierra = False
-        delimitacion = False
-        for x in electricidad:
-            if x == "apertura":
-                apertura = True
-            elif x == "encaramiento":
-                encaramiento = True
-            elif x == "ausencia":
-                ausencia = True
-            elif x == "tierra":
-                tierra = True
-            elif x == "delimitacion":
-                delimitacion = True
-
-        electricidad = TablaResultadosElectricidad(
-            rut_empresa=empresa,
-            answer1=apertura,
-            answer2=encaramiento,
-            answer3=ausencia,
-            answer4=tierra,
-            answer5=delimitacion
-        )
-        electricidad.save()
-
-        sustancias_peligrosas = request.POST.getlist('sustancias_peligrosas[]')
-
-        distintivos = False
-        tacografo = False
-        antiguedad = False
-        transporte = False
-        embalaje = False
-        carga = False
-        tipoA = False
-        tipoB = False
-        tipoC = False
-        for x in sustancias_peligrosas:
-            if x == "distintivos":
-                distintivos = True
-            elif x == "tacografo":
-                tacografo = True
-            elif x == "antiguedad":
-                antiguedad = True
-            elif x == "transporte":
-                transporte = True
-            elif x == "embalaje":
-                embalaje = True
-            elif x == "carga":
-                carga = True
-            elif x == "tipoA":
-                tipoA = True
-            elif x == "tipoB":
-                tipoB = True
-            elif x == "tipoC":
-                tipoC = True
-
-        sustancias_peligrosas = TablaResultadosSustanciasPeligrosas(
-            rut_empresa=empresa,
-            answer1=distintivos,
-            answer2=tacografo,
-            answer3=antiguedad,
-            answer4=transporte,
-            answer5=embalaje,
-            answer6=carga,
-            answer7=tipoA,
-            answer8=tipoB,
-            answer9=tipoC
-        )
-        sustancias_peligrosas.save()
-
-        altura = request.POST.getlist('altura[]')
-
-        norma = False
-        supervisor = False
-        proteccion = False
-        equipamiento = False
-        for x in altura:
-            if x == "norma":
-                norma = True
-            elif x == "supervisor":
-                supervisor = True
-            elif x == "proteccion":
-                proteccion = True
-            elif x == "equipamiento":
-                equipamiento = True
-
-        altura = TablaResultadosRiesgoAltura(
-            rut_empresa=empresa,
-            answer1=norma,
-            answer2=supervisor,
-            answer3=proteccion,
-            answer4=equipamiento)
-        altura.save()
-        return HttpResponseRedirect('resultado')
-
-    else:
-        cont = 8
-        empresa = UserGuiar.objects.get(rut='12345678-5')
-        respuestas = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
-        constru = respuestas.answer1
-        manu = respuestas.answer2
-        trans = respuestas.answer3
-        serv = respuestas.answer4
-        if constru:
-            cont += 1
-        if manu:
-            cont += 1
-        if trans:
-            cont += 1
-        if serv:
-            cont += 1
-        return render(request, "MideTuRiesgo/mideturiesgo4.html", {'cont': cont})
+    return render(request, "MideTuRiesgo/mideturiesgo4.html")
 
 def page_results(request):
     if request.method == 'GET':

@@ -31,6 +31,16 @@ admin.site.register(TablaVentasAnuales)
 admin.site.register(TablaResultadosDotacion)
 admin.site.register(TablaProcesos)
 admin.site.register(TablaResultadosProcesos)
+
+admin.site.register(TablaResultadosCertificaciones)
+admin.site.register(TablaCertificaciones)
+
+admin.site.register(TablaManejoRiesgos)
+admin.site.register(TablaResultadosManejoRiesgo)
+
+admin.site.register(TablaTiempoPrevencionista)
+admin.site.register(TablaResultadosTiempoPreven)
+
 """
 admin.site.register(TablaResultadosTransporte)
 admin.site.register(TablaResultadosContruccion)
