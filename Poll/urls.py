@@ -16,4 +16,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('login', views.MTR_login, name='MTRlogin'),
     path('profile', views.Perfil, name='perfil'),
+
+    path('password/change', views.change_password, name='change_password'),
+
 ]

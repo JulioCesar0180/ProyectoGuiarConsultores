@@ -23,6 +23,10 @@ from django.contrib import messages
 #rut
 from django import template
 
+"""Password change"""
+from django.contrib.auth.hashers import check_password
+
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -116,6 +120,39 @@ def get_name(request):
         form = FormPageOne()
 
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
+
+@login_required(login_url='MTRlogin')
+def change_password(request):
+    obj_user = request.user
+    en_password = str(request.user.password)
+    if request.method == 'POST':
+        old_password = request.POST['old_password']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if check_password(old_password, en_password):
+            print("Contraseña Correcta##########################################")
+            if password1 != "" or password2 !="":
+                if password1 == password2:
+                    obj_user.set_password(password1)
+                    obj_user.save()
+                    print("Contraseña cambiada##########################################")
+                    messages.success(request, 'Su contraseña ha sido actualizada!')
+
+                    user = authenticate(username=request.user.rut, password=request.user.password)
+                    if user is not None:
+                        login(request, user)
+                        return redirect('home')
+                else:
+                    print("No coinciden ######################################################")
+                    messages.error(request, 'Las nuevas contraseñas no coinciden.')
+            else:
+                messages.error(request, 'No puede dejar la contraseñas en blanco.')
+        else:
+            print("Contrasela Incorrecta ################################################################")
+            messages.error(request, 'Ha ingresado su contraseña incorrectamente.')
+
+    print("Pasa por aca##########################################")
+    return render(request, 'change_password.html')
 
 @login_required(login_url='MTRlogin')
 def home(request):
@@ -288,7 +325,7 @@ def phone_validator(num):
 """Le da el formato al numero de celular, incluyendo el +56"""
 def phone_format(num):
     if num[0] == "9":
-        return "%s%s" % ("+56", um)
+        return "%s%s" % ("+56", num)
     elif num[0] == "5":
         return "%s%s" % ("+", num)
     elif num[0] == "+":
