@@ -312,3 +312,51 @@ class FormTablaResultadosTiempoPreven(ModelForm):
         widgets = {
             'opciones_prevencionista_t': forms.RadioSelect
         }
+
+class FormTablaResultadosTransporte(ModelForm):
+
+    class Meta:
+        model = TablaResultadosTransporte
+        fields = [
+            'transporte'
+        ]
+
+        widgets = {
+            'transporte': forms.CheckboxSelectMultiple
+        }
+
+class FormTablaResultadosConstruccion(ModelForm):
+
+    class Meta:
+        model = TablaResultadosConstruccion
+        fields = [
+            'construccion'
+        ]
+
+        widgets = {
+            'construccion': forms.CheckboxSelectMultiple
+        }
+
+class FormTablaResultadosManufactura(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManufactura
+        fields = [
+            'manufactura'
+        ]
+
+        widgets = {
+            'manufactura': forms.CheckboxSelectMultiple
+        }
+
+class FormTablaResultadosServicios(ModelForm):
+
+    class Meta:
+        model = TablaResultadosServicios
+        fields = [
+            'servicios'
+        ]
+
+        widgets = {
+            'servicios': forms.CheckboxSelectMultiple
+        }
