@@ -214,7 +214,7 @@ class TablaResultadosServicios(models.Model):
     answer13 = models.BooleanField(default=False)
     answer14 = models.BooleanField(default=False)
 '''
-'''
+
 class TablaServicios(models.Model):
     respuesta_servicios = models.CharField(max_length=200)
 
@@ -225,4 +225,3 @@ class TablaServicios(models.Model):
 class TablaResultadosServicios(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     servicios = models.ManyToManyField(TablaServicios)
-'''

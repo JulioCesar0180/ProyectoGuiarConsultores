@@ -47,6 +47,15 @@
                     </div>
                 {% endfor %}
           <div><br></div>
+          <b>P9.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
+                <div><br></div>
+                {% for servicios in form_servicios.servicios %}
+                    <div class="input-radio">
+                        {{ servicios.tag }}
+                        <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
+                    </div>
+                {% endfor %}
+          <div><br></div>
 
       <div class="siguiente">
         <button type="submit" value="Submit" id="next">→</button>

@@ -37,6 +37,8 @@ admin.site.register(TablaConstruccion)
 admin.site.register(TablaResultadosConstruccion)
 admin.site.register(TablaManufactura)
 admin.site.register(TablaResultadosManufactura)
+admin.site.register(TablaServicios)
+admin.site.register(TablaResultadosServicios)
 """
 admin.site.register(TablaResultadosTransporte)
 admin.site.register(TablaResultadosContruccion)

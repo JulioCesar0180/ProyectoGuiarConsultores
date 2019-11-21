@@ -413,13 +413,21 @@ def page_two_poll(request):
         manufactura = TablaResultadosManufactura(id=user)
         manufactura.save()
 
+    # Query por respuestas servicios generales existentes
+    try:
+        servicios = TablaResultadosServicios.objects.get(id=user)
+    except TablaResultadosServicios.DoesNotExist:
+        servicios = TablaResultadosServicios(id=user)
+        servicios.save()
+
     if request.method == 'POST':
         form_user = FormUserGuiar(request.POST, instance=user)
         form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
         form_construccion = FormTablaResultadosConstruccion(request.POST, instance=construccion)
         form_manufactura = FormTablaResultadosManufactura(request.POST, instance=manufactura)
+        form_servicios = FormTablaResultadosServicios(request.POST, instance=servicios)
 
-        if form_user.is_valid() and form_transporte.is_valid() and form_construccion.is_valid() and form_manufactura.is_valid():
+        if form_user.is_valid() and form_transporte.is_valid() and form_construccion.is_valid() and form_manufactura.is_valid() and form_servicios.is_valid():
             myuser = form_user.save(commit=False)
             myuser.save()
 
@@ -432,12 +440,16 @@ def page_two_poll(request):
             form_manufactura.save(commit=False)
             form_manufactura.save()
 
+            form_servicios.save(commit=False)
+            form_servicios.save()
+
             return redirect('pagina3')
         else:
             context = {
                 'form_transporte': form_transporte,
                 'form_construccion': form_construccion,
                 'form_manufactura': form_manufactura,
+                'form_servicios': form_servicios,
                 'form_user': form_user,
             }
             return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
@@ -446,11 +458,13 @@ def page_two_poll(request):
         form_transporte = FormTablaResultadosTransporte(instance=transporte)
         form_construccion = FormTablaResultadosConstruccion(instance=construccion)
         form_manufactura = FormTablaResultadosManufactura(instance=manufactura)
+        form_servicios = FormTablaResultadosServicios(instance=servicios)
 
         context = {
             'form_transporte': form_transporte,
             'form_construccion': form_construccion,
             'form_manufactura': form_manufactura,
+            'form_servicios': form_servicios,
             'form_user': form_user,
         }
 
