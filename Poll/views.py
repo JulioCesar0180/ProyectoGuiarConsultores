@@ -246,6 +246,8 @@ def Perfil(request):
                     """ Actualiza la base de datos"""
                     Obj_empresa.save()
                     Obj_user.save()
+
+                    messages.success(request, "Los datos han sido actualizados con éxito!")
                 else:
                     messages.error(request, "El formato del Número de Celular ingresado no es válido")
             else:
