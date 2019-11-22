@@ -124,19 +124,26 @@ def get_name(request):
 def reset_password(request):
     if request.method == 'POST':
         email = request.POST['email']
-        empresa = TablaPerfilEmpresa.objects.get(email_representante=email)
-        user = UserGuiar.objects.get(rut=empresa.rut_empresa_id)
-        user_id = user.id
+        try:
+            empresa = TablaPerfilEmpresa.objects.get(email_representante=email)
+            id_empresa = empresa.rut_empresa_id
+            user = UserGuiar.objects.get(id=id_empresa)
+            user_id = str(user.id)
 
-        """Crear Token"""
+            messages.error(request, 'El id del usuario es: '+user_id)
 
-        """Enviar el Correo"""
-        subject, from_email, to = 'Recuperación de Contraseña de MideTuRiesgo', 'juliocesardm93@gmail.com', email
-        text_content = 'Este correo es para que pueda recuperar su contraseña de MideTuRiesgo.'
-        html_content = '<p>This is an <strong>important</strong> message.</p>'
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+            """Crear Token"""
+
+            """Enviar el Correo"""
+            subject, from_email, to = 'Recuperación de Contraseña de MideTuRiesgo', 'juliocesardm93@gmail.com', email
+            text_content = 'Este correo es para que pueda recuperar su contraseña de MideTuRiesgo.'
+            html_content = '<p>This is an <strong>important</strong> message.</p>'
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+        except:
+            messages.error(request, 'El correo ingresado no se encuentra en nuestros registros')
+
 
     return render(request, 'reset_password.html')
 
