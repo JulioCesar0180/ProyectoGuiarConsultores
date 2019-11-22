@@ -384,3 +384,51 @@ class FormTablaResultadosManiExplosivos(ModelForm):
             'tipos': forms.CheckboxSelectMultiple,
             'is_expo': forms.RadioSelect
         }
+
+
+class FormTablaResultadoElectricidad(ModelForm):
+
+    class Meta:
+        model = TablaResultadoElectricidad
+
+        fields = [
+            'is_elec',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_elec': forms.RadioSelect
+        }
+
+
+class FormTablaResultadosSustancias(ModelForm):
+
+    class Meta:
+        model = TablaResultadosSustancias
+
+        fields = [
+            'is_sust',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_sust': forms.RadioSelect
+        }
+
+
+class FormTablaResultadosAltura(ModelForm):
+
+    class Meta:
+        model = TablaResultadosAltura
+
+        fields = [
+            'is_alt',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_alt': forms.RadioSelect
+        }
