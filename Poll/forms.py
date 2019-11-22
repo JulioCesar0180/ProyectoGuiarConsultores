@@ -303,6 +303,10 @@ class FormTablaResultadosManejoRiesgo(ModelForm):
 
 class FormTablaResultadosTiempoPreven(ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super(FormTablaResultadosTiempoPreven, self).__init__(*args, **kwargs)
+        self.fields['opciones_prevencionista_t'].required = True
+
     class Meta:
         model = TablaResultadosTiempoPreven
         fields = [
@@ -312,6 +316,7 @@ class FormTablaResultadosTiempoPreven(ModelForm):
         widgets = {
             'opciones_prevencionista_t': forms.RadioSelect
         }
+
 
 class FormTablaResultadosTransporte(ModelForm):
 
@@ -325,6 +330,7 @@ class FormTablaResultadosTransporte(ModelForm):
             'transporte': forms.CheckboxSelectMultiple
         }
 
+
 class FormTablaResultadosConstruccion(ModelForm):
 
     class Meta:
@@ -336,6 +342,7 @@ class FormTablaResultadosConstruccion(ModelForm):
         widgets = {
             'construccion': forms.CheckboxSelectMultiple
         }
+
 
 class FormTablaResultadosManufactura(ModelForm):
 
@@ -349,6 +356,7 @@ class FormTablaResultadosManufactura(ModelForm):
             'manufactura': forms.CheckboxSelectMultiple
         }
 
+
 class FormTablaResultadosServicios(ModelForm):
 
     class Meta:
@@ -359,4 +367,20 @@ class FormTablaResultadosServicios(ModelForm):
 
         widgets = {
             'servicios': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManiExplosivos(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManiExplosivos
+
+        fields = [
+            'is_expo',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_expo': forms.RadioSelect
         }

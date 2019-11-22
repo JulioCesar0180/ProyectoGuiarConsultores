@@ -258,5 +258,67 @@ class TablaServicios(models.Model):
 
 
 class TablaResultadosServicios(models.Model):
+
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     servicios = models.ManyToManyField(TablaServicios)
+
+
+class TablaManiExplosivos(models.Model):
+    tipo = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tipo
+
+
+class TablaResultadosManiExplosivos(models.Model):
+    BOOL_CHOICES = ((True, 'Sí'), (False, 'No'))
+
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    is_expo = models.BooleanField(default=False, choices=BOOL_CHOICES)
+    tipos = models.ManyToManyField(TablaManiExplosivos)
+
+
+class TablaElectricidad(models.Model):
+    tipo = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tipo
+
+
+class TablaResultadoElectricidad(models.Model):
+    BOOL_CHOICES = ((True, 'Sí'), (False, 'No'))
+
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    is_elec = models.BooleanField(default=False, choices=BOOL_CHOICES)
+    tipos = models.ManyToManyField(TablaElectricidad)
+
+
+class TablaSustancias(models.Model):
+    tipo = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tipo
+
+
+class TablaResultadosSustancias(models.Model):
+    BOOL_CHOICES = ((True, 'Sí'), (False, 'No'))
+
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    is_sust = models.BooleanField(default=False, choices=BOOL_CHOICES)
+    tipos = models.ManyToManyField(TablaSustancias)
+
+
+class TablaTrabajosAltura(models.Model):
+    tipo = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.tipo
+
+
+class TablaResultadosAltura(models.Model):
+    BOOL_CHOICES = ((True, 'Sí'), (False, 'No'))
+
+    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
+    is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
+    tipos = models.ManyToManyField(TablaTrabajosAltura)
+

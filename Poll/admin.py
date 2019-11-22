@@ -45,6 +45,9 @@ admin.site.register(TablaManejoRiesgos)
 admin.site.register(TablaResultadosManejoRiesgo)
 admin.site.register(TablaTiempoPrevencionista)
 admin.site.register(TablaResultadosTiempoPreven)
+
+admin.site.register(TablaManiExplosivos)
+admin.site.register(TablaResultadosManiExplosivos)
 """
 admin.site.register(TablaResultadosTransporte)
 admin.site.register(TablaResultadosContruccion)

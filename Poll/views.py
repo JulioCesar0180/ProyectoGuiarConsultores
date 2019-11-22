@@ -522,7 +522,31 @@ def page_three_poll(request):
 
 @login_required
 def page_four_poll(request):
-    return render(request, "MideTuRiesgo/mideturiesgo4.html")
+    mani_explosivos_emp, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
+
+    if request.method == 'POST':
+        form_mani_explosivos = FormTablaResultadosManiExplosivos(request.POST, instance=mani_explosivos_emp)
+
+        if form_mani_explosivos.is_valid():
+            form_mani_explosivos.save(commit=False)
+            form_mani_explosivos.save()
+
+            return redirect('home')
+        else:
+            context = {
+                'form_mani_explosivos': form_mani_explosivos,
+            }
+
+            return render(request, 'MideTuRiesgo/mideturiesgo4.html', context)
+    else:
+        form_mani_explosivos = FormTablaResultadosManiExplosivos(instance=mani_explosivos_emp)
+
+        context = {
+            'form_mani_explosivos': form_mani_explosivos,
+        }
+
+        return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
+
 
 def page_results(request):
     if request.method == 'GET':
@@ -871,4 +895,4 @@ def page_results(request):
     else:
         # Error de metodo
         e = "Operacion Invalida"
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total':total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin, 'color':color})
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total': total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin, 'color':color})
