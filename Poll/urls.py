@@ -18,5 +18,6 @@ urlpatterns = [
     path('profile', views.Perfil, name='perfil'),
 
     path('password/change', views.change_password, name='change_password'),
+    path('password/reset', views.reset_password, name='reset_password'),
 
 ]

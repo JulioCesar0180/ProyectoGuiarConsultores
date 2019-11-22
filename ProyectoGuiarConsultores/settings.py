@@ -143,13 +143,15 @@ LOGOUT_REDIRECT_URL = 'homeGC'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #Configuracion SMTP
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'testsite_app'
-EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
+"""
+ENDGRID_API_KEY = os.getenv('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')
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = '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'
+EMAIL_HOST_PASSWORD = ""
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+"""
 
 AUTH_USER_MODEL = "Poll.UserGuiar"
 
