@@ -141,18 +141,19 @@ LOGIN_REDIRECT_URL = 'home'
 
 LOGOUT_REDIRECT_URL = 'homeGC'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #Configuracion SMTP
-"""
-ENDGRID_API_KEY = os.getenv('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')
 
+SENDGRID_API_KEY = os.getenv('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')
+
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = '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'
-EMAIL_HOST_PASSWORD = ""
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-"""
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+
 
 AUTH_USER_MODEL = "Poll.UserGuiar"
 

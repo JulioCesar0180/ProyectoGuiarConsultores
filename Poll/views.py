@@ -26,6 +26,9 @@ from django import template
 """Password change"""
 from django.contrib.auth.hashers import check_password
 
+"""Correo Electrónico"""
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -128,22 +131,30 @@ def reset_password(request):
             empresa = TablaPerfilEmpresa.objects.get(email_representante=email)
             id_empresa = empresa.rut_empresa_id
             user = UserGuiar.objects.get(id=id_empresa)
-            user_id = str(user.id)
+            name = str(empresa.nombre_representante)
 
-            messages.error(request, 'El id del usuario es: '+user_id)
+            """Crear Contraseña"""
+            new_password = get_random_string(length=8)
+            print("################################", new_password)
 
-            """Crear Token"""
+            """Cambiar la contraseña del usuario"""
+            user.set_password(new_password)
+            user.save()
+
+            message = 'Se ha solicitado una nueva contraseña. Inicie Sesión con esta nueva ccontraseña: ' + new_password
 
             """Enviar el Correo"""
-            subject, from_email, to = 'Recuperación de Contraseña de MideTuRiesgo', 'juliocesardm93@gmail.com', email
-            text_content = 'Este correo es para que pueda recuperar su contraseña de MideTuRiesgo.'
-            html_content = '<p>This is an <strong>important</strong> message.</p>'
-            msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-            msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            send_mail(
+                'Recuperación de contraseña para MideTuRiesgo',
+                'Estimado(a) ' + name + ',\n' + message,
+                'juliocesardm93@gmail.com', # Admin
+                [
+                    email
+                ]
+            )
+            messages.info(request, 'Se ha enviado una contraseña a su correo')
         except:
             messages.error(request, 'El correo ingresado no se encuentra en nuestros registros')
-
 
     return render(request, 'reset_password.html')
 
