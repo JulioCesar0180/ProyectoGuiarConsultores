@@ -40,7 +40,7 @@
                     <li><a href="{% url 'home' %}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
                     <li class="active" ><a href="{% url 'perfil' %}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
                     <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
-                    <li><a href="{% url 'password_change' %}"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cambiar Contraseña</span></a></li>
+                    <li><a href="{% url 'change_password' %}"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cambiar Contraseña</span></a></li>
                     <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cerrar Sesión</span></a></li>
                 </ul>
             </div>
@@ -64,6 +64,20 @@
                 <h1>Perfil de Usuario</h1>
                 <br/>
 
+                <div>
+                    {% if messages %}
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">
+                                <p>{{ message }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    {% endif %}
+                </div>
                 <form id="edit-profile" class="form-horizontal" method="POST">
                     {% csrf_token %}
                     <fieldset>
@@ -72,15 +86,6 @@
                                 <header class="w3-container w3-blue">
                                     <h3>Datos de Contacto de la Empresa</h3>
                                 </header>
-                                <div>
-                                    {% if messages %}
-                                    {% for message in messages %}
-                                    <div class="alert alert-danger" role="alert">
-                                        {{ message }}
-                                    </div>
-                                    {% endfor %}
-                                    {% endif %}
-                                </div>
                                 <div class="w3-container" >
                                     <p>
                                     <div class="control-group">
