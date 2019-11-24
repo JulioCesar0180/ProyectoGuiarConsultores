@@ -240,3 +240,162 @@ class FormTablaResultadosProcesos(ModelForm):
         widgets = {
             'procesos': forms.CheckboxSelectMultiple
         }
+
+
+class FormTablaResultadosCertificaciones(ModelForm):
+
+    class Meta:
+        model = TablaResultadosCertificaciones
+        fields = [
+            'certificaciones',
+        ]
+
+        widgets = {
+            'certificaciones': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManejoRiesgo(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManejoRiesgo
+        fields = [
+            'opciones_manejo'
+        ]
+
+        widgets = {
+            'opciones_manejo': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosTiempoPreven(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(FormTablaResultadosTiempoPreven, self).__init__(*args, **kwargs)
+        self.fields['opciones_prevencionista_t'].required = True
+
+    class Meta:
+        model = TablaResultadosTiempoPreven
+        fields = [
+            'opciones_prevencionista_t'
+        ]
+
+        widgets = {
+            'opciones_prevencionista_t': forms.RadioSelect
+        }
+
+
+class FormTablaResultadosTransporte(ModelForm):
+
+    class Meta:
+        model = TablaResultadosTransporte
+        fields = [
+            'transporte'
+        ]
+
+        widgets = {
+            'transporte': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosConstruccion(ModelForm):
+
+    class Meta:
+        model = TablaResultadosConstruccion
+        fields = [
+            'construccion'
+        ]
+
+        widgets = {
+            'construccion': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManufactura(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManufactura
+        fields = [
+            'manufactura'
+        ]
+
+        widgets = {
+            'manufactura': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosServicios(ModelForm):
+
+    class Meta:
+        model = TablaResultadosServicios
+        fields = [
+            'servicios'
+        ]
+
+        widgets = {
+            'servicios': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManiExplosivos(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManiExplosivos
+
+        fields = [
+            'is_expo',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_expo': forms.RadioSelect
+        }
+
+
+class FormTablaResultadoElectricidad(ModelForm):
+
+    class Meta:
+        model = TablaResultadoElectricidad
+
+        fields = [
+            'is_elec',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_elec': forms.RadioSelect
+        }
+
+
+class FormTablaResultadosSustancias(ModelForm):
+
+    class Meta:
+        model = TablaResultadosSustancias
+
+        fields = [
+            'is_sust',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_sust': forms.RadioSelect
+        }
+
+
+class FormTablaResultadosAltura(ModelForm):
+
+    class Meta:
+        model = TablaResultadosAltura
+
+        fields = [
+            'is_alt',
+            'tipos'
+        ]
+
+        widgets = {
+            'tipos': forms.CheckboxSelectMultiple,
+            'is_alt': forms.RadioSelect
+        }

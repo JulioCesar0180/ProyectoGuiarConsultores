@@ -1,0 +1,79 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/test.css'%}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Mide tu riesgo</title>
+{% endblock %}
+
+{% block content %}
+    <div id="azul"></div>
+    <div id="blanco"></div>
+    <div id="plomo"></div>
+    <div id="head"></div>
+    <div class="inicio">
+        Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado
+        <div><hr></div>
+    </div>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="inicio">
+          <b>P6.</b> Marque todas las actividades de CONSTRUCCION que realiza la empresa a ser evaluada
+                <div><br></div>
+                {% for construccion in form_construccion.construccion %}
+                    <div class="input-radio">
+                        {{ construccion.tag }}
+                        <label for="{{ construccion.id_for_label }}" class="unselectable">{{ construccion.choice_label }}</label>
+                    </div>
+                {% endfor %}
+          <div><br></div>
+          <b>P7.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
+                <div><br></div>
+                {% for manufactura in form_manufactura.manufactura %}
+                    <div class="input-radio">
+                        {{ manufactura.tag }}
+                        <label for="{{ manufactura.id_for_label }}" class="unselectable">{{ manufactura.choice_label }}</label>
+                    </div>
+                {% endfor %}
+          <div><br></div>
+          <b>P8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
+                <div><br></div>
+                {% for transporte in form_transporte.transporte %}
+                    <div class="input-radio">
+                        {{ transporte.tag }}
+                        <label for="{{ transporte.id_for_label }}" class="unselectable">{{ transporte.choice_label }}</label>
+                    </div>
+                {% endfor %}
+          <div><br></div>
+          <b>P9.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
+                <div><br></div>
+                {% for servicios in form_servicios.servicios %}
+                    <div class="input-radio">
+                        {{ servicios.tag }}
+                        <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
+                    </div>
+                {% endfor %}
+          <div><br></div>
+
+      <div class="siguiente">
+        <button type="submit" value="Submit" id="next">→</button>
+      </div>
+      <div>
+        <br>
+      </div>
+    </form>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+        <!--
+        function redirectTo(sUrl) {
+        window.location = sUrl
+        }
+        //-->
+        </script>
+{% endblock %}

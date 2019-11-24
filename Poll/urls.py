@@ -11,6 +11,8 @@ urlpatterns = [
     path('resultado', views.page_results, name="resultado"),
     path('encuesta', views.get_name, name="encuesta"),
 
+    path('2.1', views.page_two_poll, name="pagina2.1"),
+
     path('signup', views.signup, name='signup'),
 
     path('accounts/', include('django.contrib.auth.urls')),
