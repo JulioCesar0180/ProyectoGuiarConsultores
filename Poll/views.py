@@ -228,9 +228,8 @@ def home(request):
 def Perfil(request):
 
     Obj_user = request.user
-    idEmpresa = str(request.user.id)
     try:
-        Obj_empresa = TablaPerfilEmpresa.objects.get(rut_empresa_id=idEmpresa)
+        Obj_empresa = TablaPerfilEmpresa.objects.get(id=request.user)
 
         if request.method == 'POST':
 
