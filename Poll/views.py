@@ -26,6 +26,13 @@ from django.contrib import messages
 #rut
 from django import template
 
+"""Password change"""
+from django.contrib.auth.hashers import check_password
+
+"""Correo Electrónico"""
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -120,6 +127,90 @@ def get_name(request):
 
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        try:
+            empresa = TablaPerfilEmpresa.objects.get(email_representante=email)
+            id_empresa = empresa.rut_empresa_id
+            user = UserGuiar.objects.get(id=id_empresa)
+            name = str(empresa.nombre_representante)
+
+            """Crear Contraseña"""
+            new_password = get_random_string(length=8)
+            print("################################", new_password)
+
+            """Cambiar la contraseña del usuario"""
+            user.set_password(new_password)
+            user.save()
+
+            message = 'Se ha solicitado una nueva contraseña. Inicie Sesión con esta nueva ccontraseña: ' + new_password
+
+            """Enviar el Correo"""
+            send_mail(
+                'Recuperación de contraseña para MideTuRiesgo',
+                'Estimado(a) ' + name + ',\n' + message,
+                'juliocesardm93@gmail.com', # Admin
+                [
+                    email
+                ]
+            )
+            messages.info(request, 'Se ha enviado una contraseña a su correo')
+        except:
+            messages.error(request, 'El correo ingresado no se encuentra en nuestros registros')
+
+    return render(request, 'reset_password.html')
+
+def reset_password_form(request):
+    """Id recibida"""
+    id = ""
+
+    obj_user = UserGuiar.objects.get(id=id)
+
+    if request.method == 'POST':
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        if password1 != "" or password2 != "":
+            if password1 == password2:
+                obj_user.set_password(password1)
+                obj_user.save()
+                messages.success(request, 'Su contraseña ha sido actualizada!')
+            else:
+                messages.error(request, 'Las contraseñas no coinciden.')
+        else:
+            messages.error(request, 'No puede dejar la contraseñas en blanco.')
+
+    return render(request, 'reset_password_form.html')
+
+@login_required(login_url='MTRlogin')
+def change_password(request):
+    obj_user = request.user
+    en_password = str(request.user.password)
+    if request.method == 'POST':
+        old_password = request.POST['old_password']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if check_password(old_password, en_password):
+            if password1 != "" or password2 != "":
+                if password1 == password2:
+                    obj_user.set_password(password1)
+                    obj_user.save()
+                    messages.success(request, 'Su contraseña ha sido actualizada!')
+                    user = authenticate(username=request.user.rut, password=request.user.password)
+                    if user is not None:
+                        login(request, user)
+                        return redirect('home')
+                else:
+                    messages.error(request, 'Las nuevas contraseñas no coinciden.')
+            else:
+                messages.error(request, 'No puede dejar la contraseñas en blanco.')
+        else:
+            messages.error(request, 'Ha ingresado su contraseña incorrectamente.')
+
+    return render(request, 'change_password.html')
+
+@login_required(login_url='MTRlogin')
 def home(request):
 
     try:
@@ -133,7 +224,7 @@ def home(request):
             'name': "Contacto"
         })
 
-
+@login_required(login_url='MTRlogin')
 def Perfil(request):
 
     Obj_user = request.user
@@ -169,6 +260,8 @@ def Perfil(request):
                     """ Actualiza la base de datos"""
                     Obj_empresa.save()
                     Obj_user.save()
+
+                    messages.success(request, "Los datos han sido actualizados con éxito!")
                 else:
                     messages.error(request, "El formato del Número de Celular ingresado no es válido")
             else:
@@ -206,8 +299,8 @@ def MTR_login(request):
     form = LogInForm()
     return render(request, 'registration/login.html', {'form': form})
 
-def signup(request):
 
+def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -250,15 +343,6 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-def resetPassword():
-    subject, from_email, to = 'hello', 'jdm006@alumnos.ucn.cl', 'juliocesardm93@gmail.com'
-    text_content = 'This is an important message.'
-    html_content = '<p>This is an <strong>important</strong> message.</p>'
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
-
-
 def rut_validator(rut):
     try:
         rut = rut.upper()
@@ -289,12 +373,14 @@ def phone_validator(num):
 
 """Le da el formato al numero de celular, incluyendo el +56"""
 def phone_format(num):
-    if num[0] == "9":
+    if num[0] == "9" and len(num) == 9:
         return "%s%s" % ("+56", num)
-    elif num[0] == "5":
+    elif num[0] == "5" and len(num) == 11:
         return "%s%s" % ("+", num)
-    elif num[0] == "+":
+    elif num[0] == "+" and len(num) == 12:
         return num
+    elif len(num) == 8:
+        return "%s%s" % ("+569", num)
 
 """Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
 def rut_format(value, separator=""):
@@ -317,7 +403,7 @@ def rut_format(value, separator=""):
 def rut_unformat(value):
     return value.replace("-", "").replace(".", "").replace(",", "")
 
-@login_required
+@login_required(login_url='MTRlogin')
 def page_one_poll(request):
 
     # Query por un usuario existente
@@ -343,56 +429,13 @@ def page_one_poll(request):
         procesos_empresa = TablaResultadosProcesos(id=user)
         procesos_empresa.save()
 
-    if request.method == 'POST':
-        form_user = FormUserGuiar(request.POST, instance=user)
-        form_perfil_empresa = FormTablaPerfilEmpresa(request.POST, instance=perfil_empresa)
-        form_dotacion_empresa = FormTablaResultadosDotacion(request.POST, instance=dotacion_empresa)
-        form_procesos_empresa = FormTablaResultadosProcesos(request.POST, instance=procesos_empresa)
 
-        if form_user.is_valid() and form_perfil_empresa.is_valid() and form_dotacion_empresa.is_valid() and form_procesos_empresa.is_valid():
-            myuser = form_user.save(commit=False)
-            myuser.save()
-
-            form_perfil_empresa.save(commit=False)
-            form_perfil_empresa.save()
-
-            form_dotacion_empresa.save(commit=False)
-            form_dotacion_empresa.save()
-
-            form_procesos_empresa.save(commit=False)
-            form_procesos_empresa.save()
-
-            return redirect('pagina2')
-        else:
-            context = {
-                'form_perfil_empresa': form_perfil_empresa,
-                'form_user': form_user,
-                'form_dotacion_empresa': form_dotacion_empresa,
-                'form_procesos_empresa': form_procesos_empresa,
-            }
-            return render(request, "MideTuRiesgo/mideturiesgo.html", context)
-    else:
-        form_user = FormUserGuiar(instance=user)
-        form_perfil_empresa = FormTablaPerfilEmpresa(instance=perfil_empresa)
-        form_dotacion_empresa = FormTablaResultadosDotacion(instance=dotacion_empresa)
-        form_procesos_empresa = FormTablaResultadosProcesos(instance=procesos_empresa)
-
-        context = {
-            'form_perfil_empresa': form_perfil_empresa,
-            'form_user': form_user,
-            'form_dotacion_empresa': form_dotacion_empresa,
-            'form_procesos_empresa': form_procesos_empresa,
-        }
-
-        return render(request, "MideTuRiesgo/mideturiesgo.html", context)
-
-
-@login_required
+@login_required(login_url='MTRlogin')
 def page_two_poll(request):
     return render(request, 'MideTuRiesgo/mideturiesgo2.html')
 
 
-@login_required
+@login_required(login_url='MTRlogin')
 def page_three_poll(request):
     if request.method == 'POST':
 
@@ -472,7 +515,7 @@ def page_three_poll(request):
             cont += 1
     return render(request, "MideTuRiesgo/mideturiesgo3.html", {'cont': cont})
 
-@login_required
+@login_required(login_url='MTRlogin')
 def page_four_poll(request):
     if request.method == 'POST':
         empresa = UserGuiar.objects.get(rut='12345678-5')
@@ -627,6 +670,7 @@ def page_four_poll(request):
             cont += 1
         return render(request, "MideTuRiesgo/mideturiesgo4.html", {'cont': cont})
 
+@login_required(login_url='MTRlogin')
 def page_results(request):
     if request.method == 'GET':
         empresa = UserGuiar.objects.get(rut='12345678-5')
