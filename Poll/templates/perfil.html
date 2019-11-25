@@ -89,9 +89,16 @@
                                 <div class="w3-container" >
                                     <p>
                                     <div class="control-group">
+                                        <label class="control-label" for="rut_representante">RUT de Contacto</label>
+                                        <div class="controls">
+                                            <input name="rut_representante" type="text" class="input-large" id="rut_representante" value={{ Obj_empresa.rut_representante }}>
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
                                         <label class="control-label" for="nombre_representante">Nombre de Contacto</label>
                                         <div class="controls">
-                                            <input name="nombre_representante" type="text" class="input-large" id="nombre_representante" value={{ Obj_empresa.nombre_representante }}>
+                                            <input name="nombre_representante" type="text" id="nombre_representante" value={{ Obj_empresa.nombre_representante }}>
                                         </div>
                                     </div>
 
@@ -163,19 +170,13 @@
                                     </div>
 
                                     <br/>
-                                    <div class="control-group">
+
+                                    <!--<div class="control-group">
                                         <label class="control-label" for="ventas_anuales_empresa">Ventas Anuales de la Empresa</label>
                                         <div class="controls">
-                                            <select name="ventas_anuales_empresa" id="ventas_anuales_empresa">
-                                                <option value={{ Obj_empresa.ventas_anuales_empresa }}>{{ Obj_empresa.ventas_anuales_empresa }}</option>
-                                                <option value="0-2400">De UF 0 a UF 2.400</option>
-                                                <option value="2400-25000">De UF2.400 a UF 25.000</option>
-                                                <option value="25000-100000">De UF 25.000 a UF 100.000</option>
-                                                <option value="100000">Mas de UF 100.000</option>
-                                            </select>
-                                            <!--input name="ventas_anuales_empresa" type="text" class="input-large" id="ventas_anuales_empresa" value={{ Obj_empresa.ventas_anuales_empresa }}-->
+                                            <input name="ventas_anuales_empresa" type="text" class="input-large" id="ventas_anuales_empresa" value={{ Obj_empresa.ventas_anuales_empresa }}>
                                         </div>
-                                    </div>
+                                    </div>-->
 
                                     <br/>
                                     <div class="control-group">
