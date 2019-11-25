@@ -733,12 +733,36 @@ def page_results(request):
     resultado += result_dotacion
 
     # Resultados de Construccion Pag 2
+    result_const, _ = TablaResultadosConstruccion.objects.get_or_create(id=request.user)
+    suma_const = result_const.construccion.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_const is None:
+        suma_const = 0
+
+    resultado += suma_const
 
     # Resultados de Manufactura Pag 2
+    result_manu, _ = TablaResultadosManufactura.objects.get_or_create(id=request.user)
+    suma_manu = result_manu.manufactura.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_manu is None:
+        suma_manu = 0
+
+    resultado += suma_manu
 
     # Resultados de Transporte Pag 2
+    result_trans, _ = TablaResultadosTransporte.objects.get_or_create(id=request.user)
+    suma_trans = result_trans.transporte.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_trans is None:
+        suma_trans = 0
+
+    resultado += suma_trans
 
     # Resultados de Servicios Generales Pag 2
+    result_sergen,_ = TablaResultadosServicios.objects.get_or_create(id=request.user)
+    suma_sergen = result_sergen.servicios.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_sergen is None:
+        suma_sergen = 0
+
+    resultado += suma_sergen
 
     # Resultados de los Certificados ISO pag 3
     result_cert, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
@@ -791,5 +815,4 @@ def page_results(request):
         color = "ROJO"
 
     # return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html",
-                  {'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color})
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html",{'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color})

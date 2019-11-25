@@ -182,6 +182,7 @@ class TablaResultadosTransporte(models.Model):
 
 class TablaTransporte(models.Model):
     respuesta_transporte = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.respuesta_transporte
@@ -204,6 +205,7 @@ class TablaResultadosContruccion(models.Model):
 
 class TablaConstruccion(models.Model):
     respuesta_construccion = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.respuesta_construccion
@@ -227,6 +229,7 @@ class TablaResultadosManufactura(models.Model):
 
 class TablaManufactura(models.Model):
     respuesta_manufactura = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.respuesta_manufactura
@@ -257,6 +260,7 @@ class TablaResultadosServicios(models.Model):
 
 class TablaServicios(models.Model):
     respuesta_servicios = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.respuesta_servicios
