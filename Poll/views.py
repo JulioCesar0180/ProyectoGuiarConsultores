@@ -638,7 +638,7 @@ def page_four_poll(request):
 @login_required(login_url='MTRlogin')
 def page_results(request):
     # Indicadores
-    total = 0
+    total = 5
     minimo = 0
     resultado = 0
 
@@ -774,4 +774,22 @@ def page_results(request):
 
     # Resultados de Altura Pag 4
 
-    return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
+    # Despligue de Desiciones
+
+    res_por = ((resultado - minimo) / (total - minimo))
+    res_img = (379 + 19) * res_por
+    res_fin = (379 + 19) - res_img
+    res_fin = int(res_fin)
+    cuartil = (total - minimo) / 4
+    if resultado < (minimo + cuartil):
+        color = "VERDE"
+    elif (minimo + cuartil) <= resultado < (2 * cuartil + minimo):
+        color = "AMARILLO"
+    elif (2 * cuartil + minimo) <= resultado <= (3 * cuartil + minimo):
+        color = "ANARANJADO"
+    else:
+        color = "ROJO"
+
+    # return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html",
+                  {'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color})
