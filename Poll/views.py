@@ -133,8 +133,8 @@ def reset_password(request):
         email = request.POST['email']
         try:
             empresa = TablaPerfilEmpresa.objects.get(email_representante=email)
-            rut_empresa = empresa.id
-            user = UserGuiar.objects.get(id=rut_empresa)
+            rut_empresa = empresa.id_id
+            user = UserGuiar.objects.get(rut=rut_empresa)
             name = str(empresa.nombre_representante)
 
             """Crear Contraseña"""
@@ -145,7 +145,7 @@ def reset_password(request):
             user.set_password(new_password)
             user.save()
 
-            message = 'Se ha solicitado una nueva contraseña. Inicie Sesión con esta nueva ccontraseña: ' + new_password
+            message = 'Se ha solicitado una nueva contraseña. Inicie Sesión con esta nueva contraseña: ' + new_password
 
             """Enviar el Correo"""
             send_mail(
