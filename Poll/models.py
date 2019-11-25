@@ -274,6 +274,7 @@ class TablaResultadosServicios(models.Model):
 
 class TablaManiExplosivos(models.Model):
     tipo = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.tipo
@@ -289,6 +290,7 @@ class TablaResultadosManiExplosivos(models.Model):
 
 class TablaElectricidad(models.Model):
     tipo = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.tipo
@@ -304,6 +306,7 @@ class TablaResultadoElectricidad(models.Model):
 
 class TablaSustancias(models.Model):
     tipo = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.tipo
@@ -319,6 +322,7 @@ class TablaResultadosSustancias(models.Model):
 
 class TablaTrabajosAltura(models.Model):
     tipo = models.CharField(max_length=200)
+    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.tipo
