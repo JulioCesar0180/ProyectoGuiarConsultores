@@ -809,7 +809,7 @@ def page_results(request):
     # Resultados de Sustancias Pag 4
 
     # Resultados de Altura Pag 4
-    
+
     # Despligue de Desiciones
     res_por = ((resultado - minimo) / (total - minimo))
     res_img = (379 + 19) * res_por
