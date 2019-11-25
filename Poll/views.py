@@ -729,14 +729,17 @@ def page_results(request):
     else:
         result_dotacion += 7
     resultado += result_dotacion
-
-    resultado += result_dotacion
+    total += 67
+    minimo += 12
 
     # Resultados de Construccion Pag 2
     result_const, _ = TablaResultadosConstruccion.objects.get_or_create(id=request.user)
     suma_const = result_const.construccion.all().aggregate(Sum('ri'))['ri__sum']
     if suma_const is None:
         suma_const = 0
+    else:
+        total += 16
+        minimo += 6
 
     resultado += suma_const
 
@@ -745,6 +748,9 @@ def page_results(request):
     suma_manu = result_manu.manufactura.all().aggregate(Sum('ri'))['ri__sum']
     if suma_manu is None:
         suma_manu = 0
+    else:
+        total += 15
+        minimo += 4
 
     resultado += suma_manu
 
@@ -753,6 +759,9 @@ def page_results(request):
     suma_trans = result_trans.transporte.all().aggregate(Sum('ri'))['ri__sum']
     if suma_trans is None:
         suma_trans = 0
+    else:
+        total += 21
+        minimo += 5
 
     resultado += suma_trans
 
@@ -761,6 +770,9 @@ def page_results(request):
     suma_sergen = result_sergen.servicios.all().aggregate(Sum('ri'))['ri__sum']
     if suma_sergen is None:
         suma_sergen = 0
+    else:
+        total += 37
+        minimo += 3
 
     resultado += suma_sergen
 
@@ -797,9 +809,8 @@ def page_results(request):
     # Resultados de Sustancias Pag 4
 
     # Resultados de Altura Pag 4
-
+    
     # Despligue de Desiciones
-
     res_por = ((resultado - minimo) / (total - minimo))
     res_img = (379 + 19) * res_por
     res_fin = (379 + 19) - res_img
