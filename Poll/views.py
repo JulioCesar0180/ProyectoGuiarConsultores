@@ -22,6 +22,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 from django.contrib import messages
+from django.db.models import Sum
 
 #rut
 from django import template
@@ -636,350 +637,141 @@ def page_four_poll(request):
 
 @login_required(login_url='MTRlogin')
 def page_results(request):
-    if request.method == 'GET':
-        empresa = UserGuiar.objects.get(rut='12345678-5')
-        transporte = TablaResultadosTransporte.objects.get(rut_empresa=empresa)
-        construccion = TablaResultadosContruccion.objects.get(rut_empresa=empresa)
-        manufactura = TablaResultadosManufactura.objects.get(rut_empresa=empresa)
-        servicios = TablaResultadosServicios.objects.get(rut_empresa=empresa)
-        dotacion = TablaResultadosDotacion.objects.get(rut_empresa=empresa)
-        gestion = TablaResultadosGestion.objects.get(rut_empresa=empresa)
-        procesos = TablaResultadosProcesos.objects.get(rut_empresa=empresa)
-        explosivos = TablaResultadosExplosivos.objects.get(rut_empresa=empresa)
-        electricidad = TablaResultadosElectricidad.objects.get(rut_empresa=empresa)
-        sustancias = TablaResultadosSustanciasPeligrosas.objects.get(rut_empresa=empresa)
-        altura = TablaResultadosRiesgoAltura.objects.get(rut_empresa=empresa)
+    # Indicadores
+    total = 0
+    minimo = 0
+    resultado = 0
 
-        fin_procesos = 0
-        fin_construccion = 0
-        fin_manufactura = 0
-        fin_transporte = 0
-        fin_servicios = 0
-        fin_dotacion = 0
-        fin_gestion = 0
-        fin_explosivos = 0
-        fin_electricidad = 0
-        fin_sustancias = 0
-        fin_altura = 0
-        total = 0
-        minimo = 0
-        resultado = 0
-        constru = procesos.answer1
-        manu = procesos.answer2
-        trans = procesos.answer3
-        serv = procesos.answer4
-        if constru:
-            fin_procesos += 5
-            if construccion.answer1:
-                fin_construccion += 2
-            if construccion.answer2:
-                fin_construccion += 2
-            if construccion.answer3:
-                fin_construccion += 2
-            if construccion.answer4:
-                fin_construccion += 3
-            if construccion.answer5:
-                fin_construccion += 1
-            if construccion.answer6:
-                fin_construccion += 1
-            resultado += fin_construccion
-            total += 16
-            minimo += 6
-
-        if manu:
-            fin_procesos += 3
-            if manufactura.answer1:
-                fin_manufactura += 2
-            if manufactura.answer2:
-                fin_manufactura += 2
-            if manufactura.answer3:
-                fin_manufactura += 3
-            if manufactura.answer4:
-                fin_manufactura += 3
-            if manufactura.answer5:
-                fin_manufactura += 1
-            if manufactura.answer6:
-                fin_manufactura += 1
-            resultado += fin_manufactura
-            total += 15
-            minimo += 4
-
-
-        if trans:
-            fin_procesos += 4
-            if transporte.answer1:
-                fin_transporte += 1
-            if transporte.answer2:
-                fin_transporte += 3
-            if transporte.answer3:
-                fin_transporte += 2
-            if transporte.answer4:
-                fin_transporte += 1
-            if transporte.answer5:
-                fin_transporte += 1
-            if transporte.answer6:
-                fin_transporte += 1
-            if transporte.answer7:
-                fin_transporte += 4
-            if transporte.answer8:
-                fin_transporte += 2
-            if transporte.answer9:
-                fin_transporte += 2
-            resultado += fin_transporte
-            total += 21
-            minimo += 5
-
-        if serv:
-            fin_procesos += 2
-            if servicios.answer1:
-                fin_servicios += 2
-            if servicios.answer2:
-                fin_servicios += 3
-            if servicios.answer3:
-                fin_servicios += 3
-            if servicios.answer4:
-                fin_servicios += 5
-            if servicios.answer5:
-                fin_servicios += 3
-            if servicios.answer6:
-                fin_servicios += 3
-            if servicios.answer7:
-                fin_servicios += 1
-            if servicios.answer8:
-                fin_servicios += 1
-            if servicios.answer9:
-                fin_servicios += 3
-            if servicios.answer10:
-                fin_servicios += 3
-            if servicios.answer11:
-                fin_servicios += 1
-            if servicios.answer12:
-                fin_servicios += 2
-            if servicios.answer13:
-                fin_servicios += 3
-            if servicios.answer14:
-                fin_servicios += 2
-            resultado += fin_servicios
-            total += 37
-            minimo += 3
-        resultado += fin_procesos
-
-
-        if int(dotacion.answer1) < 50:
-            fin_dotacion += 1
-        elif int(dotacion.answer1) >= 50 and int(dotacion.answer1) < 125:
-            fin_dotacion += 2
-        elif int(dotacion.answer1) >= 125 and int(dotacion.answer1) < 200:
-            fin_dotacion += 3
-        else:
-            fin_dotacion += 4
-
-        if int(dotacion.answer2) < 50:
-            fin_dotacion += 1
-        elif int(dotacion.answer2) >= 50 and int(dotacion.answer2) < 125:
-            fin_dotacion += 2
-        elif int(dotacion.answer2) >= 125 and int(dotacion.answer2) < 200:
-            fin_dotacion += 3
-        else:
-            fin_dotacion += 5
-
-        if int(dotacion.answer3) < 20:
-            fin_dotacion += 1
-        elif int(dotacion.answer3) >= 20 and int(dotacion.answer3) < 30:
-            fin_dotacion += 3
-        elif int(dotacion.answer3) >= 30 and int(dotacion.answer3) < 40:
-            fin_dotacion += 5
-        elif int(dotacion.answer3) >= 40 and int(dotacion.answer3) < 50:
-            fin_dotacion += 6
-        else:
-            fin_dotacion += 7
-
-        if int(dotacion.answer4) < 20:
-            fin_dotacion += 1
-        elif int(dotacion.answer4) >= 20 and int(dotacion.answer4) < 30:
-            fin_dotacion += 3
-        elif int(dotacion.answer4) >= 30 and int(dotacion.answer4) < 40:
-            fin_dotacion += 5
-        elif int(dotacion.answer4) >= 40 and int(dotacion.answer4) < 50:
-            fin_dotacion += 6
-        else:
-            fin_dotacion += 7
-
-        if int(dotacion.answer5) < 20:
-            fin_dotacion += 3
-        elif int(dotacion.answer5) >= 20 and int(dotacion.answer5) < 30:
-            fin_dotacion += 6
-        elif int(dotacion.answer5) >= 30 and int(dotacion.answer5) < 40:
-            fin_dotacion += 9
-        elif int(dotacion.answer5) >= 40 and int(dotacion.answer5) < 50:
-            fin_dotacion += 12
-        else:
-            fin_dotacion += 15
-
-        if int(dotacion.answer6) < 20:
-            fin_dotacion += 3
-        elif int(dotacion.answer6) >= 20 and int(dotacion.answer6) < 30:
-            fin_dotacion += 6
-        elif int(dotacion.answer6) >= 30 and int(dotacion.answer6) < 40:
-            fin_dotacion += 9
-        elif int(dotacion.answer6) >= 40 and int(dotacion.answer6) < 50:
-            fin_dotacion += 12
-        else:
-            fin_dotacion += 15
-
-        if int(dotacion.answer7) < 20:
-            fin_dotacion += 1
-        elif int(dotacion.answer7) >= 20 and int(dotacion.answer7) < 30:
-            fin_dotacion += 3
-        elif int(dotacion.answer7) >= 30 and int(dotacion.answer7) < 40:
-            fin_dotacion += 5
-        elif int(dotacion.answer7) >= 40 and int(dotacion.answer7) < 50:
-            fin_dotacion += 6
-        else:
-            fin_dotacion += 7
-
-        if int(dotacion.answer8) < 20:
-            fin_dotacion += 1
-        elif int(dotacion.answer8) >= 20 and int(dotacion.answer8) < 30:
-            fin_dotacion += 3
-        elif int(dotacion.answer8) >= 30 and int(dotacion.answer8) < 40:
-            fin_dotacion += 5
-        elif int(dotacion.answer8) >= 40 and int(dotacion.answer8) < 50:
-            fin_dotacion += 6
-        else:
-            fin_dotacion += 7
-        resultado += fin_dotacion
-        total += 67
-        minimo += 12
-
-        if gestion.answer1:
-            fin_gestion += 1
-        if gestion.answer2:
-            fin_gestion += 2
-        if gestion.answer3:
-            fin_gestion += 3
-        if gestion.answer4:
-            fin_gestion += 2
-        if gestion.answer5:
-            fin_gestion += 1
-        if gestion.answer6:
-            fin_gestion += 2
-        if gestion.answer7:
-            fin_gestion += 4
-        if gestion.answer8:
-            fin_gestion += 2
-        if gestion.answer9:
-            fin_gestion += 3
-        if gestion.answer10:
-            fin_gestion += 1
-        resultado -= fin_gestion
-        total -= 3
-        minimo += 15
-
-        if explosivos.answer1:
-            fin_explosivos += 2
-        if construccion.answer2:
-            fin_explosivos += 2
-        if explosivos.answer3:
-            fin_explosivos += 2
-        if explosivos.answer4:
-            fin_explosivos += 3
-        if explosivos.answer5:
-            fin_explosivos += 1
-        if explosivos.answer6:
-            fin_explosivos += 1
-        if explosivos.answer1 or explosivos.answer2 or explosivos.answer3 or explosivos.answer4 or explosivos.answer5 or explosivos.answer6:
-            total += 11
-            minimo += 1
-            resultado += fin_explosivos
-
-        if electricidad.answer1:
-            fin_electricidad += 2
-        if electricidad.answer2:
-            fin_electricidad += 2
-        if electricidad.answer3:
-            fin_electricidad += 2
-        if electricidad.answer4:
-            fin_electricidad += 3
-        if electricidad.answer5:
-            fin_electricidad += 1
-        if electricidad.answer1 or electricidad.answer2 or electricidad.answer3 or electricidad.answer4 or electricidad.answer5:
-            total += 10
-            minimo += 1
-            resultado += fin_electricidad
-
-        if sustancias.answer1:
-            fin_sustancias += 1
-        if sustancias.answer2:
-            fin_sustancias += 2
-        if sustancias.answer3:
-            fin_sustancias += 3
-        if sustancias.answer4:
-            fin_sustancias += 2
-        if sustancias.answer5:
-            fin_sustancias += 1
-        if sustancias.answer6:
-            fin_sustancias += 2
-        if sustancias.answer7:
-            fin_sustancias += 4
-        if sustancias.answer8:
-            fin_sustancias += 2
-        if sustancias.answer9:
-            fin_sustancias += 3
-        if sustancias.answer1 or sustancias.answer2 or sustancias.answer3 or sustancias.answer4 or sustancias.answer5 or sustancias.answer6 or sustancias.answer7 or sustancias.answer8 or sustancias.answer9:
-            total += 20
-            minimo += 3
-            resultado += fin_sustancias
-
-        if altura.answer1:
-            fin_altura += 1
-        if altura.answer2:
-            fin_altura += 2
-        if altura.answer3:
-            fin_altura += 3
-        if altura.answer4:
-            fin_altura += 2
-        if altura.answer1 or altura.answer2 or altura.answer3 or altura.answer4:
-            total += 8
-            minimo += 1
-            resultado += fin_altura
-
-        final = TablaResultadosFinales(
-            rut_empresa = empresa,
-            riesgo_transporte=fin_transporte,
-            riesgo_construccion=fin_construccion,
-            riesgo_manufactura=fin_manufactura,
-            riesgo_servicios=fin_servicios,
-            riesgo_dotacion=fin_dotacion,
-            riesgo_gestion=fin_gestion,
-            riesgo_procesos=fin_procesos,
-            riesgo_explosivos=fin_explosivos,
-            riesgo_electricidad=fin_electricidad,
-            riesgo_sustancias_peligrosas=fin_sustancias,
-            riesgo_altura=fin_altura
-        )
-        final.save()
-        res_por = ((resultado-minimo)/(total-minimo))
-        res_img = (379+19)*res_por
-        res_fin = (379+19) - res_img
-        res_fin = int(res_fin)
-        cuartil = (total-minimo)/4
-        if resultado < (minimo + cuartil):
-            color = "VERDE"
-        elif resultado >= (minimo + cuartil) and resultado < (2*cuartil + minimo):
-            color = "AMARILLO"
-        elif resultado >= (2*cuartil + minimo) and resultado <= (3*cuartil + minimo):
-            color = "ANARANJADO"
-        else:
-            color = "ROJO"
-        print(res_fin)
-        print(total)
-        print(minimo)
-        print(resultado)
-        print(cuartil)
-        print(cuartil+minimo)
-
+    # Resultados de la dotacion de la empresa Pag 1
+    dotacion, _ = TablaResultadosDotacion.objects.get_or_create(id=request.user)
+    result_dotacion = 0
+    if dotacion.cant_emp_contratados < 50:
+        result_dotacion += 1
+    elif 50 <= dotacion.cant_emp_contratados < 125:
+        result_dotacion += 2
+    elif 125 <= dotacion.cant_emp_contratados < 200:
+        result_dotacion += 3
     else:
-        # Error de metodo
-        e = "Operacion Invalida"
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html", {'total': total, 'minimo':minimo, 'resultado':resultado, 'res_fin':res_fin, 'color':color})
+        result_dotacion += 4
+
+    if dotacion.cant_emp_contratista < 50:
+        result_dotacion += 1
+    elif 50 <= dotacion.cant_emp_contratista < 125:
+        result_dotacion += 2
+    elif 125 <= dotacion.cant_emp_contratista < 200:
+        result_dotacion += 3
+    else:
+        result_dotacion += 5
+
+    if dotacion.cant_veh_empresa < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_veh_empresa < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_veh_empresa < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_veh_empresa < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+
+    if dotacion.cant_veh_contratista < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_veh_contratista < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_veh_contratista < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_veh_contratista < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+
+    if dotacion.cant_veh_empresa_pesado < 20:
+        result_dotacion += 3
+    elif 20 <= dotacion.cant_veh_empresa_pesado < 30:
+        result_dotacion += 6
+    elif 30 <= dotacion.cant_veh_empresa_pesado < 40:
+        result_dotacion += 9
+    elif 40 <= dotacion.cant_veh_empresa_pesado < 50:
+        result_dotacion += 12
+    else:
+        result_dotacion += 15
+
+    if dotacion.cant_veh_contratista_pesado < 20:
+        result_dotacion += 3
+    elif 20 <= dotacion.cant_veh_contratista_pesado < 30:
+        result_dotacion += 6
+    elif 30 <= dotacion.cant_veh_contratista_pesado < 40:
+        result_dotacion += 9
+    elif 40 <= dotacion.cant_veh_contratista_pesado < 50:
+        result_dotacion += 12
+    else:
+        result_dotacion += 15
+
+    if dotacion.cant_maq_pesada_empresa < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_maq_pesada_empresa < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_maq_pesada_empresa < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_maq_pesada_empresa < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+
+    if dotacion.cant_maq_pesada_contratista < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_maq_pesada_contratista < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_maq_pesada_contratista < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_maq_pesada_contratista < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+    resultado += result_dotacion
+
+    resultado += result_dotacion
+
+    # Resultados de Construccion Pag 2
+
+    # Resultados de Manufactura Pag 2
+
+    # Resultados de Transporte Pag 2
+
+    # Resultados de Servicios Generales Pag 2
+
+    # Resultados de los Certificados ISO pag 3
+    result_cert, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
+    suma_result_cert = result_cert.certificaciones.all().aggregate(Sum('cr'))['cr__sum']
+    if suma_result_cert is None:
+        suma_result_cert = 0
+
+    resultado += suma_result_cert
+
+    # Resultado de manejo de Riesgos pag 3
+    result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
+    suma_mriesgo = result_mriesgo.opciones_manejo.all().aggregate(Sum('cr'))['cr__sum']
+    if suma_mriesgo is None:
+        suma_mriesgo = 0
+
+    resultado += suma_mriesgo
+
+    # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
+    result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
+    suma_preven = result_preven.opciones_prevencionista_t.cr
+    if suma_preven is None:
+        suma_preven = 0
+
+    resultado += suma_preven
+
+    # Resultados de Gestion pag 4
+
+    # Resultados de Explosivos Pag 4
+
+    # Resultados de Electricidad Pag 4
+
+    # Resultados de Sustancias Pag 4
+
+    # Resultados de Altura Pag 4
+
+    return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})

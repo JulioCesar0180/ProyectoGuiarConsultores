@@ -130,6 +130,7 @@ class TablaResultadosProcesos(models.Model):
 
 class TablaCertificaciones(models.Model):
     nombre_certificado = models.CharField(max_length=100)
+    cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.nombre_certificado
@@ -142,6 +143,7 @@ class TablaResultadosCertificaciones(models.Model):
 
 class TablaManejoRiesgos(models.Model):
     manejo_riesgo = models.CharField(max_length=150)
+    cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.manejo_riesgo
@@ -154,6 +156,7 @@ class TablaResultadosManejoRiesgo(models.Model):
 
 class TablaTiempoPrevencionista(models.Model):
     tiempo_prevensionista = models.CharField(max_length=150)
+    cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
         return self.tiempo_prevensionista
@@ -175,6 +178,7 @@ class TablaResultadosTransporte(models.Model):
     answer8 = models.BooleanField(default=False)
     answer9 = models.BooleanField(default=False)
 '''
+
 
 class TablaTransporte(models.Model):
     respuesta_transporte = models.CharField(max_length=200)
@@ -219,6 +223,7 @@ class TablaResultadosManufactura(models.Model):
     answer5 = models.BooleanField(default=False)
     answer6 = models.BooleanField(default=False)
 '''
+
 
 class TablaManufactura(models.Model):
     respuesta_manufactura = models.CharField(max_length=200)
