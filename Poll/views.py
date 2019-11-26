@@ -278,6 +278,7 @@ def Perfil(request):
         return redirect('home')
     """
 
+
 def MTR_login(request):
 
     if request.user.is_authenticated:
@@ -389,12 +390,16 @@ def rut_validator(rut):
 
 
 """valida el numero de celular"""
+
+
 def phone_validator(num):
     if(bool(re.match("^(\+?56)?(9)[9876543]\d{7}$", num))):
         return True
     return False
 
 """Le da el formato al numero de celular, incluyendo el +56"""
+
+
 def phone_format(num):
     if num[0] == "9" and len(num) == 9:
         return "%s%s" % ("+56", num)
@@ -406,6 +411,8 @@ def phone_format(num):
         return "%s%s" % ("+569", num)
 
 """Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
+
+
 def rut_format(value, separator=""):
     # unformat the rut
     value = rut_unformat(value)
@@ -425,6 +432,7 @@ def rut_format(value, separator=""):
 
 def rut_unformat(value):
     return value.replace("-", "").replace(".", "").replace(",", "")
+
 
 @login_required(login_url='MTRlogin')
 def page_one_poll(request):
@@ -472,7 +480,7 @@ def page_one_poll(request):
             form_procesos_empresa.save(commit=False)
             form_procesos_empresa.save()
 
-            return redirect('pagina2.1')
+            return redirect('pagina2')
         else:
             context = {
                 'form_perfil_empresa': form_perfil_empresa,
@@ -594,8 +602,8 @@ def page_two_poll(request):
             else:
                 form_servicio_valid = False
 
-    if form_construccion_valid and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
-        redirect('pagina3')
+    if request.method == 'POST' and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
+        return redirect('pagina3')
     return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
 
 
@@ -623,7 +631,7 @@ def page_three_poll(request):
             form_preven_empresa.save(commit=False)
             form_preven_empresa.save()
 
-            return redirect('home')
+            return redirect('pagina4')
         else:
 
             context = {
@@ -650,29 +658,51 @@ def page_three_poll(request):
 
 @login_required(login_url='MTRlogin')
 def page_four_poll(request):
+
     mani_explosivos_emp, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
+    elect_emp, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
+    sust_emp, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
+    alt_emp, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
+
+    form_mani_explosivos = FormTablaResultadosManiExplosivos(instance=mani_explosivos_emp)
+    form_elect_emp = FormTablaResultadoElectricidad(instance=elect_emp)
+    form_sust_emp = FormTablaResultadosSustancias(instance=sust_emp)
+    form_alt_emp = FormTablaResultadosAltura(instance=alt_emp)
 
     if request.method == 'POST':
         form_mani_explosivos = FormTablaResultadosManiExplosivos(request.POST, instance=mani_explosivos_emp)
-
-        if form_mani_explosivos.is_valid():
+        form_elect_emp = FormTablaResultadoElectricidad(request.POST, instance=elect_emp)
+        form_sust_emp = FormTablaResultadosSustancias(request.POST, instance=sust_emp)
+        form_alt_emp = FormTablaResultadosAltura(request.POST, instance=alt_emp)
+        if form_alt_emp.is_valid() and form_sust_emp.is_valid() and form_elect_emp.is_valid() and form_mani_explosivos.is_valid():
             form_mani_explosivos.save(commit=False)
             form_mani_explosivos.save()
 
-            return redirect('home')
+            form_elect_emp.save(commit=False)
+            form_elect_emp.save()
+
+            form_sust_emp.save(commit=False)
+            form_sust_emp.save()
+
+            form_alt_emp.save(commit=False)
+            form_alt_emp.save()
+
+            return redirect('resultado')
         else:
             context = {
                 'form_mani_explosivos': form_mani_explosivos,
+                'form_elect_emp': form_elect_emp,
+                'form_sust_emp': form_sust_emp,
+                'form_alt_emp': form_alt_emp,
             }
-
-            return render(request, 'MideTuRiesgo/mideturiesgo4.html', context)
+            return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
     else:
-        form_mani_explosivos = FormTablaResultadosManiExplosivos(instance=mani_explosivos_emp)
-
         context = {
             'form_mani_explosivos': form_mani_explosivos,
+            'form_elect_emp': form_elect_emp,
+            'form_sust_emp': form_sust_emp,
+            'form_alt_emp': form_alt_emp,
         }
-
         return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
 
 
@@ -842,14 +872,47 @@ def page_results(request):
     resultado += suma_preven
 
     # Resultados de Gestion pag 4
+    # ???????
 
     # Resultados de Explosivos Pag 4
+    result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
+    suma_mani_explosivos = 0
+    if result_mani_explosivos.is_expo:
+        suma_mani_explosivos = result_mani_explosivos.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_mani_explosivos not in None:
+            total += 11
+            minimo += 1
+            resultado += suma_mani_explosivos
 
     # Resultados de Electricidad Pag 4
+    result_electricidad, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
+    suma_electricidad = 0
+    if result_electricidad.is_elec:
+        suma_electricidad = result_electricidad.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_electricidad not in None:
+            total += 10
+            minimo += 1
+            resultado += suma_electricidad
 
     # Resultados de Sustancias Pag 4
+    result_sustancia, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
+    suma_sustancia = 0
+    if result_sustancia.is_sust:
+        suma_sustancia = result_sustancia.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_sustancia not in None:
+            total += 20
+            minimo += 3
+            resultado += suma_sustancia
 
     # Resultados de Altura Pag 4
+    result_altura, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
+    suma_altura = 0
+    if result_altura.is_alt:
+        suma_altura = result_altura.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_altura not in None:
+            total += 8
+            minimo += 1
+            resultado += result_altura
 
     # Despligue de Desiciones
     res_por = ((resultado - minimo) / (total - minimo))

@@ -285,7 +285,7 @@ class TablaResultadosManiExplosivos(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_expo = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaManiExplosivos)
+    tipos = models.ManyToManyField(TablaManiExplosivos, blank=True)
 
 
 class TablaElectricidad(models.Model):
@@ -300,8 +300,8 @@ class TablaResultadoElectricidad(models.Model):
     BOOL_CHOICES = ((True, 'Sí'), (False, 'No'))
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    is_elec = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaElectricidad)
+    is_elec = models.BooleanField(default=True, choices=BOOL_CHOICES)
+    tipos = models.ManyToManyField(TablaElectricidad, blank=True)
 
 
 class TablaSustancias(models.Model):
@@ -317,7 +317,7 @@ class TablaResultadosSustancias(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_sust = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaSustancias)
+    tipos = models.ManyToManyField(TablaSustancias, blank=True)
 
 
 class TablaTrabajosAltura(models.Model):
@@ -333,5 +333,5 @@ class TablaResultadosAltura(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaTrabajosAltura)
+    tipos = models.ManyToManyField(TablaTrabajosAltura, blank=True)
 
