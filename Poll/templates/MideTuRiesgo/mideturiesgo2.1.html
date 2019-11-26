@@ -20,7 +20,8 @@
     <form action="" method="post">
         {% csrf_token %}
         <div class="inicio">
-          <b>P6.</b> Marque todas las actividades de CONSTRUCCION que realiza la empresa a ser evaluada
+        {% if construccion in procesos_empresa.procesos.all %}
+            <b>P6.</b> Marque todas las actividades de CONSTRUCCION que realiza la empresa a ser evaluada
                 <div><br></div>
                 {% for construccion in form_construccion.construccion %}
                     <div class="input-radio">
@@ -28,8 +29,10 @@
                         <label for="{{ construccion.id_for_label }}" class="unselectable">{{ construccion.choice_label }}</label>
                     </div>
                 {% endfor %}
-          <div><br></div>
-          <b>P7.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
+            <div><br></div>
+        {% endif %}
+        {% if manufactura in procesos_empresa.procesos.all %}
+            <b>P7.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
                 <div><br></div>
                 {% for manufactura in form_manufactura.manufactura %}
                     <div class="input-radio">
@@ -37,8 +40,11 @@
                         <label for="{{ manufactura.id_for_label }}" class="unselectable">{{ manufactura.choice_label }}</label>
                     </div>
                 {% endfor %}
-          <div><br></div>
-          <b>P8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
+            <div><br></div>
+        {% endif %}
+
+        {% if transporte in procesos_empresa.procesos.all %}
+            <b>P8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
                 <div><br></div>
                 {% for transporte in form_transporte.transporte %}
                     <div class="input-radio">
@@ -46,17 +52,20 @@
                         <label for="{{ transporte.id_for_label }}" class="unselectable">{{ transporte.choice_label }}</label>
                     </div>
                 {% endfor %}
-          <div><br></div>
-          <b>P9.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
+            <div><br></div>
+        {% endif %}
+
+        {% if servicio in procesos_empresa.procesos.all %}
+            <b>P9.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
                 <div><br></div>
-                {% for servicios in form_servicios.servicios %}
+                {% for servicios in form_servicio.servicios %}
                     <div class="input-radio">
                         {{ servicios.tag }}
                         <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
                     </div>
                 {% endfor %}
           <div><br></div>
-
+        {% endif %}
       <div class="siguiente">
         <button type="submit" value="Submit" id="next">→</button>
       </div>

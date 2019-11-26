@@ -479,83 +479,101 @@ def page_two_poll(request):
     # Query por un usuario existente
     user = UserGuiar.objects.get(rut=request.user)
 
-    # Query por respuestas transporte existentes
-    try:
-        transporte = TablaResultadosTransporte.objects.get(id=user)
-    except TablaResultadosTransporte.DoesNotExist:
-        transporte = TablaResultadosTransporte(id=user)
-        transporte.save()
+    # Query por los procesos de la empresa
+    procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=user)
 
+    # Query para obtener todos los procesos disponibles que considera GuiarConsultores
+    tipos_procesos = TablaProcesos.objects.all()
+
+    # Dichos tipos de procesos son listados en una lista
+    list_procesos = []
+    for p in tipos_procesos:
+        list_procesos.append(p)
+
+    # Forms
     # Query por respuestas construccion existentes
-    try:
-        construccion = TablaResultadosConstruccion.objects.get(id=user)
-    except TablaResultadosConstruccion.DoesNotExist:
-        construccion = TablaResultadosConstruccion(id=user)
-        construccion.save()
+    construccion, _ = TablaResultadosConstruccion.objects.get_or_create(id=user)
+    # Form Construccion
+    form_construccion = FormTablaResultadosConstruccion(instance=construccion)
+    form_construccion_valid = True
 
-    # Query por respuestas manufactura existentes
-    try:
-        manufactura = TablaResultadosManufactura.objects.get(id=user)
-    except TablaResultadosManufactura.DoesNotExist:
-        manufactura = TablaResultadosManufactura(id=user)
-        manufactura.save()
+    # Query por respuestas manufacturas existentes
+    manufactura, _ = TablaResultadosManufactura.objects.get_or_create(id=user)
+    # Form Manufactura
+    form_manufactura = FormTablaResultadosManufactura(instance=manufactura)
+    form_manufactura_valid = True
 
-    # Query por respuestas servicios generales existentes
-    try:
-        servicios = TablaResultadosServicios.objects.get(id=user)
-    except TablaResultadosServicios.DoesNotExist:
-        servicios = TablaResultadosServicios(id=user)
-        servicios.save()
+    # Query por respuestas transportes existentes
+    transporte, _ = TablaResultadosTransporte.objects.get_or_create(id=user)
+    # Form Transporte
+    form_transporte = FormTablaResultadosTransporte(instance=transporte)
+    form_transporte_valid = True
 
-    if request.method == 'POST':
-        form_user = FormUserGuiar(request.POST, instance=user)
-        form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
-        form_construccion = FormTablaResultadosConstruccion(request.POST, instance=construccion)
-        form_manufactura = FormTablaResultadosManufactura(request.POST, instance=manufactura)
-        form_servicios = FormTablaResultadosServicios(request.POST, instance=servicios)
+    # Query por respuestas Servicios Generales existentes
+    servicio, _ = TablaResultadosServicios.objects.get_or_create(id=user)
+    # Form Servicios
+    form_servicio = FormTablaResultadosServicios(instance=servicio)
+    form_servicio_valid = True
 
-        if form_user.is_valid() and form_transporte.is_valid() and form_construccion.is_valid() and form_manufactura.is_valid() and form_servicios.is_valid():
-            myuser = form_user.save(commit=False)
-            myuser.save()
+    context = {
+        'form_construccion': form_construccion,
+        'form_manufactura': form_manufactura,
+        'form_transporte': form_transporte,
+        'form_servicio': form_servicio,
+        'construccion': list_procesos[0],
+        'manufactura': list_procesos[1],
+        'transporte': list_procesos[2],
+        'servicio': list_procesos[3],
+        'procesos_empresa': procesos_empresa,
+    }
 
-            form_transporte.save(commit=False)
-            form_transporte.save()
+    # list_procesos[0] = "Construccion"
+    if list_procesos[0] in procesos_empresa.procesos.all():
+        if request.method == "POST":
+            form_construccion = FormTablaResultadosConstruccion(request.POST, instance=construccion)
+            if form_construccion.is_valid():
+                form_construccion.save(commit=False)
+                form_construccion.save()
+                form_construccion_valid = True
+            else:
+                form_construccion_valid = False
 
-            form_construccion.save(commit=False)
-            form_construccion.save()
+    # list_procesos[1] = "Manufactura"
+    if list_procesos[1] in procesos_empresa.procesos.all():
+        if request.method == "POST":
+            form_manufactura = FormTablaResultadosManufactura(request.POST, instance=manufactura)
+            if form_manufactura.is_valid():
+                form_manufactura.save(commit=False)
+                form_manufactura.save()
+                form_manufactura_valid = True
+            else:
+                form_manufactura_valid = False
 
-            form_manufactura.save(commit=False)
-            form_manufactura.save()
+    # list_procesos[2] = "Transporte Terrestre"
+    if list_procesos[2] in procesos_empresa.procesos.all():
+        if request.method == 'POST':
+            form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
+            if form_transporte.is_valid():
+                form_transporte.save(commit=False)
+                form_transporte.save()
+                form_transporte_valid = True
+            else:
+                form_transporte_valid = False
 
-            form_servicios.save(commit=False)
-            form_servicios.save()
+    # list_procesos[3] = "Servicios Generales"
+    if list_procesos[3] in procesos_empresa.procesos.all():
+        if request.method == 'POST':
+            form_servicio = FormTablaResultadosServicios(request.POST, instance=servicio)
+            if form_servicio.is_valid():
+                form_servicio.save(commit=False)
+                form_servicio.save()
+                form_servicio_valid = True
+            else:
+                form_servicio_valid = False
 
-            return redirect('pagina3')
-        else:
-            context = {
-                'form_transporte': form_transporte,
-                'form_construccion': form_construccion,
-                'form_manufactura': form_manufactura,
-                'form_servicios': form_servicios,
-                'form_user': form_user,
-            }
-            return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
-    else:
-        form_user = FormUserGuiar(instance=user)
-        form_transporte = FormTablaResultadosTransporte(instance=transporte)
-        form_construccion = FormTablaResultadosConstruccion(instance=construccion)
-        form_manufactura = FormTablaResultadosManufactura(instance=manufactura)
-        form_servicios = FormTablaResultadosServicios(instance=servicios)
-
-        context = {
-            'form_transporte': form_transporte,
-            'form_construccion': form_construccion,
-            'form_manufactura': form_manufactura,
-            'form_servicios': form_servicios,
-            'form_user': form_user,
-        }
-
-        return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
+    if form_construccion_valid and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
+        redirect('pagina3')
+    return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
 
 
 @login_required(login_url='MTRlogin')
