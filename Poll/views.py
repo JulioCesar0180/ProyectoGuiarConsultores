@@ -337,7 +337,7 @@ def signup(request):
                             )
 
                             perfil_empresa = TablaPerfilEmpresa(
-                                id_id=rut_empresa,
+                                id=obj_user,
                                 rut_representante=rut_format(rut_representante),
                                 nombre_representante=nombre_representante,
                                 email_representante=email_representante,
