@@ -40,7 +40,71 @@
                             <h2>Crear Cuenta</h2>
                             <form method="post">
                                 {% csrf_token  %}
-                                {{ form|crispy }}
+                                <!--{{ form|crispy }}-->
+
+                                <div class="control-group">
+                                    <label class="control-label" for="rut">Ingrese el RUT de la Empresa</label>
+                                    <div class="controls">
+                                        <input name="rut" type="text" class="input-large" id="rut" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="name">Ingrese el Nombre de la Empresa</label>
+                                    <div class="controls">
+                                        <input name="name" type="text" class="input-large" id="name" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="address">Ingrese la Dirección de la Empresa</label>
+                                    <div class="controls">
+                                        <input name="address" type="text" class="input-large" id="address" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="nombre_representante">Ingrese el Nombre del Contacto</label>
+                                    <div class="controls">
+                                        <input name="nombre_representante" type="text" class="input-large" id="nombre_representante" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="rut_representante">Ingrese el RUT del Contacto</label>
+                                    <div class="controls">
+                                        <input name="rut_representante" type="text" class="input-large" id="rut_representante" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="email_representante">Ingrese el Email del Contacto</label>
+                                    <div class="controls">
+                                        <input name="email_representante" type="text" class="input-large" id="email_representante" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="telefono_representante">Ingrese el Numero de Celular del Contacto (+56) </label>
+                                    <div class="controls">
+                                        <input name="telefono_representante" type="text" class="input-large" id="telefono_representante" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="password1">Ingrese una Contraseña</label>
+                                    <div class="controls">
+                                        <input name="password1" type="password" class="input-large" id="password1" value="">
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label" for="password2">Repita su Contraseña (Confirmación)</label>
+                                    <div class="controls">
+                                        <input name="password2" type="password" class="input-large" id="password2" value="">
+                                    </div>
+                                </div>
+
                                 <center><button type="submit" class="btn login_btn">Crear Cuenta</button></center>
                             </form>
                         </font>
