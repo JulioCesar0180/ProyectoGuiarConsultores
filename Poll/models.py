@@ -335,3 +335,10 @@ class TablaResultadosAltura(models.Model):
     is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
     tipos = models.ManyToManyField(TablaTrabajosAltura, blank=True)
 
+
+class TablaPrioridadBase(models.Model):
+    nombre_seccion = models.CharField(max_length=50)
+    prioridad = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+
+    def __str__(self):
+        return self.nombre_seccion
