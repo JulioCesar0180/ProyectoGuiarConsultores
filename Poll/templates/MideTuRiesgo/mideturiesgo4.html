@@ -113,4 +113,43 @@
     }
 }
     </script>
+
+    <script type="text/javascript">
+        {% if form_elect_emp.is_elec %}
+            var elec = 0;
+            displayExplosivos();
+        {% else %}
+            var elec = 1;
+            occultExplosivos();
+        {% endif %}
+    document.getElementById("div_id_is_elec_0").onclick = function () {
+        displayExplosivos()
+    };
+
+    document.getElementById("div_id_is_elec_1").onclick = function () {
+        occultExplosivos()
+    };
+
+    function displayExplosivos(){
+        if(elec < 1) {
+            var num = document.getElementById('exp').innerHTML;
+            elec++;
+            $('<div id="explosivosNext"><b>P' + num + '-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos<div><br></div>' +
+                {% for tipo_explo in form_elect_emp.tipos %}
+                '<div class="input-radio">{{ tipo_explo.tag }}' +
+                '<label for="{{ tipo_explo.id_for_label }}" class="unselectable">{{ tipo_explo.choice_label }}</label></div>' +
+                {% endfor %}
+                '<div><br></div><div><hr></div></div>').appendTo("#explosivos");
+        }
+    }
+
+    function occultExplosivos(){
+        if(elec == 1){
+            elec--;
+            var parent = document.getElementById("explosivos");
+            var child = document.getElementById("explosivosNext");
+            parent.removeChild(child);
+        }
+    }
+    </script>
 {% endblock %}

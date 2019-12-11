@@ -879,7 +879,7 @@ def page_results(request):
     suma_mani_explosivos = 0
     if result_mani_explosivos.is_expo:
         suma_mani_explosivos = result_mani_explosivos.tipos.all().aggregate(Sum('ri'))['ri__sum']
-        if suma_mani_explosivos not in None:
+        if suma_mani_explosivos is not None:
             total += 11
             minimo += 1
             resultado += suma_mani_explosivos
@@ -889,7 +889,7 @@ def page_results(request):
     suma_electricidad = 0
     if result_electricidad.is_elec:
         suma_electricidad = result_electricidad.tipos.all().aggregate(Sum('ri'))['ri__sum']
-        if suma_electricidad not in None:
+        if suma_electricidad is not None:
             total += 10
             minimo += 1
             resultado += suma_electricidad
@@ -899,7 +899,7 @@ def page_results(request):
     suma_sustancia = 0
     if result_sustancia.is_sust:
         suma_sustancia = result_sustancia.tipos.all().aggregate(Sum('ri'))['ri__sum']
-        if suma_sustancia not in None:
+        if suma_sustancia is not None:
             total += 20
             minimo += 3
             resultado += suma_sustancia
@@ -909,7 +909,7 @@ def page_results(request):
     suma_altura = 0
     if result_altura.is_alt:
         suma_altura = result_altura.tipos.all().aggregate(Sum('ri'))['ri__sum']
-        if suma_altura not in None:
+        if suma_altura is not None:
             total += 8
             minimo += 1
             resultado += result_altura
