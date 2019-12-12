@@ -4,6 +4,7 @@ from django.conf import settings
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
+from datetime import date
 
 
 
@@ -149,17 +150,21 @@ def report(request):
 
     #Header
     logo = settings.MEDIA_ROOT + '/images/logoGC.png'
-    c.drawImage(logo, 40, 750, 120, 90, preserveAspectRatio=True)
+    c.drawImage(logo, 20, 750, 180, 90, preserveAspectRatio=True)
     c.setLineWidth(.3)
-    c.setFont('Helvetica', 22)
-    c.drawString(30,750,'GuiarConsultores')
-    c.setFont('Helvetica', 12)
-    c.drawString(30, 735, 'Report')
 
-    c.drawString(480,750,'Fecha')
+    c.setFont("Helvetica", 16)
+    # Dibujamos una cadena en la ubicación X,Y especificada
+    c.drawString(250, 750, u"MIDETURIESGO")
+    c.setFont("Helvetica", 14)
+    c.drawString(220, 730, u"REPORTE DE RESULTADOS")
+
+    today = date.today()
+    now = str(today.day)+"/"+str(today.month)+"/"+str(today.year)
+    c.drawString(480,790,now)
 
     #start X, height end Y, height
-    c.line(460, 747, 560, 747)
+    c.line(475, 787, 560, 787)
 
     #Body
     """..."""
