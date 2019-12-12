@@ -20,4 +20,5 @@ urlpatterns = [
     path('password/change', views.change_password, name='change_password'),
     path('password/reset', views.reset_password, name='reset_password'),
 
+    path('PDFreport/', views.report, name="pdfReport"),
 ]

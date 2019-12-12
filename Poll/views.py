@@ -1,4 +1,12 @@
 # encoding: utf-8
+"""PDF"""
+from django.conf import settings
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+
+
+
 """Se utiliza en el rut validator, es para iterar o una especie de foreach"""
 from itertools import cycle
 
@@ -36,6 +44,9 @@ from django.utils.crypto import get_random_string
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
+
+
 
 @login_required(login_url='MTRlogin')
 def get_name(request):
@@ -127,6 +138,41 @@ def get_name(request):
         form = FormPageOne()
 
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
+
+@login_required(login_url='MTRlogin')
+def report(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=Reporte-Guiar-Consultores.pdf'
+
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+
+    #Header
+    logo = settings.MEDIA_ROOT + '/images/logoGC.png'
+    c.drawImage(logo, 40, 750, 120, 90, preserveAspectRatio=True)
+    c.setLineWidth(.3)
+    c.setFont('Helvetica', 22)
+    c.drawString(30,750,'GuiarConsultores')
+    c.setFont('Helvetica', 12)
+    c.drawString(30, 735, 'Report')
+
+    c.drawString(480,750,'Fecha')
+
+    #start X, height end Y, height
+    c.line(460, 747, 560, 747)
+
+    #Body
+    """..."""
+
+    #Guardar pdf
+    c.save()
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+
 
 def reset_password(request):
     if request.method == 'POST':
