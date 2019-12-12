@@ -36,13 +36,10 @@
         <div id="rectangulo"></div>
       </div>
     </div>
-    <div>
-      <hr>
+    <div class="inicio">
+      A continuación se darán a conocer los detalles por seccion en valores porcentuales respecto al riesgo potencial según la encuesta:
     </div>
-    <div>
-      <br> Acontinuacion se muestran los detalles de resultado por seccion representando la distribucion poorcentual del riesgo potencial obtenido en la encuesta
-    </div>
-    <div><br></div>
+    <div class ="inicio">
         {% for d in desgloce %}
           {% for a in d %}
             {{ a }}
@@ -50,6 +47,10 @@
         %
         <br>
         {% endfor %}
+    </div>
+    <div>
+      <hr>
+    </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
