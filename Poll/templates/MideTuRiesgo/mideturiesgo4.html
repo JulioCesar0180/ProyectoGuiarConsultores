@@ -144,7 +144,7 @@
                 inspectorExp++;
                 $('#explosivos').append('<div id="explosivosNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
                     '                <div><br></div>\n' +
-                    '                {% for tipoexp in form_mani_explosivos.tipos %}\n'+
+                    '                {% for tipoexp in form_mani_explosivos.tipos_exp %}\n'+
                         '                    <div class="input-radio">\n'+
                         '                        {{ tipoexp.tag }}\n'+
                         '                        <label for="{{ tipoexp.id_for_label }}" class="unselectable">{{ tipoexp.choice_label }}</label>\n'
@@ -181,7 +181,7 @@
             inspectorElec = 1;
             $('#electricidad').append('<div id="electricidadNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
                 '        <div><br></div>\n' +
-                '        {% for tipoElec in form_elect_emp.tipos %}\n'+
+                '        {% for tipoElec in form_elect_emp.tipos_elec %}\n'+
                     '            <div class="input-radio">\n'+
                     '                {{ tipoElec.tag }}\n'+
                     '                <label for="{{ tipoElec.id_for_label }}" class="unselectable">{{ tipoElec.choice_label }}</label>\n'
@@ -202,7 +202,7 @@
                 inspectorElec++;
                 $('#electricidad').append('<div id="electricidadNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
                     '        <div><br></div>\n' +
-                    '        {% for tipoElec in form_elect_emp.tipos %}\n'+
+                    '        {% for tipoElec in form_elect_emp.tipos_elec %}\n'+
                         '            <div class="input-radio">\n'+
                         '                {{ tipoElec.tag }}\n'+
                         '                <label for="{{ tipoElec.id_for_label }}" class="unselectable">{{ tipoElec.choice_label }}</label>\n'
@@ -237,7 +237,7 @@
             inspectorSust = 1;
             $('#sustancias').append('<div id="sustanciasNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
                 '        <div><br></div>\n' +
-                '        {% for tipoSust in form_sust_emp.tipos %}\n'+
+                '        {% for tipoSust in form_sust_emp.tipos_sust %}\n'+
                     '            <div class="input-radio">\n'+
                     '                {{ tipoSust.tag }}\n'+
                     '                <label for="{{ tipoSust.id_for_label }}" class="unselectable">{{ tipoSust.choice_label }}</label>\n'
@@ -260,7 +260,7 @@
                 inspectorSust++;
                 $('#sustancias').append('<div id="sustanciasNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
                     '        <div><br></div>\n' +
-                    '        {% for tipoSust in form_sust_emp.tipos %}\n'+
+                    '        {% for tipoSust in form_sust_emp.tipos_sust %}\n'+
                         '            <div class="input-radio">\n'+
                         '                {{ tipoSust.tag }}\n'+
                         '                <label for="{{ tipoSust.id_for_label }}" class="unselectable">{{ tipoSust.choice_label }}</label>\n'
@@ -297,7 +297,7 @@
             inspectorAlt = 1;
             $('#altura').append('<div id="alturaNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
                 '        <div><br></div>\n' +
-                '        {% for tipoAlt in form_alt_emp.tipos %}\n'+
+                '        {% for tipoAlt in form_alt_emp.tipos_alt %}\n'+
                     '            <div class="input-radio">\n'+
                     '                {{ tipoAlt.tag }}\n'+
                     '                <label for="{{ tipoAlt.id_for_label }}" class="unselectable">{{ tipoAlt.choice_label }}</label>\n'
@@ -320,7 +320,7 @@
                 inspectorAlt++;
                 $('#altura').append('<div id="alturaNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
                     '        <div><br></div>\n' +
-                    '        {% for tipoAlt in form_alt_emp.tipos %}\n'+
+                    '        {% for tipoAlt in form_alt_emp.tipos_alt %}\n'+
                         '            <div class="input-radio">\n'+
                         '                {{ tipoAlt.tag }}\n'+
                         '                <label for="{{ tipoAlt.id_for_label }}" class="unselectable">{{ tipoAlt.choice_label }}</label>\n'
