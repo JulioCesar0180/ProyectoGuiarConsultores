@@ -13,6 +13,13 @@
     <form action="" method="post">
         {% csrf_token %}
         <div class="inicio">
+            {% for error in form_mani_explosivos.errors %}
+                {{ error }}
+            {% endfor %}
+        {{ form_mani_explosivos.is_valid }}
+        {{ form_elect_emp.is_valid }}
+        {{ form_alt_emp.is_valid }}
+        {{ form_sust_emp.is_valid }}
             Por último realizaremos algunas preguntas sobre el manejo de riesgos en las actividades que realiza la empresa a ser evaluada.
             <div><hr></div>
         </div>
@@ -20,10 +27,17 @@
             <b>P<c id="exp">{{cont|add:"1"}}</c>.</b> ¿En la empresa para su funcionamiento se utilizan y/o manipulan explosivos?
             <div><br></div>
             {% for explosivo in form_mani_explosivos.is_expo %}
-                <div id="div_{{ explosivo.id_for_label }}" class="input-radio">
-                    {{ explosivo.tag }}
-                    <label for="{{ explosivo.id_for_label }}" class="unselectable">{{ explosivo.choice_label }}</label>
-                </div>
+                {% if "0" in explosivo.id_for_label %}
+                    <div id="div_{{ explosivo.id_for_label }}" class="input-radio" onclick="displayExplosivos()">
+                        {{ explosivo.tag }}
+                        <label for="{{ explosivo.id_for_label }}" class="unselectable">{{ explosivo.choice_label }}</label>
+                    </div>
+                {% else %}
+                    <div id="div_{{ explosivo.id_for_label }}" class="input-radio" onclick="hiddenExplosivos()">
+                        {{ explosivo.tag }}
+                        <label for="{{ explosivo.id_for_label }}" class="unselectable">{{ explosivo.choice_label }}</label>
+                    </div>
+                {% endif %}
             {% endfor %}
             <div><br></div>
             <div><hr></div>
@@ -32,10 +46,17 @@
             <b>P<c id="ele">{{cont|add:"2"}}</c>.</b> ¿En la empresa para su funcionamiento se utilizan y/o manipulan cables de alta tensión y/o electricidad?
             <div><br></div>
             {% for electricidad in form_elect_emp.is_elec %}
-                <div class="input-radio">
-                    {{ electricidad.tag }}
-                    <label for="{{ electricidad.id_for_label }}" class="unselectable">{{ electricidad.choice_label }}</label>
-                </div>
+                {% if "0" in electricidad.id_for_label %}
+                    <div class="input-radio" onclick="displayElectricidad()">
+                        {{ electricidad.tag }}
+                        <label for="{{ electricidad.id_for_label }}" class="unselectable">{{ electricidad.choice_label }}</label>
+                    </div>
+                {% else %}
+                    <div class="input-radio" onclick="hiddenElectricidad()">
+                        {{ electricidad.tag }}
+                        <label for="{{ electricidad.id_for_label }}" class="unselectable">{{ electricidad.choice_label }}</label>
+                    </div>
+                {% endif %}
             {% endfor %}
             <div><br></div><div><hr></div>
         </div>
@@ -43,10 +64,17 @@
             <b>P<c id="sus">{{cont|add:"3"}}</c>.</b> ¿En la empresa para su funcionamiento se transportan, custodia y/o manipulan corrosivos, inflamables, tóxicos, combustibles?
             <div><br></div>
             {% for sustancia in form_sust_emp.is_sust %}
-                <div class="input-radio">
-                    {{ sustancia.tag }}
-                    <label for="{{ sustancia.id_for_label }}" class="unselectable">{{ sustancia.choice_label }}</label>
-                </div>
+                {% if "0" in sustancia.id_for_label %}
+                    <div class="input-radio" onclick="displaySustancias()">
+                        {{ sustancia.tag }}
+                        <label for="{{ sustancia.id_for_label }}" class="unselectable">{{ sustancia.choice_label }}</label>
+                    </div>
+                {% else %}
+                    <div class="input-radio" onclick="hiddenSustancias()">
+                        {{ sustancia.tag }}
+                        <label for="{{ sustancia.id_for_label }}" class="unselectable">{{ sustancia.choice_label }}</label>
+                    </div>
+                {% endif %}
             {% endfor %}
             </div><div><br>
         </div>
@@ -56,10 +84,17 @@
             <b>P<c id="alt">{{cont|add:"4"}}</c>.</b> ¿En la empresa para su funcionamiento se realizan trabajos en altura?
             <div><br></div>
             {% for altura in form_alt_emp.is_alt %}
-                <div class="input-radio">
-                    {{ altura.tag }}
-                    <label for="{{ altura.id_for_label }}" class="unselectable">{{ altura.choice_label }}</label>
-                </div>
+                {% if "0" in altura.id_for_label %}
+                    <div class="input-radio" onclick="displayAltura()">
+                        {{ altura.tag }}
+                        <label for="{{ altura.id_for_label }}" class="unselectable">{{ altura.choice_label }}</label>
+                    </div>
+                {% else %}
+                    <div class="input-radio" onclick="hiddenAltura()">
+                        {{ altura.tag }}
+                        <label for="{{ altura.id_for_label }}" class="unselectable">{{ altura.choice_label }}</label>
+                    </div>
+                {% endif %}
             {% endfor %}
             <div><br></div>
             <div><hr></div>
@@ -75,81 +110,241 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </form>
+
+    {# Para Explosivos #}
     <script type="text/javascript">
-        {% if form_mani_explosivos.is_expo %}
-            var explosivos = 0;
-            displayExplosivos();
-        {% else %}
-            var explosivos = 1;
-            occultExplosivos();
-        {% endif %}
-    document.getElementById("div_id_is_expo_0").onclick = function () {
-        displayExplosivos()
-    };
 
-    document.getElementById("div_id_is_expo_1").onclick = function () {
-        occultExplosivos()
-    };
-
-    function displayExplosivos(){
-        if(explosivos < 1) {
-            var num = document.getElementById('exp').innerHTML;
-            explosivos++;
-            $('<div id="explosivosNext"><b>P' + num + '-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos<div><br></div>' +
-                {% for tipo_explo in form_mani_explosivos.tipos %}
-                '<div class="input-radio">{{ tipo_explo.tag }}' +
-                '<label for="{{ tipo_explo.id_for_label }}" class="unselectable">{{ tipo_explo.choice_label }}</label></div>' +
-                {% endfor %}
-                '<div><br></div><div><hr></div></div>').appendTo("#explosivos");
+        var checkbox = $('[id="id_is_expo_0"]');
+        var inspectorExp;
+        if (checkbox.is(':checked'))
+        {
+            inspectorExp = 1;
+            $('#explosivos').append('<div id="explosivosNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
+                    '                <div><br></div>\n' +
+                    '                {% for tipoexp in form_mani_explosivos.tipos %}\n'+
+                        '                    <div class="input-radio">\n'+
+                        '                        {{ tipoexp.tag }}\n'+
+                        '                        <label for="{{ tipoexp.id_for_label }}" class="unselectable">{{ tipoexp.choice_label }}</label>\n'
+                        +
+                        '                    </div>\n'+
+                        '                {% endfor %}\n' +
+                    '                <div><br></div>\n' +
+                    '                <div><hr></div>\n' +
+                    '            </div>')
+        }else
+        {
+            inspectorExp = 0;
         }
-    }
 
-    function occultExplosivos(){
-    if(explosivos == 1){
-        explosivos--;
-        var parent = document.getElementById("explosivos");
-        var child = document.getElementById("explosivosNext");
-        parent.removeChild(child);
-    }
-}
+        function displayExplosivos() {
+
+            if (inspectorExp < 1)
+            {
+                console.log("SI");
+                inspectorExp++;
+                $('#explosivos').append('<div id="explosivosNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
+                    '                <div><br></div>\n' +
+                    '                {% for tipoexp in form_mani_explosivos.tipos %}\n'+
+                        '                    <div class="input-radio">\n'+
+                        '                        {{ tipoexp.tag }}\n'+
+                        '                        <label for="{{ tipoexp.id_for_label }}" class="unselectable">{{ tipoexp.choice_label }}</label>\n'
+                        +
+                        '                    </div>\n'+
+                        '                {% endfor %}\n' +
+                    '                <div><br></div>\n' +
+                    '                <div><hr></div>\n' +
+                    '            </div>')
+            }
+        }
+
+        function hiddenExplosivos() {
+
+            if (inspectorExp === 1)
+            {
+                console.log("NO");
+                inspectorExp--;
+                var parent = document.getElementById("explosivos");
+                var child = document.getElementById("explosivosNext");
+                parent.removeChild(child);
+            }
+        }
+
     </script>
 
+    {# Para Electricidad #}
     <script type="text/javascript">
-        {% if form_elect_emp.is_elec %}
-            var elec = 0;
-            displayExplosivos();
-        {% else %}
-            var elec = 1;
-            occultExplosivos();
-        {% endif %}
-    document.getElementById("div_id_is_elec_0").onclick = function () {
-        displayExplosivos()
-    };
 
-    document.getElementById("div_id_is_elec_1").onclick = function () {
-        occultExplosivos()
-    };
-
-    function displayExplosivos(){
-        if(elec < 1) {
-            var num = document.getElementById('exp').innerHTML;
-            elec++;
-            $('<div id="explosivosNext"><b>P' + num + '-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos<div><br></div>' +
-                {% for tipo_explo in form_elect_emp.tipos %}
-                '<div class="input-radio">{{ tipo_explo.tag }}' +
-                '<label for="{{ tipo_explo.id_for_label }}" class="unselectable">{{ tipo_explo.choice_label }}</label></div>' +
-                {% endfor %}
-                '<div><br></div><div><hr></div></div>').appendTo("#explosivos");
+        var checkbox = $('[id="id_is_elec_0"]');
+        var inspectorElec;
+        if (checkbox.is(':checked'))
+        {
+            inspectorElec = 1;
+            $('#electricidad').append('<div id="electricidadNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
+                '        <div><br></div>\n' +
+                '        {% for tipoElec in form_elect_emp.tipos %}\n'+
+                    '            <div class="input-radio">\n'+
+                    '                {{ tipoElec.tag }}\n'+
+                    '                <label for="{{ tipoElec.id_for_label }}" class="unselectable">{{ tipoElec.choice_label }}</label>\n'
+                    +
+                    '            </div>\n'+
+                    '        {% endfor %}\n' +
+                '        <div><br></div><div><hr></div></div>')
+        }else
+        {
+            inspectorElec = 0;
         }
-    }
 
-    function occultExplosivos(){
-        if(elec == 1){
-            elec--;
-            var parent = document.getElementById("explosivos");
-            var child = document.getElementById("explosivosNext");
-            parent.removeChild(child);
+        function displayElectricidad() {
+
+            if (inspectorElec < 1)
+            {
+                console.log("SI");
+                inspectorElec++;
+                $('#electricidad').append('<div id="electricidadNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
+                    '        <div><br></div>\n' +
+                    '        {% for tipoElec in form_elect_emp.tipos %}\n'+
+                        '            <div class="input-radio">\n'+
+                        '                {{ tipoElec.tag }}\n'+
+                        '                <label for="{{ tipoElec.id_for_label }}" class="unselectable">{{ tipoElec.choice_label }}</label>\n'
+                        +
+                        '            </div>\n'+
+                        '        {% endfor %}\n' +
+                    '        <div><br></div><div><hr></div></div>')
+            }
         }
-    }
+
+        function hiddenElectricidad() {
+
+            if (inspectorElec === 1)
+            {
+                console.log("NO");
+                inspectorElec--;
+                var parent = document.getElementById("electricidad");
+                var child = document.getElementById("electricidadNext");
+                parent.removeChild(child);
+            }
+        }
+
     </script>
+
+    {# Para Sustancias #}
+    <script type="text/javascript">
+
+        var checkbox = $('[id="id_is_sust_0"]');
+        var inspectorSust;
+        if (checkbox.is(':checked'))
+        {
+            inspectorSust = 1;
+            $('#sustancias').append('<div id="sustanciasNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
+                '        <div><br></div>\n' +
+                '        {% for tipoSust in form_sust_emp.tipos %}\n'+
+                    '            <div class="input-radio">\n'+
+                    '                {{ tipoSust.tag }}\n'+
+                    '                <label for="{{ tipoSust.id_for_label }}" class="unselectable">{{ tipoSust.choice_label }}</label>\n'
+                    +
+                    '            </div>\n'+
+                    '        {% endfor %}\n' +
+                '        <div><br></div>\n' +
+                '        <div><hr></div>\n' +
+                '    </div>')
+        }else
+        {
+            inspectorSust = 0;
+        }
+
+        function displaySustancias() {
+
+            if (inspectorSust < 1)
+            {
+                console.log("SI");
+                inspectorSust++;
+                $('#sustancias').append('<div id="sustanciasNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
+                    '        <div><br></div>\n' +
+                    '        {% for tipoSust in form_sust_emp.tipos %}\n'+
+                        '            <div class="input-radio">\n'+
+                        '                {{ tipoSust.tag }}\n'+
+                        '                <label for="{{ tipoSust.id_for_label }}" class="unselectable">{{ tipoSust.choice_label }}</label>\n'
+                        +
+                        '            </div>\n'+
+                        '        {% endfor %}\n' +
+                    '        <div><br></div>\n' +
+                    '        <div><hr></div>\n' +
+                    '    </div>')
+            }
+        }
+
+        function hiddenSustancias() {
+
+            if (inspectorSust === 1)
+            {
+                console.log("NO");
+                inspectorSust--;
+                var parent = document.getElementById("sustancias");
+                var child = document.getElementById("sustanciasNext");
+                parent.removeChild(child);
+            }
+        }
+
+    </script>
+
+    {# Para Altura #}
+    <script type="text/javascript">
+
+        var checkbox = $('[id="id_is_alt_0"]');
+        var inspectorAlt;
+        if (checkbox.is(':checked'))
+        {
+            inspectorAlt = 1;
+            $('#altura').append('<div id="alturaNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
+                '        <div><br></div>\n' +
+                '        {% for tipoAlt in form_alt_emp.tipos %}\n'+
+                    '            <div class="input-radio">\n'+
+                    '                {{ tipoAlt.tag }}\n'+
+                    '                <label for="{{ tipoAlt.id_for_label }}" class="unselectable">{{ tipoAlt.choice_label }}</label>\n'
+                    +
+                    '            </div>\n'+
+                    '        {% endfor %}\n' +
+                '        <div><br></div>\n' +
+                '        <div><hr></div>\n' +
+                '    </div>')
+        }else
+        {
+            inspectorAlt = 0;
+        }
+
+        function displayAltura() {
+
+            if (inspectorAlt < 1)
+            {
+                console.log("SI");
+                inspectorAlt++;
+                $('#altura').append('<div id="alturaNext"><b>P\'+num+\'-1.</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
+                    '        <div><br></div>\n' +
+                    '        {% for tipoAlt in form_alt_emp.tipos %}\n'+
+                        '            <div class="input-radio">\n'+
+                        '                {{ tipoAlt.tag }}\n'+
+                        '                <label for="{{ tipoAlt.id_for_label }}" class="unselectable">{{ tipoAlt.choice_label }}</label>\n'
+                        +
+                        '            </div>\n'+
+                        '        {% endfor %}\n' +
+                    '        <div><br></div>\n' +
+                    '        <div><hr></div>\n' +
+                    '    </div>')
+            }
+        }
+
+        function hiddenAltura() {
+
+            if (inspectorAlt === 1)
+            {
+                console.log("NO");
+                inspectorAlt--;
+                var parent = document.getElementById("altura");
+                var child = document.getElementById("alturaNext");
+                parent.removeChild(child);
+            }
+        }
+
+    </script>
+
 {% endblock %}

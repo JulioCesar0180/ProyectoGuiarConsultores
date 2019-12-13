@@ -368,6 +368,9 @@ class FormTablaResultadoElectricidad(ModelForm):
             'is_elec': forms.RadioSelect
         }
 
+    def is_valid(self):
+        return True
+
 
 class FormTablaResultadosSustancias(ModelForm):
 
@@ -384,6 +387,9 @@ class FormTablaResultadosSustancias(ModelForm):
             'is_sust': forms.RadioSelect
         }
 
+    def is_valid(self):
+        return True
+
 
 class FormTablaResultadosAltura(ModelForm):
 
@@ -399,3 +405,6 @@ class FormTablaResultadosAltura(ModelForm):
             'tipos': forms.CheckboxSelectMultiple,
             'is_alt': forms.RadioSelect
         }
+
+    def is_valid(self):
+        return True
