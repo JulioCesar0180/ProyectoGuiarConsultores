@@ -4,6 +4,10 @@ from django.conf import settings
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import cm
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
+from reportlab.lib import colors
 from datetime import date
 
 
@@ -140,8 +144,10 @@ def get_name(request):
 
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
+desgloce=[]
 @login_required(login_url='MTRlogin')
 def report(request):
+    global desgloce
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=Reporte-Guiar-Consultores.pdf'
 
@@ -155,9 +161,9 @@ def report(request):
 
     c.setFont("Helvetica", 16)
     # Dibujamos una cadena en la ubicación X,Y especificada
-    c.drawString(250, 750, u"MIDETURIESGO")
+    c.drawString(240, 750, u"MIDETURIESGO")
     c.setFont("Helvetica", 14)
-    c.drawString(220, 730, u"REPORTE DE RESULTADOS")
+    c.drawString(210, 730, u"REPORTE DE RESULTADOS")
 
     today = date.today()
     now = str(today.day)+"/"+str(today.month)+"/"+str(today.year)
@@ -168,6 +174,46 @@ def report(request):
 
     #Body
     """..."""
+
+    #Table header
+    styles = getSampleStyleSheet()
+    styleBH = styles["Normal"]
+    #styleBH.alignment = TA_CENTER
+    styleBH.fontSize = 10
+
+    numero = Paragraph('''No.''', styleBH)
+    seccion = Paragraph('''Sección''', styleBH)
+    porcentaje = Paragraph('''Porcentaje''', styleBH)
+
+    data = []
+    data.append([numero, seccion, porcentaje])
+
+    #Table Content
+    styleN = styles["BodyText"]
+    #styleN.alignment = TA_CENTER
+    styleN.fontSize = 7
+
+    high = 650
+    cont = 1
+    for i in desgloce:
+        i.insert(0, cont)
+        cont += 1
+        data.append(i)
+        high = high-18
+
+
+    #table size
+    width, height = A4
+    table = Table(data, colWidths = [1.2*cm, 9*cm, 2.2*cm])
+    table.setStyle(TableStyle([ #estilos de la tabla
+        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+        ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
+
+    #pdf size
+    table.wrapOn(c, width, height)
+    table.drawOn(c, 30, high)
+    c.showPage()
+
 
     #Guardar pdf
     c.save()
@@ -768,7 +814,10 @@ def page_results(request):
     resultado = 0
 
     # Se guardan resultados parciales con nombre de seccion y riesgo porcentual, el nombre se puede omitir pero implica recordar la posicion de cada seccion
-    desgloce = []
+
+    #Por Julio, te declaré desgloce como variable global porq lo necesito usar en report() y no se me ocurrio otra forma
+    global desgloce
+    desgloce.clear()
 
     # Resultados de la dotacion de la empresa Pag 1
     dotacion, _ = TablaResultadosDotacion.objects.get_or_create(id=request.user)
