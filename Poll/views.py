@@ -1056,5 +1056,8 @@ def page_results(request):
     else:
         color = "ROJO"
 
+    #sort arreglo desgloce
+    desgloce.sort(key = lambda array: array[1], reverse=True)
+
     # return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
     return render(request, "MideTuRiesgo/mideturiesgoresultado.html",{'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color, 'desgloce':desgloce})
