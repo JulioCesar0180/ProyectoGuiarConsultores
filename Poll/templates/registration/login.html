@@ -2,9 +2,6 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
-
-
-
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/registration.css'%}">
 {% endblock %}
@@ -14,21 +11,12 @@
     .asteriskfield{
         display: none;
     }
-
-    form .alert ul li {
-        list-style: none;
-    }
-
-    form .alert ul {
-        padding: 0;
-        margin: 0;
-    }
 </style>
+
 <div class="center">
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card2">
-
                 {% if messages %}
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3">

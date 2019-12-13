@@ -1,4 +1,13 @@
 # encoding: utf-8
+"""PDF"""
+from django.conf import settings
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from datetime import date
+
+
+
 """Se utiliza en el rut validator, es para iterar o una especie de foreach"""
 from itertools import cycle
 
@@ -36,6 +45,9 @@ from django.utils.crypto import get_random_string
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+
+
+
 
 @login_required(login_url='MTRlogin')
 def get_name(request):
@@ -127,6 +139,45 @@ def get_name(request):
         form = FormPageOne()
 
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
+
+@login_required(login_url='MTRlogin')
+def report(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=Reporte-Guiar-Consultores.pdf'
+
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+
+    #Header
+    logo = settings.MEDIA_ROOT + '/images/logoGC.png'
+    c.drawImage(logo, 20, 750, 180, 90, preserveAspectRatio=True)
+    c.setLineWidth(.3)
+
+    c.setFont("Helvetica", 16)
+    # Dibujamos una cadena en la ubicación X,Y especificada
+    c.drawString(250, 750, u"MIDETURIESGO")
+    c.setFont("Helvetica", 14)
+    c.drawString(220, 730, u"REPORTE DE RESULTADOS")
+
+    today = date.today()
+    now = str(today.day)+"/"+str(today.month)+"/"+str(today.year)
+    c.drawString(480,790,now)
+
+    #start X, height end Y, height
+    c.line(475, 787, 560, 787)
+
+    #Body
+    """..."""
+
+    #Guardar pdf
+    c.save()
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+
 
 def reset_password(request):
     if request.method == 'POST':
@@ -244,22 +295,22 @@ def Perfil(request):
                 """Cada linea de este codigo, modifica los campos correpondientes"""
                 #Este es nuevo
                 Obj_empresa.rut_representante = request.POST['rut_representante']
-                Obj_empresa.nombre_representante = request.POST['nombre_representante']
+                Obj_empresa.nombre_representante = string_format(request.POST['nombre_representante'])
                 Obj_empresa.email_representante = request.POST['email_representante']
                 Obj_empresa.telefono_representante = phone_format(request.POST['telefono_representante'])
                 Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
                 Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
                 #Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
-                Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
-                Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
+                Obj_empresa.comuna_empresa = string_format(request.POST['comuna_empresa'])
+                Obj_empresa.ciudad_empresa = string_format(request.POST['ciudad_empresa'])
 
                 "Nombre de la empresa se repite en las 2 tablas"
                 #Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
                 Obj_empresa.id_id = request.user.rut
 
                 "Datos User Guiar"
-                Obj_user.name = request.POST['nombre_empresa']
-                Obj_user.address = request.POST['address']
+                Obj_user.name = string_format(request.POST['nombre_empresa'])
+                Obj_user.address = string_format(request.POST['address'])
 
                 """ Actualiza la base de datos"""
                 Obj_empresa.save()
@@ -409,6 +460,9 @@ def phone_format(num):
         return num
     elif len(num) == 8:
         return "%s%s" % ("+569", num)
+
+def string_format(string):
+    return string.replace(' ','_',5)
 
 """Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
 
@@ -816,10 +870,10 @@ def page_results(request):
     else:
         total += 16
         minimo += 6
+        riesgoporcentual_construccion = round((suma_const / 16) * 100,2)
+        desgloce.append(["Construccion", riesgoporcentual_construccion])
 
     resultado += suma_const
-    riesgoporcentual_construccion = round((suma_const / 16) * 100,2)
-    desgloce.append(["Construccion", riesgoporcentual_construccion])
 
     # Resultados de Manufactura Pag 2
     result_manu, _ = TablaResultadosManufactura.objects.get_or_create(id=request.user)
@@ -829,10 +883,10 @@ def page_results(request):
     else:
         total += 15
         minimo += 4
+        riesgoporcentual_manufactura = round((suma_manu / 15) * 100,2)
+        desgloce.append(["Manufactura", riesgoporcentual_manufactura])
 
     resultado += suma_manu
-    riesgoporcentual_manufactura = round((suma_manu / 15) * 100,2)
-    desgloce.append(["Manufactura", riesgoporcentual_manufactura])
 
     # Resultados de Transporte Pag 2
     result_trans, _ = TablaResultadosTransporte.objects.get_or_create(id=request.user)
@@ -842,10 +896,10 @@ def page_results(request):
     else:
         total += 21
         minimo += 5
+        riesgoporcentual_Transporte = round((suma_trans / 21) * 100,2)
+        desgloce.append(["Transporte", riesgoporcentual_Transporte])
 
     resultado += suma_trans
-    riesgoporcentual_Transporte = round((suma_trans / 21) * 100,2)
-    desgloce.append(["Transporte", riesgoporcentual_Transporte])
 
     # Resultados de Servicios Generales Pag 2
     result_sergen,_ = TablaResultadosServicios.objects.get_or_create(id=request.user)
@@ -855,40 +909,40 @@ def page_results(request):
     else:
         total += 37
         minimo += 3
+        riesgoporcentual_servicios = round((suma_sergen / 37) * 100,2)
+        desgloce.append(["Servicios", riesgoporcentual_servicios])
 
     resultado += suma_sergen
-    riesgoporcentual_servicios = round((suma_sergen / 37) * 100,2)
-    desgloce.append(["Servicios", riesgoporcentual_servicios])
 
     # Resultados de los Certificados ISO pag 3
     result_cert, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
     suma_result_cert = result_cert.certificaciones.all().aggregate(Sum('cr'))['cr__sum']
     if suma_result_cert is None:
         suma_result_cert = 0
-
+    else:
+        riesgoporcentual_certificacion = round((1 - (suma_result_cert / 10)) * 100, 2)
+        desgloce.append(["Certificacion", riesgoporcentual_certificacion])
     resultado += suma_result_cert
-    riesgoporcentual_certificacion = round((suma_result_cert / 10) * 100,2)
-    desgloce.append(["Certificacion", riesgoporcentual_certificacion])
 
     # Resultado de manejo de Riesgos pag 3
     result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
     suma_mriesgo = result_mriesgo.opciones_manejo.all().aggregate(Sum('cr'))['cr__sum']
     if suma_mriesgo is None:
         suma_mriesgo = 0
-
+    else:
+        riesgoporcentual_manejoriesgo = round((1 - (suma_mriesgo / 5)) * 100, 2)
+        desgloce.append(["ManejoRiesgo", riesgoporcentual_manejoriesgo])
     resultado += suma_mriesgo
-    riesgoporcentual_manejoriesgo = round((suma_mriesgo / 5) * 100,2)
-    desgloce.append(["ManejoRiesgo", riesgoporcentual_manejoriesgo])
 
     # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
     result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
     suma_preven = result_preven.opciones_prevencionista_t.cr
     if suma_preven is None:
         suma_preven = 0
-
+    else:
+        riesgoporcentual_prevencionista = round((1 - (suma_preven / 10)) * 100, 2)
+        desgloce.append(["TiempoPrevencionista", riesgoporcentual_prevencionista])
     resultado += suma_preven
-    riesgoporcentual_prevencionista = round((suma_preven / 10) * 100,2)
-    desgloce.append(["TiempoPrevencionista", riesgoporcentual_prevencionista])
 
     # Resultados de Explosivos Pag 4
     result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)

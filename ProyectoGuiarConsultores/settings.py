@@ -162,3 +162,5 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
                 message_constants.SUCCESS: 'success',
                 message_constants.WARNING: 'warning',
                 message_constants.ERROR: 'danger',}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
