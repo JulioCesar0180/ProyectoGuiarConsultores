@@ -27,15 +27,15 @@ class SignUpForm(UserCreationForm):
         widget=forms.TextInput(attrs={'placeholder': 'Ingrese el Nombre de la Empresa'}))
 
     nombre_representante = forms.CharField(max_length=254, label="Nombre de Contacto", help_text='Requerido',
-                                           widget=forms.TextInput(attrs={'placeholder': 'Ingrese el Nombre de Contacto de la Empresa'}))
+                                           widget=forms.TextInput(attrs={'placeholder': 'Ejemplo: Pedro Herrera'}))
 
     email_representante = forms.EmailField(max_length=40, label="Email de Contacto", help_text='Requerido',
                                            widget=forms.TextInput(
-                                               attrs={'placeholder': 'Ingrese el Email de Contacto de la Empresa'}))
+                                               attrs={'placeholder': 'Ejemplo: example@dominio.cl'}))
 
-    telefono_representante = forms.CharField(max_length=9, label="Número de Contacto", help_text='Requerido',
+    telefono_representante = forms.CharField(max_length=9, label="Número de Contacto (+56)", help_text='Requerido',
                                              widget=forms.TextInput(
-                                                 attrs={'placeholder': 'Ingrese el Número de Contacto de la Empresa'}))
+                                                 attrs={'placeholder': 'Ejemplo: 955555555'}))
 
     address = forms.CharField(
         max_length=254, label="Dirección", help_text='Requerido',

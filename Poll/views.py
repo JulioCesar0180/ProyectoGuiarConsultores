@@ -290,22 +290,22 @@ def Perfil(request):
                 """Cada linea de este codigo, modifica los campos correpondientes"""
                 #Este es nuevo
                 Obj_empresa.rut_representante = request.POST['rut_representante']
-                Obj_empresa.nombre_representante = request.POST['nombre_representante']
+                Obj_empresa.nombre_representante = string_format(request.POST['nombre_representante'])
                 Obj_empresa.email_representante = request.POST['email_representante']
                 Obj_empresa.telefono_representante = phone_format(request.POST['telefono_representante'])
                 Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
                 Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
                 #Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
-                Obj_empresa.comuna_empresa = request.POST['comuna_empresa']
-                Obj_empresa.ciudad_empresa = request.POST['ciudad_empresa']
+                Obj_empresa.comuna_empresa = string_format(request.POST['comuna_empresa'])
+                Obj_empresa.ciudad_empresa = string_format(request.POST['ciudad_empresa'])
 
                 "Nombre de la empresa se repite en las 2 tablas"
                 #Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
                 Obj_empresa.id_id = request.user.rut
 
                 "Datos User Guiar"
-                Obj_user.name = request.POST['nombre_empresa']
-                Obj_user.address = request.POST['address']
+                Obj_user.name = string_format(request.POST['nombre_empresa'])
+                Obj_user.address = string_format(request.POST['address'])
 
                 """ Actualiza la base de datos"""
                 Obj_empresa.save()
@@ -455,6 +455,9 @@ def phone_format(num):
         return num
     elif len(num) == 8:
         return "%s%s" % ("+569", num)
+
+def string_format(string):
+    return string.replace(' ','_',5)
 
 """Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
 
