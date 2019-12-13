@@ -344,11 +344,11 @@ class FormTablaResultadosManiExplosivos(ModelForm):
 
         fields = [
             'is_expo',
-            'tipos'
+            'tipos_exp'
         ]
 
         widgets = {
-            'tipos': forms.CheckboxSelectMultiple,
+            'tipos_exp': forms.CheckboxSelectMultiple,
             'is_expo': forms.RadioSelect
         }
 
@@ -360,11 +360,11 @@ class FormTablaResultadoElectricidad(ModelForm):
 
         fields = [
             'is_elec',
-            'tipos'
+            'tipos_elec'
         ]
 
         widgets = {
-            'tipos': forms.CheckboxSelectMultiple,
+            'tipos_elec': forms.CheckboxSelectMultiple,
             'is_elec': forms.RadioSelect
         }
 
@@ -379,11 +379,11 @@ class FormTablaResultadosSustancias(ModelForm):
 
         fields = [
             'is_sust',
-            'tipos'
+            'tipos_sust'
         ]
 
         widgets = {
-            'tipos': forms.CheckboxSelectMultiple,
+            'tipos_sust': forms.CheckboxSelectMultiple,
             'is_sust': forms.RadioSelect
         }
 
@@ -398,11 +398,11 @@ class FormTablaResultadosAltura(ModelForm):
 
         fields = [
             'is_alt',
-            'tipos'
+            'tipos_alt'
         ]
 
         widgets = {
-            'tipos': forms.CheckboxSelectMultiple,
+            'tipos_alt': forms.CheckboxSelectMultiple,
             'is_alt': forms.RadioSelect
         }
 

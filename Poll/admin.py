@@ -48,8 +48,12 @@ admin.site.register(TablaResultadosTiempoPreven)
 
 admin.site.register(TablaManiExplosivos)
 admin.site.register(TablaResultadosManiExplosivos)
+admin.site.register(TablaElectricidad)
 admin.site.register(TablaResultadoElectricidad)
-
+admin.site.register(TablaSustancias)
+admin.site.register(TablaResultadosSustancias)
+admin.site.register(TablaTrabajosAltura)
+admin.site.register(TablaResultadosAltura)
 admin.site.register(TablaPrioridadBase)
 """
 admin.site.register(TablaResultadosTransporte)

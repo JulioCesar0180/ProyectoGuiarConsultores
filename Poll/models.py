@@ -274,11 +274,11 @@ class TablaResultadosServicios(models.Model):
 
 
 class TablaManiExplosivos(models.Model):
-    tipo = models.CharField(max_length=200)
+    tipo_exp = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
-        return self.tipo
+        return self.tipo_exp
 
 
 class TablaResultadosManiExplosivos(models.Model):
@@ -286,15 +286,15 @@ class TablaResultadosManiExplosivos(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_expo = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaManiExplosivos, blank=True, null=True)
+    tipos_exp = models.ManyToManyField(TablaManiExplosivos, blank=True, null=True)
 
 
 class TablaElectricidad(models.Model):
-    tipo = models.CharField(max_length=200)
+    tipo_elec = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
-        return self.tipo
+        return self.tipo_elec
 
 
 class TablaResultadoElectricidad(models.Model):
@@ -302,15 +302,15 @@ class TablaResultadoElectricidad(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_elec = models.BooleanField(default=True, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaElectricidad, blank=True, null=True)
+    tipos_elec = models.ManyToManyField(TablaElectricidad, blank=True, null=True)
 
 
 class TablaSustancias(models.Model):
-    tipo = models.CharField(max_length=200)
+    tipo_sust = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
-        return self.tipo
+        return self.tipo_sust
 
 
 class TablaResultadosSustancias(models.Model):
@@ -318,15 +318,15 @@ class TablaResultadosSustancias(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_sust = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaSustancias, blank=True, null=True)
+    tipos_sust = models.ManyToManyField(TablaSustancias, blank=True, null=True)
 
 
 class TablaTrabajosAltura(models.Model):
-    tipo = models.CharField(max_length=200)
+    tipo_alt = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
 
     def __str__(self):
-        return self.tipo
+        return self.tipo_alt
 
 
 class TablaResultadosAltura(models.Model):
@@ -334,7 +334,7 @@ class TablaResultadosAltura(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos = models.ManyToManyField(TablaTrabajosAltura, blank=True, null=True)
+    tipos_alt = models.ManyToManyField(TablaTrabajosAltura, blank=True, null=True)
 
 
 class TablaPrioridadBase(models.Model):
