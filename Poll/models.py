@@ -72,7 +72,7 @@ class TablaPerfilEmpresa(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
 
     # Datos complementarios a la empresa
-    experiencia_empresa = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])
+    experiencia_empresa = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(500)])
     ciudad_empresa = models.CharField(max_length=20, default="")
     comuna_empresa = models.CharField(max_length=20, default="")
     razon_social_empresa = models.CharField(max_length=100, default="")
