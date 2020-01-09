@@ -128,9 +128,14 @@ class TablaResultadosProcesos(models.Model):
     servicios = models.BooleanField(default=False)
 
 
+class TablaPoliza(models.Model):
+    nombre = models.CharField()
+
+
 class TablaCertificaciones(models.Model):
     nombre_certificado = models.CharField(max_length=100)
     cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nombre_certificado
@@ -144,6 +149,7 @@ class TablaResultadosCertificaciones(models.Model):
 class TablaManejoRiesgos(models.Model):
     manejo_riesgo = models.CharField(max_length=150)
     cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.manejo_riesgo
@@ -157,6 +163,7 @@ class TablaResultadosManejoRiesgo(models.Model):
 class TablaTiempoPrevencionista(models.Model):
     tiempo_prevensionista = models.CharField(max_length=150)
     cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.tiempo_prevensionista
@@ -183,6 +190,7 @@ class TablaResultadosTransporte(models.Model):
 class TablaTransporte(models.Model):
     respuesta_transporte = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.respuesta_transporte
@@ -206,6 +214,7 @@ class TablaResultadosContruccion(models.Model):
 class TablaConstruccion(models.Model):
     respuesta_construccion = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.respuesta_construccion
@@ -230,6 +239,7 @@ class TablaResultadosManufactura(models.Model):
 class TablaManufactura(models.Model):
     respuesta_manufactura = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.respuesta_manufactura
@@ -262,6 +272,7 @@ class TablaResultadosServicios(models.Model):
 class TablaServicios(models.Model):
     respuesta_servicios = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.respuesta_servicios
@@ -276,6 +287,7 @@ class TablaResultadosServicios(models.Model):
 class TablaManiExplosivos(models.Model):
     tipo_exp = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.tipo_exp
@@ -292,6 +304,7 @@ class TablaResultadosManiExplosivos(models.Model):
 class TablaElectricidad(models.Model):
     tipo_elec = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.tipo_elec
@@ -308,6 +321,7 @@ class TablaResultadoElectricidad(models.Model):
 class TablaSustancias(models.Model):
     tipo_sust = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.tipo_sust
@@ -324,6 +338,7 @@ class TablaResultadosSustancias(models.Model):
 class TablaTrabajosAltura(models.Model):
     tipo_alt = models.CharField(max_length=200)
     ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.tipo_alt
