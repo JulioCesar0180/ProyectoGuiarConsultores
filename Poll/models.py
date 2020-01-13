@@ -129,7 +129,7 @@ class TablaResultadosProcesos(models.Model):
 
 
 class TablaPoliza(models.Model):
-    nombre = models.CharField()
+    nombre = models.CharField(max_length=100)
 
 
 class TablaCertificaciones(models.Model):
