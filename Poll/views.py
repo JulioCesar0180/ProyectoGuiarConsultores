@@ -819,6 +819,9 @@ def page_results(request):
     global desgloce
     desgloce.clear()
 
+    for poliza in TablaPoliza.objects.all():
+        desgloce.append([poliza.nombre_poliza,0,0,poliza.id])
+
     # Resultados de la dotacion de la empresa Pag 1
     dotacion, _ = TablaResultadosDotacion.objects.get_or_create(id=request.user)
     result_dotacion = 0
@@ -908,8 +911,14 @@ def page_results(request):
     resultado += result_dotacion
     total += 67
     minimo += 12
+
     riesgoporcentual_dotacion = round((result_dotacion / 67) * 100,2)
-    desgloce.append(["Dotacion",riesgoporcentual_dotacion])
+    # desgloce.append(["Dotacion",riesgoporcentual_dotacion])
+
+    for d in desgloce:
+        if d[3] == 1:
+            d[1] += 67
+            d[2] += result_dotacion
 
     # Resultados de Construccion Pag 2
     result_const, _ = TablaResultadosConstruccion.objects.get_or_create(id=request.user)
@@ -919,8 +928,14 @@ def page_results(request):
     else:
         total += 16
         minimo += 6
+
         riesgoporcentual_construccion = round((suma_const / 16) * 100,2)
-        desgloce.append(["Construccion", riesgoporcentual_construccion])
+        # desgloce.append(["Construccion", riesgoporcentual_construccion])
+        for re in result_const.construccion.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 16
+                    d[2] += suma_const
 
     resultado += suma_const
 
@@ -933,7 +948,12 @@ def page_results(request):
         total += 15
         minimo += 4
         riesgoporcentual_manufactura = round((suma_manu / 15) * 100,2)
-        desgloce.append(["Manufactura", riesgoporcentual_manufactura])
+        # desgloce.append(["Manufactura", riesgoporcentual_manufactura])
+        for re in result_manu.manufactura.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 15
+                    d[2] += suma_manu
 
     resultado += suma_manu
 
@@ -946,7 +966,12 @@ def page_results(request):
         total += 21
         minimo += 5
         riesgoporcentual_Transporte = round((suma_trans / 21) * 100,2)
-        desgloce.append(["Transporte", riesgoporcentual_Transporte])
+        # desgloce.append(["Transporte", riesgoporcentual_Transporte])
+        for re in result_trans.transporte.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 21
+                    d[2] += suma_trans
 
     resultado += suma_trans
 
@@ -959,7 +984,12 @@ def page_results(request):
         total += 37
         minimo += 3
         riesgoporcentual_servicios = round((suma_sergen / 37) * 100,2)
-        desgloce.append(["Servicios", riesgoporcentual_servicios])
+        # desgloce.append(["Servicios", riesgoporcentual_servicios])
+        for re in result_sergen.servicios.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 37
+                    d[2] += suma_sergen
 
     resultado += suma_sergen
 
@@ -970,7 +1000,12 @@ def page_results(request):
         suma_result_cert = 0
     else:
         riesgoporcentual_certificacion = round((1 - (suma_result_cert / 10)) * 100, 2)
-        desgloce.append(["Certificacion", riesgoporcentual_certificacion])
+        # desgloce.append(["Certificacion", riesgoporcentual_certificacion])
+        for re in result_cert.certificaciones.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 0
+                    d[2] -= suma_result_cert
     resultado += suma_result_cert
 
     # Resultado de manejo de Riesgos pag 3
@@ -980,7 +1015,12 @@ def page_results(request):
         suma_mriesgo = 0
     else:
         riesgoporcentual_manejoriesgo = round((1 - (suma_mriesgo / 5)) * 100, 2)
-        desgloce.append(["ManejoRiesgo", riesgoporcentual_manejoriesgo])
+        # desgloce.append(["ManejoRiesgo", riesgoporcentual_manejoriesgo])
+        for re in result_mriesgo.opciones_manejo.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 0
+                    d[2] -= suma_mriesgo
     resultado += suma_mriesgo
 
     # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
@@ -990,7 +1030,11 @@ def page_results(request):
         suma_preven = 0
     else:
         riesgoporcentual_prevencionista = round((1 - (suma_preven / 10)) * 100, 2)
-        desgloce.append(["TiempoPrevencionista", riesgoporcentual_prevencionista])
+        # desgloce.append(["TiempoPrevencionista", riesgoporcentual_prevencionista])
+        for d in desgloce:
+            if d[3] == result_preven.opciones_prevencionista_t.poliza.id:
+                d[1] += 0
+                d[2] -= suma_preven
     resultado += suma_preven
 
     # Resultados de Explosivos Pag 4
@@ -1003,7 +1047,12 @@ def page_results(request):
             minimo += 1
             resultado += suma_mani_explosivos
             riesgoporcentual_explosivos = round((suma_mani_explosivos / 11) * 100, 2)
-            desgloce.append(["Explosivos", riesgoporcentual_explosivos])
+            # desgloce.append(["Explosivos", riesgoporcentual_explosivos])
+            for re in result_mani_explosivos.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 11
+                        d[2] += suma_mani_explosivos
 
     # Resultados de Electricidad Pag 4
     result_electricidad, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
@@ -1015,7 +1064,12 @@ def page_results(request):
             minimo += 1
             resultado += suma_electricidad
             riesgoporcentual_electricidad = round((suma_electricidad / 10) * 100, 2)
-            desgloce.append(["Electricidad", riesgoporcentual_electricidad])
+            # desgloce.append(["Electricidad", riesgoporcentual_electricidad])
+            for re in result_electricidad.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 10
+                        d[2] += suma_electricidad
 
     # Resultados de Sustancias Pag 4
     result_sustancia, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
@@ -1027,7 +1081,12 @@ def page_results(request):
             minimo += 3
             resultado += suma_sustancia
             riesgoporcentual_sustancias = round((suma_sustancia / 20) * 100, 2)
-            desgloce.append(["Sustancias", riesgoporcentual_sustancias])
+            # desgloce.append(["Sustancias", riesgoporcentual_sustancias])
+            for re in result_sustancia.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 20
+                        d[2] += suma_sustancia
 
     # Resultados de Altura Pag 4
     result_altura, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
@@ -1039,7 +1098,12 @@ def page_results(request):
             minimo += 1
             resultado += result_altura
             riesgoporcentual_altura = round((suma_altura / 8) * 100, 2)
-            desgloce.append(["Altura", riesgoporcentual_altura])
+            # desgloce.append(["Altura", riesgoporcentual_altura])
+            for re in result_altura.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 8
+                        d[2] += suma_altura
 
     # Despligue de Desiciones
     res_por = ((resultado - minimo) / (total - minimo))
@@ -1057,7 +1121,11 @@ def page_results(request):
         color = "ROJO"
 
     #sort arreglo desgloce
-    desgloce.sort(key = lambda array: array[1], reverse=True)
+    desgloce_ordenado = []
+    for des in desgloce:
+        if des[1] != 0:
+            desgloce_ordenado.append([des[0],round((des[2]/des[1])*100,1)])
+    desgloce_ordenado.sort(key = lambda array: array[1], reverse=True)
 
     # return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html",{'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color, 'desgloce':desgloce})
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html",{'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color, 'desgloce':desgloce_ordenado})

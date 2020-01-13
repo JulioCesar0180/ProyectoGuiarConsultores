@@ -41,9 +41,7 @@
     </div>
     <div class ="bordes">
         {% for d in desgloce %}
-          {% for a in d %}
-            {{ a }}
-        {% endfor %}
+            {{ d.0 }} {{ d.1 }}
         %
         <br>
         {% endfor %}
