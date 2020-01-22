@@ -1,238 +1,404 @@
 {% extends 'header.html' %}
 {% load static %}
-{% block content %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="{% static 'css/mideturiesgo.css'%}">
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/test.css'%}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
     <title>Mide tu riesgo</title>
-  </head>
-  <body>
+{% endblock %}
+
+{% block content %}
     <div id="azul"></div>
     <div id="blanco"></div>
     <div id="plomo"></div>
     <div id="head"></div>
     <div class="inicio">
-      Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado
-      <div>
-        <hr>
-      </div>
+        Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado
+        <div><hr></div>
     </div>
 
-    <div class="inicio">
-      <b>Pn.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
-       <div>
-        <br>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="estructura" name="estructura" value="estructura" required>
-        <label for="estructura" class="unselectable">Ingeniería, construcción o fabricación de estructuras metálicas</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="gruesa" name="gruesa" value="gruesa" required>
-        <label for="gruesa" class="unselectable">Ingeniería o construcción de edificios, obra gruesa, concreto, carreteras</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="instalaciones" id="instalaciones" value="instalaciones" required>
-        <label for="instalaciones" class="unselectable">Ingeniería, construcción o montaje de obras e instalaciones privadas o públicas</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="menores" name="menores" value="menores" required>
-        <label for="menores" class="unselectable">Obras menores de construcción, contratistas, albañería, carpintería, climatización</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="tuberias" name="tuberias" value="tuberias" required>
-        <label for="tuberias" class="unselectable">Instalación de tuberías y construcción de alcantarillado, base de concreto y obras de cimentación, excavación</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="refuerzos" id="refuerzos" value="refuerzos" required>
-        <label for="refuerzos" class="unselectable">Refuerzos, reparación y protección de estructuras de acero, reparación de estanques, impermeabilización, protección catódica</label>
-      </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="inicio">
+            {% if construccion %}
+                <b>P6.</b> Marque todas las actividades de CONSTRUCCION que realiza la empresa a ser evaluada
+                <div><br></div>
+                <div class="input-radio">
+                    <input type="checkbox" id="estructura" name="construccion[]" value="estructura">
+                    <label for="estructura" class="unselectable">Ingeniería, construcción o fabricación de estructuras metálicas</label>
+                </div>
+            {% elif manufactura %}
+                <b>P6.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
+                <div><br></div>
+                <div class="input-radio">
+                    <input type="checkbox" id="produccion" name="manufactura[]" value="produccion">
+                    <label for="produccion" class="unselectable">Producción, procesamiento y conservación de alimentos, casinos, abastecimientos alimenticios</label>
+                </div>
+            {% elif transporte %}
+                <b>P6.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
+                <div><br></div>
+                <div class="input-radio">
+                    <input type="checkbox" id="materiales" name="transporte[]" value="materiales">
+                    <label for="materiales" class="unselectable">Materiales diversos de construcción, repuestos, otros</label>
+                </div>
+            {% else %}
+                <b>P6.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
+                <div><br></div>
+                <div class="input-radio">
+                    <input type="checkbox" id="maestranza" name="servicios[]" value="maestranza">
+                    <label for="maestranza" class="unselectable">Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor</label>
+                </div>
+                <div class="input-radio">
+                    <input type="checkbox" id="reparacion" name="servicios[]" value="reparacion">
+                    <label for="reparacion" class="unselectable">Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras</label>
+                </div>
+            {% endif %}
+
+      {% if constru or manu %}
+        <div class="inicio">
+          {% if constru and manu %}
+          <b>P7.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
+           <div>
+            <br>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="produccion" name="manufactura[]" value="produccion">
+            <label for="produccion" class="unselectable">Producción, procesamiento y conservación de alimentos, casinos, abastecimientos alimenticios</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="confeccion" name="manufactura[]" value="confeccion">
+            <label for="confeccion" class="unselectable">Confección, fabricación y distribución de prendas de vestir, seguridad, zapatos</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="manufactura[]" id="tornerias" value="tornerias">
+            <label for="tornerias" class="unselectable">Diseño y fabricación de piezas especiales menores, tornerías, otros</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="pvc" name="manufactura[]" value="pvc">
+            <label for="pvc" class="unselectable">Diseño y fabricación de piezas especiales mayores, PVC, acero, otros</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="muebles" name="manufactura[]" value="muebles">
+            <label for="muebles" class="unselectable">Diseño y fabricación de muebles para acondicionamiento de oficinas y faenas</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="manufactura[]" id="prototipos" value="prototipos">
+            <label for="prototipos" class="unselectable">Diseño y fabricación de prototipos industriales y mineros</label>
+          </div>
+          {% elif constru and trans or manu and trans %}
+          <b>P7.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
+          <div>
+            <br>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="materiales" name="transporte[]" value="materiales">
+            <label for="materiales" class="unselectable">Materiales diversos de construcción, repuestos, otros</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="personas" name="transporte[]" value="personas">
+            <label for="personas" class="unselectable">Personas, trabajadores propios o terceros</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="transporte[]" id="maquinaria" value="maquinaria">
+            <label for="maquinaria" class="unselectable">Maquinaria pesada, motores, vehículos, equipo minero</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="mercaderia" name="transporte[]" value="mercaderia">
+            <label for="mercaderia" class="unselectable">Mercadería en alimentos, medicinales</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="granel" name="transporte[]" value="granel">
+            <label for="granel" class="unselectable">Minerales a granel</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="transporte[]" id="solidos" value="solidos">
+            <label for="solidos" class="unselectable">Minerales sólidos</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="transporte[]" id="corrosivo" value="corrosivo">
+            <label for="corrosivo" class="unselectable">Materiales corrosivos, tóxicos, residuos peligrosos</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="transporte[]" id="aceite" value="aceite">
+            <label for="aceite" class="unselectable">Aceites, lubricantes aditivos</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="transporte[]" id="carga" value="carga">
+            <label for="carga" class="unselectable">Carga sobredimensionada, estructuras, piezas y/o partes, equipo minero</label>
+          </div>
+          {% elif serv %}
+          <b>P7.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
+          <div>
+            <br>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="maestranza" name="servicios[]" value="maestranza">
+            <label for="maestranza" class="unselectable">Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="reparacion" name="servicios[]" value="reparacion">
+            <label for="reparacion" class="unselectable">Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="electricos" value="electricos">
+            <label for="electricos" class="unselectable">Mantención y repación de componentes eléctricos</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="generador" name="servicios[]" value="generador">
+            <label for="generador" class="unselectable">Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" id="repuesto" name="servicios[]" value="repuesto">
+            <label for="repuesto" class="unselectable">Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="hidraulico" value="hidraulico">
+            <label for="hidraulico" class="unselectable">Mantención, reparación y montaje de sistemas hidráulicos, válvulas, compresores, bombas, otros</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="computacional" value="computacional">
+            <label for="computacional" class="unselectable">Mantención, reparación y venta de equipos computacionales, software, adware</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="lavenderia" value="lavenderia">
+            <label for="lavenderia" class="unselectable">Servicio de lavandería industrial y afines</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="movimiento" value="movimiento">
+            <label for="movimiento" class="unselectable">Servicio de movimiento de tierras, perforaciones, mecánicas de rocas</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="arriendo" value="arriendo">
+            <label for="arriendo" class="unselectable">Servicio y arriendo de equipo minero, perforaciones, movimiento de tierras, maquinaria pesada</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="ferreteria" value="ferreteria">
+            <label for="ferreteria" class="unselectable">Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="carretera" value="carretera">
+            <label for="carretera" class="unselectable">Servicios de fabricación e instalación de señaléticas en carreteras y/o caminos privados</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="izaje" value="izaje">
+            <label for="izaje" class="unselectable">Servicios de izajes, manipulación de cargas y equipos</label>
+          </div>
+          <div class="input-radio">
+            <input type="checkbox" name="servicios[]" id="garage" value="garage">
+            <label for="garage" class="unselectable">Servicios de mantención, reparación, garage, desabollada, vehículos multi-marca</label>
+          </div>
+          {% endif %}
+          <div>
+            <br>
+          </div>
+          <div>
+            <hr>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if constru and manu or trans %}
+      <div class="inicio">
+        {% if constru and manu and trans %}
+        <b>P8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
         <div>
           <br>
         </div>
-      <div>
-        <hr>
+        <div class="input-radio">
+          <input type="checkbox" id="materiales" name="transporte[]" value="materiales">
+          <label for="materiales" class="unselectable">Materiales diversos de construcción, repuestos, otros</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="personas" name="transporte[]" value="personas">
+          <label for="personas" class="unselectable">Personas, trabajadores propios o terceros</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="transporte[]" id="maquinaria" value="maquinaria">
+          <label for="maquinaria" class="unselectable">Maquinaria pesada, motores, vehículos, equipo minero</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="mercaderia" name="transporte[]" value="mercaderia">
+          <label for="mercaderia" class="unselectable">Mercadería en alimentos, medicinales</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="granel" name="transporte[]" value="granel">
+          <label for="granel" class="unselectable">Minerales a granel</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="transporte[]" id="solidos" value="solidos">
+          <label for="solidos" class="unselectable">Minerales sólidos</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="transporte[]" id="corrosivo" value="corrosivo">
+          <label for="corrosivo" class="unselectable">Materiales corrosivos, tóxicos, residuos peligrosos</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="transporte[]" id="aceite" value="aceite">
+          <label for="aceite" class="unselectable">Aceites, lubricantes aditivos</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="transporte[]" id="carga" value="carga">
+          <label for="carga" class="unselectable">Carga sobredimensionada, estructuras, piezas y/o partes, equipo minero</label>
+        </div>
+        {% elif serv %}
+        <b>P8.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
+         <div>
+          <br>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="maestranza" name="servicios[]" value="maestranza">
+          <label for="maestranza" class="unselectable">Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="reparacion" name="servicios[]" value="reparacion">
+          <label for="reparacion" class="unselectable">Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="electricos" value="electricos">
+          <label for="electricos" class="unselectable">Mantención y repación de componentes eléctricos</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="generador" name="servicios[]" value="generador">
+          <label for="generador" class="unselectable">Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="repuesto" name="servicios[]" value="repuesto">
+          <label for="repuesto" class="unselectable">Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="hidraulico" value="hidraulico">
+          <label for="hidraulico" class="unselectable">Mantención, reparación y montaje de sistemas hidráulicos, válvulas, compresores, bombas, otros</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="computacional" value="computacional">
+          <label for="computacional" class="unselectable">Mantención, reparación y venta de equipos computacionales, software, adware</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="lavenderia" value="lavenderia">
+          <label for="lavenderia" class="unselectable">Servicio de lavandería industrial y afines</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="movimiento" value="movimiento">
+          <label for="movimiento" class="unselectable">Servicio de movimiento de tierras, perforaciones, mecánicas de rocas</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="arriendo" value="arriendo">
+          <label for="arriendo" class="unselectable">Servicio y arriendo de equipo minero, perforaciones, movimiento de tierras, maquinaria pesada</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="ferreteria" value="ferreteria">
+          <label for="ferreteria" class="unselectable">Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="carretera" value="carretera">
+          <label for="carretera" class="unselectable">Servicios de fabricación e instalación de señaléticas en carreteras y/o caminos privados</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="izaje" value="izaje">
+          <label for="izaje" class="unselectable">Servicios de izajes, manipulación de cargas y equipos</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="garage" value="garage">
+          <label for="garage" class="unselectable">Servicios de mantención, reparación, garage, desabollada, vehículos multi-marca</label>
+        </div>
+        {% endif %}
+          <div>
+            <br>
+          </div>
+        <div>
+          <hr>
+        </div>
       </div>
-    </div>
+      {% endif %}
 
-    <div class="inicio">
-      <b>Pn.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
-       <div>
-        <br>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="produccion" name="produccion" value="produccion" required>
-        <label for="produccion" class="unselectable">Producción, procesamiento y conservación de alimentos, casinos, abastecimientos alimenticios</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="confeccion" name="confeccion" value="confeccion" required>
-        <label for="confeccion" class="unselectable">Confección, fabricación y distribución de prendas de vestir, seguridad, zapatos</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="tornerias" id="tornerias" value="tornerias" required>
-        <label for="tornerias" class="unselectable">Diseño y fabricación de piezas especiales menores, tornerías, otros</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="pvc" name="pvc" value="pvc" required>
-        <label for="pvc" class="unselectable">Diseño y fabricación de piezas especiales mayores, PVC, acero, otros</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="muebles" name="muebles" value="muebles" required>
-        <label for="muebles" class="unselectable">Diseño y fabricación de muebles para acondicionamiento de oficinas y faenas</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="prototipos" id="prototipos" value="prototipos" required>
-        <label for="prototipos" class="unselectable">Diseño y fabricación de prototipos industriales y mineros</label>
-      </div>
+      {% if constru and manu and trans and serv %}
+      <div class="inicio">
+        <b>P9.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
         <div>
           <br>
         </div>
-      <div>
-        <hr>
-      </div>
-    </div>
-
-    <div class="inicio">
-      <b>Pn.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
-       <div>
-        <br>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="materiales" name="materiales" value="materiales" required>
-        <label for="materiales" class="unselectable">Materiales diversos de construcción, repuestos, otros</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="personas" name="personas" value="personas" required>
-        <label for="personas" class="unselectable">Personas, trabajadores propios o terceros</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="maquinaria" id="maquinaria" value="maquinaria" required>
-        <label for="maquinaria" class="unselectable">Maquinaria pesada, motores, vehículos, equipo minero</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="mercaderia" name="mercaderia" value="mercaderia" required>
-        <label for="mercaderia" class="unselectable">Mercadería en alimentos, medicinales</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="granel" name="granel" value="granel" required>
-        <label for="granel" class="unselectable">Minerales a granel</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="solidos" id="solidos" value="solidos" required>
-        <label for="solidos" class="unselectable">Minerales sólidos</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="corrosivo" id="corrosivo" value="corrosivo" required>
-        <label for="corrosivo" class="unselectable">Materiales corrosivos, tóxicos, residuos peligrosos</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="aceite" id="aceite" value="aceite" required>
-        <label for="aceite" class="unselectable">Aceites, lubricantes aditivos</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="carga" id="carga" value="carga" required>
-        <label for="carga" class="unselectable">Carga sobredimensionada, estructuras, piezas y/o partes, equipo minero</label>
-      </div>
+        <div class="input-radio">
+          <input type="checkbox" id="maestranza" name="servicios[]" value="maestranza">
+          <label for="maestranza" class="unselectable">Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="reparacion" name="servicios[]" value="reparacion">
+          <label for="reparacion" class="unselectable">Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="electricos" value="electricos">
+          <label for="electricos" class="unselectable">Mantención y repación de componentes eléctricos</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="generador" name="servicios[]" value="generador">
+          <label for="generador" class="unselectable">Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" id="repuesto" name="servicios[]" value="repuesto">
+          <label for="repuesto" class="unselectable">Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="hidraulico" value="hidraulico">
+          <label for="hidraulico" class="unselectable">Mantención, reparación y montaje de sistemas hidráulicos, válvulas, compresores, bombas, otros</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="computacional" value="computacional">
+          <label for="computacional" class="unselectable">Mantención, reparación y venta de equipos computacionales, software, adware</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="lavenderia" value="lavenderia">
+          <label for="lavenderia" class="unselectable">Servicio de lavandería industrial y afines</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="movimiento" value="movimiento">
+          <label for="movimiento" class="unselectable">Servicio de movimiento de tierras, perforaciones, mecánicas de rocas</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="arriendo" value="arriendo">
+          <label for="arriendo" class="unselectable">Servicio y arriendo de equipo minero, perforaciones, movimiento de tierras, maquinaria pesada</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="ferreteria" value="ferreteria">
+          <label for="ferreteria" class="unselectable">Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="carretera" value="carretera">
+          <label for="carretera" class="unselectable">Servicios de fabricación e instalación de señaléticas en carreteras y/o caminos privados</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="izaje" value="izaje">
+          <label for="izaje" class="unselectable">Servicios de izajes, manipulación de cargas y equipos</label>
+        </div>
+        <div class="input-radio">
+          <input type="checkbox" name="servicios[]" id="garage" value="garage">
+          <label for="garage" class="unselectable">Servicios de mantención, reparación, garage, desabollada, vehículos multi-marca</label>
+        </div>
         <div>
           <br>
         </div>
-      <div>
-        <hr>
-      </div>
-    </div>
-
-    <div class="inicio">
-      <b>Pn.</b> Indique todos los Servicios Generales que realiza la empresa a ser evaluada
-       <div>
-        <br>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="maestranza" name="maestranza" value="maestranza" required>
-        <label for="maestranza" class="unselectable">Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="reparacion" name="reparacion" value="reparacion" required>
-        <label for="reparacion" class="unselectable">Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="electricos" id="electricos" value="electricos" required>
-        <label for="electricos" class="unselectable">Mantención y repación de componentes eléctricos</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="generador" name="generador" value="generador" required>
-        <label for="generador" class="unselectable">Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="repuesto" name="repuesto" value="repuesto" required>
-        <label for="repuesto" class="unselectable">Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="hidraulico" id="hidraulico" value="hidraulico" required>
-        <label for="hidraulico" class="unselectable">Mantención, reparación y montaje de sistemas hidráulicos, válvulas, compresores, bombas, otros</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="computacional" id="computacional" value="computacional" required>
-        <label for="computacional" class="unselectable">Mantención, reparación y venta de equipos computacionales, software, adware</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="lavenderia" id="lavenderia" value="lavenderia" required>
-        <label for="lavenderia" class="unselectable">Servicio de lavandería industrial y afines</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="movimiento" id="movimiento" value="movimiento" required>
-        <label for="movimiento" class="unselectable">Servicio de movimiento de tierras, perforaciones, mecánicas de rocas</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="arriendo" id="arriendo" value="arriendo" required>
-        <label for="arriendo" class="unselectable">Servicio y arriendo de equipo minero, perforaciones, movimiento de tierras, maquinaria pesada</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="ferreteria" id="ferreteria" value="ferreteria" required>
-        <label for="ferreteria" class="unselectable">Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="carretera" id="carretera" value="carretera" required>
-        <label for="carretera" class="unselectable">Servicios de fabricación e instalación de señaléticas en carreteras y/o caminos privados</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="izaje" id="izaje" value="izaje" required>
-        <label for="izaje" class="unselectable">Servicios de izajes, manipulación de cargas y equipos</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="garage" id="garage" value="garage" required>
-        <label for="garage" class="unselectable">Servicios de mantención, reparación, garage, desabollada, vehículos multi-marca</label>
-      </div>
         <div>
-          <br>
+          <hr>
         </div>
-      <div>
-        <hr>
       </div>
-    </div>
+      {% endif %}
 
-    <div class="direccion">
-      <form action="{% url 'encuesta' %}" class="anterior">{% csrf_token %}
-        <button type="submit" value="Submit" id="previous">←</button>
-      </form>
-      <form action="{% url 'pagina3' %}" class="siguiente">{% csrf_token %}
+      <div class="siguiente">
         <button type="submit" value="Submit" id="next">→</button>
-      </form>
-    </div>
-    <div>
-      <br>
-    </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
-</html>
+      </div>
+      <div>
+        <br>
+      </div>
+    </form>
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+        <!--
+        function redirectTo(sUrl) {
+        window.location = sUrl
+        }
+        //-->
+        </script>
 {% endblock %}

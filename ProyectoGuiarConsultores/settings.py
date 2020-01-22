@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
+from django.contrib.messages import constants as message_constants
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'udhg0k5s4df_o7ejlr3uz-vfe=g1kxw_-$yb6k^m$8iaf20$!+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,13 +33,13 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
     'django.contrib.staticfiles',
     'Home.apps.HomeConfig',
     'Poll.apps.PollConfig',
-    'crispy_forms',
+    #'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.messages',
 ]
 
 MIDDLEWARE = [
@@ -76,14 +76,23 @@ WSGI_APPLICATION = 'ProyectoGuiarConsultores.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'guiarconsultores',
-        'USER': 'admin',
+        'USER': 'useradmin',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '3306',
+    },
+}
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -141,4 +150,26 @@ LOGIN_REDIRECT_URL = 'home'
 
 LOGOUT_REDIRECT_URL = 'homeGC'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Configuracion SMTP
+
+SENDGRID_API_KEY = os.getenv('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')
+
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+
+
+AUTH_USER_MODEL = "Poll.UserGuiar"
+
+MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
+                message_constants.INFO: 'info',
+                message_constants.SUCCESS: 'success',
+                message_constants.WARNING: 'warning',
+                message_constants.ERROR: 'danger',}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,296 +1,164 @@
-{% extends 'header.html' %}
+{% extends 'MideTuRiesgo/mideturiesgo-base.html' %}
 {% load static %}
 {% block content %}
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/mideturiesgo.css'%}">
-    <title>Mide tu riesgo</title>
-  </head>
-  <body>
-    <div id="azul"></div>
-    <div id="blanco"></div>
-    <div id="plomo"></div>
-    <div id="head"></div>
+    <!-- Encabezado de Titulo de la encuesta -->
     <div class="inicio">
-      Bienvenido a nuestro evaluador de riesgo de negocio. Este formulario tiene como objetivo saber de las características de su empresa, de tal manera de mostrarle sus principales oportunidades para disminuir su riesgo de operación, de tal manera de proteger su patrimonio y transferir el riesgo no deseado.
-      <div>
-        <br>
-      </div>
-      Este formulario consta de 4 secciones, cada una personalizada en base a sus respuestas.
-      <div>
-        <br>
-      </div>
-      A continuación realizaremos una serie de preguntas que permitirá identificar estas oportunidades.
-      <div>
-        <hr>
-      </div>
+        Bienvenido a nuestro evaluador de riesgo de negocio. Este formulario tiene como objetivo saber de las características de su empresa, de tal manera de mostrarle sus principales oportunidades para disminuir su riesgo de operación, de tal manera de proteger su patrimonio y transferir el riesgo no deseado.
+        <div><br></div>
+        Este formulario consta de 4 secciones, cada una personalizada en base a sus respuestas.
+        <div><br></div>
+        A continuación realizaremos una serie de preguntas que permitirá identificar estas oportunidades.
+        <div><hr></div>
     </div>
 
-    <div class="inicio">
-      <b>P1.</b> Datos generales de la empresa
-      <div>
-        <br>
-      </div>
-      <div class="datos">
-        <table>
-          <tbody>
-            <tr>
-              <td class="nombreCampo">
-                Razón Social
-              </td>
-              <td class="campos">
-                <input type="text" name="razon" id="razon" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                RUT
-              </td>
-              <td class="campos">
-                <input type="text" name="rut" id="rut" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Antigüedad de la empresa (años)
-              </td>
-              <td class="campos">
-                <input type="text" name="experiencia" id="experiencia" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Dirección
-              </td>
-              <td class="campos">
-                <input type="text" name="direccion" id="direccion" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Comuna
-              </td>
-              <td class="campos">
-                <input type="text" name="comuna" id="comuna" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Ciudad
-              </td>
-              <td class="campos">
-                <input type="text" name="ciudad" id="ciudad" required>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-          <br>
+    <form method="POST" class="siguiente" style="margin: 0">
+        {% csrf_token %}
+        {% for field in form_procesos_empresa.visible_fields %}
+            {{ field.errors }}
+        {% endfor %}
+        <!-- Datos Generales de la empresa -->
+        <div class="inicio">
+            <b>P1.</b> Datos generales de la empresa
+            <div><br></div>
+            <div class="datos">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="nombreCampo"><label for="razon_social">Razon Social</label></td>
+                        <td class="campos">{{ form_perfil_empresa.razon_social_empresa }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="rut">Rut</label></td>
+                        <td class="campos">{{ form_user.rut }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="experiencia">Antigüedad de la empresa (años)</label></td>
+                        <td class="campos">{{ form_perfil_empresa.experiencia_empresa }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="direccion">Dirección</label></td>
+                        <td class="campos">{{ form_user.address }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="comuna">Comuna</label></td>
+                        <td class="campos">{{ form_perfil_empresa.comuna_empresa }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="ciudad">Ciudad</label></td>
+                        <td class="campos">{{ form_perfil_empresa.ciudad_empresa }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div><br></div>
+            </div>
+            <div><hr></div>
         </div>
-      </div>
-      <div>
-        <hr>
-      </div>
-    </div>
 
-    <div class="inicio">
-      <b>P2.</b> Datos de contacto
-      <div>
-        <br>
-      </div>
-      <div class="datos">
-        <table>
-          <tbody>
-            <tr>
-              <td class="nombreCampo">
-                Nombre
-              </td>
-              <td class="campos">
-                <input type="text" name="nombre" id="nombre" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Correo Electronico
-              </td>
-              <td class="campos">
-                <input type="text" name="email" id="email" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Teléfono
-              </td>
-              <td class="campos">
-                <input type="text" name="telefono" id="telefono" required>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-          <br>
+        <!-- Datos del representante de la empresa -->
+        <div class="inicio">
+            <b>P2.</b> Datos de contacto
+            <div><br></div>
+            <div class="datos">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="nombreCampo"><label for="nombre">{{ form_perfil_empresa.nombre_representante.label }}</label></td>
+                        <td class="campos">{{ form_perfil_empresa.nombre_representante }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="rut">Rut</label></td>
+                        <td class="campos">{{ form_perfil_empresa.rut_representante }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="email">Correo electronico</label></td>
+                        <td class="campos">{{ form_perfil_empresa.email_representante }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="telefono">Teléfono</label></td>
+                        <td class="campos">{{ form_perfil_empresa.telefono_representante }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div><br></div>
+            </div>
+            <div><hr></div>
         </div>
-      </div>
-      <div>
-        <hr>
-      </div>
-    </div>
 
-    <div class="inicio">
-        <b>P3.</b> Ventas anuales de la empresa
-        <div>
-          <br>
-        </div>
-      <div class="input-radio">
-        <input type="radio" id="minimo" name="ventas" value="minimo" required>
-        <label for="minimo" class="unselectable">De UF 0 a UF 2.400</label>
-      </div>
-      <div class="input-radio">
-        <input type="radio" id="intermedio" name="ventas" value="intermedio" required>
-        <label for="intermedio" class="unselectable">De UF 2.400 a UF 25.000</label>
-      </div>
-      <div class="input-radio">
-        <input type="radio" name="ventas" id="maximo" value="maximo" required>
-        <label for="maximo">De UF 25.000 a UF 100.000</label>
-      </div>
-      <div class="input-radio">
-        <input type="radio" name="ventas" id="mas" value="mas" required>
-        <label for="mas" class="unselectable">Más de UF 100.000</label>
-      </div>
-      <div>
-          <br>
-        </div>
-      <div>
-        <hr>
-      </div>
-    </div>
+        <!-- Ventas anuales de la empresa - Seleccion Multiple (Radio)-->
+        <div class="inicio">
+            <b>P3.</b> Ventas anuales de la empresa
+            <div><br></div>
+            {% for radio in form_perfil_empresa.ventas_anuales_empresa %}
+                <div class="input-radio">
+                    {% if radio.choice_label != "---------" %}
+                        {{ radio.tag }}
+                        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div><br></div>
 
-    <div class="inicio">
-      <b>P4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
-      <div>
-        <br>
-      </div>
-      <div class="datos">
-        <table>
-          <tbody>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de empleados contratados
-              </td>
-              <td class="campos">
-                <input type="text" name="empContratados" id="empContratados" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de empleados contratistas
-              </td>
-              <td class="campos">
-                <input type="text" name="empContratistas" id="empContratistas" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales livianos de la empresa
-              </td>
-              <td class="campos">
-                <input type="text" name="vehLivianos" id="vehLivianos" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales de contratistas
-              </td>
-              <td class="campos">
-                <input type="text" name="vehContratistas" id="vehContratistas" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales pesados de la empresa
-              </td>
-              <td class="campos">
-                <input type="text" name="vehPesados" id="vehPesados" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de vehículos comerciales pesados de contratistas
-              </td>
-              <td class="campos">
-                <input type="text" name="vehPesadosContratistas" id="vehPesadosContratistas" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de maquinaria pesada de la empresa
-              </td>
-              <td class="campos">
-                <input type="text" name="maqEmpresa" id="maqEmpresa" required>
-              </td>
-            </tr>
-            <tr>
-              <td class="nombreCampo">
-                Cantidad de maquinaria pesada de contratista
-              </td>
-              <td class="campos">
-                <input type="text" name="marContratista" id="marContratista" required>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-          <br>
+            <div><hr></div>
         </div>
-      </div>
-      <div>
-        <hr>
-      </div>
-    </div>
 
-    <div class="inicio">
-        <b>P5.</b> Indique el o los rubros en que participa la empresa
-        <div>
-          <br>
+        <!-- Dotacion de la empresa -->
+        <div class="inicio">
+            <b>P4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
+            <div><br></div>
+            <div class="datos">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="nombreCampo"><label for="empContratados"></label>Cantidad de empleados contratados</td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_emp_contratados }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="empContratistas">Cantidad de empleados contratistas</label></td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_emp_contratista }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="vehLivianos">Cantidad de vehículos comerciales livianos de la empresa</label></td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="vehContratistas">Cantidad de vehículos comerciales de contratistas</label></td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="vehPesados">Cantidad de vehículos comerciales pesados de la empresa</label></td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa_pesado }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="vehPesadosContratistas">Cantidad de vehículos comerciales pesados de contratistas</label></td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista_pesado }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="maqEmpresa">Cantidad de maquinaria pesada de la empresa</label></td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_empresa }}</td>
+                    </tr>
+                    <tr>
+                        <td class="nombreCampo"><label for="maqContratista">Cantidad de maquinaria pesada de contratista</label></td>
+                        <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_contratista }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div><br></div>
+            </div>
+            <div><hr></div>
         </div>
-      <div class="input-radio">
-        <input type="checkbox" id="construccion" name="construccion" value="construccion" required>
-        <label for="construccion" class="unselectable">Construcción</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" id="manufactura" name="manufactura" value="manufactura" required>
-        <label for="manufactura" class="unselectable">Manufactura</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="transporte" id="transporte" value="transporte" required>
-        <label for="transporte" class="unselectable">Transporte terreste</label>
-      </div>
-      <div class="input-radio">
-        <input type="checkbox" name="servicio" id="servicio" value="servicio" required>
-        <label for="servicio" class="unselectable">Servicios generales</label>
-      </div>
-    </div>
-    <form method="post" action="{% url 'pagina2' %}" class="siguiente">
-      {% csrf_token %}
-      {{ FormInicial }}
-      <button type="submit" value="Submit" id="next">→</button>
+
+        <!-- Rubros de participacion de una empresa - Seleccion Multiple (Checkbox) -->
+           <div class="inicio">
+            <b>P5.</b> Indique el o los rubros en que participa la empresa
+            <div><br></div>
+            {% for rubro in form_procesos_empresa.procesos %}
+                <div class="input-radio">
+                    {{ rubro.tag }}
+                    <label for="{{ rubro.id_for_label }}" class="unselectable">{{ rubro.choice_label }}</label>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit" value="Submit" id="next">→</button>
     </form>
-    <div>
-      <br>
-    </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
-</html>
-
+    <div><br></div>
 {% endblock %}

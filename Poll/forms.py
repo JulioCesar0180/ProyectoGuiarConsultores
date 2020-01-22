@@ -1,249 +1,410 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
+from .models import *
 
-class SignUpForm(UserCreationForm):
-    nombre_de_empresa = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+class LogInForm(forms.Form):
+    rut = forms.CharField(label='Rut Empresa', widget=forms.TextInput(attrs={'placeholder': 'Ingrese Rut de Empresa'}))
+    password = forms.CharField(label='Contraseña', max_length=30,
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese Contraseña'}))
+
     class Meta:
-        model = User
-        fields = ('username', 'nombre_de_empresa', 'last_name', 'email', 'password1', 'password2', )
+        model = UserGuiar
+        fields = ('rut', 'password')
 
 
-class FormInicial(forms.Form):
-    nombre = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    telefono = forms.CharField(max_length=100)
-    razon = forms.CharField(max_length=100)
-    rut = forms.CharField(max_length=100)
-    experiencia = forms.CharField(max_length=100)
-    direccion = forms.CharField(max_length=100)
-    comuna = forms.CharField(max_length=100)
-    ciudad = forms.CharField(max_length=100)
-    # ventas = forms.BooleanField(required=False)
-    message = forms.CharField(widget=forms.Textarea)
+# Arreglarlo
+class SignUpForm(UserCreationForm):
+    rut = forms.CharField(
+        max_length=30, required=True,
+        help_text='Requerido', label="Rut Empresa",
+        widget=forms.TextInput(attrs={'placeholder': 'Ingrese el RUT de Empresa'}))
+
+    name = forms.CharField(
+        max_length=30, required=True,
+        help_text='Requerido', label='Nombre Empresa',
+        widget=forms.TextInput(attrs={'placeholder': 'Ingrese el Nombre de la Empresa'}))
+
+    nombre_representante = forms.CharField(max_length=254, label="Nombre de Contacto", help_text='Requerido',
+                                           widget=forms.TextInput(attrs={'placeholder': 'Ejemplo: Pedro Herrera'}))
+
+    email_representante = forms.EmailField(max_length=40, label="Email de Contacto", help_text='Requerido',
+                                           widget=forms.TextInput(
+                                               attrs={'placeholder': 'Ejemplo: example@dominio.cl'}))
+
+    telefono_representante = forms.CharField(max_length=9, label="Número de Contacto (+56)", help_text='Requerido',
+                                             widget=forms.TextInput(
+                                                 attrs={'placeholder': 'Ejemplo: 955555555'}))
+
+    address = forms.CharField(
+        max_length=254, label="Dirección", help_text='Requerido',
+        widget=forms.TextInput(attrs={'placeholder': 'Ingrese la Dirección de la Empresa'}))
+
+    password1 = forms.CharField(label='Contraseña', max_length=30, help_text='Requerido',
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese una Contraseña'}))
+
+    password2 = forms.CharField(label='Confirmar Contraseña', max_length=30, help_text='Requerido',
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese la Contraseña nuevamente'}))
+
+    class Meta:
+        model = UserGuiar
+        fields = ('rut', 'name', 'address')
 
 
-class FormDefault(forms.Form):
-    placeholder = forms.CharField()
 
 
-class Form_datosPersonales(forms.Form):
-    # Nombre del Usuario #
-    attrs_nombre = {
-        'class': 'form-control',
-        'id': 'form-texbox'
-    }
-
-    nombre = forms.CharField(label='Nombre', widget=forms.TextInput(attrs=attrs_nombre))
-
-    # Email del Usuario #
-    attrs_email = {
-        'class': 'form-control'
-    }
-    email = forms.EmailField(label='Correo Electronico', widget=forms.EmailInput(attrs=attrs_email))
-
-    # Telefono del Usuario #
-    attrs_telefono = {
-        'class': 'form-control'
-    }
-    telefono = forms.CharField(label='Teléfono', widget=forms.TextInput(attrs=attrs_telefono))
-
-
-class Form_datosEmpresa(forms.Form):
-
-    # Nombre de la empresa #
-    attrs_nombre = {
-        'class': 'form-control'
-    }
-    nombre = forms.CharField(label='Nombre Empresa', widget=forms.TextInput(attrs=attrs_nombre))
-
-    # Razon Social de la empresa #
-    attrs_razon = {
-        'class': 'form-control'
-    }
-    razon = forms.CharField(label='Razón Social', widget=forms.TextInput(attrs=attrs_razon))
-
-    # Rut de la empresa #
-    attrs_rut = {
-        'class': 'form-control'
-    }
-    rut = forms.CharField(label='Rut', widget=forms.TextInput(attrs=attrs_rut))
-
-    # Años de Experiencia de la empresa #
-    attrs_experiencia = {
-        'class': 'form-control'
-    }
-    experiencia = forms.IntegerField(label='Antigüedad de la empresa (años)',
-            widget=forms.TextInput(attrs=attrs_experiencia))
-
-    # Direccion de la empresa #
-    attrs_direccion = {
-        'class': 'form-control'
-    }
-    direccion = forms.CharField(label='Dirección', widget=forms.TextInput(attrs=attrs_direccion))
-
-    # Comuna de la empresa #
-    attrs_comuna = {
-        'class': 'form-control'
-    }
-    comuna = forms.CharField(label='Comuna', widget=forms.TextInput(attrs=attrs_comuna))
-
-    # Ciudad de la empresa #
-    attrs_ciudad = {
-        'class': 'form-control'
-    }
-    ciudad = forms.CharField(label='Ciudad', widget=forms.TextInput(attrs=attrs_ciudad))
-
-
-class Form_ventasEmpresa(forms.Form):
-    CHOICE = [('1', 'De UF 0 a UF 2.400'),
-              ('2', 'De UF 2.400 a UF 25.000'),
-              ('3', 'De UF 25.000 a UF 100.000'),
-              ('4', 'Más de UF 100.000')]
-    attrs_ventas = {'class': 'form-check-input'}
-    ventas = forms.MultipleChoiceField(choices=CHOICE, widget=forms.CheckboxInput())
-
-
-class Form_dotacionEmpresa(forms.Form):
-    empContratados = forms.CharField(
-        label='Cantidad de empleados contratados',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'autocomplete': 'off'
-        })
-    )
-
-    empContratistas = forms.CharField(
-        label='Cantidad de empleados contratistas',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'autocomplete': 'off'
-        })
-    )
-
-    vehLivianos = forms.CharField(
-        label='Cantidad de vehículos comerciales livianos de la empresa',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-
-        })
-    )
-
-    vehContratistas = forms.CharField(
-        label='Cantidad de vehículos comerciales de contratistas'
-    )
-    vehPesados = forms.IntegerField(
-        label='-'
-    )
-    vehPesadosContratistas = forms.IntegerField(
-        label='-'
-    )
-    maqEmpresa = forms.IntegerField(
-        label='-'
-    )
-    marContratista = forms.IntegerField(
-        label='-'
-    )
-
-
-class Form_rubroEmpresa(forms.Form):
-    CHOICE = [('1', 'Contrucción'),
-              ('2', 'Manufactura'),
-              ('3', 'Transporte terrestre'),
-              ('4', 'Servicios Generales'),
-              ('5', 'Otro (por favor especifique')]
-    rubro = forms.ChoiceField(widget=forms.RadioSelect(choices=CHOICE))
-
+""" 
+---------------------------------------------------------------------------------------------------
+FormUserGuiar
+-------------------------------------------------------------------------------------------------------
 """
-
-    
-    rubro = forms.MultipleChoiceField(choices=CHOICE, widget=forms.RadioSelect())
-
-    attrs_otro = {'class': 'form-control'}
-    otro = forms.CharField(widget=forms.TextInput(attrs=attrs_otro))
-    """
+""" Formulario relacionado con UserGuiar """
 
 
-class Form_elementosRiesgo(forms.Form):
-    CHOICE = [('1', 'Ingeniería, contrucción o fabricación de estructuras metálicas'),
-              ('2', 'Ingeniería o construcción de edificios, obra gruesa, concreto, carreteras'),
-              ('3', 'Ingeniería, construcción o montaje de obras e instalaciones privadas o públicas'),
-              ('4', 'Obras menores de construcción, contratistas, albañería, carpintería, climatización'),
-              ('5', 'Instalación de tuberías y construcción de alcantarrillado, base de concreto y obras de cimentación, exacavación'),
-              ('6', 'Refuerzos, reparación y protección de estructuras de acero, reparación de estanques, impermeabilización, protección catódica'),
-              ('7', 'Otros')]
+class FormUserGuiar(ModelForm):
+    class Meta:
+        model = UserGuiar
+        fields = [
+            'rut',  # Rut de la empresa
+            'name',  # Nombre de la empresa
+            'address'  # Direccion de la empresa
+        ]
 
-    attrs_otro = {'class': 'form-control'}
-    otro = forms.CharField(widget=forms.TextInput(attrs=attrs_otro))
+        labels = {
+            'rut': 'Rut de la empresa',
+            'name': 'Nombre',
+            'address': 'Dirección'
+        }
 
+        exclude = [
+            'name',
+            'password',
+            'is_admin',
+            'is_superuser',
+            'groups',
+            'last_login',
+            'user_permissions'
+        ]
 
-class Form_actManufaturas(forms.Form):
-    CHOICE = [('1', 'Producción, procesamiento y conservación de alimentos, casinos, abastecimientos alimenticios'),
-              ('2', 'Confección, fabricación y distribución de prendas de vestir, seguridad, zapatos'),
-              ('3', 'Diseño y fabricación de piezas especiales menores, tornerías, otros'),
-              ('4', 'Diseño y fabricación de piezas especiales mayores, PVC, acero, otros'),
-              ('5', 'Diseño y fabricación de muebles para acondicionamiento de oficinas y faenas'),
-              ('6', 'Diseño y fabricación de prototipos industriales y mineros'),
-              ('7', 'Otros')]
-
-    attrs_otros = {'class': 'form-control'}
-    otro = forms.CharField(widget=forms.TextInput(attrs=attrs_otros))
-
-
-class Form_tipoCargas(forms.Form):
-    CHOICE = [('1', 'Materiales diversos de construcción, repuestos, otros'),
-              ('2', 'Personas, trabajadores propios o terceros'),
-              ('3', 'Maquinaria pesada, motores, vehículos, equipo minero'),
-              ('4', 'Mercadería de alimentos, medicinales'),
-              ('5', 'Minerales a granel'),
-              ('6', 'Minerales sólidos'),
-              ('7', 'Materiales corrosivos, tóxicos, residuos peligrosos'),
-              ('8', 'Aceites, lubricantes aditivos'),
-              ('9', 'Carga sobredimensionada, estructuras, piezas y/o partes, equipo minero'),
-              ('10', 'otro')]
-
-    attrs_otros = {'class': 'form-control'}
-    otro = forms.CharField(widget=forms.TextInput(attrs=attrs_otros))
+        widgets = {
+            'rut': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
 
 
-class Form_serviciosGenerales(forms.Form):
-    CHOICE = [('1', 'Maestranza de maquinarias, equipos y componentes, repuestos de vehículos con/sin motor'),
-              ('2', 'Maestranza, reparación y fabricación de piezas y/o partes mecanicas, industriales y mineras'),
-              ('3', 'Mantención y reparación de componentes eléctricos'),
-              ('4', 'Mantención, reparación y montaje de generadores, transformadores eléctricos, alta tensión, líneas'),
-              ('5', 'Mantención, reparación y montaje de piezas, repuestos, partes de equipo de extracción minera, industrial'),
-              ('6', 'Mantención, reparación y montaje de sistemas hidráulicos, válvulas, compresores, bombas, otros'),
-              ('7', 'Mantención, reparación y venta de equipos computacionales, software, adware'),
-              ('8', 'Servicio de lavandería industrial y afines'),
-              ('9', 'Servicio de movimiento de tierras, perforaciones, mecánicas de rocas'),
-              ('10', 'Servicio y arriendo de equipo minero, perforaciones, movimiento de tierras, maquinaria pesada'),
-              ('11', 'Servicio de abastecimiento de herramientas, maquinarias menores, ferretería, materiales de construcción'),
-              ('12', 'Servicios de fabricación e instalación de señaleticas en carreteras y/o caminos privados'),
-              ('13', 'Servicios de izajes, manipulación de cargas y equipos'),
-              ('14', 'Servicios de mantención, reparación, garage, desabollada, vehículos, multi-marca')]
+""" 
+---------------------------------------------------------------------------------------------------
+FormTablaPerfilEmpresa
+-------------------------------------------------------------------------------------------------------
+"""
+""" Formulario relacionado con la TablaPerfilEmpresa """
 
 
-class Form_certificacionesEmpresa(forms.Form):
-    CHOICE = [('1', 'ISO 9.001'),
-              ('2', 'ISO 14.001'),
-              ('3', 'OHSAS 18.001'),
-              ('4', 'Otro (Por favor especifique')]
+class FormTablaPerfilEmpresa(ModelForm):
 
-    attrs_otros = {'class': 'form-control'}
-    otro = forms.CharField(widget=forms.TextInput(attrs=attrs_otros))
+    # Como ventas anuales puede ser null, mediante el formulario se fuerza a tener un valor
+    def __init__(self, *args, **kwargs):
+        super(FormTablaPerfilEmpresa, self).__init__(*args, **kwargs)
+        self.fields['ventas_anuales_empresa'].required = True
+
+    class Meta:
+        model = TablaPerfilEmpresa
+        fields = (
+            'experiencia_empresa',
+            'ciudad_empresa',
+            'comuna_empresa',
+            'razon_social_empresa',
+            'ventas_anuales_empresa',
+            'nombre_representante',
+            'rut_representante',
+            'email_representante',
+            'telefono_representante',
+        )
+
+        labels = {
+            'experiencia_empresa': 'Antigüedad de la empresa',
+            'ciudad_empresa': 'Ciudad',
+            'comuna_empresa': 'Comuna',
+            'razon_social_empresa': 'Razon Social',
+            'ventas_anuales_empresa': 'Ventas Anuales de la Empresa',
+            'nombre_representante': 'Nombre',
+            'rut_representante': 'Rut',
+            'email_representante': 'Correo Electronico',
+            'telefono_representante': 'Teléfono'
+        }
+
+        exclude = [
+            'id'
+        ]
+
+        widgets = {
+            'experiencia_empresa': forms.NumberInput(attrs={
+                'class': 'form-control',
+            }),
+            'ciudad_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'comuna_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'razon_social_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'ventas_anuales_empresa': forms.RadioSelect,
+            'nombre_representante': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'rut_representante': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'email_representante': forms.EmailInput(attrs={
+                'class': 'form-control',
+            }),
+            'telefono_representante': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
 
 
-class Form_elementosManejoRiesgos(forms.Form):
-    CHOICE = [('1', 'Procedimiento de autocuidado, trabajo seguro, medidas preventivas y/o correctivas'),
-              ('2', 'Asesoría de mutualidades'),
-              ('3', 'Gerencia/Administración de riesgos (ISO 31.000:2009')]
+class FormTablaResultadosDotacion(ModelForm):
+
+    class Meta:
+        model = TablaResultadosDotacion
+        fields = [
+            'cant_emp_contratados',
+            'cant_emp_contratista',
+            'cant_veh_empresa',
+            'cant_veh_contratista',
+            'cant_veh_empresa_pesado',
+            'cant_veh_contratista_pesado',
+            'cant_maq_pesada_empresa',
+            'cant_maq_pesada_contratista',
+        ]
+        labels = {
+            'cant_emp_contratados': 'Cantidad de empleados contratados',
+            'cant_emp_contratista': 'Cantidad de empleados contratistas',
+            'cant_veh_empresa': 'Cantidad de vehículos comerciales livianos de la empresa',
+            'cant_veh_contratista': 'Cantidad de vehículos comerciales de contratistas',
+            'cant_veh_empresa_pesado': 'Cantidad de vehículos comerciales pesados de la empresa',
+            'cant_veh_contratista_pesado': 'Cantidad de vehículos comerciales pesados de contratistas',
+            'cant_maq_pesada_empresa': 'Cantidad de maquinaria pesada de la empresa',
+            'cant_maq_pesada_contratista': 'Cantidad de maquinaria pesada de contratista',
+        }
+        exclude = [
+            'id'
+        ]
+        widgets = {
+            'cant_emp_contratados': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_emp_contratista': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_empresa': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_contratista': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_empresa_pesado': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_veh_contratista_pesado': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_maq_pesada_empresa': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+            'cant_maq_pesada_contratista': forms.NumberInput(attrs={
+                'class': 'form-control'
+            }),
+        }
 
 
-class Form_jornadaPrevencionista(forms.Form):
-    CHOICE = [('1', 'Tiempo Completo'),
-              ('2', 'Tiempo Parcial o Part-time'),
-              ('3', 'Para proyectos específicos'),
-              ('4', 'No cuenta con prevencionista de riesgos')]
+class FormTablaResultadosProcesos(ModelForm):
+
+    class Meta:
+        model = TablaResultadosProcesos
+        fields = [
+            'procesos'
+        ]
+
+        widgets = {
+            'procesos': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosCertificaciones(ModelForm):
+
+    class Meta:
+        model = TablaResultadosCertificaciones
+        fields = [
+            'certificaciones',
+        ]
+
+        widgets = {
+            'certificaciones': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManejoRiesgo(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManejoRiesgo
+        fields = [
+            'opciones_manejo'
+        ]
+
+        widgets = {
+            'opciones_manejo': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosTiempoPreven(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(FormTablaResultadosTiempoPreven, self).__init__(*args, **kwargs)
+        self.fields['opciones_prevencionista_t'].required = True
+
+    class Meta:
+        model = TablaResultadosTiempoPreven
+        fields = [
+            'opciones_prevencionista_t'
+        ]
+
+        widgets = {
+            'opciones_prevencionista_t': forms.RadioSelect
+        }
+
+
+class FormTablaResultadosTransporte(ModelForm):
+
+    class Meta:
+        model = TablaResultadosTransporte
+        fields = [
+            'transporte'
+        ]
+
+        widgets = {
+            'transporte': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosConstruccion(ModelForm):
+
+    class Meta:
+        model = TablaResultadosConstruccion
+        fields = [
+            'construccion'
+        ]
+
+        widgets = {
+            'construccion': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManufactura(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManufactura
+        fields = [
+            'manufactura'
+        ]
+
+        widgets = {
+            'manufactura': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosServicios(ModelForm):
+
+    class Meta:
+        model = TablaResultadosServicios
+        fields = [
+            'servicios'
+        ]
+
+        widgets = {
+            'servicios': forms.CheckboxSelectMultiple
+        }
+
+
+class FormTablaResultadosManiExplosivos(ModelForm):
+
+    class Meta:
+        model = TablaResultadosManiExplosivos
+
+        fields = [
+            'is_expo',
+            'tipos_exp'
+        ]
+
+        widgets = {
+            'tipos_exp': forms.CheckboxSelectMultiple,
+            'is_expo': forms.RadioSelect
+        }
+
+
+class FormTablaResultadoElectricidad(ModelForm):
+
+    class Meta:
+        model = TablaResultadoElectricidad
+
+        fields = [
+            'is_elec',
+            'tipos_elec'
+        ]
+
+        widgets = {
+            'tipos_elec': forms.CheckboxSelectMultiple,
+            'is_elec': forms.RadioSelect
+        }
+
+    def is_valid(self):
+        return True
+
+
+class FormTablaResultadosSustancias(ModelForm):
+
+    class Meta:
+        model = TablaResultadosSustancias
+
+        fields = [
+            'is_sust',
+            'tipos_sust'
+        ]
+
+        widgets = {
+            'tipos_sust': forms.CheckboxSelectMultiple,
+            'is_sust': forms.RadioSelect
+        }
+
+    def is_valid(self):
+        return True
+
+
+class FormTablaResultadosAltura(ModelForm):
+
+    class Meta:
+        model = TablaResultadosAltura
+
+        fields = [
+            'is_alt',
+            'tipos_alt'
+        ]
+
+        widgets = {
+            'tipos_alt': forms.CheckboxSelectMultiple,
+            'is_alt': forms.RadioSelect
+        }
+
+    def is_valid(self):
+        return True

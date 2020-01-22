@@ -1,13 +1,32 @@
 # encoding: utf-8
+"""PDF"""
+from django.conf import settings
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import cm
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
+from reportlab.lib import colors
+from datetime import date
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
+
+
+"""Se utiliza en el rut validator, es para iterar o una especie de foreach"""
+from itertools import cycle
+
+"""Libreria de expresiones regulares"""
+import re
+
 from django.contrib.auth.forms import UserCreationForm
+from django.db.transaction import commit
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
+from django.views.generic import CreateView
 
+from .models import UserGuiar
 from .forms import *
 from Poll.models import *
 from django.contrib.auth.decorators import login_required
@@ -15,417 +34,1098 @@ from django.core.mail import EmailMultiAlternatives
 
 from django.template.loader import render_to_string
 
+from django.contrib import messages
+from django.db.models import Sum
+
 #rut
 from django import template
 
+"""Password change"""
+from django.contrib.auth.hashers import check_password
 
+"""Correo Electrónico"""
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+
+
+
+
+@login_required(login_url='MTRlogin')
+def get_name(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = FormPageOne(request.POST)
+        rubro = request.POST.getlist('rubro[]')
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            rutEmpresa = form.cleaned_data['rut']
+            empresa = UserGuiar.objects.get(rut=rutEmpresa)
+            #Datos del usuario
+            nombreUser = form.cleaned_data['representante']
+            correo = form.cleaned_data['email']
+            fono = form.cleaned_data['telefono']
+            #Datos de la empresa
+            nombreEmpresa = form.cleaned_data['nombre']
+            razonEmpresa = form.cleaned_data['razon']
+            experienciaEmpresa = form.cleaned_data['experiencia']
+            direccionEmpresa = form.cleaned_data['direccion']
+            comunaEmpresa = form.cleaned_data['comuna']
+            ciudadEmpresa = form.cleaned_data['ciudad']
+            #Datos ganancias
+            ganancia = form.cleaned_data['ventas']
+            #Datos dotación empresa
+            empleadosCont = form.cleaned_data['empContratados']
+            empleadosContra = form.cleaned_data['empContratistas']
+            vehiculosLiv = form.cleaned_data['vehLivianos']
+            vehiculosCont = form.cleaned_data['vehContratistas']
+            vehiculosPes = form.cleaned_data['vehPesados']
+            vehiculosPesCont = form.cleaned_data['vehPesadosContratistas']
+            maquinariaEmpr = form.cleaned_data['maqEmpresa']
+            maquinariaCont = form.cleaned_data['marContratista']
+            datoDotacion = TablaResultadosDotacion(
+                rut_empresa = empresa,
+                answer1 = empleadosCont,
+                answer2 = empleadosContra,
+                answer3 = vehiculosLiv,
+                answer4 = vehiculosCont,
+                answer5 = vehiculosPes,
+                answer6 = vehiculosPesCont,
+                answer7 = maquinariaEmpr,
+                answer8 = maquinariaCont,
+            )
+            datoNombre = TablaPerfilEmpresa(
+                nombre_empresa = nombreEmpresa,
+                razon_social_empresa = razonEmpresa,
+                rut_empresa = empresa,
+                experiencia_empresa = experienciaEmpresa,
+                direccion_empresa = direccionEmpresa,
+                comuna_empresa = comunaEmpresa,
+                ciudad_empresa = ciudadEmpresa,
+                nombre_representante = nombreUser,
+                email_representante = correo,
+                telefono_representante = fono,
+                ventas_anuales_empresa = ganancia
+            )
+            construccion = False
+            manufactura = False
+            transporte = False
+            servicios = False
+            for x in rubro:
+                if x == "construccion":
+                    construccion = True
+                elif x == "manufactura":
+                    manufactura = True
+                elif x == "transporte":
+                    transporte = True
+                elif x == "servicio":
+                    servicios = True
+
+            datoRubro = TablaResultadosProcesos(
+                rut_empresa=empresa,
+                answer1=construccion,
+                answer2=manufactura,
+                answer3=transporte,
+                answer4=servicios
+            )
+            datoDotacion.save()
+            datoRubro.save()
+            datoNombre.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect('2')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = FormPageOne()
+
+    return render(request, 'MideTuRiesgo/test.html', {'form': form})
+
+desgloce=[]
+@login_required(login_url='MTRlogin')
+def report(request):
+    global desgloce
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=Reporte-Guiar-Consultores.pdf'
+
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+
+    #Header
+    logo = settings.MEDIA_ROOT + '/images/logoGC.png'
+    c.drawImage(logo, 20, 750, 180, 90, preserveAspectRatio=True)
+    c.setLineWidth(.3)
+
+    c.setFont("Helvetica", 16)
+    # Dibujamos una cadena en la ubicación X,Y especificada
+    c.drawString(240, 750, u"MIDETURIESGO")
+    c.setFont("Helvetica", 14)
+    c.drawString(210, 730, u"REPORTE DE RESULTADOS")
+
+    today = date.today()
+    now = str(today.day)+"/"+str(today.month)+"/"+str(today.year)
+    c.drawString(480,790,now)
+
+    #start X, height end Y, height
+    c.line(475, 787, 560, 787)
+
+    #Body
+    """..."""
+
+    #Table header
+    styles = getSampleStyleSheet()
+    styleBH = styles["Normal"]
+    #styleBH.alignment = TA_CENTER
+    styleBH.fontSize = 10
+
+    numero = Paragraph('''No.''', styleBH)
+    seccion = Paragraph('''Sección''', styleBH)
+    porcentaje = Paragraph('''Porcentaje''', styleBH)
+
+    data = []
+    data.append([numero, seccion, porcentaje])
+
+    #Table Content
+    styleN = styles["BodyText"]
+    #styleN.alignment = TA_CENTER
+    styleN.fontSize = 7
+
+    high = 650
+    cont = 1
+    for i in desgloce:
+        i.insert(0, cont)
+        cont += 1
+        data.append(i)
+        high = high-18
+
+
+    #table size
+    width, height = A4
+    table = Table(data, colWidths = [1.2*cm, 9*cm, 2.2*cm])
+    table.setStyle(TableStyle([ #estilos de la tabla
+        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+        ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
+
+    #pdf size
+    table.wrapOn(c, width, height)
+    table.drawOn(c, 30, high)
+    c.showPage()
+
+
+    #Guardar pdf
+    c.save()
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        try:
+            empresa = TablaPerfilEmpresa.objects.get(email_representante=email)
+            rut_empresa = empresa.id_id
+            user = UserGuiar.objects.get(rut=rut_empresa)
+            name = str(empresa.nombre_representante)
+
+            """Crear Contraseña"""
+            new_password = get_random_string(length=8)
+            print("################################", new_password)
+
+            """Cambiar la contraseña del usuario"""
+            user.set_password(new_password)
+            user.save()
+
+            message = 'Se ha solicitado una nueva contraseña. Inicie Sesión con esta nueva contraseña: ' + new_password
+
+            """Enviar el Correo"""
+            send_mail(
+                'Recuperación de contraseña para MideTuRiesgo',
+                'Estimado(a) ' + name + ',\n' + message,
+                'juliocesardm93@gmail.com', # Admin
+                [
+                    email
+                ]
+            )
+            messages.info(request, 'Se ha enviado una contraseña a su correo')
+        except:
+            messages.error(request, 'El correo ingresado no se encuentra en nuestros registros')
+
+    return render(request, 'reset_password.html')
+
+"""Por ahora no se está usando"""
+def reset_password_form(request):
+    """Id recibida"""
+    id = ""
+
+    obj_user = UserGuiar.objects.get(id=id)
+
+    if request.method == 'POST':
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        if password1 != "" or password2 != "":
+            if password1 == password2:
+                obj_user.set_password(password1)
+                obj_user.save()
+                messages.success(request, 'Su contraseña ha sido actualizada!')
+            else:
+                messages.error(request, 'Las contraseñas no coinciden.')
+        else:
+            messages.error(request, 'No puede dejar la contraseñas en blanco.')
+
+    return render(request, 'reset_password_form.html')
+
+@login_required(login_url='MTRlogin')
+def change_password(request):
+    obj_user = request.user
+    en_password = str(request.user.password)
+    if request.method == 'POST':
+        old_password = request.POST['old_password']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if check_password(old_password, en_password):
+            if password1 != "" or password2 != "":
+                if password1 == password2:
+                    obj_user.set_password(password1)
+                    obj_user.save()
+                    messages.success(request, 'Su contraseña ha sido actualizada!')
+                    user = authenticate(username=request.user.rut, password=request.user.password)
+                    if user is not None:
+                        login(request, user)
+                        return redirect('home')
+                else:
+                    messages.error(request, 'Las nuevas contraseñas no coinciden.')
+            else:
+                messages.error(request, 'No puede dejar la contraseñas en blanco.')
+        else:
+            messages.error(request, 'Ha ingresado su contraseña incorrectamente.')
+
+    return render(request, 'change_password.html')
+
+@login_required(login_url='MTRlogin')
 def home(request):
-    count = User.objects.count()
-    return render(request, 'home.html', {
-        'count': count
+
+    try:
+        empresa = TablaPerfilEmpresa.objects.get(id_id=request.user.rut)
+        nombre_representante = empresa.nombre_representante
+        return render(request, 'home.html', {
+            'name': nombre_representante
+        })
+    except:
+        return render(request, 'home.html', {
+            'name': "Contacto"
+        })
+
+@login_required(login_url='MTRlogin')
+def Perfil(request):
+
+    Obj_user = request.user
+    #try:
+    Obj_empresa = TablaPerfilEmpresa.objects.get(id_id=request.user.rut)
+
+    if request.method == 'POST':
+
+        """Datos de contacto de la Obj_empresa"""
+
+        """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
+         validar el ingreso de texto en blanco"""
+        if(request.POST['nombre_representante'] and request.POST['email_representante'] and request.POST['telefono_representante'] != ""):
+            if (phone_validator(request.POST['telefono_representante'])):
+                """Cada linea de este codigo, modifica los campos correpondientes"""
+                #Este es nuevo
+                Obj_empresa.rut_representante = request.POST['rut_representante']
+                Obj_empresa.nombre_representante = string_format(request.POST['nombre_representante'])
+                Obj_empresa.email_representante = request.POST['email_representante']
+                Obj_empresa.telefono_representante = phone_format(request.POST['telefono_representante'])
+                Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
+                Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
+                #Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
+                Obj_empresa.comuna_empresa = string_format(request.POST['comuna_empresa'])
+                Obj_empresa.ciudad_empresa = string_format(request.POST['ciudad_empresa'])
+
+                "Nombre de la empresa se repite en las 2 tablas"
+                #Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
+                Obj_empresa.id_id = request.user.rut
+
+                "Datos User Guiar"
+                Obj_user.name = string_format(request.POST['nombre_empresa'])
+                Obj_user.address = string_format(request.POST['address'])
+
+                """ Actualiza la base de datos"""
+                Obj_empresa.save()
+                Obj_user.save()
+
+                messages.success(request, "Los datos han sido actualizados con éxito!")
+            else:
+                messages.error(request, "El formato del Número de Celular ingresado no es válido")
+        else:
+            messages.error(request, "Los campos Nombre, Email y Número de contacto no pueden estar vacíos")
+    return render(request, 'perfil.html', {
+        'Obj_empresa': Obj_empresa,
+        'Obj_user': Obj_user,
     })
+    """except:
+        return redirect('home')
+    """
+
+
+def MTR_login(request):
+
+    if request.user.is_authenticated:
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = LogInForm(request.POST)
+        if form.is_valid():
+            if(rut_validator(form.cleaned_data['rut'])):
+                rut = rut_format(form.cleaned_data['rut'])
+                password = form.cleaned_data["password"]
+                user = authenticate(username=rut, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    messages.error(request, 'El RUT o la clave ingresada no son correctos.')
+            else:
+                messages.error(request, "El formato del Rut ingresado no es válido")
+        else:
+            return render(request, 'registration/login.html', {'form': form})
+
+    form = LogInForm()
+    return render(request, 'registration/login.html', {'form': form})
 
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            username = rut_format(username, ".")
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+        """Validar rut"""
+        if rut_validator(request.POST['rut']):
+            if rut_validator(request.POST['rut']):
+                if(phone_validator(request.POST['telefono_representante'])):
+
+                    """Se leen los datos de empresa"""
+                    rut_empresa = request.POST['rut']
+                    nombre_empresa = request.POST['name']
+                    direccion_empresa = request.POST['address']
+
+                    """Se leen los datos de Contacto"""
+                    rut_representante = request.POST['rut_representante']
+                    nombre_representante = request.POST['nombre_representante']
+                    email_representante = request.POST['email_representante']
+                    telefono_representante = phone_format(request.POST['telefono_representante'])
 
 
-def denunciar(request):
-    return render(request, 'Navbar/denunciar.html')
+                    """Se leen las contraseñas"""
+                    password1 = request.POST['password1']
+                    password2 = request.POST['password2']
+                    if password1 != "" or password2 != "":
+                        if password1 == password2:
+
+                            obj_user = UserGuiar(
+                                rut=rut_format(rut_empresa),
+                                name=nombre_empresa,
+                                address=direccion_empresa,
+                                password=password1
+                            )
+
+                            perfil_empresa = TablaPerfilEmpresa(
+                                id=obj_user,
+                                rut_representante=rut_format(rut_representante),
+                                nombre_representante=nombre_representante,
+                                email_representante=email_representante,
+                                telefono_representante=telefono_representante
+                            )
+
+                            obj_user.set_password(password1)
+                            obj_user.save()
+
+                            login(request, obj_user)
+
+                            perfil_empresa.save()
+
+                            return redirect('home')
+                        else:
+                            messages.error(request, 'Las contraseñas no coinciden.')
+                    else:
+                        messages.error(request, 'No puede dejar la contraseñas en blanco.')
+                else:
+                    messages.error(request, "El formato del Número de Celular ingresado no es válido")
+            else:
+                messages.error(request, "El formato del Rut del Contacto ingresado no es válido")
+        else:
+            messages.error(request, "El formato del Rut de la Empresa ingresado no es válido")
+
+    return render(request, 'registration/signup.html')
 
 
-def resetPassword():
-    subject, from_email, to = 'hello', 'jdm006@alumnos.ucn.cl', 'juliocesardm93@gmail.com'
-    text_content = 'This is an important message.'
-    html_content = '<p>This is an <strong>important</strong> message.</p>'
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+def rut_validator(rut):
+    try:
+        rut = rut.upper()
+        rut = rut.replace("-", "").replace(".", "")
+        num = rut[:-1]
+        dv = rut[-1:]
+
+        reversed_digits = map(int, reversed(str(num)))
+        factors = cycle(range(2, 8))
+        s = sum(d * f for d, f in zip(reversed_digits, factors))
+        res = (-s) % 11
+
+        if str(res) == dv:
+            return True
+        elif dv == "K" and res == 10:
+            return True
+        else:
+            return False
+    except:
+        return False
 
 
-def rut_format(value, separator=","):
+"""valida el numero de celular"""
 
-    # Unformat the RUT
+
+def phone_validator(num):
+    if(bool(re.match("^(\+?56)?(9)[9876543]\d{7}$", num))):
+        return True
+    return False
+
+"""Le da el formato al numero de celular, incluyendo el +56"""
+
+
+def phone_format(num):
+    if num[0] == "9" and len(num) == 9:
+        return "%s%s" % ("+56", num)
+    elif num[0] == "5" and len(num) == 11:
+        return "%s%s" % ("+", num)
+    elif num[0] == "+" and len(num) == 12:
+        return num
+    elif len(num) == 8:
+        return "%s%s" % ("+569", num)
+
+def string_format(string):
+    return string.replace(' ','_',5)
+
+"""Se encarga de dar formato al rut, por ejemplo, si se ingresa 18.502.184-K te lo deja 18502184-k"""
+
+
+def rut_format(value, separator=""):
+    # unformat the rut
     value = rut_unformat(value)
-
-    rut, verifier_digit = value[:-1], value[-1]
+    rut, dv = value[:-1], value[-1]
 
     try:
-        # Add thousands separator
         rut = "{0:,}".format(int(rut))
 
-        # If you specified another thousands separator instead of ','
         if separator != ",":
-            # Apply the custom thousands separator
             rut = rut.replace(",", separator)
 
-        return "%s-%s" % (rut, verifier_digit)
+        return "%s-%s" % (rut, dv)
 
     except ValueError:
-        # If the RUT cannot be converted to Int
-        raise template.TemplateSyntaxError("RUT must be numeric, in order to be formatted")
+        raise template.TemplateSyntaxError("El rut debe ser númerico")
 
 
 def rut_unformat(value):
-
     return value.replace("-", "").replace(".", "").replace(",", "")
 
-@login_required
+
+@login_required(login_url='MTRlogin')
 def page_one_poll(request):
-    form1 = Form_datosPersonales()
-    form2 = Form_datosEmpresa()
-    form3 = Form_ventasEmpresa()
-    form4 = Form_dotacionEmpresa()
+
+    # Query por un usuario existente
+    user = UserGuiar.objects.get(rut=request.user)
+
+    # Query por un perfil empresa existente
+    try:
+        perfil_empresa = TablaPerfilEmpresa.objects.get(id=user)
+    except TablaPerfilEmpresa.DoesNotExist:
+        perfil_empresa = TablaPerfilEmpresa(id=user)
+        perfil_empresa.save()
+
+    # Query por dotacion de la empresa
+    try:
+        dotacion_empresa = TablaResultadosDotacion.objects.get(id=user)
+    except TablaResultadosDotacion.DoesNotExist:
+        dotacion_empresa = TablaResultadosDotacion(id=user)
+        dotacion_empresa.save()
+
+    try:
+        procesos_empresa = TablaResultadosProcesos.objects.get(id=user)
+    except TablaResultadosProcesos.DoesNotExist:
+        procesos_empresa = TablaResultadosProcesos(id=user)
+        procesos_empresa.save()
+
     if request.method == 'POST':
-        form1 = Form_datosPersonales(request.POST)
-        form2 = Form_datosEmpresa(request.POST)
-        form3 = Form_ventasEmpresa(request.POST)
-        form4 = Form_dotacionEmpresa(request.POST)
-        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
-            #obtener datos de la Empresa
-            nombreEmpresa = form2.cleaned_data['nombre']
-            razon_social = form2.cleaned_data['razon']
-            rut = form2.cleaned_data['rut']
-            experiencia = form2.cleaned_data['experiencia']
-            direccion = form2.cleaned_data['direccion']
-            comuna = form2.cleaned_data['comuna']
-            ciudad = form2.cleaned_data['ciudad']
-            ventas = form3.cleaned_data['ventas']
+        form_user = FormUserGuiar(request.POST, instance=user)
+        form_perfil_empresa = FormTablaPerfilEmpresa(request.POST, instance=perfil_empresa)
+        form_dotacion_empresa = FormTablaResultadosDotacion(request.POST, instance=dotacion_empresa)
+        form_procesos_empresa = FormTablaResultadosProcesos(request.POST, instance=procesos_empresa)
 
-            # obtener datos de Datos Personales
-            nombre = form1.cleaned_data['nombre']
-            email = form1.cleaned_data['email']
-            telefono = form1.cleaned_data['telefono']
+        if form_user.is_valid() and form_perfil_empresa.is_valid() and form_dotacion_empresa.is_valid() and form_procesos_empresa.is_valid():
 
-            # obtener los datos que reflejan la dotacion de la empresa
-            empContratados = form3.cleaned_data['empContratados']
-            empContratistas = form3.cleaned_data['empContratistas']
-            vehLivianos = form3.cleaned_data['vehLivianos']
-            vehContratistas = form3.cleaned_data['vehContratistas']
-            vehPesados = form3.cleaned_data['vehPesados']
-            vehPesadosContratistas = form3.cleaned_data['vehPesadosContratistas']
-            maqEmpresa = form3.cleaned_data['maqEmpresa']
-            marContratista = form3.cleaned_data['marContratista']
+            form_user.save(commit=False)
+            form_user.save()
 
-            #Se crea el objeto
-            datosEmpresa = Tabla_perfil_empresa(
-                user_id=request.user.id,
-                nombre_empresa=nombreEmpresa,
-                rut_empresa=rut,
-                direccion_empresa=direccion,
-                experiencia_empresa=experiencia,
-                ciudad_empresa=ciudad,
-                comuna_empresa=comuna,
-                razon_social_empresa=razon_social,
-                ventas_anuales_empresa=ventas
-            )
-            datosEmpresa.save()
+            form_perfil_empresa.save(commit=False)
+            form_perfil_empresa.save()
 
-            # leer el id de la empresa agregada recientemente
-            id_empresa = "1"
-            datosPersonales = Tabla_perfil_usuario(
-                empresa=id_empresa,
-                nombre=nombre,
-                email=email,
-                telefono=telefono
-            )
-            datosPersonales.save()
+            form_dotacion_empresa.save(commit=False)
+            form_dotacion_empresa.save()
 
-            dotacion = Tabla_resultados_dotacion(
-                user=id_empresa,
-                empContratados=empContratados,
-                empContratistas=empContratistas,
-                vehLivianos=vehLivianos,
-                vehContratistas=vehContratistas,
-                vehPesados=vehPesados,
-                vehPesadosContratistas=vehPesadosContratistas,
-                maqEmpresa=maqEmpresa,
-                marContratista=marContratista
-            )
-            dotacion.save()
-            #Volver a la pagina de Inicio por el momento
-            return render(request, "home/home.html")
+            form_procesos_empresa.save(commit=False)
+            form_procesos_empresa.save()
+
+            return redirect('pagina2')
+        else:
+            context = {
+                'form_perfil_empresa': form_perfil_empresa,
+                'form_user': form_user,
+                'form_dotacion_empresa': form_dotacion_empresa,
+                'form_procesos_empresa': form_procesos_empresa,
+            }
+            return render(request, "MideTuRiesgo/mideturiesgo.html", context)
     else:
-        # Error de metodo
-        e = "Operacion Invalida"
-    context = \
-        {'datos_personales': form1,
-         'datos_empresa': form2,
-         'ventas_empresa': form3,
-         'dotacion_empresa': form4
-         }
-    return render(request, "MideTuRiesgo/mideturiesgo.html", context)
+        form_user = FormUserGuiar(instance=user)
+        form_perfil_empresa = FormTablaPerfilEmpresa(instance=perfil_empresa)
+        form_dotacion_empresa = FormTablaResultadosDotacion(instance=dotacion_empresa)
+        form_procesos_empresa = FormTablaResultadosProcesos(instance=procesos_empresa)
+
+        context = {
+            'form_perfil_empresa': form_perfil_empresa,
+            'form_user': form_user,
+            'form_dotacion_empresa': form_dotacion_empresa,
+            'form_procesos_empresa': form_procesos_empresa,
+        }
+
+        return render(request, "MideTuRiesgo/mideturiesgo.html", context)
+
 
 @login_required
 def page_two_poll(request):
-    if request.method == 'POST':
-        form1 = Form_elementosRiesgo(request.POST)
-        form2 = Form_actManufaturas(request.POST)
-        form3 = Form_tipoCargas(request.POST)
-        form4 = Form_serviciosGenerales(request.POST)
-        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
-            estructura = form1.cleaned_data['estructura']
-            gruesa = form1.cleaned_data['gruesa']
-            instalaciones = form1.cleaned_data['instalaciones']
-            menores = form1.cleaned_data['menores']
-            tuberias = form1.cleaned_data['tuberias']
-            refuerzos = form1.cleaned_data['refuerzos']
-            # leer el id de la empresa agregada recientemente
-            id_empresa = "1"
-            construccion = Tabla_resultados_construccion(
-                empresa=id_empresa,
-                answer1=estructura,
-                answer2=gruesa,
-                answer3=instalaciones,
-                answer4=menores,
-                answer5=tuberias,
-                answer6=refuerzos
-            )
-            construccion.save()
-            # return HttpResponseRedirect('/thanks/')
-            produccion = form2.cleaned_data['produccion']
-            confeccion = form2.cleaned_data['confeccion']
-            tornerias = form2.cleaned_data['tornerias']
-            pvc = form2.cleaned_data['pvc']
-            muebles = form2.cleaned_data['muebles']
-            prototipos = form2.cleaned_data['prototipos']
-            manufactura= Tabla_resultados_manufactura(
-                empresa=id_empresa,
-                answer1=produccion,
-                answer2=confeccion,
-                answer3=tornerias,
-                answer4=pvc,
-                answer5=muebles,
-                answer6=prototipos
-            )
-            manufactura.save()
-            # return HttpResponseRedirect('/thanks/')
-            materiales = form3.cleaned_data['materiales']
-            personas = form3.cleaned_data['personas']
-            maquinaria = form3.cleaned_data['maquinaria']
-            mercaderia = form3.cleaned_data['mercaderia']
-            granel = form3.cleaned_data['granel']
-            solidos = form3.cleaned_data['solidos']
-            corrosivo = form3.cleaned_data['corrosivo']
-            aceite = form3.cleaned_data['aceite']
-            carga = form3.cleaned_data['carga']
-            transporte = Tabla_resultados_transporte(
-                empresa=id_empresa,
-                answer1=materiales,
-                answer2=personas,
-                answer3=maquinaria,
-                answer4=mercaderia,
-                answer5=granel,
-                answer6=solidos,
-                answer7=corrosivo,
-                answer8=aceite,
-                answer9=carga
-            )
-            transporte.save()
-            # return HttpResponseRedirect('/thanks/')
-            maestranza = form4.cleaned_data['maestranza']
-            reparacion = form4.cleaned_data['reparacion']
-            electricos = form4.cleaned_data['electricos']
-            generador = form4.cleaned_data['generador']
-            repuesto = form4.cleaned_data['repuesto']
-            hidraulico = form4.cleaned_data['hidraulico']
-            computacional = form4.cleaned_data['computacional']
-            lavenderia = form4.cleaned_data['lavenderia']
-            movimiento = form4.cleaned_data['movimiento']
-            arriendo = form4.cleaned_data['arriendo']
-            ferreteria = form4.cleaned_data['ferreteria']
-            carretera = form4.cleaned_data['carretera']
-            izaje = form4.cleaned_data['izaje']
-            garage = form4.cleaned_data['garage']
-            servicios = Tabla_resultados_servicios(
-                empresa=id_empresa,
-                answer1=maestranza,
-                answer2=reparacion,
-                answer3=electricos,
-                answer4=generador,
-                answer5=repuesto,
-                answer6=hidraulico,
-                answer7=computacional,
-                answer8=lavenderia,
-                answer9=movimiento,
-                answer10=arriendo,
-                answer11=ferreteria,
-                answer12=carretera,
-                answer13=izaje,
-                answer14=garage
-            )
-            servicios.save()
-            # Volver a la pagina de Inicio por el momento
-            return render(request, "home/home.html")
-        else:
-            # hay problemas con los Forms
-            e = "Operacion Invalida"
-    else:
-        # Error de metodo
-        e = "Operacion Invalida"
-    context = \
-        {'resultados_construccion':form1,
-         'resultados_manufactura':form2,
-         'resultados_transporte':form3,
-         'resultados_servicios':form4
-         }
-    return render(request, "MideTuRiesgo/mideturiesgo2.html", context)
+    # Query por un usuario existente
+    user = UserGuiar.objects.get(rut=request.user)
 
-@login_required
+    # Query por los procesos de la empresa
+    procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=user)
+
+    # Query para obtener todos los procesos disponibles que considera GuiarConsultores
+    tipos_procesos = TablaProcesos.objects.all()
+
+    # Dichos tipos de procesos son listados en una lista
+    list_procesos = []
+    for p in tipos_procesos:
+        list_procesos.append(p)
+
+    # Forms
+    # Query por respuestas construccion existentes
+    construccion, _ = TablaResultadosConstruccion.objects.get_or_create(id=user)
+    # Form Construccion
+    form_construccion = FormTablaResultadosConstruccion(instance=construccion)
+    form_construccion_valid = True
+
+    # Query por respuestas manufacturas existentes
+    manufactura, _ = TablaResultadosManufactura.objects.get_or_create(id=user)
+    # Form Manufactura
+    form_manufactura = FormTablaResultadosManufactura(instance=manufactura)
+    form_manufactura_valid = True
+
+    # Query por respuestas transportes existentes
+    transporte, _ = TablaResultadosTransporte.objects.get_or_create(id=user)
+    # Form Transporte
+    form_transporte = FormTablaResultadosTransporte(instance=transporte)
+    form_transporte_valid = True
+
+    # Query por respuestas Servicios Generales existentes
+    servicio, _ = TablaResultadosServicios.objects.get_or_create(id=user)
+    # Form Servicios
+    form_servicio = FormTablaResultadosServicios(instance=servicio)
+    form_servicio_valid = True
+
+    context = {
+        'form_construccion': form_construccion,
+        'form_manufactura': form_manufactura,
+        'form_transporte': form_transporte,
+        'form_servicio': form_servicio,
+        'construccion': list_procesos[0],
+        'manufactura': list_procesos[1],
+        'transporte': list_procesos[2],
+        'servicio': list_procesos[3],
+        'procesos_empresa': procesos_empresa,
+    }
+
+    # list_procesos[0] = "Construccion"
+    if list_procesos[0] in procesos_empresa.procesos.all():
+        if request.method == "POST":
+            form_construccion = FormTablaResultadosConstruccion(request.POST, instance=construccion)
+            if form_construccion.is_valid():
+                form_construccion.save(commit=False)
+                form_construccion.save()
+                form_construccion_valid = True
+            else:
+                form_construccion_valid = False
+
+    # list_procesos[1] = "Manufactura"
+    if list_procesos[1] in procesos_empresa.procesos.all():
+        if request.method == "POST":
+            form_manufactura = FormTablaResultadosManufactura(request.POST, instance=manufactura)
+            if form_manufactura.is_valid():
+                form_manufactura.save(commit=False)
+                form_manufactura.save()
+                form_manufactura_valid = True
+            else:
+                form_manufactura_valid = False
+
+    # list_procesos[2] = "Transporte Terrestre"
+    if list_procesos[2] in procesos_empresa.procesos.all():
+        if request.method == 'POST':
+            form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
+            if form_transporte.is_valid():
+                form_transporte.save(commit=False)
+                form_transporte.save()
+                form_transporte_valid = True
+            else:
+                form_transporte_valid = False
+
+    # list_procesos[3] = "Servicios Generales"
+    if list_procesos[3] in procesos_empresa.procesos.all():
+        if request.method == 'POST':
+            form_servicio = FormTablaResultadosServicios(request.POST, instance=servicio)
+            if form_servicio.is_valid():
+                form_servicio.save(commit=False)
+                form_servicio.save()
+                form_servicio_valid = True
+            else:
+                form_servicio_valid = False
+
+    if request.method == 'POST' and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
+        return redirect('pagina3')
+    return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
+
+
+@login_required(login_url='MTRlogin')
 def page_three_poll(request):
-    if request.method == 'POST':
-        form1 = Form_certificacionesEmpresa(request.POST)
-        form2 = Form_elementosManejoRiesgos(request.POST)
-        form3 = Form_jornadaPrevencionista(request.POST)
-        if form1.is_valid() and form2.is_valid() and form3.is_valid():
-            iso9001 = form1.cleaned_data['iso9001']
-            iso14001 = form1.cleaned_data['iso14001']
-            ohsas18001 = form1.cleaned_data['ohsas18001']
-            procedimiento = form2.cleaned_data['procedimiento']
-            asesoria = form2.cleaned_data['asesoria']
-            gerencia = form2.cleaned_data['gerencia']
-            tiempoCompleto = form3.cleaned_data['tiempoCompleto']
-            tiempoParcial = form3.cleaned_data['tiempoParcial']
-            proyectos = form3.cleaned_data['proyectos']
-            noTiene = form3.cleaned_data['noTiene']
-            # leer el id de la empresa agregada recientemente
-            id_empresa = "1"
-            gestion = Tabla_resultados_gestion(
-                empresa=id_empresa,
-                answer1=iso9001,
-                answer2=iso14001,
-                answer3=ohsas18001,
-                answer4=procedimiento,
-                answer5=asesoria,
-                answer6=gerencia,
-                answer7=tiempoCompleto,
-                answer8=tiempoParcial,
-                answer9=proyectos,
-                answer10=noTiene
-            )
-            gestion.save()
-            return render(request, "home/home.html")
-        else:
-            # hay problemas con los Forms
-            e = "Operacion Invalida"
-    else:
-        # Error de metodo
-        e = "Operacion Invalida"
-    context = \
-        {'resultados_gestion_certificaciones':form1,
-         'resultados_gestion_elementos':form2,
-         'resultados_gestion_jornada':form3
-         }
-    return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
+    # Obtener certificados de la empresa o crear para agregarlas
+    cert_empresa, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
+    man_riesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
+    preven_empresa, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
 
-@login_required
+    # POST
+    if request.method == "POST":
+        form_cert_empresa = FormTablaResultadosCertificaciones(request.POST, instance=cert_empresa)
+        form_man_riesgo = FormTablaResultadosManejoRiesgo(request.POST, instance=man_riesgo)
+        form_preven_empresa = FormTablaResultadosTiempoPreven(request.POST, instance=preven_empresa)
+
+        if form_cert_empresa.is_valid():
+
+            form_cert_empresa.save(commit=False)
+            form_cert_empresa.save()
+
+            form_man_riesgo.save(commit=False)
+            form_man_riesgo.save()
+
+            form_preven_empresa.save(commit=False)
+            form_preven_empresa.save()
+
+            return redirect('pagina4')
+        else:
+
+            context = {
+                'form_cert_empresa': form_cert_empresa,
+                'form_man_riesgo': form_man_riesgo,
+                'form_preven_empresa': form_preven_empresa,
+            }
+
+            return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
+    # GET
+    else:
+        form_cert_empresa = FormTablaResultadosCertificaciones(instance=cert_empresa)
+        form_man_riesgo = FormTablaResultadosManejoRiesgo(instance=man_riesgo)
+        form_preven_empresa = FormTablaResultadosTiempoPreven(instance=preven_empresa)
+
+        context = {
+            'form_cert_empresa': form_cert_empresa,
+            'form_man_riesgo': form_man_riesgo,
+            'form_preven_empresa': form_preven_empresa,
+        }
+
+        return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
+
+
+@login_required(login_url='MTRlogin')
 def page_four_poll(request):
+
+    mani_explosivos_emp, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
+    elect_emp, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
+    sust_emp, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
+    alt_emp, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
+
+    form_mani_explosivos = FormTablaResultadosManiExplosivos(instance=mani_explosivos_emp)
+    form_elect_emp = FormTablaResultadoElectricidad(instance=elect_emp)
+    form_sust_emp = FormTablaResultadosSustancias(instance=sust_emp)
+    form_alt_emp = FormTablaResultadosAltura(instance=alt_emp)
+
     if request.method == 'POST':
-        form1 = FormDefault(request.POST)
-        form2 = FormDefault(request.POST)
-        form3 = FormDefault(request.POST)
-        form4 = FormDefault(request.POST)
-        if form1.is_valid() and form2.is_valid() and form3.is_valid() and form4.is_valid():
-            inscripcion = form1.cleaned_data['inscripcion']
-            certificado = form1.cleaned_data['certificado']
-            personal = form1.cleaned_data['personal']
-            polvorin = form1.cleaned_data['polvorin']
-            procedimientos = form1.cleaned_data['procedimientos']
-            dispositivos = form1.cleaned_data['dispositivos']
-            # leer el id de la empresa agregada recientemente
-            id_empresa = "1"
-            explosivos = Tabla_resultados_explosivos(
-                empresa=id_empresa,
-                answer1=inscripcion,
-                answer2=certificado,
-                answer3=personal,
-                answer4=polvorin,
-                answer5=procedimientos,
-                answer6=dispositivos
-            )
-            explosivos.save()
-            # return HttpResponseRedirect('/thanks/')
-            apertura = form2.cleaned_data['apertura']
-            encaramiento = form2.cleaned_data['encaramiento']
-            ausencia = form2.cleaned_data['ausencia']
-            tierra = form2.cleaned_data['tierra']
-            delimitacion = form2.cleaned_data['delimitacion']
-            electricidad = Tabla_resultados_electricidad(
-                empresa=id_empresa,
-                answer1=apertura,
-                answer2=encaramiento,
-                answer3=ausencia,
-                answer4=tierra,
-                answer5=delimitacion
-            )
-            electricidad.save()
-            # return HttpResponseRedirect('/thanks/')
-            distintivos = form3.cleaned_data['distintivos']
-            tacografo = form3.cleaned_data['tacografo']
-            antiguedad = form3.cleaned_data['antiguedad']
-            transporte = form3.cleaned_data['transporte']
-            embalaje = form3.cleaned_data['embalaje']
-            carga = form3.cleaned_data['carga']
-            tipoA = form3.cleaned_data['tipoA']
-            tipoB = form3.cleaned_data['tipoB']
-            tipoC = form3.cleaned_data['tipoC']
-            sustancias_peligrosas = Tabla_resultados_sustancias_peligrosas(
-                empresa=id_empresa,
-                answer1=distintivos,
-                answer2=tacografo,
-                answer3=antiguedad,
-                answer4=transporte,
-                answer5=embalaje,
-                answer6=carga,
-                answer7=tipoA,
-                answer8=tipoB,
-                answer9=tipoC
-            )
-            sustancias_peligrosas.save()
-            # return HttpResponseRedirect('/thanks/')
-            norma = form4.cleaned_data['norma']
-            supervisor = form4.cleaned_data['supervisor']
-            proteccion = form4.cleaned_data['proteccion']
-            equipamiento = form4.cleaned_data['equipamiento']
-            altura = Tabla_resultados_altura(
-                empresa=id_empresa,
-                answer1=norma,
-                answer2=supervisor,
-                answer3=proteccion,
-                answer4=equipamiento)
-            altura.save()
-            return render(request, "home/home.html")
+        form_mani_explosivos = FormTablaResultadosManiExplosivos(request.POST, instance=mani_explosivos_emp)
+        form_elect_emp = FormTablaResultadoElectricidad(request.POST, instance=elect_emp)
+        form_sust_emp = FormTablaResultadosSustancias(request.POST, instance=sust_emp)
+        form_alt_emp = FormTablaResultadosAltura(request.POST, instance=alt_emp)
+        if form_alt_emp.is_valid() and form_sust_emp.is_valid() and form_elect_emp.is_valid() and form_mani_explosivos.is_valid():
+            form_mani_explosivos.save(commit=False)
+            form_mani_explosivos.save()
+
+            form_elect_emp.save(commit=False)
+            form_elect_emp.save()
+
+            form_sust_emp.save(commit=False)
+            form_sust_emp.save()
+
+            form_alt_emp.save(commit=False)
+            form_alt_emp.save()
+
+            return redirect('resultado')
         else:
-            # hay problemas con los Forms
-            e = "Operacion Invalida"
+            context = {
+                'form_mani_explosivos': form_mani_explosivos,
+                'form_elect_emp': form_elect_emp,
+                'form_sust_emp': form_sust_emp,
+                'form_alt_emp': form_alt_emp,
+            }
+            return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
     else:
-        # Error de metodo
-        e = "Operacion Invalida"
-    context = \
-        {'resultados_explosivos':form1,
-         'resultados_electricidad':form2,
-         'resultados_sustancias_peligrosas':form3,
-         'resultados_altura':form4
-         }
-    return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
+        context = {
+            'form_mani_explosivos': form_mani_explosivos,
+            'form_elect_emp': form_elect_emp,
+            'form_sust_emp': form_sust_emp,
+            'form_alt_emp': form_alt_emp,
+        }
+        return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
 
 
+@login_required(login_url='MTRlogin')
 def page_results(request):
-    if request.method == 'GET':
-        a = "placeholder"
+    # Indicadores
+    total = 5
+    minimo = 0
+    resultado = 0
+
+    # Se guardan resultados parciales con nombre de seccion y riesgo porcentual, el nombre se puede omitir pero implica recordar la posicion de cada seccion
+
+    #Por Julio, te declaré desgloce como variable global porq lo necesito usar en report() y no se me ocurrio otra forma
+    global desgloce
+    desgloce.clear()
+
+    for poliza in TablaPoliza.objects.all():
+        desgloce.append([poliza.nombre_poliza,0,0,poliza.id])
+
+    # Resultados de la dotacion de la empresa Pag 1
+    dotacion, _ = TablaResultadosDotacion.objects.get_or_create(id=request.user)
+    result_dotacion = 0
+    if dotacion.cant_emp_contratados < 50:
+        result_dotacion += 1
+    elif 50 <= dotacion.cant_emp_contratados < 125:
+        result_dotacion += 2
+    elif 125 <= dotacion.cant_emp_contratados < 200:
+        result_dotacion += 3
     else:
-        # Error de metodo
-        e = "Operacion Invalida"
-    return render(request, "MideTuRiesgo/mideturiesgoresultado.html")
+        result_dotacion += 4
+
+    if dotacion.cant_emp_contratista < 50:
+        result_dotacion += 1
+    elif 50 <= dotacion.cant_emp_contratista < 125:
+        result_dotacion += 2
+    elif 125 <= dotacion.cant_emp_contratista < 200:
+        result_dotacion += 3
+    else:
+        result_dotacion += 5
+
+    if dotacion.cant_veh_empresa < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_veh_empresa < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_veh_empresa < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_veh_empresa < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+
+    if dotacion.cant_veh_contratista < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_veh_contratista < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_veh_contratista < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_veh_contratista < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+
+    if dotacion.cant_veh_empresa_pesado < 20:
+        result_dotacion += 3
+    elif 20 <= dotacion.cant_veh_empresa_pesado < 30:
+        result_dotacion += 6
+    elif 30 <= dotacion.cant_veh_empresa_pesado < 40:
+        result_dotacion += 9
+    elif 40 <= dotacion.cant_veh_empresa_pesado < 50:
+        result_dotacion += 12
+    else:
+        result_dotacion += 15
+
+    if dotacion.cant_veh_contratista_pesado < 20:
+        result_dotacion += 3
+    elif 20 <= dotacion.cant_veh_contratista_pesado < 30:
+        result_dotacion += 6
+    elif 30 <= dotacion.cant_veh_contratista_pesado < 40:
+        result_dotacion += 9
+    elif 40 <= dotacion.cant_veh_contratista_pesado < 50:
+        result_dotacion += 12
+    else:
+        result_dotacion += 15
+
+    if dotacion.cant_maq_pesada_empresa < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_maq_pesada_empresa < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_maq_pesada_empresa < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_maq_pesada_empresa < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+
+    if dotacion.cant_maq_pesada_contratista < 20:
+        result_dotacion += 1
+    elif 20 <= dotacion.cant_maq_pesada_contratista < 30:
+        result_dotacion += 3
+    elif 30 <= dotacion.cant_maq_pesada_contratista < 40:
+        result_dotacion += 5
+    elif 40 <= dotacion.cant_maq_pesada_contratista < 50:
+        result_dotacion += 6
+    else:
+        result_dotacion += 7
+    resultado += result_dotacion
+    total += 67
+    minimo += 12
+
+    riesgoporcentual_dotacion = round((result_dotacion / 67) * 100,2)
+    # desgloce.append(["Dotacion",riesgoporcentual_dotacion])
+
+    for d in desgloce:
+        if d[3] == 1:
+            d[1] += 67
+            d[2] += result_dotacion
+
+    # Resultados de Construccion Pag 2
+    result_const, _ = TablaResultadosConstruccion.objects.get_or_create(id=request.user)
+    suma_const = result_const.construccion.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_const is None:
+        suma_const = 0
+    else:
+        total += 16
+        minimo += 6
+
+        riesgoporcentual_construccion = round((suma_const / 16) * 100,2)
+        # desgloce.append(["Construccion", riesgoporcentual_construccion])
+        for re in result_const.construccion.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 16
+                    d[2] += suma_const
+
+    resultado += suma_const
+
+    # Resultados de Manufactura Pag 2
+    result_manu, _ = TablaResultadosManufactura.objects.get_or_create(id=request.user)
+    suma_manu = result_manu.manufactura.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_manu is None:
+        suma_manu = 0
+    else:
+        total += 15
+        minimo += 4
+        riesgoporcentual_manufactura = round((suma_manu / 15) * 100,2)
+        # desgloce.append(["Manufactura", riesgoporcentual_manufactura])
+        for re in result_manu.manufactura.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 15
+                    d[2] += suma_manu
+
+    resultado += suma_manu
+
+    # Resultados de Transporte Pag 2
+    result_trans, _ = TablaResultadosTransporte.objects.get_or_create(id=request.user)
+    suma_trans = result_trans.transporte.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_trans is None:
+        suma_trans = 0
+    else:
+        total += 21
+        minimo += 5
+        riesgoporcentual_Transporte = round((suma_trans / 21) * 100,2)
+        # desgloce.append(["Transporte", riesgoporcentual_Transporte])
+        for re in result_trans.transporte.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 21
+                    d[2] += suma_trans
+
+    resultado += suma_trans
+
+    # Resultados de Servicios Generales Pag 2
+    result_sergen,_ = TablaResultadosServicios.objects.get_or_create(id=request.user)
+    suma_sergen = result_sergen.servicios.all().aggregate(Sum('ri'))['ri__sum']
+    if suma_sergen is None:
+        suma_sergen = 0
+    else:
+        total += 37
+        minimo += 3
+        riesgoporcentual_servicios = round((suma_sergen / 37) * 100,2)
+        # desgloce.append(["Servicios", riesgoporcentual_servicios])
+        for re in result_sergen.servicios.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 37
+                    d[2] += suma_sergen
+
+    resultado += suma_sergen
+
+    # Resultados de los Certificados ISO pag 3
+    result_cert, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
+    suma_result_cert = result_cert.certificaciones.all().aggregate(Sum('cr'))['cr__sum']
+    if suma_result_cert is None:
+        suma_result_cert = 0
+    else:
+        riesgoporcentual_certificacion = round((1 - (suma_result_cert / 10)) * 100, 2)
+        # desgloce.append(["Certificacion", riesgoporcentual_certificacion])
+        for re in result_cert.certificaciones.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 0
+                    d[2] -= suma_result_cert
+    resultado += suma_result_cert
+
+    # Resultado de manejo de Riesgos pag 3
+    result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
+    suma_mriesgo = result_mriesgo.opciones_manejo.all().aggregate(Sum('cr'))['cr__sum']
+    if suma_mriesgo is None:
+        suma_mriesgo = 0
+    else:
+        riesgoporcentual_manejoriesgo = round((1 - (suma_mriesgo / 5)) * 100, 2)
+        # desgloce.append(["ManejoRiesgo", riesgoporcentual_manejoriesgo])
+        for re in result_mriesgo.opciones_manejo.all():
+            for d in desgloce:
+                if d[3] == re.poliza.id:
+                    d[1] += 0
+                    d[2] -= suma_mriesgo
+    resultado += suma_mriesgo
+
+    # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
+    result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
+    suma_preven = result_preven.opciones_prevencionista_t.cr
+    if suma_preven is None:
+        suma_preven = 0
+    else:
+        riesgoporcentual_prevencionista = round((1 - (suma_preven / 10)) * 100, 2)
+        # desgloce.append(["TiempoPrevencionista", riesgoporcentual_prevencionista])
+        for d in desgloce:
+            if d[3] == result_preven.opciones_prevencionista_t.poliza.id:
+                d[1] += 0
+                d[2] -= suma_preven
+    resultado += suma_preven
+
+    # Resultados de Explosivos Pag 4
+    result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
+    suma_mani_explosivos = 0
+    if result_mani_explosivos.is_expo:
+        suma_mani_explosivos = result_mani_explosivos.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_mani_explosivos is not None:
+            total += 11
+            minimo += 1
+            resultado += suma_mani_explosivos
+            riesgoporcentual_explosivos = round((suma_mani_explosivos / 11) * 100, 2)
+            # desgloce.append(["Explosivos", riesgoporcentual_explosivos])
+            for re in result_mani_explosivos.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 11
+                        d[2] += suma_mani_explosivos
+
+    # Resultados de Electricidad Pag 4
+    result_electricidad, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
+    suma_electricidad = 0
+    if result_electricidad.is_elec:
+        suma_electricidad = result_electricidad.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_electricidad is not None:
+            total += 10
+            minimo += 1
+            resultado += suma_electricidad
+            riesgoporcentual_electricidad = round((suma_electricidad / 10) * 100, 2)
+            # desgloce.append(["Electricidad", riesgoporcentual_electricidad])
+            for re in result_electricidad.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 10
+                        d[2] += suma_electricidad
+
+    # Resultados de Sustancias Pag 4
+    result_sustancia, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
+    suma_sustancia = 0
+    if result_sustancia.is_sust:
+        suma_sustancia = result_sustancia.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_sustancia is not None:
+            total += 20
+            minimo += 3
+            resultado += suma_sustancia
+            riesgoporcentual_sustancias = round((suma_sustancia / 20) * 100, 2)
+            # desgloce.append(["Sustancias", riesgoporcentual_sustancias])
+            for re in result_sustancia.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 20
+                        d[2] += suma_sustancia
+
+    # Resultados de Altura Pag 4
+    result_altura, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
+    suma_altura = 0
+    if result_altura.is_alt:
+        suma_altura = result_altura.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        if suma_altura is not None:
+            total += 8
+            minimo += 1
+            resultado += result_altura
+            riesgoporcentual_altura = round((suma_altura / 8) * 100, 2)
+            # desgloce.append(["Altura", riesgoporcentual_altura])
+            for re in result_altura.tipos.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 8
+                        d[2] += suma_altura
+
+    # Despligue de Desiciones
+    res_por = ((resultado - minimo) / (total - minimo))
+    res_img = (379 + 19) * res_por
+    res_fin = (379 + 19) - res_img
+    res_fin = int(res_fin)
+    cuartil = (total - minimo) / 4
+    if resultado < (minimo + cuartil):
+        color = "VERDE"
+    elif (minimo + cuartil) <= resultado < (2 * cuartil + minimo):
+        color = "AMARILLO"
+    elif (2 * cuartil + minimo) <= resultado <= (3 * cuartil + minimo):
+        color = "ANARANJADO"
+    else:
+        color = "ROJO"
+
+    #sort arreglo desgloce
+    desgloce_ordenado = []
+    for des in desgloce:
+        if des[1] != 0:
+            desgloce_ordenado.append([des[0],round((des[2]/des[1])*100,1)])
+    desgloce_ordenado.sort(key = lambda array: array[1], reverse=True)
+
+    # return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
+    return render(request, "MideTuRiesgo/mideturiesgoresultado.html",{'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color, 'desgloce':desgloce_ordenado})

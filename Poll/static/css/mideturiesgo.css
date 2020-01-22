@@ -157,7 +157,7 @@ input[type=radio] + label{
     background-color:blue;
     border: blue;
     border-radius: 5px;
-    width: 600%
+    width: 100%
   }
   #resultado{
     color:white;
@@ -169,7 +169,6 @@ input[type=radio] + label{
   .anterior{
     margin-left: 21%
   }
-
 .containerimgs{
     widht: 100px;
     height: 400px;
@@ -179,7 +178,7 @@ input[type=radio] + label{
     width: 100px;
     height: 400px;
     border:1px solid #000;
-    background-image:linear-gradient(red,yellow,green);
+    background:linear-gradient(green 25%, yellow 25% 50%, orange 50% 75%, red 75% 100%);
   }
 
   #triangulo{
@@ -187,10 +186,16 @@ input[type=radio] + label{
     height: 0px;
 	border-top: 20px solid transparent;
 	border-left: 30px solid #555;
-	border-bottom: 20px solid transparent;
-	/*Maximo margin-bottom 134%*/
-	margin-bottom:134%;
+	/*Maximo margin-bottom 380px*/
+	/*Minimo margin-bottom -19px*/
+	margin-bottom: -19px;
 }
 #rectangulo, #triangulo{
     display:inline-block;
 }
+.bordes{
+		border: 1px solid;
+		height: auto;
+		width: 300px;
+		margin-left: 350px;
+	}
