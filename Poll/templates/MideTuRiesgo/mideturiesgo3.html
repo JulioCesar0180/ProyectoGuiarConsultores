@@ -1,4 +1,4 @@
-{% extends 'header.html' %}
+{% extends 'MideTuRiesgo/mideturiesgo-base.html' %}
 {% load static %}
 
 {% block head %}
@@ -6,10 +6,6 @@
     <title>Mide tu riesgo</title>
 {% endblock %}
 {% block content %}
-    <div id="azul"></div>
-    <div id="blanco"></div>
-    <div id="plomo"></div>
-    <div id="head"></div>
     <div class="inicio">
         Las siguientes preguntas están relacionadas con la implementación y manejo de riesgos de la empresa
         <div><hr></div>
@@ -52,11 +48,16 @@
                     {% endif %}
                 </div>
             {% endfor %}
+            <div class="navButtons">
+            <div class="boton">
+                <input type="button" id="previous" onclick="history.go(-1)" value="←">
+            </div>
+            <div class="boton">
+                <button type="submit" value="Submit" id="next">→</button>
+            </div>
         </div>
-
-        <div class="siguiente">
-            <button type="submit" value="Submit" id="next">→</button>
-        </div><div><br></div>
+        <div><br></div>
+        </div>
     </form>
 
     <script type="text/javascript">

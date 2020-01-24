@@ -1,31 +1,26 @@
-{% extends 'header.html' %}
+{% extends 'MideTuRiesgo/mideturiesgo-base.html' %}
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/test.css'%}">
     <title>Mide tu riesgo</title>
 {% endblock %}
 {% block content %}
-    <div id="azul"></div>
-    <div id="blanco"></div>
-    <div id="plomo"></div>
-    <div id="head"></div>
     <form action="" method="post">
         {% csrf_token %}
         <div class="inicio">
             {% for error in form_mani_explosivos.errors %}
                 {{ error }}
             {% endfor %}
-        {{ form_mani_explosivos.is_valid }}
-        {{ form_elect_emp.is_valid }}
-        {{ form_alt_emp.is_valid }}
-        {{ form_sust_emp.is_valid }}
             Por último realizaremos algunas preguntas sobre el manejo de riesgos en las actividades que realiza la empresa a ser evaluada.
-            <div><hr></div>
+            <div>
+                <hr>
+            </div>
         </div>
-        <div id="explosivos">
+        <div id="explosivos" class="inicio">
             <b>P<c id="exp">{{cont|add:"1"}}</c>.</b> ¿En la empresa para su funcionamiento se utilizan y/o manipulan explosivos?
-            <div><br></div>
+            <div>
+                <br>
+            </div>
             {% for explosivo in form_mani_explosivos.is_expo %}
                 {% if "0" in explosivo.id_for_label %}
                     <div id="div_{{ explosivo.id_for_label }}" class="input-radio" onclick="displayExplosivos()">
@@ -42,7 +37,7 @@
             <div><br></div>
             <div><hr></div>
         </div>
-        <div id="electricidad">
+        <div id="electricidad" class="inicio">
             <b>P<c id="ele">{{cont|add:"2"}}</c>.</b> ¿En la empresa para su funcionamiento se utilizan y/o manipulan cables de alta tensión y/o electricidad?
             <div><br></div>
             {% for electricidad in form_elect_emp.is_elec %}
@@ -60,7 +55,7 @@
             {% endfor %}
             <div><br></div><div><hr></div>
         </div>
-        <div id="sustancias">
+        <div id="sustancias" class="inicio">
             <b>P<c id="sus">{{cont|add:"3"}}</c>.</b> ¿En la empresa para su funcionamiento se transportan, custodia y/o manipulan corrosivos, inflamables, tóxicos, combustibles?
             <div><br></div>
             {% for sustancia in form_sust_emp.is_sust %}
@@ -76,11 +71,10 @@
                     </div>
                 {% endif %}
             {% endfor %}
-            </div><div><br>
-        </div>
+            <div><br></div>
             <div><hr></div>
         </div>
-        <div id="altura">
+        <div id="altura" class="inicio">
             <b>P<c id="alt">{{cont|add:"4"}}</c>.</b> ¿En la empresa para su funcionamiento se realizan trabajos en altura?
             <div><br></div>
             {% for altura in form_alt_emp.is_alt %}
@@ -100,16 +94,23 @@
             <div><hr></div>
         </div>
 
-        <div class="siguiente">
-            <button type="submit" value="Submit" id="next">Terminar</button>
+        <div class="navButtons">
+            <div class="boton">
+                <input type="button" id="previous" onclick="history.go(-1)" value="←">
+            </div>
+            <div class="boton">
+                <button type="submit" value="Submit" id="next">Terminar</button>
+            </div>
         </div>
         <div><br></div>
+
+        </form>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    </form>
+
 
     {# Para Explosivos #}
     <script type="text/javascript">
