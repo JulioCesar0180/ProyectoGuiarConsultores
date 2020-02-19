@@ -136,12 +136,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
     'Home/static',
     'Poll/static',
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #Template crispy_forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
