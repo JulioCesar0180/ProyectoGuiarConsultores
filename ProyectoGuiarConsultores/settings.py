@@ -141,7 +141,7 @@ STATICFILES_DIRS = [
     'Poll/static',
 ]
 
-STATIC_ROOT = "/var/www/static"
+STATIC_ROOT = '/static/'
 
 #Template crispy_forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
