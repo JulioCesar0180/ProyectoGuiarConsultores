@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'udhg0k5s4df_o7ejlr3uz-vfe=g1kxw_-$yb6k^m$8iaf20$!+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -141,6 +141,7 @@ STATICFILES_DIRS = [
     'Poll/static',
 ]
 
+STATIC_ROOT = "/var/www/static"
 
 #Template crispy_forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
