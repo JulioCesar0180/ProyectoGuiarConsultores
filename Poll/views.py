@@ -824,90 +824,152 @@ def page_results(request):
 
     # Resultados de la dotacion de la empresa Pag 1
     dotacion, _ = TablaResultadosDotacion.objects.get_or_create(id=request.user)
+    designacion = TablaDesignacionDotacion.objects.first()
     result_dotacion = 0
+    cont_empl = 0
+    cont_trans = 0
+
     if dotacion.cant_emp_contratados < 50:
-        result_dotacion += 1
+        res_emp_contratados = 1
     elif 50 <= dotacion.cant_emp_contratados < 125:
-        result_dotacion += 2
+        res_emp_contratados = 2
     elif 125 <= dotacion.cant_emp_contratados < 200:
-        result_dotacion += 3
+        res_emp_contratados = 3
     else:
-        result_dotacion += 4
+        res_emp_contratados = 4
+    result_dotacion += res_emp_contratados
+    cont_empl += res_emp_contratados
+
+    for d in desgloce:
+        if d[3] == designacion.campo1:
+            d[1] += 4
+            d[2] += res_emp_contratados
 
     if dotacion.cant_emp_contratista < 50:
-        result_dotacion += 1
+        res_emp_contratista = 1
     elif 50 <= dotacion.cant_emp_contratista < 125:
-        result_dotacion += 2
+        res_emp_contratista = 2
     elif 125 <= dotacion.cant_emp_contratista < 200:
-        result_dotacion += 3
+        res_emp_contratista = 3
     else:
-        result_dotacion += 5
+        res_emp_contratista = 5
+    result_dotacion += res_emp_contratista
+    cont_empl += res_emp_contratista
+
+    for d in desgloce:
+        if d[3] == designacion.campo2:
+            d[1] += 5
+            d[2] += res_emp_contratista
 
     if dotacion.cant_veh_empresa < 20:
-        result_dotacion += 1
+        res_veh_empresa = 1
     elif 20 <= dotacion.cant_veh_empresa < 30:
-        result_dotacion += 3
+        res_veh_empresa = 3
     elif 30 <= dotacion.cant_veh_empresa < 40:
-        result_dotacion += 5
+        res_veh_empresa = 5
     elif 40 <= dotacion.cant_veh_empresa < 50:
-        result_dotacion += 6
+        res_veh_empresa = 6
     else:
-        result_dotacion += 7
+        res_veh_empresa = 7
+    result_dotacion += res_veh_empresa
+    cont_trans += res_veh_empresa
+
+    for d in desgloce:
+        if d[3] == designacion.campo3:
+            d[1] += 7
+            d[2] += res_veh_empresa
 
     if dotacion.cant_veh_contratista < 20:
-        result_dotacion += 1
+        res_veh_contratista = 1
     elif 20 <= dotacion.cant_veh_contratista < 30:
-        result_dotacion += 3
+        res_veh_contratista = 3
     elif 30 <= dotacion.cant_veh_contratista < 40:
-        result_dotacion += 5
+        res_veh_contratista = 5
     elif 40 <= dotacion.cant_veh_contratista < 50:
-        result_dotacion += 6
+        res_veh_contratista = 6
     else:
-        result_dotacion += 7
+        res_veh_contratista = 7
+    result_dotacion += res_veh_contratista
+    cont_trans += res_veh_contratista
+
+    for d in desgloce:
+        if d[3] == designacion.campo4:
+            d[1] += 7
+            d[2] += res_veh_contratista
 
     if dotacion.cant_veh_empresa_pesado < 20:
-        result_dotacion += 3
+        res_veh_empresa_pesado = 3
     elif 20 <= dotacion.cant_veh_empresa_pesado < 30:
-        result_dotacion += 6
+        res_veh_empresa_pesado = 6
     elif 30 <= dotacion.cant_veh_empresa_pesado < 40:
-        result_dotacion += 9
+        res_veh_empresa_pesado = 9
     elif 40 <= dotacion.cant_veh_empresa_pesado < 50:
-        result_dotacion += 12
+        res_veh_empresa_pesado = 12
     else:
-        result_dotacion += 15
+        res_veh_empresa_pesado = 15
+    result_dotacion += res_veh_empresa_pesado
+    cont_trans += res_veh_empresa_pesado
+
+    for d in desgloce:
+        if d[3] == designacion.campo5:
+            d[1] += 15
+            d[2] += res_veh_empresa_pesado
 
     if dotacion.cant_veh_contratista_pesado < 20:
-        result_dotacion += 3
+        res_veh_contratista_pesado = 3
     elif 20 <= dotacion.cant_veh_contratista_pesado < 30:
-        result_dotacion += 6
+        res_veh_contratista_pesado = 6
     elif 30 <= dotacion.cant_veh_contratista_pesado < 40:
-        result_dotacion += 9
+        res_veh_contratista_pesado = 9
     elif 40 <= dotacion.cant_veh_contratista_pesado < 50:
-        result_dotacion += 12
+        res_veh_contratista_pesado = 12
     else:
-        result_dotacion += 15
+        res_veh_contratista_pesado= 15
+    result_dotacion += res_veh_contratista_pesado
+    cont_trans += res_veh_contratista_pesado
+
+    for d in desgloce:
+        if d[3] == designacion.campo6:
+            d[1] += 15
+            d[2] += res_veh_contratista_pesado
 
     if dotacion.cant_maq_pesada_empresa < 20:
-        result_dotacion += 1
+        res_maq_pesada_empresa= 1
     elif 20 <= dotacion.cant_maq_pesada_empresa < 30:
-        result_dotacion += 3
+        res_maq_pesada_empresa = 3
     elif 30 <= dotacion.cant_maq_pesada_empresa < 40:
-        result_dotacion += 5
+        res_maq_pesada_empresa = 5
     elif 40 <= dotacion.cant_maq_pesada_empresa < 50:
-        result_dotacion += 6
+        res_maq_pesada_empresa = 6
     else:
-        result_dotacion += 7
+        res_maq_pesada_empresa = 7
+    result_dotacion += res_maq_pesada_empresa
+
+    for d in desgloce:
+        if d[3] == designacion.campo7:
+            d[1] += 7
+            d[2] += res_maq_pesada_empresa
 
     if dotacion.cant_maq_pesada_contratista < 20:
-        result_dotacion += 1
+        res_maq_pesada_contratista = 1
     elif 20 <= dotacion.cant_maq_pesada_contratista < 30:
-        result_dotacion += 3
+        res_maq_pesada_contratista = 3
     elif 30 <= dotacion.cant_maq_pesada_contratista < 40:
-        result_dotacion += 5
+        res_maq_pesada_contratista = 5
     elif 40 <= dotacion.cant_maq_pesada_contratista < 50:
-        result_dotacion += 6
+        res_maq_pesada_contratista = 6
     else:
-        result_dotacion += 7
+        res_maq_pesada_contratista = 7
+    result_dotacion += res_maq_pesada_contratista
+
+    for d in desgloce:
+        if d[3] == designacion.campo8:
+            d[1] += 7
+            d[2] += res_maq_pesada_contratista
+        if d[3] == 3:
+            d[1] += 53
+            d[2] += cont_trans + cont_empl
+
     resultado += result_dotacion
     total += 67
     minimo += 12
@@ -1122,10 +1184,22 @@ def page_results(request):
 
     #sort arreglo desgloce
     desgloce_ordenado = []
+
     for des in desgloce:
         if des[1] != 0:
             desgloce_ordenado.append([des[0],round((des[2]/des[1])*100,1)])
     desgloce_ordenado.sort(key = lambda array: array[1], reverse=True)
+
+    '''
+    aux = 0
+    for des in desgloce_ordenado:
+        ant = des[1]
+        if aux != 0:
+            if des[1] == ant:
+                if ant.priority < des[1]:
+                    ordenar esa seccion por prioridad
+        aux = 1
+    '''
 
     # return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
     return render(request, "MideTuRiesgo/mideturiesgoresultado.html",{'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color, 'desgloce':desgloce_ordenado})
