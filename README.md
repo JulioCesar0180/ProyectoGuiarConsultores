@@ -101,7 +101,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'guiarconsultores',
-        'USER': 'admin',
+        'USER': 'useradmin',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
@@ -190,8 +190,9 @@ py manage.py createsuperuser
 ```
 La instruccion anterior es para crear una cuenta super-usuario para tener control total de la base de datos. A continuacion nos solicitará completar un formulario para registrarnos, estos datos son:
 ```
-username: admin
-Email address: admin@mideturiesgo.cl
+Rut Empresa: 12345678-5
+Nombre Empresa: UCN
+Direccion: Avenida Angamos 0610
 Password: mideturiesgo
 Password (again): mideturiesgo
 Superuser created successfully.
