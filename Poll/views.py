@@ -1041,14 +1041,14 @@ def page_results(request):
     result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
     suma_mani_explosivos = 0
     if result_mani_explosivos.is_expo:
-        suma_mani_explosivos = result_mani_explosivos.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_mani_explosivos = result_mani_explosivos.tipos_exp.all().aggregate(Sum('ri'))['ri__sum']
         if suma_mani_explosivos is not None:
             total += 11
             minimo += 1
             resultado += suma_mani_explosivos
             riesgoporcentual_explosivos = round((suma_mani_explosivos / 11) * 100, 2)
             # desgloce.append(["Explosivos", riesgoporcentual_explosivos])
-            for re in result_mani_explosivos.tipos.all():
+            for re in result_mani_explosivos.tipos_exp.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 11
@@ -1058,14 +1058,14 @@ def page_results(request):
     result_electricidad, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
     suma_electricidad = 0
     if result_electricidad.is_elec:
-        suma_electricidad = result_electricidad.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_electricidad = result_electricidad.tipos_elec.all().aggregate(Sum('ri'))['ri__sum']
         if suma_electricidad is not None:
             total += 10
             minimo += 1
             resultado += suma_electricidad
             riesgoporcentual_electricidad = round((suma_electricidad / 10) * 100, 2)
             # desgloce.append(["Electricidad", riesgoporcentual_electricidad])
-            for re in result_electricidad.tipos.all():
+            for re in result_electricidad.tipos_elec.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 10
@@ -1075,14 +1075,14 @@ def page_results(request):
     result_sustancia, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
     suma_sustancia = 0
     if result_sustancia.is_sust:
-        suma_sustancia = result_sustancia.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_sustancia = result_sustancia.tipos_sust.all().aggregate(Sum('ri'))['ri__sum']
         if suma_sustancia is not None:
             total += 20
             minimo += 3
             resultado += suma_sustancia
             riesgoporcentual_sustancias = round((suma_sustancia / 20) * 100, 2)
             # desgloce.append(["Sustancias", riesgoporcentual_sustancias])
-            for re in result_sustancia.tipos.all():
+            for re in result_sustancia.tipos_sust.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 20
@@ -1092,14 +1092,14 @@ def page_results(request):
     result_altura, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
     suma_altura = 0
     if result_altura.is_alt:
-        suma_altura = result_altura.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_altura = result_altura.tipos_alt.all().aggregate(Sum('ri'))['ri__sum']
         if suma_altura is not None:
             total += 8
             minimo += 1
-            resultado += result_altura
+            resultado += suma_altura
             riesgoporcentual_altura = round((suma_altura / 8) * 100, 2)
             # desgloce.append(["Altura", riesgoporcentual_altura])
-            for re in result_altura.tipos.all():
+            for re in result_altura.tipos_alt.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 8

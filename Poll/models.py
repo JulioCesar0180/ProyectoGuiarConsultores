@@ -354,3 +354,4 @@ class TablaResultadosAltura(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
     tipos_alt = models.ManyToManyField(TablaTrabajosAltura, blank=True, null=True)
+    
