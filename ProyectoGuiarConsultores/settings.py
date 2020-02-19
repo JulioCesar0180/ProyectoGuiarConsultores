@@ -141,7 +141,7 @@ STATICFILES_DIRS = [
     'Poll/static',
 ]
 
-STATIC_ROOT = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static'),
 
 #Template crispy_forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
