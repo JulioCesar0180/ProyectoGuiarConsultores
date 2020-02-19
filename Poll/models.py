@@ -129,7 +129,11 @@ class TablaResultadosProcesos(models.Model):
 
 
 class TablaPoliza(models.Model):
-    nombre = models.CharField()
+    nombre_poliza = models.CharField(max_length=100)
+    prioridad = models.IntegerField(default=99, validators=[MinValueValidator(0)])
+
+    def __str__(self):
+        return self.nombre_poliza
 
 
 class TablaCertificaciones(models.Model):
@@ -350,11 +354,3 @@ class TablaResultadosAltura(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
     tipos_alt = models.ManyToManyField(TablaTrabajosAltura, blank=True, null=True)
-
-
-class TablaPrioridadBase(models.Model):
-    nombre_seccion = models.CharField(max_length=50)
-    prioridad = models.DecimalField(decimal_places=2, max_digits=3, default=0)
-
-    def __str__(self):
-        return self.nombre_seccion
