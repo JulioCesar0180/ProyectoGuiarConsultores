@@ -25,7 +25,7 @@ SECRET_KEY = 'udhg0k5s4df_o7ejlr3uz-vfe=g1kxw_-$yb6k^m$8iaf20$!+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['3.15.23.166','127.0.0.1', 'ec2-3-15-23-166.us-east-2.compute.amazonaws.com']
 
 
 # Application definition
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'es-cl'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -140,7 +140,9 @@ STATICFILES_DIRS = [
     'Poll/static',
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+INTERNAL_IPS = ['127.0.0.1']
 
 #Template crispy_forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -171,5 +173,3 @@ MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
                 message_constants.SUCCESS: 'success',
                 message_constants.WARNING: 'warning',
                 message_constants.ERROR: 'danger',}
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

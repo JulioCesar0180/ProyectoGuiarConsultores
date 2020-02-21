@@ -1,0 +1,170 @@
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #43464d;
+}
+table{
+    width:100%;
+    table-layout:fixed;
+}
+#azul{
+    height: 8px;
+    width: 33%;
+    background: blue;
+    left: 0%;
+    position: absolute;
+    }
+#blanco{
+    height: 8px;
+    width: 33%;
+    background: white;
+    left: 33%;
+    position: absolute;
+    }
+#plomo{
+    height: 8px;
+    width: 34%;
+    background: gray;
+    left: 66%;
+    position: absolute;
+    }
+#head{
+    padding-top: 2%;
+}
+
+.inicio, #explosivos, #explosivosNext, #electricidad, #electricidadNext, #sustancias, #sustanciasNext, #altura, #alturaNext{
+    font-size: 16px;
+    color: #43464d;
+    padding: 20px;
+    line-height: 1.5em;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+#explosivosNext, #electricidadNext, #sustanciasNext, #alturaNext{
+    width:100%;
+    margin-left:0;
+    margin-right:0;
+}
+
+.input-radio{
+    display: inline-block;
+    width:100%;
+}
+input[type=radio] {
+    display: none;
+}
+input[type=radio] + label{
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    text-align:left;
+    transition: 0.2s;
+    width: 100%;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    background: #f3f5f6;
+    border-color: #f3f5f6;
+  }
+
+  input[type=radio]:checked + label{
+    background:#2e393f;
+    border-color:#030404;
+    color:white;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    width:100%;
+  }
+  input[type=checkbox] {
+    display: none;
+}
+
+    input[type=checkbox] + label {
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    text-align:left;
+    transition: 0.2s;
+    width: 100%;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    background: #f3f5f6;
+    border-color: #f3f5f6;
+  }
+
+  input[type=checkbox]:checked + label {
+    background:#2e393f;
+    border-color:#030404;
+    color:white;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    width:100%;
+  }
+  .siguiente{
+    margin-left: 40%
+  }
+  #next, #previous{
+    color:white;
+    background-color:blue;
+    border: blue;
+    border-radius: 5px;
+  }
+  #resultado{
+    color:white;
+    background-color:orange;
+    border: blue;
+    border-radius: 5px;
+  }
+  .anterior{
+    margin-left: 21%
+  }
+  .direccion{
+    margin-left: 30%
+  }
+  .campo{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d;
+    height: auto;
+    width: auto;
+}
+
+.campo:focus{
+    outline: none;
+    border: 2px solid black;
+}
+
+.campos input{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d ;
+    height: 40%;
+    width: 100%
+}
+
+.campos input{
+    border: 2px solid #d2d2d6;
+    font-family: Grotesque,Arial,sans-serif;
+    font-size: 16px;
+    color: #43464d;
+    height: 40%;
+    width: 100%
+}
+.campos input:focus{
+    outline: none;
+    border: 2px solid black;
+}
+
