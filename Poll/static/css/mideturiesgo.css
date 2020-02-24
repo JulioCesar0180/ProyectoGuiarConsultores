@@ -149,17 +149,17 @@ input[type=radio] + label{
   }
   #next, #previous{
     color:white;
-    background-color:blue;
-    border: blue;
+    background-color:#2e393f;
+    border: #030404;
     border-radius: 5px;
     width: 20%;
   }
   #resultado{
     color:white;
-    background-color:orange;
-    border: blue;
+    background-color: #203c4b;
+    border: #203c4b;
     border-radius: 5px;
-    width: 210%
+    width: 20%;
   }
 .containerimgs{
     widht: 100px;
@@ -190,4 +190,14 @@ input[type=radio] + label{
 		height: auto;
 		width: 300px;
 		margin-left: 350px;
-	}
+}
+
+.pagina{
+    text-align:center;
+    margin-left: 40%;
+    border: 1px solid green;
+    width:20%;
+    color: white;
+    background-color:#2e393f;
+    border-radius: 10px 10px 10px 10px;
+}

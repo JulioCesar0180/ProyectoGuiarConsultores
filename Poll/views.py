@@ -51,8 +51,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 
-
-
 @login_required(login_url='MTRlogin')
 def get_name(request):
     # if this is a POST request we need to process the form data
@@ -651,15 +649,26 @@ def page_two_poll(request):
         'form_manufactura': form_manufactura,
         'form_transporte': form_transporte,
         'form_servicio': form_servicio,
-        'construccion': list_procesos[0],
-        'manufactura': list_procesos[1],
-        'transporte': list_procesos[2],
+        'transporte': list_procesos[0],
+        'construccion': list_procesos[1],
+        'manufactura': list_procesos[2],
         'servicio': list_procesos[3],
         'procesos_empresa': procesos_empresa,
     }
 
-    # list_procesos[0] = "Construccion"
+    # list_procesos[0] = "Transporte Terrestre"
     if list_procesos[0] in procesos_empresa.procesos.all():
+        if request.method == 'POST':
+            form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
+            if form_transporte.is_valid():
+                form_transporte.save(commit=False)
+                form_transporte.save()
+                form_transporte_valid = True
+            else:
+                form_transporte_valid = False
+
+    # list_procesos[1] = "Construccion"
+    if list_procesos[1] in procesos_empresa.procesos.all():
         if request.method == "POST":
             form_construccion = FormTablaResultadosConstruccion(request.POST, instance=construccion)
             if form_construccion.is_valid():
@@ -669,8 +678,8 @@ def page_two_poll(request):
             else:
                 form_construccion_valid = False
 
-    # list_procesos[1] = "Manufactura"
-    if list_procesos[1] in procesos_empresa.procesos.all():
+    # list_procesos[2] = "Manufactura"
+    if list_procesos[2] in procesos_empresa.procesos.all():
         if request.method == "POST":
             form_manufactura = FormTablaResultadosManufactura(request.POST, instance=manufactura)
             if form_manufactura.is_valid():
@@ -679,17 +688,6 @@ def page_two_poll(request):
                 form_manufactura_valid = True
             else:
                 form_manufactura_valid = False
-
-    # list_procesos[2] = "Transporte Terrestre"
-    if list_procesos[2] in procesos_empresa.procesos.all():
-        if request.method == 'POST':
-            form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
-            if form_transporte.is_valid():
-                form_transporte.save(commit=False)
-                form_transporte.save()
-                form_transporte_valid = True
-            else:
-                form_transporte_valid = False
 
     # list_procesos[3] = "Servicios Generales"
     if list_procesos[3] in procesos_empresa.procesos.all():
@@ -702,7 +700,7 @@ def page_two_poll(request):
             else:
                 form_servicio_valid = False
 
-    if request.method == 'POST' and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
+    if request.method == 'POST' and form_construccion_valid and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
         return redirect('pagina3')
     return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
 
@@ -713,6 +711,8 @@ def page_three_poll(request):
     cert_empresa, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
     man_riesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
     preven_empresa, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
+    procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=request.user)
+    cont = len(procesos_empresa.procesos.all())+5
 
     # POST
     if request.method == "POST":
@@ -738,6 +738,7 @@ def page_three_poll(request):
                 'form_cert_empresa': form_cert_empresa,
                 'form_man_riesgo': form_man_riesgo,
                 'form_preven_empresa': form_preven_empresa,
+                'cont': cont
             }
 
             return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
@@ -751,6 +752,7 @@ def page_three_poll(request):
             'form_cert_empresa': form_cert_empresa,
             'form_man_riesgo': form_man_riesgo,
             'form_preven_empresa': form_preven_empresa,
+            'cont': cont
         }
 
         return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
@@ -768,6 +770,8 @@ def page_four_poll(request):
     form_elect_emp = FormTablaResultadoElectricidad(instance=elect_emp)
     form_sust_emp = FormTablaResultadosSustancias(instance=sust_emp)
     form_alt_emp = FormTablaResultadosAltura(instance=alt_emp)
+    procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=request.user)
+    cont = len(procesos_empresa.procesos.all()) + 8
 
     if request.method == 'POST':
         form_mani_explosivos = FormTablaResultadosManiExplosivos(request.POST, instance=mani_explosivos_emp)
@@ -794,6 +798,7 @@ def page_four_poll(request):
                 'form_elect_emp': form_elect_emp,
                 'form_sust_emp': form_sust_emp,
                 'form_alt_emp': form_alt_emp,
+                'cont': cont
             }
             return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
     else:
@@ -802,6 +807,7 @@ def page_four_poll(request):
             'form_elect_emp': form_elect_emp,
             'form_sust_emp': form_sust_emp,
             'form_alt_emp': form_alt_emp,
+            'cont': cont
         }
         return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
 
