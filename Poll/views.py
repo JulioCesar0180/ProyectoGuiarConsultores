@@ -1068,7 +1068,7 @@ def page_results(request):
                 if d[3] == re.poliza.id:
                     d[1] += 0
                     d[2] -= suma_result_cert
-    resultado += suma_result_cert
+    resultado -= suma_result_cert
 
     # Resultado de manejo de Riesgos pag 3
     result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
@@ -1083,7 +1083,7 @@ def page_results(request):
                 if d[3] == re.poliza.id:
                     d[1] += 0
                     d[2] -= suma_mriesgo
-    resultado += suma_mriesgo
+    resultado -= suma_mriesgo
 
     # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
     result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
@@ -1097,7 +1097,7 @@ def page_results(request):
             if d[3] == result_preven.opciones_prevencionista_t.poliza.id:
                 d[1] += 0
                 d[2] -= suma_preven
-    resultado += suma_preven
+    resultado -= suma_preven
 
     # Resultados de Explosivos Pag 4
     result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
@@ -1168,16 +1168,16 @@ def page_results(request):
                         d[2] += suma_altura
 
     # Despligue de Desiciones
-    res_por = ((resultado - minimo) / (total - minimo))
+    res_por = ((resultado) / (total))
     res_img = (379 + 19) * res_por
     res_fin = (379 + 19) - res_img
     res_fin = int(res_fin)
-    cuartil = (total - minimo) / 4
-    if resultado < (minimo + cuartil):
+    cuartil = (total) / 4
+    if resultado < (cuartil):
         color = "VERDE"
-    elif (minimo + cuartil) <= resultado < (2 * cuartil + minimo):
+    elif (cuartil) <= resultado < (2 * cuartil):
         color = "AMARILLO"
-    elif (2 * cuartil + minimo) <= resultado <= (3 * cuartil + minimo):
+    elif (2 * cuartil) <= resultado <= (3 * cuartil):
         color = "ANARANJADO"
     else:
         color = "ROJO"
