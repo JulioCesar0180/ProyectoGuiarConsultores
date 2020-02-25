@@ -54,6 +54,7 @@ admin.site.register(TablaSustancias)
 admin.site.register(TablaResultadosSustancias)
 admin.site.register(TablaTrabajosAltura)
 admin.site.register(TablaResultadosAltura)
+admin.site.register(TablaDesignacionDotacion)
 
 admin.site.register(TablaPoliza)
 """

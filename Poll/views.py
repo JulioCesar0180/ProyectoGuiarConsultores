@@ -51,8 +51,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 
-
-
 @login_required(login_url='MTRlogin')
 def get_name(request):
     # if this is a POST request we need to process the form data
@@ -646,15 +644,26 @@ def page_two_poll(request):
         'form_manufactura': form_manufactura,
         'form_transporte': form_transporte,
         'form_servicio': form_servicio,
-        'construccion': list_procesos[0],
-        'manufactura': list_procesos[1],
-        'transporte': list_procesos[2],
+        'transporte': list_procesos[0],
+        'construccion': list_procesos[1],
+        'manufactura': list_procesos[2],
         'servicio': list_procesos[3],
         'procesos_empresa': procesos_empresa,
     }
 
-    # list_procesos[0] = "Construccion"
+    # list_procesos[0] = "Transporte Terrestre"
     if list_procesos[0] in procesos_empresa.procesos.all():
+        if request.method == 'POST':
+            form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
+            if form_transporte.is_valid():
+                form_transporte.save(commit=False)
+                form_transporte.save()
+                form_transporte_valid = True
+            else:
+                form_transporte_valid = False
+
+    # list_procesos[1] = "Construccion"
+    if list_procesos[1] in procesos_empresa.procesos.all():
         if request.method == "POST":
             form_construccion = FormTablaResultadosConstruccion(request.POST, instance=construccion)
             if form_construccion.is_valid():
@@ -664,8 +673,8 @@ def page_two_poll(request):
             else:
                 form_construccion_valid = False
 
-    # list_procesos[1] = "Manufactura"
-    if list_procesos[1] in procesos_empresa.procesos.all():
+    # list_procesos[2] = "Manufactura"
+    if list_procesos[2] in procesos_empresa.procesos.all():
         if request.method == "POST":
             form_manufactura = FormTablaResultadosManufactura(request.POST, instance=manufactura)
             if form_manufactura.is_valid():
@@ -674,17 +683,6 @@ def page_two_poll(request):
                 form_manufactura_valid = True
             else:
                 form_manufactura_valid = False
-
-    # list_procesos[2] = "Transporte Terrestre"
-    if list_procesos[2] in procesos_empresa.procesos.all():
-        if request.method == 'POST':
-            form_transporte = FormTablaResultadosTransporte(request.POST, instance=transporte)
-            if form_transporte.is_valid():
-                form_transporte.save(commit=False)
-                form_transporte.save()
-                form_transporte_valid = True
-            else:
-                form_transporte_valid = False
 
     # list_procesos[3] = "Servicios Generales"
     if list_procesos[3] in procesos_empresa.procesos.all():
@@ -697,7 +695,7 @@ def page_two_poll(request):
             else:
                 form_servicio_valid = False
 
-    if request.method == 'POST' and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
+    if request.method == 'POST' and form_construccion_valid and form_manufactura_valid and form_transporte_valid and form_servicio_valid:
         return redirect('pagina3')
     return render(request, "MideTuRiesgo/mideturiesgo2.1.html", context)
 
@@ -708,6 +706,8 @@ def page_three_poll(request):
     cert_empresa, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
     man_riesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
     preven_empresa, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
+    procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=request.user)
+    cont = len(procesos_empresa.procesos.all())+5
 
     # POST
     if request.method == "POST":
@@ -733,6 +733,7 @@ def page_three_poll(request):
                 'form_cert_empresa': form_cert_empresa,
                 'form_man_riesgo': form_man_riesgo,
                 'form_preven_empresa': form_preven_empresa,
+                'cont': cont
             }
 
             return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
@@ -746,6 +747,7 @@ def page_three_poll(request):
             'form_cert_empresa': form_cert_empresa,
             'form_man_riesgo': form_man_riesgo,
             'form_preven_empresa': form_preven_empresa,
+            'cont': cont
         }
 
         return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
@@ -763,6 +765,8 @@ def page_four_poll(request):
     form_elect_emp = FormTablaResultadoElectricidad(instance=elect_emp)
     form_sust_emp = FormTablaResultadosSustancias(instance=sust_emp)
     form_alt_emp = FormTablaResultadosAltura(instance=alt_emp)
+    procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=request.user)
+    cont = len(procesos_empresa.procesos.all()) + 8
 
     if request.method == 'POST':
         form_mani_explosivos = FormTablaResultadosManiExplosivos(request.POST, instance=mani_explosivos_emp)
@@ -789,6 +793,7 @@ def page_four_poll(request):
                 'form_elect_emp': form_elect_emp,
                 'form_sust_emp': form_sust_emp,
                 'form_alt_emp': form_alt_emp,
+                'cont': cont
             }
             return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
     else:
@@ -797,6 +802,7 @@ def page_four_poll(request):
             'form_elect_emp': form_elect_emp,
             'form_sust_emp': form_sust_emp,
             'form_alt_emp': form_alt_emp,
+            'cont': cont
         }
         return render(request, "MideTuRiesgo/mideturiesgo4.html", context)
 
@@ -819,90 +825,152 @@ def page_results(request):
 
     # Resultados de la dotacion de la empresa Pag 1
     dotacion, _ = TablaResultadosDotacion.objects.get_or_create(id=request.user)
+    designacion = TablaDesignacionDotacion.objects.first()
     result_dotacion = 0
+    cont_empl = 0
+    cont_trans = 0
+
     if dotacion.cant_emp_contratados < 50:
-        result_dotacion += 1
+        res_emp_contratados = 1
     elif 50 <= dotacion.cant_emp_contratados < 125:
-        result_dotacion += 2
+        res_emp_contratados = 2
     elif 125 <= dotacion.cant_emp_contratados < 200:
-        result_dotacion += 3
+        res_emp_contratados = 3
     else:
-        result_dotacion += 4
+        res_emp_contratados = 4
+    result_dotacion += res_emp_contratados
+    cont_empl += res_emp_contratados
+
+    for d in desgloce:
+        if d[3] == designacion.campo1:
+            d[1] += 4
+            d[2] += res_emp_contratados
 
     if dotacion.cant_emp_contratista < 50:
-        result_dotacion += 1
+        res_emp_contratista = 1
     elif 50 <= dotacion.cant_emp_contratista < 125:
-        result_dotacion += 2
+        res_emp_contratista = 2
     elif 125 <= dotacion.cant_emp_contratista < 200:
-        result_dotacion += 3
+        res_emp_contratista = 3
     else:
-        result_dotacion += 5
+        res_emp_contratista = 5
+    result_dotacion += res_emp_contratista
+    cont_empl += res_emp_contratista
+
+    for d in desgloce:
+        if d[3] == designacion.campo2:
+            d[1] += 5
+            d[2] += res_emp_contratista
 
     if dotacion.cant_veh_empresa < 20:
-        result_dotacion += 1
+        res_veh_empresa = 1
     elif 20 <= dotacion.cant_veh_empresa < 30:
-        result_dotacion += 3
+        res_veh_empresa = 3
     elif 30 <= dotacion.cant_veh_empresa < 40:
-        result_dotacion += 5
+        res_veh_empresa = 5
     elif 40 <= dotacion.cant_veh_empresa < 50:
-        result_dotacion += 6
+        res_veh_empresa = 6
     else:
-        result_dotacion += 7
+        res_veh_empresa = 7
+    result_dotacion += res_veh_empresa
+    cont_trans += res_veh_empresa
+
+    for d in desgloce:
+        if d[3] == designacion.campo3:
+            d[1] += 7
+            d[2] += res_veh_empresa
 
     if dotacion.cant_veh_contratista < 20:
-        result_dotacion += 1
+        res_veh_contratista = 1
     elif 20 <= dotacion.cant_veh_contratista < 30:
-        result_dotacion += 3
+        res_veh_contratista = 3
     elif 30 <= dotacion.cant_veh_contratista < 40:
-        result_dotacion += 5
+        res_veh_contratista = 5
     elif 40 <= dotacion.cant_veh_contratista < 50:
-        result_dotacion += 6
+        res_veh_contratista = 6
     else:
-        result_dotacion += 7
+        res_veh_contratista = 7
+    result_dotacion += res_veh_contratista
+    cont_trans += res_veh_contratista
+
+    for d in desgloce:
+        if d[3] == designacion.campo4:
+            d[1] += 7
+            d[2] += res_veh_contratista
 
     if dotacion.cant_veh_empresa_pesado < 20:
-        result_dotacion += 3
+        res_veh_empresa_pesado = 3
     elif 20 <= dotacion.cant_veh_empresa_pesado < 30:
-        result_dotacion += 6
+        res_veh_empresa_pesado = 6
     elif 30 <= dotacion.cant_veh_empresa_pesado < 40:
-        result_dotacion += 9
+        res_veh_empresa_pesado = 9
     elif 40 <= dotacion.cant_veh_empresa_pesado < 50:
-        result_dotacion += 12
+        res_veh_empresa_pesado = 12
     else:
-        result_dotacion += 15
+        res_veh_empresa_pesado = 15
+    result_dotacion += res_veh_empresa_pesado
+    cont_trans += res_veh_empresa_pesado
+
+    for d in desgloce:
+        if d[3] == designacion.campo5:
+            d[1] += 15
+            d[2] += res_veh_empresa_pesado
 
     if dotacion.cant_veh_contratista_pesado < 20:
-        result_dotacion += 3
+        res_veh_contratista_pesado = 3
     elif 20 <= dotacion.cant_veh_contratista_pesado < 30:
-        result_dotacion += 6
+        res_veh_contratista_pesado = 6
     elif 30 <= dotacion.cant_veh_contratista_pesado < 40:
-        result_dotacion += 9
+        res_veh_contratista_pesado = 9
     elif 40 <= dotacion.cant_veh_contratista_pesado < 50:
-        result_dotacion += 12
+        res_veh_contratista_pesado = 12
     else:
-        result_dotacion += 15
+        res_veh_contratista_pesado= 15
+    result_dotacion += res_veh_contratista_pesado
+    cont_trans += res_veh_contratista_pesado
+
+    for d in desgloce:
+        if d[3] == designacion.campo6:
+            d[1] += 15
+            d[2] += res_veh_contratista_pesado
 
     if dotacion.cant_maq_pesada_empresa < 20:
-        result_dotacion += 1
+        res_maq_pesada_empresa= 1
     elif 20 <= dotacion.cant_maq_pesada_empresa < 30:
-        result_dotacion += 3
+        res_maq_pesada_empresa = 3
     elif 30 <= dotacion.cant_maq_pesada_empresa < 40:
-        result_dotacion += 5
+        res_maq_pesada_empresa = 5
     elif 40 <= dotacion.cant_maq_pesada_empresa < 50:
-        result_dotacion += 6
+        res_maq_pesada_empresa = 6
     else:
-        result_dotacion += 7
+        res_maq_pesada_empresa = 7
+    result_dotacion += res_maq_pesada_empresa
+
+    for d in desgloce:
+        if d[3] == designacion.campo7:
+            d[1] += 7
+            d[2] += res_maq_pesada_empresa
 
     if dotacion.cant_maq_pesada_contratista < 20:
-        result_dotacion += 1
+        res_maq_pesada_contratista = 1
     elif 20 <= dotacion.cant_maq_pesada_contratista < 30:
-        result_dotacion += 3
+        res_maq_pesada_contratista = 3
     elif 30 <= dotacion.cant_maq_pesada_contratista < 40:
-        result_dotacion += 5
+        res_maq_pesada_contratista = 5
     elif 40 <= dotacion.cant_maq_pesada_contratista < 50:
-        result_dotacion += 6
+        res_maq_pesada_contratista = 6
     else:
-        result_dotacion += 7
+        res_maq_pesada_contratista = 7
+    result_dotacion += res_maq_pesada_contratista
+
+    for d in desgloce:
+        if d[3] == designacion.campo8:
+            d[1] += 7
+            d[2] += res_maq_pesada_contratista
+        if d[3] == 3:
+            d[1] += 53
+            d[2] += cont_trans + cont_empl
+
     resultado += result_dotacion
     total += 67
     minimo += 12
@@ -1001,7 +1069,7 @@ def page_results(request):
                 if d[3] == re.poliza.id:
                     d[1] += 0
                     d[2] -= suma_result_cert
-    resultado += suma_result_cert
+    resultado -= suma_result_cert
 
     # Resultado de manejo de Riesgos pag 3
     result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
@@ -1016,7 +1084,7 @@ def page_results(request):
                 if d[3] == re.poliza.id:
                     d[1] += 0
                     d[2] -= suma_mriesgo
-    resultado += suma_mriesgo
+    resultado -= suma_mriesgo
 
     # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
     result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
@@ -1030,20 +1098,20 @@ def page_results(request):
             if d[3] == result_preven.opciones_prevencionista_t.poliza.id:
                 d[1] += 0
                 d[2] -= suma_preven
-    resultado += suma_preven
+    resultado -= suma_preven
 
     # Resultados de Explosivos Pag 4
     result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
     suma_mani_explosivos = 0
     if result_mani_explosivos.is_expo:
-        suma_mani_explosivos = result_mani_explosivos.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_mani_explosivos = result_mani_explosivos.tipos_exp.all().aggregate(Sum('ri'))['ri__sum']
         if suma_mani_explosivos is not None:
             total += 11
             minimo += 1
             resultado += suma_mani_explosivos
             riesgoporcentual_explosivos = round((suma_mani_explosivos / 11) * 100, 2)
             # desgloce.append(["Explosivos", riesgoporcentual_explosivos])
-            for re in result_mani_explosivos.tipos.all():
+            for re in result_mani_explosivos.tipos_exp.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 11
@@ -1053,14 +1121,14 @@ def page_results(request):
     result_electricidad, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
     suma_electricidad = 0
     if result_electricidad.is_elec:
-        suma_electricidad = result_electricidad.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_electricidad = result_electricidad.tipos_elec.all().aggregate(Sum('ri'))['ri__sum']
         if suma_electricidad is not None:
             total += 10
             minimo += 1
             resultado += suma_electricidad
             riesgoporcentual_electricidad = round((suma_electricidad / 10) * 100, 2)
             # desgloce.append(["Electricidad", riesgoporcentual_electricidad])
-            for re in result_electricidad.tipos.all():
+            for re in result_electricidad.tipos_elec.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 10
@@ -1070,14 +1138,14 @@ def page_results(request):
     result_sustancia, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
     suma_sustancia = 0
     if result_sustancia.is_sust:
-        suma_sustancia = result_sustancia.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_sustancia = result_sustancia.tipos_sust.all().aggregate(Sum('ri'))['ri__sum']
         if suma_sustancia is not None:
             total += 20
             minimo += 3
             resultado += suma_sustancia
             riesgoporcentual_sustancias = round((suma_sustancia / 20) * 100, 2)
             # desgloce.append(["Sustancias", riesgoporcentual_sustancias])
-            for re in result_sustancia.tipos.all():
+            for re in result_sustancia.tipos_sust.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 20
@@ -1087,40 +1155,52 @@ def page_results(request):
     result_altura, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
     suma_altura = 0
     if result_altura.is_alt:
-        suma_altura = result_altura.tipos.all().aggregate(Sum('ri'))['ri__sum']
+        suma_altura = result_altura.tipos_alt.all().aggregate(Sum('ri'))['ri__sum']
         if suma_altura is not None:
             total += 8
             minimo += 1
-            resultado += result_altura
+            resultado += suma_altura
             riesgoporcentual_altura = round((suma_altura / 8) * 100, 2)
             # desgloce.append(["Altura", riesgoporcentual_altura])
-            for re in result_altura.tipos.all():
+            for re in result_altura.tipos_alt.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 8
                         d[2] += suma_altura
 
     # Despligue de Desiciones
-    res_por = ((resultado - minimo) / (total - minimo))
+    res_por = ((resultado) / (total))
     res_img = (379 + 19) * res_por
     res_fin = (379 + 19) - res_img
     res_fin = int(res_fin)
-    cuartil = (total - minimo) / 4
-    if resultado < (minimo + cuartil):
+    cuartil = (total) / 4
+    if resultado < (cuartil):
         color = "VERDE"
-    elif (minimo + cuartil) <= resultado < (2 * cuartil + minimo):
+    elif (cuartil) <= resultado < (2 * cuartil):
         color = "AMARILLO"
-    elif (2 * cuartil + minimo) <= resultado <= (3 * cuartil + minimo):
+    elif (2 * cuartil) <= resultado <= (3 * cuartil):
         color = "ANARANJADO"
     else:
         color = "ROJO"
 
     #sort arreglo desgloce
     desgloce_ordenado = []
+
     for des in desgloce:
         if des[1] != 0:
             desgloce_ordenado.append([des[0],round((des[2]/des[1])*100,1)])
     desgloce_ordenado.sort(key = lambda array: array[1], reverse=True)
+
+    '''
+    aux = 0
+    for des in desgloce_ordenado:
+        ant = des[1]
+        if aux != 0:
+            if des[1] == ant:
+                if ant.priority < des[1]:
+                    ordenar esa seccion por prioridad
+        aux = 1
+    '''
 
     # return render(request,  'MideTuRiesgo/mideturiesgoresultado.html', {'suma': resultado})
     return render(request, "MideTuRiesgo/mideturiesgoresultado.html",{'total': total, 'minimo': minimo, 'resultado': resultado, 'res_fin': res_fin, 'color': color, 'desgloce':desgloce_ordenado})

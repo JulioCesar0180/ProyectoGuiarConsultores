@@ -90,21 +90,23 @@
                     </div>
                 {% endif %}
             {% endfor %}
-            <div><br></div>
             <div><hr></div>
         </div>
 
         <div style="text-align: center;" class="navButtons">
             <div class="boton">
-                <input type="button" id="previous" onclick="history.go(-1)" value="←">
+                <input type="button" id="previous" onclick="history.go(-1)" value="Anterior">
             </div>
             <div class="boton">
-                <button type="submit" value="Submit" id="next">Terminar</button>
+                <button type="submit" value="Submit" id="resultado">Terminar</button>
             </div>
         </div>
         <div><br></div>
-
         </form>
+        <div class="pagina">
+            Página 4/4
+        </div>
+        <div><br></div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -116,11 +118,12 @@
     <script type="text/javascript">
 
         var checkbox = $('[id="id_is_expo_0"]');
+        var num = document.getElementById('exp').innerHTML;
         var inspectorExp;
         if (checkbox.is(':checked'))
         {
             inspectorExp = 1;
-            $('#explosivos').append('<div id="explosivosNext"><b>P1.1 .</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
+            $('#explosivos').append('<div id="explosivosNext"><b>P'+num+'.1 .</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
                     '                <div><br></div>\n' +
                     '                {% for tipoexp in form_mani_explosivos.tipos %}\n'+
                         '                    <div class="input-radio">\n'+
@@ -141,9 +144,10 @@
 
             if (inspectorExp < 1)
             {
+                var num = document.getElementById('exp').innerHTML;
                 console.log("SI");
                 inspectorExp++;
-                $('#explosivos').append('<div id="explosivosNext"><b>P1.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
+                $('#explosivos').append('<div id="explosivosNext"><b>P'+num+'.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
                     '                <div><br></div>\n' +
                     '                {% for tipoexp in form_mani_explosivos.tipos_exp %}\n'+
                         '                    <div class="input-radio">\n'+
@@ -177,10 +181,11 @@
 
         var checkbox = $('[id="id_is_elec_0"]');
         var inspectorElec;
+        var num = document.getElementById('ele').innerHTML;
         if (checkbox.is(':checked'))
         {
             inspectorElec = 1;
-            $('#electricidad').append('<div id="electricidadNext"><b>P2.1 .</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
+            $('#electricidad').append('<div id="electricidadNext"><b>P'+num+'.1 .</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
                 '        <div><br></div>\n' +
                 '        {% for tipoElec in form_elect_emp.tipos_elec %}\n'+
                     '            <div class="input-radio">\n'+
@@ -201,7 +206,8 @@
             {
                 console.log("SI");
                 inspectorElec++;
-                $('#electricidad').append('<div id="electricidadNext"><b>P2.1 .</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
+                var num = document.getElementById('ele').innerHTML;
+                $('#electricidad').append('<div id="electricidadNext"><b>P'+num+'.1 .</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la MANIPULACIÓN DE ELECTRICIDAD\n' +
                     '        <div><br></div>\n' +
                     '        {% for tipoElec in form_elect_emp.tipos_elec %}\n'+
                         '            <div class="input-radio">\n'+
@@ -233,10 +239,11 @@
 
         var checkbox = $('[id="id_is_sust_0"]');
         var inspectorSust;
+        var num = document.getElementById('sus').innerHTML;
         if (checkbox.is(':checked'))
         {
             inspectorSust = 1;
-            $('#sustancias').append('<div id="sustanciasNext"><b>P3.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
+            $('#sustancias').append('<div id="sustanciasNext"><b>P'+num+'.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
                 '        <div><br></div>\n' +
                 '        {% for tipoSust in form_sust_emp.tipos_sust %}\n'+
                     '            <div class="input-radio">\n'+
@@ -259,7 +266,8 @@
             {
                 console.log("SI");
                 inspectorSust++;
-                $('#sustancias').append('<div id="sustanciasNext"><b>P3.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
+                var num = document.getElementById('sus').innerHTML;
+                $('#sustancias').append('<div id="sustanciasNext"><b>P'+num+'.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto al TRANSPORTE DE SUSTANCIAS PELIGROSAS\n' +
                     '        <div><br></div>\n' +
                     '        {% for tipoSust in form_sust_emp.tipos_sust %}\n'+
                         '            <div class="input-radio">\n'+
@@ -293,10 +301,11 @@
 
         var checkbox = $('[id="id_is_alt_0"]');
         var inspectorAlt;
+        var num = document.getElementById('alt').innerHTML;
         if (checkbox.is(':checked'))
         {
             inspectorAlt = 1;
-            $('#altura').append('<div id="alturaNext"><b>P4.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
+            $('#altura').append('<div id="alturaNext"><b>P'+num+'.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
                 '        <div><br></div>\n' +
                 '        {% for tipoAlt in form_alt_emp.tipos_alt %}\n'+
                     '            <div class="input-radio">\n'+
@@ -319,7 +328,8 @@
             {
                 console.log("SI");
                 inspectorAlt++;
-                $('#altura').append('<div id="alturaNext"><b>P4.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
+                var num = document.getElementById('alt').innerHTML;
+                $('#altura').append('<div id="alturaNext"><b>P'+num+'.1 </b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a los TRABAJOS EN ALTURA\n' +
                     '        <div><br></div>\n' +
                     '        {% for tipoAlt in form_alt_emp.tipos_alt %}\n'+
                         '            <div class="input-radio">\n'+

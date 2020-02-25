@@ -116,8 +116,8 @@ input[type=radio] + label{
   }
   #next, #previous{
     color:white;
-    background-color:blue;
-    border: blue;
+    background-color:#2e393f;
+    border: #030404;
     border-radius: 5px;
     width: 10%;
   }
@@ -166,4 +166,6 @@ input[type=radio] + label{
     border: 2px solid black;
 }
 }
+
+
 

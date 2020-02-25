@@ -354,3 +354,15 @@ class TablaResultadosAltura(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
     tipos_alt = models.ManyToManyField(TablaTrabajosAltura, blank=True, null=True)
+
+
+class TablaDesignacionDotacion(models.Model):
+    campo1 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    campo2 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    campo3 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    campo4 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    campo5 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    campo6 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    campo7 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    campo8 = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    
