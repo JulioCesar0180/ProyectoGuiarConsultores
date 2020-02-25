@@ -1,88 +1,118 @@
 {% extends 'header.html' %}
 {% load static %}
-{% block content %}
 
-<link rel="stylesheet" href="{% static 'css/user_Home.css'%}">
-<link rel="stylesheet" href="{% static 'css/registration.css'%}">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-
-{% if user.is_authenticated %}
-<body class="home">
-<div class="container-fluid display-table" style="height:100vh">
-    <div class="row display-table-row" style="display: table-caption !important;">
-        <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
-            <div class="navi">
-                <ul>
-                    <li class="active"><a href="{% url 'home' %}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
-                    <li><a href="{% url 'perfil' %}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Perfil</span></a></li>
-                    <li><a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
-                    <li><a href="{% url 'change_password' %}"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cambiar Contraseña</span></a></li>
-                    <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Cerrar Sesión</span></a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-10 col-sm-11 display-table-cell v-align">
-            <div class="row">
-                <div class="col-md-7">
-                    <nav class="navbar-default pull-left">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-            <center>
-                <div class="w3-container">
-                    <div class="w3-card-4" style="width:69%;">
-                        <header class="w3-container w3-blue">
-                            <h2>Bienvenido(a) a MideTuRiesgo, {{ name }}!</h2>
-                        </header>
-
-                        <div class="w3-container" >
-                            <p>
-                            <div class="row">
-                                <img src="{% static 'images/mideturiesgo.png' %}">
-                                <a id="btn-button" href="{% url 'test' %}" class="button">Comenzar</a>
-                            </div>
-                            <p>
-
-                        </div>
-                        <footer class="w3-container w3-blue">
-                            <p>
-                        </footer>
-                    </div>
-                </div>
-            </center>
-
-        </div>
-    </div>
-</div>
-</body>
-{% else %}
-
-<meta http-equiv="REFRESH" content="0;url={% url 'login' %}">
-
-{% endif %}
-
+{% block head %}
 {% endblock %}
 
+{% block background_body %}style="background-image: url('{% static 'images/img_carousel/carousel-3.jpg' %}')"{% endblock %}
 
+{% block content %}
+    <div class="container-gc-large uk-container uk-container-large">
+    <h2 class="title-gc">Mideturiesgo</h2>
+        <div class="panel-card">
+            <div class="uk-card uk-card-default uk-card-body">
+                <article>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </article>
+                <a href="" class="btn btn-gc-blue">Responder Encuesta</a>
+            </div>
+        </div>
+    </div>
+    <div class="container-gc-large uk-container uk-container-large">
+        <h2 class="title-gc">Detalles de la Cuenta</h2>
+        <div class="panel-gc uk-text-center" uk-grid>
+            <div class="panel-card uk-width-1-3@m">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div>
+                        <h5>Datos Representante</h5>
+                    </div>
+                    <div class="container-grid-gc" text="left">
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="nombre" style="text-align: left">Nombre</label>
+                            <input class="form-control" style="text-align: center; padding-left: 0" id="nombre" value="{{ empresa.nombre_representante }}" disabled>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="ciudad" style="text-align: left">Ciudad</label>
+                            <input class="form-control" style="text-align: center; padding-left: 0" id="ciudad" value="{{ empresa.rut_representante }}" disabled>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="comuna" style="text-align: left">Comuna</label>
+                            <input class="form-control" style="text-align: center; padding-left: 0" id="comuna" value="{{ empresa.email_representante }}" disabled>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="razon_social" style="text-align: left">Razon Social</label>
+                            <input class="form-control" style="text-align: center; padding-left: 0" id="razon_social" value="{{ empresa.telefono_representante }}" disabled>
+                        </div>
+                    </div>
+                    <a href="" class="btn"></a>
+                </div>
+            </div>
+            <div class="panel-card uk-width-1-3@m">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div>
+                        <h5>Datos de la Empresa</h5>
+                    </div>
+                    <div class="container-grid-gc" text="left">
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="nombre">Nombre</label>
+                            <input class="form-control" style="text-align: center;" id="nombre" value="{{ request.user.name }}" disabled>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="ciudad">Ciudad</label>
+                            <input class="form-control" style="text-align: center;" id="ciudad" value="{{ empresa.ciudad_empresa }}" disabled>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="comuna">Comuna</label>
+                            <input class="form-control" style="text-align: center;" id="comuna" value="{{ empresa.comuna_empresa }}" disabled>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="razon_social">Razon Social</label>
+                            <input class="form-control" style="text-align: center;" id="razon_social" value="{{ empresa.razon_social_empresa }}" disabled>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+                            <label for="antiguedad">Antigüedad</label>
+                            <input class="form-control" style="text-align: center;" id="antiguedad" value="{{ empresa.experiencia_empresa }}" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-card uk-width-1-3@m">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div>
+                        <h5>Cambiar Contraseña</h5>
+                    </div>
+                    <div style="background: rgba(25,25,112, 0.2);padding: 30px 35px;" text="left">
+                        <button style="background: blue; color: white" class="btn">Cambiar Clave</button>
+                    </div>
+                </div>
+            </div>
 
+            <div class="panel-card uk-width-1-2@m">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div>
+                        <h5>Datos Personales</h5>
+                    </div>
+                    <div style="background: blue; height: 100px; border-radius: 20px">
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-card uk-width-1-2@m">
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div>
+                        <h5>Datos de la Empresa</h5>
+                    </div>
+                    <div style="background: blue; height: 100px; border-radius: 20px" text="left">
+                        <p>Nombre: </p>
+                        <p>Rut:</p>
+                        <p>Telefono</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
 

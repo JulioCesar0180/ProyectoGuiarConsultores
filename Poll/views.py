@@ -167,7 +167,7 @@ def report(request):
 
     today = date.today()
     now = str(today.day)+"/"+str(today.month)+"/"+str(today.year)
-    c.drawString(480,790,now)
+    c.drawString(480, 790, now)
 
     #start X, height end Y, height
     c.line(475, 787, 560, 787)
@@ -309,19 +309,14 @@ def change_password(request):
 
     return render(request, 'change_password.html')
 
+
 @login_required(login_url='MTRlogin')
 def home(request):
+    empresa = TablaPerfilEmpresa.objects.get(id_id=request.user.rut)
+    return render(request, 'home.html', {
+        'empresa': empresa
+    })
 
-    try:
-        empresa = TablaPerfilEmpresa.objects.get(id_id=request.user.rut)
-        nombre_representante = empresa.nombre_representante
-        return render(request, 'home.html', {
-            'name': nombre_representante
-        })
-    except:
-        return render(request, 'home.html', {
-            'name': "Contacto"
-        })
 
 @login_required(login_url='MTRlogin')
 def Perfil(request):
