@@ -9,7 +9,6 @@
 .container-gc-large{
     height: auto; background: rgba(144, 164, 174, 0.7); padding-bottom: 30px;
     margin-top: 30px;
-    margin-bottom: auto;
 }
 
 .panel-card{
@@ -28,6 +27,7 @@ div > label{
 body{
     background-size: cover;
     background: no-repeat;
+    padding-bottom: 30px
 }
 
 .title-gc{

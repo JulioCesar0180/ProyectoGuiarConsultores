@@ -10,7 +10,7 @@
         {% endblock %}
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css" />
-        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
         <!-- UIkit JS -->
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit-icons.min.js"></script>
@@ -19,10 +19,11 @@
     <body {% block background_body %}{% endblock %}>
     <nav class="navbar uk-navbar-container" uk-navbar>
         <div class="uk-navbar-item" style="color: white">
-            <p>Empresa {{ request.user.name }}</p>
+            <p class="title-banner">Empresa {{ request.user.name }}</p>
         </div>
         <div class="uk-navbar-right">
-            <img style="height: 45px; width: 260px" src="{% static 'images/mideturiesgo.png' %}">
+            <a href="#">Active</a>
+            <a href="">Cerrar Sesión</a>
         </div>
     </nav>
         {% block content %}{% endblock %}
