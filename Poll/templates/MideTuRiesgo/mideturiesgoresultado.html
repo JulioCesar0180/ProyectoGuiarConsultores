@@ -41,12 +41,16 @@
         %
         <br>
         {% endfor %}
+
     </div>
     <div class="inicio">
-      Con el siguiente link puede descargar el reporte, en donde podrá ver el resumen de la encuenta respondida.
+      Recomendamos fuertemente que, en base al resultado de la encuesta realizada, usted adquiera una poliza de {{ desgloce.0.0 }}.
+      <br>
+      Lo tomaremos en consideración cuando nos contactemos con usted. Además, con el siguiente link puede descargar el reporte,
+      en donde podrá ver el resumen de la encuenta respondida.
     </div>
     <div class="inicio">
-      <a href="{% url 'pdfReport' %}">Descargar reporte en pdf</a>
+      <a href="{% url 'pdfReport' %}" id="next">Descargar reporte en pdf</a>
     </div>
     <div>
       <hr>
