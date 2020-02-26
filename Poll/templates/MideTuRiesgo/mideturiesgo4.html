@@ -125,7 +125,7 @@
             inspectorExp = 1;
             $('#explosivos').append('<div id="explosivosNext"><b>P'+num+'.1 .</b> Indique todas las actividades que realiza la empresa para disminuir los riesgos con respecto a la manipulación de explosivos\n' +
                     '                <div><br></div>\n' +
-                    '                {% for tipoexp in form_mani_explosivos.tipos %}\n'+
+                    '                {% for tipoexp in form_mani_explosivos.tipos_exp %}\n'+
                         '                    <div class="input-radio">\n'+
                         '                        {{ tipoexp.tag }}\n'+
                         '                        <label for="{{ tipoexp.id_for_label }}" class="unselectable">{{ tipoexp.choice_label }}</label>\n'
