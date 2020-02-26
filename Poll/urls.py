@@ -14,8 +14,8 @@ urlpatterns = [
 
     path('signup', views.signup, name='signup'),
 
-    path('accounts/', include('django.contrib.auth.urls')),
     path('login', views.MTR_login, name='MTRlogin'),
+    path('logout', views.logout_view, name='logout'),
     path('profile/<slug:pk>', login_required(views.PerfilView.as_view()), name='perfil'),
     path('profile/business/<slug:pk>', login_required(views.PerfilEmpresaView.as_view()), name='business-profile'),
 

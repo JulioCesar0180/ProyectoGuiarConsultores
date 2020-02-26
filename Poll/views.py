@@ -26,7 +26,7 @@ from django.db.transaction import commit
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.views.generic import CreateView, UpdateView
 
 from .models import UserGuiar
@@ -318,7 +318,7 @@ class PerfilEmpresaView(UpdateView):
 class ChangePasswordView(PasswordChangeView):
     template_name = 'change_password.html'
     form_class = FormChangePassword
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('login')
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -362,6 +362,11 @@ def MTR_login(request):
 
     form = LogInForm()
     return render(request, 'registration/login.html', {'form': form})
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('MTRlogin')
 
 
 def signup(request):

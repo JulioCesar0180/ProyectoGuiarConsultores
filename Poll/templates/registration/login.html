@@ -8,6 +8,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'css/registration.css'%}">
+
+    <script src="https://kit.fontawesome.com/a8e077e6ff.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.3.3/dist/css/uikit.min.css" />
 
@@ -33,26 +38,28 @@
                 <img src="{% static 'images/logoGC.png' %}" alt="">
             </div>
             <div class="uk-card-body">
-                <h3 class="uk-card-title uk-text-center" style="color: white">Iniciar Sesión</h3>
+                <h3 class="uk-card-title uk-text-center" style="color: white;">Bienvenido</h3>
+                {% for message in messages %}
+                <div class="uk-alert-{{ message.tags }}" style="padding: 10px; margin-bottom: 5px" role="alert">
+                    <p style="margin-bottom: 0"><i style="margin-right: 5px" class="fas fa-exclamation-triangle"></i>{{ message }}</p>
+                </div>
+                {% endfor %}
                 <form method="post">
                     {% csrf_token %}
                     {{ form }}
                     <center><button type="submit" class="uk-button login_btn">Iniciar Sesión</button></center>
                 </form>
-
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    <p>{{ message }}</p>
-                </div>
-                {% endfor %}
             </div>
 
-            <div class="uk-card-footer" style="background: rgb(144, 164, 174)">
+            <div class="uk-card-footer uk-text-center" style="background: rgb(144, 164, 174)">
                 <div class="d-flex justify-content-center links">
                     ¿No tiene una cuenta?<a href="{% url 'signup'%}">Registrarse</a>
                 </div>
                 <div class="d-flex justify-content-center">
                     <a href="{% url 'reset_password' %}"> ¿Olvidó su contraseña? </a>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <a class="uk-button" style="background: blue; margin-top: 10px;" href="{% url 'homeGC' %}"> Volver al sitio </a>
                 </div>
             </div>
         </div>
