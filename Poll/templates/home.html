@@ -15,7 +15,7 @@
                 <article>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </article>
-                <a href="" class="btn btn-gc-blue">Responder Encuesta</a>
+                <a href="{% url 'test' %}" class="btn btn-gc-blue">Responder Encuesta</a>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
                             <input class="form-control" style="text-align: center; padding-left: 0" id="razon_social" value="{{ empresa.telefono_representante }}" disabled>
                         </div>
                     </div>
-                    <a href="" class="btn btn-gc-blue">Modificar</a>
+                    <a class="btn btn-gc-blue update-profile">Editar Información</a>
                 </div>
             </div>
             <div class="panel-card uk-width-1-2@m">
@@ -75,7 +75,7 @@
                             <input class="form-control" style="text-align: center;" id="antiguedad" value="{{ empresa.experiencia_empresa }}" disabled>
                         </div>
                     </div>
-                    <a href="" class="btn btn-gc-blue">Modificar</a>
+                    <a class="btn btn-gc-blue update-business">Editar Información</a>
                 </div>
             </div>
 
@@ -84,35 +84,65 @@
                     <div>
                         <h5>Cambiar Contraseña</h5>
                     </div>
-                    <div style="background: rgba(25,25,112, 0.2);padding: 30px 35px;" text="left">
-                        <button style="background: blue; color: white" class="btn">Cambiar Clave</button>
+                    <div class="container-grid-gc" text="left">
+                        <a class="btn btn-gc-blue change-pass">Cambiar Contraseña</a>
                     </div>
                 </div>
             </div>
             <div class="panel-card uk-width-1-3@m">
                 <div class="uk-card uk-card-default uk-card-body">
                     <div>
-                        <h5>Cambiar Contraseña</h5>
+                        <h5>Resultados</h5>
                     </div>
                     <div style="background: rgba(25,25,112, 0.2);padding: 30px 35px;" text="left">
-                        <button style="background: blue; color: white" class="btn">Cambiar Clave</button>
+                        <a href="{% url 'resultado' %}" class="btn btn-gc-blue">Ver resultados</a>
                     </div>
                 </div>
             </div>
             <div class="panel-card uk-width-1-3@m">
                 <div class="uk-card uk-card-default uk-card-body">
                     <div>
-                        <h5>Cambiar Contraseña</h5>
+                        <h5>Otro</h5>
                     </div>
                     <div style="background: rgba(25,25,112, 0.2);padding: 30px 35px;" text="left">
-                        <button style="background: blue; color: white" class="btn">Cambiar Clave</button>
+                        <button style="background: blue; color: white" class="btn">Ver Otros</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block script %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".update-profile").modalForm({
+                formURL: "{% url 'perfil' request.user.rut %}"
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".update-business").modalForm({
+                formURL: "{% url 'business-profile' request.user.rut %}"
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".change-pass").modalForm({
+                formURL: "{% url 'change_password' request.user.rut %}"
+            });
+        });
+    </script>
 {% endblock %}
 

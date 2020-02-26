@@ -1,5 +1,6 @@
 .navbar{
     background: blue !important;
+    border-radius: 0!important;
 }
 
 .panel-gc{
@@ -38,4 +39,8 @@ body{
     background: blue !important;
     color: white !important;
     margin-top: 20px
+}
+
+.btn-gc-blue:hover{
+    background: rgba(144, 164, 174, 0.7) !important;
 }

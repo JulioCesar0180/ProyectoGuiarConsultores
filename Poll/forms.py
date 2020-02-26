@@ -4,10 +4,13 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import *
 
+
 class LogInForm(forms.Form):
-    rut = forms.CharField(label='Rut Empresa', widget=forms.TextInput(attrs={'placeholder': 'Ingrese Rut de Empresa'}))
+    rut = forms.CharField(label='Rut Empresa', widget=forms.TextInput(attrs={'placeholder': 'Ingrese Rut de Empresa',
+                                                                             'class': 'uk-input'}))
     password = forms.CharField(label='Contraseña', max_length=30,
-                               widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese Contraseña'}))
+                               widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese Contraseña',
+                                                                 'class': 'uk-input'}))
 
     class Meta:
         model = UserGuiar
@@ -98,6 +101,82 @@ class FormUserGuiar(ModelForm):
                 'class': 'form-control',
             }),
         }
+
+
+class FormDatosRepresentante(forms.ModelForm):
+    class Meta:
+        model = TablaPerfilEmpresa
+        fields = (
+            'nombre_representante', 'rut_representante',
+            'email_representante', 'telefono_representante'
+        )
+
+        widgets = {
+            'nombre_representante': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'rut_representante': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'email_representante': forms.EmailInput(attrs={
+                'class': 'form-control'
+            }),
+            'telefono_representante': forms.NumberInput(attrs={
+                'class': 'form-control',
+            })
+        }
+
+
+class FormDatosEmpresa(forms.ModelForm):
+    class Meta:
+        model = TablaPerfilEmpresa
+        fields = (
+            'ciudad_empresa', 'comuna_empresa', 'razon_social_empresa', 'experiencia_empresa'
+        )
+
+        widgets = {
+            'ciudad_empresa': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'comuna_empresa': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'razon_social_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'experiencia_empresa': forms.NumberInput(attrs={
+                'class': 'form-control',
+            })
+        }
+
+
+class FormChangePassword(forms.Form):
+    old_password = forms.CharField(
+        label="Contraseña Actual",
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+
+    new_password = forms.CharField(
+        label="Nueva Contraseña",
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
+
+    confirm_password = forms.CharField(
+        label="Confirmar Contraseña",
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control'
+            }
+        )
+    )
 
 
 """ 

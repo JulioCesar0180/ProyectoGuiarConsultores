@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path, include
 from django.contrib import admin
 from Poll import views
@@ -15,9 +16,10 @@ urlpatterns = [
 
     path('accounts/', include('django.contrib.auth.urls')),
     path('login', views.MTR_login, name='MTRlogin'),
-    path('profile', views.Perfil, name='perfil'),
+    path('profile/<slug:pk>', login_required(views.PerfilView.as_view()), name='perfil'),
+    path('profile/business/<slug:pk>', login_required(views.PerfilEmpresaView.as_view()), name='business-profile'),
 
-    path('password/change', views.change_password, name='change_password'),
+    path('password/change/<slug:pk>', login_required(views.ChangePasswordView.as_view()), name='change_password'),
     path('password/reset', views.reset_password, name='reset_password'),
 
     path('PDFreport/', views.report, name="pdfReport"),

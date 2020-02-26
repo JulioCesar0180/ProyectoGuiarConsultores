@@ -2,6 +2,9 @@
 """PDF"""
 from django.conf import settings
 from io import BytesIO
+
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
@@ -24,7 +27,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 
 from .models import UserGuiar
 from .forms import *
@@ -143,9 +146,10 @@ def get_name(request):
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
 desgloce=[]
+desgloce_ordenado=[]
 @login_required(login_url='MTRlogin')
 def report(request):
-    global desgloce
+    global desgloce_ordenado
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=Reporte-Guiar-Consultores.pdf'
 
@@ -173,6 +177,7 @@ def report(request):
     #Body
     """..."""
 
+
     #Table header
     styles = getSampleStyleSheet()
     styleBH = styles["Normal"]
@@ -193,7 +198,7 @@ def report(request):
 
     high = 650
     cont = 1
-    for i in desgloce:
+    for i in desgloce_ordenado:
         i.insert(0, cont)
         cont += 1
         data.append(i)
@@ -206,6 +211,13 @@ def report(request):
     table.setStyle(TableStyle([ #estilos de la tabla
         ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
         ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
+
+
+    """Contenido"""
+    c.setFont("Helvetica", 10)
+    texto = "En base a los resultados de la encuesta, la sección con más prioridad es " + str(desgloce_ordenado[0][1])
+    c.drawString(40, 500, texto)
+
 
     #pdf size
     table.wrapOn(c, width, height)
@@ -280,33 +292,6 @@ def reset_password_form(request):
 
     return render(request, 'reset_password_form.html')
 
-@login_required(login_url='MTRlogin')
-def change_password(request):
-    obj_user = request.user
-    en_password = str(request.user.password)
-    if request.method == 'POST':
-        old_password = request.POST['old_password']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        if check_password(old_password, en_password):
-            if password1 != "" or password2 != "":
-                if password1 == password2:
-                    obj_user.set_password(password1)
-                    obj_user.save()
-                    messages.success(request, 'Su contraseña ha sido actualizada!')
-                    user = authenticate(username=request.user.rut, password=request.user.password)
-                    if user is not None:
-                        login(request, user)
-                        return redirect('home')
-                else:
-                    messages.error(request, 'Las nuevas contraseñas no coinciden.')
-            else:
-                messages.error(request, 'No puede dejar la contraseñas en blanco.')
-        else:
-            messages.error(request, 'Ha ingresado su contraseña incorrectamente.')
-
-    return render(request, 'change_password.html')
-
 
 @login_required(login_url='MTRlogin')
 def home(request):
@@ -316,57 +301,41 @@ def home(request):
     })
 
 
-@login_required(login_url='MTRlogin')
-def Perfil(request):
+class PerfilView(UpdateView):
+    template_name = 'perfil.html'
+    model = TablaPerfilEmpresa
+    form_class = FormDatosRepresentante
+    success_url = reverse_lazy('home')
 
-    Obj_user = request.user
-    #try:
-    Obj_empresa = TablaPerfilEmpresa.objects.get(id_id=request.user.rut)
 
-    if request.method == 'POST':
+class PerfilEmpresaView(UpdateView):
+    template_name = 'perfilEmpresa.html'
+    model = TablaPerfilEmpresa
+    form_class = FormDatosEmpresa
+    success_url = reverse_lazy('home')
 
-        """Datos de contacto de la Obj_empresa"""
 
-        """ Aquí solo falta validar el ingreso de datos para cada atributo, por ejemplo
-         validar el ingreso de texto en blanco"""
-        if(request.POST['nombre_representante'] and request.POST['email_representante'] and request.POST['telefono_representante'] != ""):
-            if (phone_validator(request.POST['telefono_representante'])):
-                """Cada linea de este codigo, modifica los campos correpondientes"""
-                #Este es nuevo
-                Obj_empresa.rut_representante = request.POST['rut_representante']
-                Obj_empresa.nombre_representante = string_format(request.POST['nombre_representante'])
-                Obj_empresa.email_representante = request.POST['email_representante']
-                Obj_empresa.telefono_representante = phone_format(request.POST['telefono_representante'])
-                Obj_empresa.experiencia_empresa = request.POST['experiencia_empresa']
-                Obj_empresa.razon_social_empresa = request.POST['razon_social_empresa']
-                #Obj_empresa.ventas_anuales_empresa = request.POST['ventas_anuales_empresa']
-                Obj_empresa.comuna_empresa = string_format(request.POST['comuna_empresa'])
-                Obj_empresa.ciudad_empresa = string_format(request.POST['ciudad_empresa'])
+class ChangePasswordView(PasswordChangeView):
+    template_name = 'change_password.html'
+    form_class = FormChangePassword
+    success_url = reverse_lazy('home')
 
-                "Nombre de la empresa se repite en las 2 tablas"
-                #Obj_empresa.nombre_empresa = request.POST['nombre_empresa']
-                Obj_empresa.id_id = request.user.rut
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form})
 
-                "Datos User Guiar"
-                Obj_user.name = string_format(request.POST['nombre_empresa'])
-                Obj_user.address = string_format(request.POST['address'])
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            old_pass = form.cleaned_data['old_password']
+            new_pass = form.cleaned_data['new_password']
+            confirm_pass = form.cleaned_data['confirm_password']
 
-                """ Actualiza la base de datos"""
-                Obj_empresa.save()
-                Obj_user.save()
-
-                messages.success(request, "Los datos han sido actualizados con éxito!")
-            else:
-                messages.error(request, "El formato del Número de Celular ingresado no es válido")
-        else:
-            messages.error(request, "Los campos Nombre, Email y Número de contacto no pueden estar vacíos")
-    return render(request, 'perfil.html', {
-        'Obj_empresa': Obj_empresa,
-        'Obj_user': Obj_user,
-    })
-    """except:
+            if check_password(old_pass, request.user.password) and new_pass == confirm_pass:
+                request.user.set_password(new_pass)
+                request.user.save()
+                return redirect('home')
         return redirect('home')
-    """
 
 
 def MTR_login(request):
@@ -819,6 +788,9 @@ def page_results(request):
     #Por Julio, te declaré desgloce como variable global porq lo necesito usar en report() y no se me ocurrio otra forma
     global desgloce
     desgloce.clear()
+
+    global desgloce_ordenado
+    desgloce_ordenado.clear()
 
     for poliza in TablaPoliza.objects.all():
         desgloce.append([poliza.nombre_poliza,0,0,poliza.id])
