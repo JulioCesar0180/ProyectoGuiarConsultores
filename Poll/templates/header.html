@@ -4,19 +4,28 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         {% block head %}
         {% endblock %}
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css" />
-
+        <link rel="stylesheet" href="{% static 'css/header.css' %}">
         <!-- UIkit JS -->
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit-icons.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-    <!-- Navigation -->
-    <body>
+    <body {% block background_body %}{% endblock %}>
+    <nav class="navbar uk-navbar-container" uk-navbar>
+        <div class="uk-navbar-item" style="color: white">
+            <p class="title-banner">Empresa {{ request.user.name }}</p>
+        </div>
+        <div class="uk-navbar-right">
+            <a href="#">Active</a>
+            <a href="">Cerrar Sesión</a>
+        </div>
+    </nav>
         {% block content %}{% endblock %}
     </body>
     {% block script %}
