@@ -79,11 +79,23 @@ button.login_btn{
 color: black;
 background-color: #FFC312;
 width: auto;
+  margin-top: 20px;
 }
 
 button.login_btn:hover{
 color: black;
-background-color: white;
+background-color: orange;
+}
+
+.card-login{
+  background: rgba(255,255,255,1);
+}
+
+.custom-card{
+  background: rgba(0,0,0,0.6);
+  color: white;
+  width: 500px;
+  padding: 0!important;
 }
 
 .links{

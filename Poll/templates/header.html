@@ -6,33 +6,48 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {% block head %}
-        {% endblock %}
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/base.css'%}">
+
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/css/uikit.min.css" />
         <link rel="stylesheet" href="{% static 'css/header.css' %}">
         <!-- UIkit JS -->
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.2.3/dist/js/uikit-icons.min.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        {% block head %}
+        {% endblock %}
     </head>
     <body {% block background_body %}{% endblock %}>
     <nav class="navbar uk-navbar-container" uk-navbar>
-        <div class="uk-navbar-item" style="color: white">
-            <p class="title-banner">Empresa {{ request.user.name }}</p>
+        <div class="uk-navbar-left">
+            <ul class="uk-navbar-nav">
+                <li><a href="#">Empresa {{ request.user.name }}</a></li>
+            </ul>
         </div>
         <div class="uk-navbar-right">
-            <a href="#">Active</a>
-            <a href="">Cerrar Sesión</a>
+            <ul class="uk-navbar-nav">
+                <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
+                <li><a href="{% url 'homeGC' %}">Volver al sitio</a></li>
+            </ul>
         </div>
     </nav>
         {% block content %}{% endblock %}
-    </body>
+
+
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-notify.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+    <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
     {% block script %}
 
     {% endblock %}
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" integrity="sha256-CNwnGWPO03a1kOlAsGaH5g8P3dFaqFqqGFV/1nkX5OU=" crossorigin="anonymous" />
+    </body>
+
+
+
 </html>

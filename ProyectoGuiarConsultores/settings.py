@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.messages',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [
