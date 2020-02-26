@@ -146,9 +146,10 @@ def get_name(request):
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
 desgloce=[]
+desgloce_ordenado=[]
 @login_required(login_url='MTRlogin')
 def report(request):
-    global desgloce
+    global desgloce_ordenado
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=Reporte-Guiar-Consultores.pdf'
 
@@ -176,6 +177,7 @@ def report(request):
     #Body
     """..."""
 
+
     #Table header
     styles = getSampleStyleSheet()
     styleBH = styles["Normal"]
@@ -196,7 +198,7 @@ def report(request):
 
     high = 650
     cont = 1
-    for i in desgloce:
+    for i in desgloce_ordenado:
         i.insert(0, cont)
         cont += 1
         data.append(i)
@@ -209,6 +211,13 @@ def report(request):
     table.setStyle(TableStyle([ #estilos de la tabla
         ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
         ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
+
+
+    """Contenido"""
+    c.setFont("Helvetica", 10)
+    texto = "En base a los resultados de la encuesta, la sección con más prioridad es " + str(desgloce_ordenado[0][1])
+    c.drawString(40, 500, texto)
+
 
     #pdf size
     table.wrapOn(c, width, height)
@@ -779,6 +788,9 @@ def page_results(request):
     #Por Julio, te declaré desgloce como variable global porq lo necesito usar en report() y no se me ocurrio otra forma
     global desgloce
     desgloce.clear()
+
+    global desgloce_ordenado
+    desgloce_ordenado.clear()
 
     for poliza in TablaPoliza.objects.all():
         desgloce.append([poliza.nombre_poliza,0,0,poliza.id])

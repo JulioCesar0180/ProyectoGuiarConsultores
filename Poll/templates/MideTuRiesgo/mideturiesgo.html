@@ -13,9 +13,6 @@
 
     <form method="POST" class="siguiente" style="margin: 0">
         {% csrf_token %}
-        {% for field in form_procesos_empresa.visible_fields %}
-            {{ field.errors }}
-        {% endfor %}
         <!-- Datos Generales de la empresa -->
         <div class="inicio">
             <b>P1.</b> Datos generales de la empresa
@@ -151,6 +148,9 @@
            <div class="inicio">
             <b>P5.</b> Indique el o los rubros en que participa la empresa
             <div><br></div>
+               {% for field in form_procesos_empresa.visible_fields %}
+                    {{ field.errors }}
+                {% endfor %}
             {% for rubro in form_procesos_empresa.procesos %}
                 <div class="input-radio">
                     {{ rubro.tag }}
