@@ -15,7 +15,7 @@
                 <article>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </article>
-                <a href="" class="btn btn-gc-blue">Responder Encuesta</a>
+                <a href="{% url 'test' %}" class="btn btn-gc-blue">Responder Encuesta</a>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
                             <input class="form-control" style="text-align: center; padding-left: 0" id="razon_social" value="{{ empresa.telefono_representante }}" disabled>
                         </div>
                     </div>
-                    <a href="" class="btn btn-gc-blue">Modificar</a>
+                    <a href="{% url 'perfil' %}" class="btn btn-gc-blue">Editar información</a>
                 </div>
             </div>
             <div class="panel-card uk-width-1-2@m">
@@ -75,7 +75,7 @@
                             <input class="form-control" style="text-align: center;" id="antiguedad" value="{{ empresa.experiencia_empresa }}" disabled>
                         </div>
                     </div>
-                    <a href="" class="btn btn-gc-blue">Modificar</a>
+                    <a href="{% url 'perfil' %}" class="btn btn-gc-blue">Editar información</a>
                 </div>
             </div>
 
@@ -96,7 +96,7 @@
                         <h5>Resultados</h5>
                     </div>
                     <div style="background: rgba(25,25,112, 0.2);padding: 30px 35px;" text="left">
-                        <button style="background: blue; color: white" class="btn">Ver Resultados</button>
+                        <a href="{% url 'resultado' %}" class="btn btn-gc-blue">Ver resultados</a>
                     </div>
                 </div>
             </div>
