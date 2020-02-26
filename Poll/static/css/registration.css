@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
-html,body{
+body{
   background-image: url('https://images7.alphacoders.com/311/311578.jpg');
   background-size: cover;
   background-attachment: fixed;
-  height: 100vh;
   font-family: 'Numans', sans-serif;
+  height: 150vh;
 }
 
 .container{
