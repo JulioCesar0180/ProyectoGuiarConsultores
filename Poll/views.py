@@ -795,7 +795,7 @@ def page_results(request):
 
     # Resultados de la dotacion de la empresa Pag 1
     dotacion, _ = TablaResultadosDotacion.objects.get_or_create(id=request.user)
-    designacion = TablaDesignacionDotacion.objects.first()
+    designacion = TablaDesignacionDotacion.objects.all()
     result_dotacion = 0
     cont_empl = 0
     cont_trans = 0
@@ -812,9 +812,10 @@ def page_results(request):
     cont_empl += res_emp_contratados
 
     for d in desgloce:
-        if d[3] == designacion.campo1:
-            d[1] += 4 * 200
-            d[2] += min(res_emp_contratados * dotacion.cant_emp_contratados, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 4 * 200
+                d[2] += min(res_emp_contratados * dotacion.cant_emp_contratados, d[1])
 
     if dotacion.cant_emp_contratista < 50:
         res_emp_contratista = 1
@@ -828,9 +829,10 @@ def page_results(request):
     cont_empl += res_emp_contratista
 
     for d in desgloce:
-        if d[3] == designacion.campo2:
-            d[1] += 5 * 200
-            d[2] += min(res_emp_contratista * dotacion.cant_emp_contratista, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 5 * 200
+                d[2] += min(res_emp_contratista * dotacion.cant_emp_contratista, d[1])
 
     if dotacion.cant_veh_empresa < 20:
         res_veh_empresa = 1
@@ -846,9 +848,10 @@ def page_results(request):
     cont_trans += res_veh_empresa
 
     for d in desgloce:
-        if d[3] == designacion.campo3:
-            d[1] += 7 * 50
-            d[2] += min(res_veh_empresa * dotacion.cant_veh_empresa, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 7 * 50
+                d[2] += min(res_veh_empresa * dotacion.cant_veh_empresa, d[1])
 
     if dotacion.cant_veh_contratista < 20:
         res_veh_contratista = 1
@@ -864,9 +867,10 @@ def page_results(request):
     cont_trans += res_veh_contratista
 
     for d in desgloce:
-        if d[3] == designacion.campo4:
-            d[1] += 7 * 50
-            d[2] += min(res_veh_contratista * dotacion.cant_veh_contratista, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 7 * 50
+                d[2] += min(res_veh_contratista * dotacion.cant_veh_contratista, d[1])
 
     if dotacion.cant_veh_empresa_pesado < 20:
         res_veh_empresa_pesado = 3
@@ -882,9 +886,10 @@ def page_results(request):
     cont_trans += res_veh_empresa_pesado
 
     for d in desgloce:
-        if d[3] == designacion.campo5:
-            d[1] += 15 * 50
-            d[2] += min(res_veh_empresa_pesado * dotacion.cant_veh_empresa_pesado, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 15 * 50
+                d[2] += min(res_veh_empresa_pesado * dotacion.cant_veh_empresa_pesado, d[1])
 
     if dotacion.cant_veh_contratista_pesado < 20:
         res_veh_contratista_pesado = 3
@@ -900,9 +905,10 @@ def page_results(request):
     cont_trans += res_veh_contratista_pesado
 
     for d in desgloce:
-        if d[3] == designacion.campo6:
-            d[1] += 15 * 50
-            d[2] += min(res_veh_contratista_pesado * dotacion.cant_veh_contratista_pesado, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 15 * 50
+                d[2] += min(res_veh_contratista_pesado * dotacion.cant_veh_contratista_pesado, d[1])
 
     if dotacion.cant_maq_pesada_empresa < 20:
         res_maq_pesada_empresa= 1
@@ -917,9 +923,10 @@ def page_results(request):
     result_dotacion += res_maq_pesada_empresa
 
     for d in desgloce:
-        if d[3] == designacion.campo7:
-            d[1] += 7 * 50
-            d[2] += min(res_maq_pesada_empresa * dotacion.cant_maq_pesada_empresa, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 7 * 50
+                d[2] += min(res_maq_pesada_empresa * dotacion.cant_maq_pesada_empresa, d[1])
 
     if dotacion.cant_maq_pesada_contratista < 20:
         res_maq_pesada_contratista = 1
@@ -934,9 +941,10 @@ def page_results(request):
     result_dotacion += res_maq_pesada_contratista
 
     for d in desgloce:
-        if d[3] == designacion.campo8:
-            d[1] += 7 * 50
-            d[2] += min(res_maq_pesada_contratista * dotacion.cant_maq_pesada_contratista, d[1])
+        for des in designacion:
+            if d[3] == des.poliza:
+                d[1] += 7 * 50
+                d[2] += min(res_maq_pesada_contratista * dotacion.cant_maq_pesada_contratista, d[1])
         '''
         if d[3] == 3:
             d[1] += 53
@@ -1058,21 +1066,32 @@ def page_results(request):
         resultado = resultado * (1 - suma_preven / 100)
 
     # Resultados de Explosivos Pag 4
+    trabajos_especificos = TablaTrabajosEspecificos.objects.all()
+    for esp in trabajos_especificos:
+        if esp.trabajo == "Manejo de Explosivos":
+            total_explosivos = esp.ri
+        if esp.trabajo == "Intervencion Electricidad":
+            total_electricidad = esp.ri
+        if esp.trabajo == "Sustancias Peligrosas":
+            total_sustancias = esp.ri
+        if esp.trabajo == "Trabajos en Altura":
+            total_altura = esp.ri
+
     result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
     suma_mani_explosivos = 0
     if result_mani_explosivos.is_expo:
         suma_mani_explosivos = result_mani_explosivos.tipos_exp.all().aggregate(Sum('ri'))['ri__sum']
         if suma_mani_explosivos is not None:
-            total += 11
+            total += total_explosivos
             minimo += 1
-            resultado += suma_mani_explosivos
+            resultado += total_explosivos - suma_mani_explosivos
             riesgoporcentual_explosivos = round((suma_mani_explosivos / 11) * 100, 2)
             # desgloce.append(["Explosivos", riesgoporcentual_explosivos])
             for re in result_mani_explosivos.tipos_exp.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
-                        d[1] += 11
-                        d[2] += suma_mani_explosivos
+                        d[1] += total_explosivos
+                        d[2] += total_explosivos - suma_mani_explosivos
 
     # Resultados de Electricidad Pag 4
     result_electricidad, _ = TablaResultadoElectricidad.objects.get_or_create(id=request.user)
@@ -1080,16 +1099,16 @@ def page_results(request):
     if result_electricidad.is_elec:
         suma_electricidad = result_electricidad.tipos_elec.all().aggregate(Sum('ri'))['ri__sum']
         if suma_electricidad is not None:
-            total += 10
+            total += total_electricidad
             minimo += 1
-            resultado += suma_electricidad
+            resultado += total_electricidad - suma_electricidad
             riesgoporcentual_electricidad = round((suma_electricidad / 10) * 100, 2)
             # desgloce.append(["Electricidad", riesgoporcentual_electricidad])
             for re in result_electricidad.tipos_elec.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
-                        d[1] += 10
-                        d[2] += suma_electricidad
+                        d[1] += total_electricidad
+                        d[2] += total_electricidad - suma_electricidad
 
     # Resultados de Sustancias Pag 4
     result_sustancia, _ = TablaResultadosSustancias.objects.get_or_create(id=request.user)
@@ -1097,16 +1116,16 @@ def page_results(request):
     if result_sustancia.is_sust:
         suma_sustancia = result_sustancia.tipos_sust.all().aggregate(Sum('ri'))['ri__sum']
         if suma_sustancia is not None:
-            total += 20
+            total += total_sustancias
             minimo += 3
-            resultado += suma_sustancia
+            resultado += total_sustancias - suma_sustancia
             riesgoporcentual_sustancias = round((suma_sustancia / 20) * 100, 2)
             # desgloce.append(["Sustancias", riesgoporcentual_sustancias])
             for re in result_sustancia.tipos_sust.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
-                        d[1] += 20
-                        d[2] += suma_sustancia
+                        d[1] += total_sustancias
+                        d[2] += total_sustancias - suma_sustancia
 
     # Resultados de Altura Pag 4
     result_altura, _ = TablaResultadosAltura.objects.get_or_create(id=request.user)
@@ -1114,16 +1133,16 @@ def page_results(request):
     if result_altura.is_alt:
         suma_altura = result_altura.tipos_alt.all().aggregate(Sum('ri'))['ri__sum']
         if suma_altura is not None:
-            total += 8
+            total += total_altura
             minimo += 1
-            resultado += suma_altura
+            resultado += total_altura - suma_altura
             riesgoporcentual_altura = round((suma_altura / 8) * 100, 2)
             # desgloce.append(["Altura", riesgoporcentual_altura])
             for re in result_altura.tipos_alt.all():
                 for d in desgloce:
                     if d[3] == re.poliza.id:
-                        d[1] += 8
-                        d[2] += suma_altura
+                        d[1] += total_altura
+                        d[2] += total_altura - suma_altura
 
     # Despligue de Desiciones
     res_por = ((resultado) / (total))
