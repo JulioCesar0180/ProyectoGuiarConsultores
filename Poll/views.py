@@ -54,6 +54,98 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 
+@login_required(login_url='MTRlogin')
+def get_name(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = FormPageOne(request.POST)
+        rubro = request.POST.getlist('rubro[]')
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            rutEmpresa = form.cleaned_data['rut']
+            empresa = UserGuiar.objects.get(rut=rutEmpresa)
+            #Datos del usuario
+            nombreUser = form.cleaned_data['representante']
+            correo = form.cleaned_data['email']
+            fono = form.cleaned_data['telefono']
+            #Datos de la empresa
+            nombreEmpresa = form.cleaned_data['nombre']
+            razonEmpresa = form.cleaned_data['razon']
+            experienciaEmpresa = form.cleaned_data['experiencia']
+            direccionEmpresa = form.cleaned_data['direccion']
+            comunaEmpresa = form.cleaned_data['comuna']
+            ciudadEmpresa = form.cleaned_data['ciudad']
+            #Datos ganancias
+            ganancia = form.cleaned_data['ventas']
+            #Datos dotación empresa
+            empleadosCont = form.cleaned_data['empContratados']
+            empleadosContra = form.cleaned_data['empContratistas']
+            vehiculosLiv = form.cleaned_data['vehLivianos']
+            vehiculosCont = form.cleaned_data['vehContratistas']
+            vehiculosPes = form.cleaned_data['vehPesados']
+            vehiculosPesCont = form.cleaned_data['vehPesadosContratistas']
+            maquinariaEmpr = form.cleaned_data['maqEmpresa']
+            maquinariaCont = form.cleaned_data['marContratista']
+            datoDotacion = TablaResultadosDotacion(
+                rut_empresa = empresa,
+                answer1 = empleadosCont,
+                answer2 = empleadosContra,
+                answer3 = vehiculosLiv,
+                answer4 = vehiculosCont,
+                answer5 = vehiculosPes,
+                answer6 = vehiculosPesCont,
+                answer7 = maquinariaEmpr,
+                answer8 = maquinariaCont,
+            )
+            datoNombre = TablaPerfilEmpresa(
+                nombre_empresa = nombreEmpresa,
+                razon_social_empresa = razonEmpresa,
+                rut_empresa = empresa,
+                experiencia_empresa = experienciaEmpresa,
+                direccion_empresa = direccionEmpresa,
+                comuna_empresa = comunaEmpresa,
+                ciudad_empresa = ciudadEmpresa,
+                nombre_representante = nombreUser,
+                email_representante = correo,
+                telefono_representante = fono,
+                ventas_anuales_empresa = ganancia
+            )
+            construccion = False
+            manufactura = False
+            transporte = False
+            servicios = False
+            for x in rubro:
+                if x == "construccion":
+                    construccion = True
+                elif x == "manufactura":
+                    manufactura = True
+                elif x == "transporte":
+                    transporte = True
+                elif x == "servicio":
+                    servicios = True
+
+            datoRubro = TablaResultadosProcesos(
+                rut_empresa=empresa,
+                answer1=construccion,
+                answer2=manufactura,
+                answer3=transporte,
+                answer4=servicios
+            )
+            datoDotacion.save()
+            datoRubro.save()
+            datoNombre.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect('2')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = FormPageOne()
+
+    return render(request, 'MideTuRiesgo/test.html', {'form': form})
+
+
 desgloce=[]
 desgloce_ordenado=[]
 @login_required(login_url='MTRlogin')
