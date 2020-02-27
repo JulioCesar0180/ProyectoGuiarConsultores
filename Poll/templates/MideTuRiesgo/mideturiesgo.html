@@ -15,7 +15,7 @@
         {% csrf_token %}
         <!-- Datos Generales de la empresa -->
         <div class="inicio">
-            <b>P1.</b> Datos generales de la empresa
+            <b>1.</b> Datos generales de la empresa
             <div><br></div>
             <div class="datos">
                 <table>
@@ -53,7 +53,7 @@
 
         <!-- Datos del representante de la empresa -->
         <div class="inicio">
-            <b>P2.</b> Datos de contacto
+            <b>2.</b> Datos de contacto
             <div><br></div>
             <div class="datos">
                 <table>
@@ -83,7 +83,7 @@
 
         <!-- Ventas anuales de la empresa - Seleccion Multiple (Radio)-->
         <div class="inicio">
-            <b>P3.</b> Ventas anuales de la empresa
+            <b>3.</b> Ventas anuales de la empresa
             <div><br></div>
             {% for radio in form_perfil_empresa.ventas_anuales_empresa %}
                 <div class="input-radio">
@@ -100,7 +100,7 @@
 
         <!-- Dotacion de la empresa -->
         <div class="inicio">
-            <b>P4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
+            <b>4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
             <div><br></div>
             <div class="datos">
                 <table>
@@ -146,7 +146,7 @@
 
         <!-- Rubros de participacion de una empresa - Seleccion Multiple (Checkbox) -->
            <div class="inicio">
-            <b>P5.</b> Indique el o los rubros en que participa la empresa
+            <b>5.</b> Indique el o los rubros en que participa la empresa
             <div><br></div>
                {% for field in form_procesos_empresa.visible_fields %}
                     {{ field.errors }}
