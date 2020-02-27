@@ -1056,12 +1056,13 @@ def page_results(request):
     else:
         riesgoporcentual_manejoriesgo = round((1 - (suma_mriesgo / 5)) * 100, 2)
         # desgloce.append(["ManejoRiesgo", riesgoporcentual_manejoriesgo])
-        for re in result_mriesgo.opciones_manejo.all():
-            for d in desgloce:
-                if d[3] == re.poliza.id:
-                    d[1] += 0
-                    d[2] -= suma_mriesgo
-    resultado -= suma_mriesgo
+        if suma_mriesgo > 0:
+            for re in result_mriesgo.opciones_manejo.all():
+                for d in desgloce:
+                    if d[3] == re.poliza.id:
+                        d[1] += 0
+                        d[2] = d[2]*(1-suma_mriesgo/100)
+            resultado = resultado*(1-suma_mriesgo/100)
 
     # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
     result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
