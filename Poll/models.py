@@ -137,20 +137,6 @@ class TablaPoliza(models.Model):
         return self.nombre_poliza
 
 
-class TablaCertificaciones(models.Model):
-    nombre_certificado = models.CharField(max_length=100)
-    cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
-    poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.nombre_certificado
-
-
-class TablaResultadosCertificaciones(models.Model):
-    id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    certificaciones = models.ManyToManyField(TablaCertificaciones)
-
-
 class TablaManejoRiesgos(models.Model):
     manejo_riesgo = models.CharField(max_length=150)
     cr = models.DecimalField(decimal_places=2, max_digits=4, default=0)
@@ -168,7 +154,7 @@ class TablaResultadosManejoRiesgo(models.Model):
 
 class TablaTiempoPrevencionista(models.Model):
     tiempo_prevensionista = models.CharField(max_length=150)
-    cr = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    cr = models.DecimalField(decimal_places=2, max_digits=4, default=0)
     poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
     orden = models.IntegerField(default=1, validators=[MinValueValidator(1)])
 
@@ -297,7 +283,7 @@ class TablaResultadosServicios(models.Model):
 
 class TablaManiExplosivos(models.Model):
     tipo_exp = models.CharField(max_length=200)
-    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    ri = models.DecimalField(decimal_places=2, max_digits=4, default=0)
     poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
     orden = models.IntegerField(default=1, validators=[MinValueValidator(1)])
 
@@ -315,7 +301,7 @@ class TablaResultadosManiExplosivos(models.Model):
 
 class TablaElectricidad(models.Model):
     tipo_elec = models.CharField(max_length=200)
-    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    ri = models.DecimalField(decimal_places=2, max_digits=4, default=0)
     poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
     orden = models.IntegerField(default=1, validators=[MinValueValidator(1)])
 
@@ -333,7 +319,7 @@ class TablaResultadoElectricidad(models.Model):
 
 class TablaSustancias(models.Model):
     tipo_sust = models.CharField(max_length=200)
-    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    ri = models.DecimalField(decimal_places=2, max_digits=4, default=0)
     poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
     orden = models.IntegerField(default=1, validators=[MinValueValidator(1)])
 
@@ -351,7 +337,7 @@ class TablaResultadosSustancias(models.Model):
 
 class TablaTrabajosAltura(models.Model):
     tipo_alt = models.CharField(max_length=200)
-    ri = models.DecimalField(decimal_places=2, max_digits=3, default=0)
+    ri = models.DecimalField(decimal_places=2, max_digits=4, default=0)
     poliza = models.ForeignKey(TablaPoliza, null=True, on_delete=models.CASCADE)
     orden = models.IntegerField(default=1, validators=[MinValueValidator(1)])
 
@@ -380,7 +366,7 @@ class TablaDesignacionDotacion(models.Model):
 
 class TablaTrabajosEspecificos(models.Model):
     trabajo = models.CharField(max_length=100)
-    ri = models.IntegerField(default=0, validators=[MinValueValidator(0),MaxValueValidator(20)])
+    ri = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 
     def __str__(self):
         return self.trabajo

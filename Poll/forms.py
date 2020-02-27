@@ -321,19 +321,6 @@ class FormTablaResultadosProcesos(ModelForm):
         }
 
 
-class FormTablaResultadosCertificaciones(ModelForm):
-
-    class Meta:
-        model = TablaResultadosCertificaciones
-        fields = [
-            'certificaciones',
-        ]
-
-        widgets = {
-            'certificaciones': forms.CheckboxSelectMultiple
-        }
-
-
 class FormTablaResultadosManejoRiesgo(ModelForm):
 
     class Meta:

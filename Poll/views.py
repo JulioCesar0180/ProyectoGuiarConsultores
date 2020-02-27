@@ -677,7 +677,6 @@ def page_two_poll(request):
 @login_required(login_url='MTRlogin')
 def page_three_poll(request):
     # Obtener certificados de la empresa o crear para agregarlas
-    cert_empresa, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
     man_riesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
     preven_empresa, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
     procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=request.user)
@@ -685,14 +684,10 @@ def page_three_poll(request):
 
     # POST
     if request.method == "POST":
-        form_cert_empresa = FormTablaResultadosCertificaciones(request.POST, instance=cert_empresa)
         form_man_riesgo = FormTablaResultadosManejoRiesgo(request.POST, instance=man_riesgo)
         form_preven_empresa = FormTablaResultadosTiempoPreven(request.POST, instance=preven_empresa)
 
-        if form_cert_empresa.is_valid():
-
-            form_cert_empresa.save(commit=False)
-            form_cert_empresa.save()
+        if form_man_riesgo.is_valid():
 
             form_man_riesgo.save(commit=False)
             form_man_riesgo.save()
@@ -704,7 +699,6 @@ def page_three_poll(request):
         else:
 
             context = {
-                'form_cert_empresa': form_cert_empresa,
                 'form_man_riesgo': form_man_riesgo,
                 'form_preven_empresa': form_preven_empresa,
                 'cont': cont
@@ -713,12 +707,10 @@ def page_three_poll(request):
             return render(request, "MideTuRiesgo/mideturiesgo3.html", context)
     # GET
     else:
-        form_cert_empresa = FormTablaResultadosCertificaciones(instance=cert_empresa)
         form_man_riesgo = FormTablaResultadosManejoRiesgo(instance=man_riesgo)
         form_preven_empresa = FormTablaResultadosTiempoPreven(instance=preven_empresa)
 
         context = {
-            'form_cert_empresa': form_cert_empresa,
             'form_man_riesgo': form_man_riesgo,
             'form_preven_empresa': form_preven_empresa,
             'cont': cont
@@ -1033,21 +1025,6 @@ def page_results(request):
 
     resultado += suma_sergen
 
-    # Resultados de los Certificados ISO pag 3
-    result_cert, _ = TablaResultadosCertificaciones.objects.get_or_create(id=request.user)
-    suma_result_cert = result_cert.certificaciones.all().aggregate(Sum('cr'))['cr__sum']
-    if suma_result_cert is None:
-        suma_result_cert = 0
-    else:
-        riesgoporcentual_certificacion = round((1 - (suma_result_cert / 10)) * 100, 2)
-        # desgloce.append(["Certificacion", riesgoporcentual_certificacion])
-        for re in result_cert.certificaciones.all():
-            for d in desgloce:
-                if d[3] == re.poliza.id:
-                    d[1] += 0
-                    d[2] -= suma_result_cert
-    resultado -= suma_result_cert
-
     # Resultado de manejo de Riesgos pag 3
     result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
     suma_mriesgo = result_mriesgo.opciones_manejo.all().aggregate(Sum('cr'))['cr__sum']
@@ -1061,8 +1038,8 @@ def page_results(request):
                 for d in desgloce:
                     if d[3] == re.poliza.id:
                         d[1] += 0
-                        d[2] = d[2]*(1-suma_mriesgo/100)
-            resultado = resultado*(1-suma_mriesgo/100)
+                        d[2] = d[2] * (1 - suma_mriesgo / 100)
+            resultado = resultado * (1 - suma_mriesgo / 100)
 
     # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
     result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
@@ -1075,8 +1052,8 @@ def page_results(request):
         for d in desgloce:
             if d[3] == result_preven.opciones_prevencionista_t.poliza.id:
                 d[1] += 0
-                d[2] -= suma_preven
-    resultado -= suma_preven
+                d[2] = d[2] * (1 - suma_preven / 100)
+        resultado = resultado * (1 - suma_preven / 100)
 
     # Resultados de Explosivos Pag 4
     result_mani_explosivos, _ = TablaResultadosManiExplosivos.objects.get_or_create(id=request.user)
