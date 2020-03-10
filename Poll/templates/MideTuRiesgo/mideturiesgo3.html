@@ -16,18 +16,23 @@
             <b>{{cont|add:"1"}}.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
             <div><br></div>
             {% for manejo_riesgo in form_man_riesgo.opciones_manejo %}
-                <div class="input-radio">
-                    {{ manejo_riesgo.tag }}
-                    <label for="{{ manejo_riesgo.id_for_label }}" class="unselectable">{{ manejo_riesgo.choice_label }}</label>
-                </div>
+                {% if manejo_riesgo.id_for_label == "id_opciones_manejo_2" %}
+                    <div class="input-radio" onclick="blockOptions()">
+                        {{ manejo_riesgo.tag }}
+                        <label for="{{ manejo_riesgo.id_for_label }}" class="unselectable">{{ manejo_riesgo.choice_label }}</label>
+                    </div>
+                {% else %}
+                    <div class="input-radio" onclick="unblockOptions()">
+                        {{ manejo_riesgo.tag }}
+                        <label for="{{ manejo_riesgo.id_for_label }}" class="unselectable">{{ manejo_riesgo.choice_label }}</label>
+                    </div>
+                {% endif %}
             {% endfor %}
-            <div><br></div>
             <div><hr></div>
         </div>
 
         <div class="inicio">
             <b>{{cont|add:"2"}}.</b> La empresa cuenta con prevencionista de riesgos
-            <div><br></div>
             {% for t_preven in form_preven_empresa.opciones_prevencionista_t %}
                 <div class="input-radio">
                     {% if t_preven.choice_label != "---------" %}
@@ -36,7 +41,6 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <div><br></div>
             <div><hr></div>
             <div style="text-align: center" class="navButtons">
             <div class="boton">
@@ -59,5 +63,33 @@
             window.location = sUrl
         }
         //-->
+    </script>
+    <script type="text/javascript">
+        var checkbox = $('[id="id_opciones_manejo_2"]');
+        if (checkbox.is(':checked')){
+            document.getElementById("id_opciones_prevencionista_t_1").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_2").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_3").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_4").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_4").checked = true;
+        }else{
+            document.getElementById("id_opciones_prevencionista_t_1").disabled = false;
+            document.getElementById("id_opciones_prevencionista_t_2").disabled = false;
+            document.getElementById("id_opciones_prevencionista_t_3").disabled = false;
+            document.getElementById("id_opciones_prevencionista_t_4").disabled = false;
+        }
+        function blockOptions(){
+            document.getElementById("id_opciones_prevencionista_t_1").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_2").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_3").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_4").disabled = true;
+            document.getElementById("id_opciones_prevencionista_t_4").checked = true;
+        }
+        function unblockOptions(){
+            document.getElementById("id_opciones_prevencionista_t_1").disabled = false;
+            document.getElementById("id_opciones_prevencionista_t_2").disabled = false;
+            document.getElementById("id_opciones_prevencionista_t_3").disabled = false;
+            document.getElementById("id_opciones_prevencionista_t_4").disabled = false;
+        }
     </script>
 {% endblock %}

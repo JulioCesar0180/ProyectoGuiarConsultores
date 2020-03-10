@@ -330,7 +330,7 @@ class FormTablaResultadosManejoRiesgo(ModelForm):
         ]
 
         widgets = {
-            'opciones_manejo': forms.CheckboxSelectMultiple
+            'opciones_manejo': forms.RadioSelect
         }
 
 

@@ -652,6 +652,7 @@ def page_two_poll(request):
     if list_procesos[2] in procesos_empresa.procesos.all():
         if request.method == "POST":
             form_manufactura = FormTablaResultadosManufactura(request.POST, instance=manufactura)
+            print(form_manufactura.is_valid())
             if form_manufactura.is_valid():
                 form_manufactura.save(commit=False)
                 form_manufactura.save()
@@ -688,6 +689,9 @@ def page_three_poll(request):
         form_man_riesgo = FormTablaResultadosManejoRiesgo(request.POST, instance=man_riesgo)
         form_preven_empresa = FormTablaResultadosTiempoPreven(request.POST, instance=preven_empresa)
 
+        print(form_man_riesgo.errors)
+        print(form_preven_empresa.errors)
+        print(form_man_riesgo.is_valid())
         if form_man_riesgo.is_valid():
 
             form_man_riesgo.save(commit=False)
@@ -733,7 +737,7 @@ def page_four_poll(request):
     form_sust_emp = FormTablaResultadosSustancias(instance=sust_emp)
     form_alt_emp = FormTablaResultadosAltura(instance=alt_emp)
     procesos_empresa, _ = TablaResultadosProcesos.objects.get_or_create(id=request.user)
-    cont = len(procesos_empresa.procesos.all()) + 8
+    cont = len(procesos_empresa.procesos.all()) + 7
 
     if request.method == 'POST':
         form_mani_explosivos = FormTablaResultadosManiExplosivos(request.POST, instance=mani_explosivos_emp)

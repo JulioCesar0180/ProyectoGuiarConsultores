@@ -153,6 +153,7 @@ input[type=radio] + label{
     border: #030404;
     border-radius: 5px;
     width: 20%;
+    text-decoration:none;
   }
   #resultado{
     color:white;
@@ -164,7 +165,6 @@ input[type=radio] + label{
 .containerimgs{
     widht: 100px;
     height: 400px;
-    margin-left: 65%
 }
   #rectangulo{
     width: 100px;
@@ -189,7 +189,6 @@ input[type=radio] + label{
 		border: 1px solid;
 		height: auto;
 		width: 300px;
-		margin-left: 350px;
 }
 
 .pagina{
