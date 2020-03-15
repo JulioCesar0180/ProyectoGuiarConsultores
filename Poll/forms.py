@@ -71,13 +71,11 @@ class FormUserGuiar(ModelForm):
         fields = [
             'rut',  # Rut de la empresa
             'name',  # Nombre de la empresa
-            'address'  # Direccion de la empresa
         ]
 
         labels = {
             'rut': 'Rut de la empresa',
             'name': 'Nombre',
-            'address': 'Dirección'
         }
 
         exclude = [
@@ -95,9 +93,6 @@ class FormUserGuiar(ModelForm):
                 'class': 'form-control',
             }),
             'name': forms.TextInput(attrs={
-                'class': 'form-control',
-            }),
-            'address': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
         }
@@ -131,7 +126,7 @@ class FormDatosEmpresa(forms.ModelForm):
     class Meta:
         model = TablaPerfilEmpresa
         fields = (
-            'ciudad_empresa', 'comuna_empresa', 'razon_social_empresa', 'experiencia_empresa'
+            'ciudad_empresa', 'comuna_empresa', 'direccion_empresa', 'razon_social_empresa', 'experiencia_empresa',
         )
 
         widgets = {
@@ -139,6 +134,9 @@ class FormDatosEmpresa(forms.ModelForm):
                 'class': 'form-control'
             }),
             'comuna_empresa': forms.TextInput(attrs={
+                'class': 'form-control'
+            }),
+            'direccion_empresa': forms.TextInput(attrs={
                 'class': 'form-control'
             }),
             'razon_social_empresa': forms.TextInput(attrs={

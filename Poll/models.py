@@ -29,11 +29,10 @@ class UserGuiarManager(BaseUserManager):
 class UserGuiar(AbstractBaseUser, PermissionsMixin):
     rut = models.CharField(max_length=12, verbose_name="Rut Empresa", primary_key=True, default="")
     name = models.CharField(max_length=100, verbose_name="Nombre Empresa", default="")
-    address = models.CharField(max_length=100, verbose_name="Direccion", default="")
     is_admin = models.BooleanField(default=False)
     objects = UserGuiarManager()
     USERNAME_FIELD = 'rut'
-    REQUIRED_FIELDS = ['name', 'address']
+    REQUIRED_FIELDS = ['name']
 
     class Meta:
         verbose_name = "Usuario"
@@ -72,17 +71,18 @@ class TablaPerfilEmpresa(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
 
     # Datos complementarios a la empresa
-    experiencia_empresa = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(500)])
-    ciudad_empresa = models.CharField(max_length=20, default="")
-    comuna_empresa = models.CharField(max_length=20, default="")
-    razon_social_empresa = models.CharField(max_length=100, default="")
-    ventas_anuales_empresa = models.ForeignKey(TablaVentasAnuales, on_delete=models.CASCADE, null=True, blank=True)
+    experiencia_empresa = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(500)], verbose_name="antigüedad")
+    direccion_empresa = models.CharField(default="", max_length=50, verbose_name="dirección")
+    ciudad_empresa = models.CharField(max_length=20, default="", verbose_name="ciudad")
+    comuna_empresa = models.CharField(max_length=20, default="", verbose_name="comuna")
+    razon_social_empresa = models.CharField(max_length=100, default="", verbose_name="razon social")
+    ventas_anuales_empresa = models.ForeignKey(TablaVentasAnuales, on_delete=models.CASCADE, null=True, blank=True, verbose_name="ventas anuales")
 
     # Datos del representante
-    nombre_representante = models.CharField(max_length=50, default="")
-    rut_representante = models.CharField(max_length=12)
-    email_representante = models.EmailField(max_length=50, default="")
-    telefono_representante = models.CharField(max_length=15, default="")
+    nombre_representante = models.CharField(max_length=50, default="", verbose_name="nombre")
+    rut_representante = models.CharField(max_length=12, verbose_name="rut")
+    email_representante = models.EmailField(max_length=50, default="", verbose_name="email")
+    telefono_representante = models.CharField(max_length=15, default="", verbose_name="teléfono")
 
 
 """
@@ -149,7 +149,7 @@ class TablaManejoRiesgos(models.Model):
 
 class TablaResultadosManejoRiesgo(models.Model):
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
-    opciones_manejo = models.ManyToManyField(TablaManejoRiesgos)
+    opciones_manejo = models.OneToOneField(TablaManejoRiesgos, on_delete=models.CASCADE, null=True)
 
 
 class TablaTiempoPrevencionista(models.Model):
@@ -296,7 +296,7 @@ class TablaResultadosManiExplosivos(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_expo = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos_exp = models.ManyToManyField(TablaManiExplosivos, blank=True, null=True)
+    tipos_exp = models.ManyToManyField(TablaManiExplosivos, blank=True)
 
 
 class TablaElectricidad(models.Model):
@@ -314,7 +314,7 @@ class TablaResultadoElectricidad(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_elec = models.BooleanField(default=True, choices=BOOL_CHOICES)
-    tipos_elec = models.ManyToManyField(TablaElectricidad, blank=True, null=True)
+    tipos_elec = models.ManyToManyField(TablaElectricidad, blank=True)
 
 
 class TablaSustancias(models.Model):
@@ -332,7 +332,7 @@ class TablaResultadosSustancias(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_sust = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos_sust = models.ManyToManyField(TablaSustancias, blank=True, null=True)
+    tipos_sust = models.ManyToManyField(TablaSustancias, blank=True)
 
 
 class TablaTrabajosAltura(models.Model):
@@ -350,7 +350,7 @@ class TablaResultadosAltura(models.Model):
 
     id = models.OneToOneField(UserGuiar, on_delete=models.CASCADE, primary_key=True)
     is_alt = models.BooleanField(default=False, choices=BOOL_CHOICES)
-    tipos_alt = models.ManyToManyField(TablaTrabajosAltura, blank=True, null=True)
+    tipos_alt = models.ManyToManyField(TablaTrabajosAltura, blank=True)
 
 
 class TablaDesignacionDotacion(models.Model):

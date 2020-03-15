@@ -8,20 +8,19 @@ from .models import *
 class UserGuiarAdmin(UserAdmin):
     add_form = SignUpForm
     model = UserGuiar
-    list_display = ['rut', 'name', 'address', 'is_admin']
-    list_filter = ['is_admin', 'name', 'address']
+    list_display = ['rut', 'name', 'is_admin']
+    list_filter = ['is_admin', 'name']
     ordering = ['rut']
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('rut', 'name', 'address', 'password1', 'password2',)
+            'fields': ('rut', 'name', 'password1', 'password2',)
         }),
     )
 
     fieldsets = (
         (None, {'fields': ('rut', 'password')}),
-        ('Informacion', {'fields': ('name', 'address')}),
         ('Permisos', {'fields': ('is_admin',)})
     )
 

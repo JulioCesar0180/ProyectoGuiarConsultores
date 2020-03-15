@@ -8,7 +8,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="{% static 'css/registration.css'%}">
     <script src="https://kit.fontawesome.com/a8e077e6ff.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -24,6 +23,7 @@
 </head>
 
 <body>
+<div class="uk-container uk-container-expand" style="background: '{% static 'images/img_carousel/carousel-1.jpg' %}'" uk-height-viewport="expand: true">
     <div class="uk-position-center">
         <div class="uk-card custom-card uk-card-small uk-card-body" style="margin-top: 230px">
             <div class="uk-card-media-top card-login" style="padding: 50px">
@@ -38,7 +38,6 @@
                 {% endfor %}
                 <form method="post">
                     {% csrf_token  %}
-                    <!--{{ form|crispy }}-->
                     <div class="control-group">
                         <label class="control-label" for="rut">RUT de la Empresa</label>
                         <div class="controls">
@@ -123,7 +122,6 @@
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
-
-
