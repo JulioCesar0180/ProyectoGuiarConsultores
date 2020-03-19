@@ -1,6 +1,4 @@
-form {
-    display: inline-block;
-}
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

@@ -5,6 +5,7 @@ from Poll import views
 
 urlpatterns = [
     path('home', views.home, name="home"),
+    path('bienvenido', views.welcome_poll, name="welcome"),
     path('1', views.page_one_poll, name="test"),
     path('2', views.page_two_poll, name="pagina2"),
     path('3', views.page_three_poll, name="pagina3"),

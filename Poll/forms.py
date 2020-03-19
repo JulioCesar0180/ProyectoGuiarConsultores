@@ -199,6 +199,7 @@ class FormTablaPerfilEmpresa(ModelForm):
             'ciudad_empresa',
             'comuna_empresa',
             'razon_social_empresa',
+            'direccion_empresa',
             'ventas_anuales_empresa',
             'nombre_representante',
             'rut_representante',
@@ -210,6 +211,7 @@ class FormTablaPerfilEmpresa(ModelForm):
             'experiencia_empresa': 'Antigüedad de la empresa',
             'ciudad_empresa': 'Ciudad',
             'comuna_empresa': 'Comuna',
+            'direccion_empresa': 'Dirección',
             'razon_social_empresa': 'Razon Social',
             'ventas_anuales_empresa': 'Ventas Anuales de la Empresa',
             'nombre_representante': 'Nombre',
@@ -230,6 +232,9 @@ class FormTablaPerfilEmpresa(ModelForm):
                 'class': 'form-control',
             }),
             'comuna_empresa': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'direccion_empresa': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
             'razon_social_empresa': forms.TextInput(attrs={

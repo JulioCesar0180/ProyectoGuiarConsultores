@@ -1,173 +1,191 @@
 {% extends 'MideTuRiesgo/mideturiesgo-base.html' %}
 {% load static %}
+
+{% block head %}
+{% endblock %}
+
 {% block content %}
-    <!-- Encabezado de Titulo de la encuesta -->
-    <div class="inicio">
-        Bienvenido a nuestro evaluador de riesgo de negocio. Este formulario tiene como objetivo saber de las características de su empresa, de tal manera de mostrarle sus principales oportunidades para disminuir su riesgo de operación, de tal manera de proteger su patrimonio y transferir el riesgo no deseado.
-        <div><br></div>
-        Este formulario consta de 4 secciones, cada una personalizada en base a sus respuestas.
-        <div><br></div>
-        A continuación realizaremos una serie de preguntas que permitirá identificar estas oportunidades.
-        <div><hr></div>
+    <div class="uk-container uk-container-expand" uk-height-viewport="expand" style="background: rgba(69,90,100,0.8);">
+        <div class="uk-container" style="background: blue; padding: 20px">
+            <article style="color: white">
+                Bienvenido a nuestro evaluador de riesgo de negocio. Este formulario tiene como objetivo saber de las características de su empresa, de tal manera de mostrarle sus principales oportunidades para disminuir su riesgo de operación, de tal manera de proteger su patrimonio y transferir el riesgo no deseado.
+                <div><br></div>
+                Este formulario consta de 4 secciones, cada una personalizada en base a sus respuestas.
+                <div><br></div>
+                A continuación realizaremos una serie de preguntas que permitirá identificar estas oportunidades.
+                <div><hr></div>
+            </article>
+        </div>
+
+        <form method="POST" class="siguiente" style="margin: 0">
+            {% csrf_token %}
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <div class="inicio">
+
+                   <h3 style="color: white"> <b>1.</b> Datos generales de la empresa</h3>
+                    <div><br></div>
+                    <div class="datos">
+                        <table style="color: white">
+                            <tbody>
+                            <tr>
+                                <td class="nombreCampo"><label for="razon_social">Razon Social</label></td>
+                                <td class="campos">{{ form_perfil_empresa.razon_social_empresa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="rut">Rut</label></td>
+                                <td class="campos">{{ form_user.rut }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="experiencia">Antigüedad de la empresa (años)</label></td>
+                                <td class="campos">{{ form_perfil_empresa.experiencia_empresa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="direccion">Dirección</label></td>
+                                <td class="campos">{{ form_perfil_empresa.direccion_empresa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="comuna">Comuna</label></td>
+                                <td class="campos">{{ form_perfil_empresa.comuna_empresa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="ciudad">Ciudad</label></td>
+                                <td class="campos">{{ form_perfil_empresa.ciudad_empresa }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div><br></div>
+                    </div>
+                    <div><hr></div>
+                </div>
+            </div>
+
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <!-- Datos del representante de la empresa -->
+                <div class="inicio">
+                    <h3 style="color: white"><b>2.</b> Datos de contacto</h3>
+                    <div><br></div>
+                    <div class="datos">
+                        <table style="color: white">
+                            <tbody>
+                            <tr>
+                                <td class="nombreCampo"><label for="nombre">{{ form_perfil_empresa.nombre_representante.label }}</label></td>
+                                <td class="campos">{{ form_perfil_empresa.nombre_representante }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="rut">Rut</label></td>
+                                <td class="campos">{{ form_perfil_empresa.rut_representante }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="email">Correo electronico</label></td>
+                                <td class="campos">{{ form_perfil_empresa.email_representante }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="telefono">Teléfono</label></td>
+                                <td class="campos">{{ form_perfil_empresa.telefono_representante }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div><br></div>
+                    </div>
+                    <div><hr></div>
+                </div>
+            </div>
+
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <!-- Ventas anuales de la empresa - Seleccion Multiple (Radio)-->
+                <div class="inicio">
+                    <h3 style="color: white"><b>3.</b> Ventas anuales de la empresa</h3>
+                    <div><br></div>
+                    {% for radio in form_perfil_empresa.ventas_anuales_empresa %}
+                        <div class="input-radio">
+                            {% if radio.choice_label != "---------" %}
+                                {{ radio.tag }}
+                                <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div><br></div>
+
+                    <div><hr></div>
+                </div>
+            </div>
+
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <!-- Dotacion de la empresa -->
+                <div class="inicio">
+                    <h3 style="color: white"><b>4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada</h3>
+                    <div><br></div>
+                    <div class="datos">
+                        <table style="color: white">
+                            <tbody>
+                            <tr>
+                                <td class="nombreCampo"><label for="empContratados"></label>Cantidad de empleados contratados</td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_emp_contratados }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="empContratistas">Cantidad de empleados contratistas</label></td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_emp_contratista }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="vehLivianos">Cantidad de vehículos comerciales livianos de la empresa</label></td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="vehContratistas">Cantidad de vehículos comerciales de contratistas</label></td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="vehPesados">Cantidad de vehículos comerciales pesados de la empresa</label></td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa_pesado }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="vehPesadosContratistas">Cantidad de vehículos comerciales pesados de contratistas</label></td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista_pesado }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="maqEmpresa">Cantidad de maquinaria pesada de la empresa</label></td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_empresa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="nombreCampo"><label for="maqContratista">Cantidad de maquinaria pesada de contratista</label></td>
+                                <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_contratista }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div><br></div>
+                    </div>
+                    <div><hr></div>
+                </div>
+            </div>
+
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <!-- Rubros de participacion de una empresa - Seleccion Multiple (Checkbox) -->
+                <div class="inicio">
+                    <h3 style="color: white"><b>5.</b> Indique el o los rubros en que participa la empresa</h3>
+                    <div><br></div>
+                   {% for field in form_procesos_empresa.visible_fields %}
+                        {{ field.errors }}
+                   {% endfor %}
+                    {% for rubro in form_procesos_empresa.procesos %}
+                        <div class="input-radio">
+                            {{ rubro.tag }}
+                            <label for="{{ rubro.id_for_label }}" class="unselectable">{{ rubro.choice_label }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="uk-container" style="margin-top: 20px; margin-bottom: 20px">
+                <div class="uk-text-center">
+                    <button class="uk-button" type="submit" value="Submit" id="next">Siguiente</button>
+                </div>
+                <div>
+                    <br>
+                </div>
+                <div class="pagina">
+                    Página 1/4
+                </div>
+            </div>
+        </form>
     </div>
-
-    <form method="POST" class="siguiente" style="margin: 0">
-        {% csrf_token %}
-        <!-- Datos Generales de la empresa -->
-        <div class="inicio">
-            <b>1.</b> Datos generales de la empresa
-            <div><br></div>
-            <div class="datos">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td class="nombreCampo"><label for="razon_social">Razon Social</label></td>
-                        <td class="campos">{{ form_perfil_empresa.razon_social_empresa }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="rut">Rut</label></td>
-                        <td class="campos">{{ form_user.rut }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="experiencia">Antigüedad de la empresa (años)</label></td>
-                        <td class="campos">{{ form_perfil_empresa.experiencia_empresa }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="direccion">Dirección</label></td>
-                        <td class="campos">{{ form_user.address }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="comuna">Comuna</label></td>
-                        <td class="campos">{{ form_perfil_empresa.comuna_empresa }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="ciudad">Ciudad</label></td>
-                        <td class="campos">{{ form_perfil_empresa.ciudad_empresa }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div><br></div>
-            </div>
-            <div><hr></div>
-        </div>
-
-        <!-- Datos del representante de la empresa -->
-        <div class="inicio">
-            <b>2.</b> Datos de contacto
-            <div><br></div>
-            <div class="datos">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td class="nombreCampo"><label for="nombre">{{ form_perfil_empresa.nombre_representante.label }}</label></td>
-                        <td class="campos">{{ form_perfil_empresa.nombre_representante }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="rut">Rut</label></td>
-                        <td class="campos">{{ form_perfil_empresa.rut_representante }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="email">Correo electronico</label></td>
-                        <td class="campos">{{ form_perfil_empresa.email_representante }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="telefono">Teléfono</label></td>
-                        <td class="campos">{{ form_perfil_empresa.telefono_representante }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div><br></div>
-            </div>
-            <div><hr></div>
-        </div>
-
-        <!-- Ventas anuales de la empresa - Seleccion Multiple (Radio)-->
-        <div class="inicio">
-            <b>3.</b> Ventas anuales de la empresa
-            <div><br></div>
-            {% for radio in form_perfil_empresa.ventas_anuales_empresa %}
-                <div class="input-radio">
-                    {% if radio.choice_label != "---------" %}
-                        {{ radio.tag }}
-                        <label for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-                    {% endif %}
-                </div>
-            {% endfor %}
-            <div><br></div>
-
-            <div><hr></div>
-        </div>
-
-        <!-- Dotacion de la empresa -->
-        <div class="inicio">
-            <b>4.</b> Indique la dotación de cada elemento que tiene la empresa a ser evaluada
-            <div><br></div>
-            <div class="datos">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td class="nombreCampo"><label for="empContratados"></label>Cantidad de empleados contratados</td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_emp_contratados }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="empContratistas">Cantidad de empleados contratistas</label></td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_emp_contratista }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="vehLivianos">Cantidad de vehículos comerciales livianos de la empresa</label></td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="vehContratistas">Cantidad de vehículos comerciales de contratistas</label></td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="vehPesados">Cantidad de vehículos comerciales pesados de la empresa</label></td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_veh_empresa_pesado }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="vehPesadosContratistas">Cantidad de vehículos comerciales pesados de contratistas</label></td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_veh_contratista_pesado }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="maqEmpresa">Cantidad de maquinaria pesada de la empresa</label></td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_empresa }}</td>
-                    </tr>
-                    <tr>
-                        <td class="nombreCampo"><label for="maqContratista">Cantidad de maquinaria pesada de contratista</label></td>
-                        <td class="campos">{{ form_dotacion_empresa.cant_maq_pesada_contratista }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div><br></div>
-            </div>
-            <div><hr></div>
-        </div>
-
-        <!-- Rubros de participacion de una empresa - Seleccion Multiple (Checkbox) -->
-           <div class="inicio">
-            <b>5.</b> Indique el o los rubros en que participa la empresa
-            <div><br></div>
-               {% for field in form_procesos_empresa.visible_fields %}
-                    {{ field.errors }}
-                {% endfor %}
-            {% for rubro in form_procesos_empresa.procesos %}
-                <div class="input-radio">
-                    {{ rubro.tag }}
-                    <label for="{{ rubro.id_for_label }}" class="unselectable">{{ rubro.choice_label }}</label>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="uk-text-center">
-            <button type="submit" value="Submit" id="next">Siguiente</button>
-        </div>
-        <div>
-            <br>
-        </div>
-        <div class="pagina">
-            Página 1/4
-        </div>
-
-    </form>
-    <div><br></div>
 {% endblock %}

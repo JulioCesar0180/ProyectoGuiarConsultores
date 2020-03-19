@@ -38,11 +38,7 @@
     </nav>
 </head>
 <body>
-<div id="azul"></div>
-<div id="blanco"></div>
-<div id="plomo"></div>
-<div id="head"></div>
-<div class="container-fluid">
+<div class="uk-container uk-container-expand" uk-height-viewport="expand" {% block screen_body %} style="background-image: url('{% static 'images/pexels-photo-1009928.jpeg' %}'); background-repeat: no-repeat; background-size: cover; background-attachment: fixed; padding: 0" {% endblock %}>
 {% block content %}
 
 {% endblock %}
