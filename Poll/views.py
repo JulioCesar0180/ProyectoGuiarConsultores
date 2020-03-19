@@ -175,60 +175,127 @@ def report(request):
     #start X, height end Y, height
     c.line(475, 787, 560, 787)
 
-    #Body
-    """..."""
+    #Body portada
+    """ """
 
-
-    #Table header
-    styles = getSampleStyleSheet()
-    styleBH = styles["Normal"]
-    #styleBH.alignment = TA_CENTER
-    styleBH.fontSize = 10
-
-    numero = Paragraph('''No.''', styleBH)
-    seccion = Paragraph('''Sección''', styleBH)
-    porcentaje = Paragraph('''Porcentaje''', styleBH)
-
-    data = []
-    data.append([numero, seccion, porcentaje])
-
-    #Table Content
-    styleN = styles["BodyText"]
-    #styleN.alignment = TA_CENTER
-    styleN.fontSize = 7
-
-    high = 650
-    cont = 1
-    for i in desgloce_ordenado:
-        i.insert(0, cont)
-        cont += 1
-        data.append(i)
-        high = high-18
-
-
-    #table size
-    width, height = A4
-    table = Table(data, colWidths = [1.2*cm, 9*cm, 2.2*cm])
-    table.setStyle(TableStyle([ #estilos de la tabla
-        ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
-        ('BOX', (0,0), (-1,-1), 0.25, colors.black), ]))
-
-
-    """Contenido"""
-    c.setFont("Helvetica", 10)
-    texto = "En base a los resultados de la encuesta, la sección con más prioridad es " + str(desgloce_ordenado[0][1])
-    c.drawString(40, 500, texto)
-
-
-    #pdf size
-    table.wrapOn(c, width, height)
-    table.drawOn(c, 30, high)
+    #Termina la pagina
     c.showPage()
+
+    """Segunda pagina"""
+
+    # Header
+    logo = settings.MEDIA_ROOT + '/images/logoGC.png'
+    c.drawImage(logo, 20, 750, 180, 90, preserveAspectRatio=True)
+    c.setLineWidth(.3)
+
+    c.setFont("Helvetica", 16)
+    # Dibujamos una cadena en la ubicación X,Y especificada
+    c.drawString(40, 750, u"POLIZA DE REPSONSABILIDAD CIVIL DE EMPRESA UF 2.000.-")
+
+    #DATE
+    today = date.today()
+    now = str(today.day) + "/" + str(today.month) + "/" + str(today.year)
+    c.drawString(480, 790, now)
+    # start X, height end Y, height
+    c.line(475, 787, 560, 787)
+
+    #Parrafo
+    textobject = c.beginText()
+    # Set text location (x, y)
+    textobject.setTextOrigin(40, 720)
+    # Set font face and size
+    textobject.setFont('Times-Roman', 12)
+    textobject.textLine(text=u'OBJETO DEL SEGURO:')
+    textobject.textLine(text='')
+    textobject.textLine(text='Cubre la Responsabilidad Civil Extracontractual que el o los asegurados sean')
+    textobject.textLine(text='declarados legalmente obligado (s) a pagar ya sea por sentencia ejecutoriada o')
+    textobject.textLine(text='transacción aceptada por el asegurador cuando sea civilmente responsable por daños')
+    textobject.textLine(text='materiales y/o lesiones corporales, lucro cesante, daño moral, causados a terceros,')
+    textobject.textLine(text='relacionada a la actividad de la empresa contratante.')
+    textobject.textLine(text='')
+    textobject.textLine(text='MONTO ASEGURADO RECOMENDADO : UF 2.000.-')
+    textobject.textLine(text='')
+    textobject.textLine(text=u'COBERTURAS:')
+    textobject.textLine(text='Según Condiciones Generales de Póliza de Responsabilidad Civil General, incluyendo:')
+    textobject.textLine(text='')
+    textobject.textLine(text=u'Responsabilidad civil de empresa.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Adicional que extiende a cubrir la Responsabilidad Civil de Empresa por actividades que ')
+    textobject.textLine(text='se realicen en cualquier parte dentro del territorio de la República de Chile, incluyendo')
+    textobject.textLine(text='la Responsabilidad civil por incendio y/o explosión.')
+    textobject.textLine(text='')
+    textobject.textLine(text=u'Responsabilidad civil patronal.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Monto Asegurado : UF 1000.- por persona y evento, máximo UF 2.000.- en la vigencia de la póliza.')
+    textobject.textLine(text='Cubre en exceso de la Ley de Accidentes del Trabajo (Ley 16.744) Y siempre que a la época e se originen en')
+    textobject.textLine(text='dicha ley. del siniestro el Asegurado haya cumplido con sus obligaciones de afiliación y se encuentre al día')
+    textobject.textLine(text='en el pago de las cotizaciones que se originen en dicha ley')
+    textobject.textLine(text='')
+    textobject.textLine(text='Incluye a los trabajadores Contratistas, sub-contratistas, de servicios transitorios, a honorarios, áreas')
+    textobject.textLine(text='confinadas, uso de explosivos, en altura, subterráneos, accidentes de trayecto.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Responsabilidad civil cruzada, cubre las acitivades de la o las empresas que sean subcontratadas por el')
+    textobject.textLine(text='asegurado en las actividades realcionadas al giro de la empresa.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Responsabilidad civil para empresas de transporte, Cubre las indemnizaciones que sea responsable la empresa')
+    textobject.textLine(text='asegurada en actividades de carga de mercancías y/o transporte privado de pasajeros.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Responsabilidad civil vehicular, cubre en exceso de las Responsabilidad Civil vehicular que tenga contratado')
+    textobject.textLine(text='y/o contrate el asegurado, para vehículos livianos, vehículos pesados y equipos móviles, generalmente en exceso')
+    textobject.textLine(text='de UF 500.- y/o en exceso de UF 1.000.-')
+    textobject.textLine(text='')
+    textobject.textLine(text='Responsabilidad civil de producto, cubre las indemnizaciones que civilmente sea responsable, ocacionados por el')
+    textobject.textLine(text='suministro de alimentos, intoxicación, fabricados por la empresa asegurada.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Responsabilidad civil de construcción, cubrie trabajos de mantención, remodelación o ampliación dentro de las')
+    textobject.textLine(text='instalaciones del asegurado')
+
+
+    c.drawText(textobject)
+    c.showPage()
+
+    # Header
+    logo = settings.MEDIA_ROOT + '/images/logoGC.png'
+    c.drawImage(logo, 20, 750, 180, 90, preserveAspectRatio=True)
+    c.setLineWidth(.3)
+
+    # DATE
+    today = date.today()
+    now = str(today.day) + "/" + str(today.month) + "/" + str(today.year)
+    c.drawString(480, 790, now)
+    # start X, height end Y, height
+    c.line(475, 787, 560, 787)
+
+    textobject = c.beginText()
+    textobject.setTextOrigin(40, 720)
+    textobject.textLine(text='')
+    textobject.textLine(text='Responsabilidad civil para propietarios de inmuebles, cubre los daños que civilmene sea responsable')
+    textobject.textLine(text='el asegurado, copropietarios de edificios y/o condominios, a personas o cosas originadas por,')
+    textobject.textLine(text='mantenimiento acensores,montacargas, carteles, arboles, estanques de la porpiedad, funciones de')
+    textobject.textLine(text='servicio de conserjes, vigilantes, dependientes.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Responsabilidad Civil de Empresas para Fábricas, Manufacturas, Artesanías, Oficinas o')
+    textobject.textLine(text='Administraciones Cubre las indemnizaciones cuando el asegurado sea civilvemente responsable')
+    textobject.textLine(text='en caso de incendio y, o, explosión, locales, tiendas, almacenes a los cuales  el público')
+    textobject.textLine(text='tiene libre acceso.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Rige cláusula de responsabilidad civil por contaminación y/o polución súbita y accidental, Cubre las')
+    textobject.textLine(text='indemnizaciones cuando el asegurado sea civilmente responsable y que accidentalmente los efectos')
+    textobject.textLine(text='ambientales se manifiesten en forma repentina o contaminante a raíz de vertido, inyección, depósito,')
+    textobject.textLine(text='descarga, derrame o filtración de dicho contaminante. Defensa Judicial. La presente póliza se extiende')
+    textobject.textLine(text='a cubrir los gastos de defensa judicial del asegurado por reclamaciones civiles y penales, siempre y')
+    textobject.textLine(text='cuando ésta sea asumida por abogados nombrados por la compañía o por el asegurado con el')
+    textobject.textLine(text='consentimiento y aprobación de la Compañía.')
+    textobject.textLine(text='')
+    textobject.textLine(text='Deducible')
+    textobject.textLine(text='Las Compañías de seguros generalmente utilizan deducible porcentual asociado a la pérdida o del monto')
+    textobject.textLine(text='Asegurado, con un mínimo expresado en UF.')
+
+    c.drawText(textobject)
 
 
     #Guardar pdf
     c.save()
-
     pdf = buffer.getvalue()
     buffer.close()
     response.write(pdf)
