@@ -1,67 +1,52 @@
 {% extends 'MideTuRiesgo/mideturiesgo-base.html' %}
 {% load static %}
+
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/test.css'%}">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Mide tu riesgo</title>
 {% endblock %}
 
 {% block content %}
-    <div class="inicio">
-        Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado
-        <div>
-            <hr>
+    <div class="uk-container uk-container-expand" uk-height-viewport="expand" style="background: rgba(69,90,100,0.8);">
+        <div class="uk-container" style="background: blue; padding: 20px">
+            <p style="color: white">Las próximas preguntas son para saber qué actividades productivas realiza su empresa y así poder ofrecer un producto más personalizado</p>
         </div>
-    </div>
-    <form action="" method="post">
+
+        <form action="" method="post">
         {% csrf_token %}
-        <div class="inicio">
-            <b>6.</b>
-            {% if construccion in procesos_empresa.procesos.all %}
-                 Marque todas las actividades de CONSTRUCCION que realiza la empresa a ser evaluada
-                <div>
-                    <br>
-                </div>
-                {% for construccion in form_construccion.construccion %}
-                    <div class="input-radio">
-                        {{ construccion.tag }}
-                        <label for="{{ construccion.id_for_label }}" class="unselectable">{{ construccion.choice_label }}</label>
-                    </div>
-                {% endfor %}
-                <div>
-                    <br>
-                </div>
-                {% if manufactura in procesos_empresa.procesos.all %}
-                    <b>7.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
-                    <div>
-                        <br>
-                    </div>
-                    {% for manufactura in form_manufactura.manufactura %}
-                        <div class="input-radio">
-                            {{ manufactura.tag }}
-                            <label for="{{ manufactura.id_for_label }}" class="unselectable">{{ manufactura.choice_label }}</label>
-                        </div>
-                    {% endfor %}
-                    <div>
-                        <br>
-                    </div>
-                    {% if transporte in procesos_empresa.procesos.all %}
-                        <b>8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
-                        <div>
-                            <br>
-                        </div>
-                        {% for transporte in form_transporte.transporte %}
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <div class="inicio">
+
+                    {% if construccion in procesos_empresa.procesos.all %}
+                        <h3 style="color: white"><b>6.</b>Marque todas las actividades de CONSTRUCCION que realiza la empresa a ser evaluada</h3>
+                        <div><br></div>
+                        {% for construccion in form_construccion.construccion %}
                             <div class="input-radio">
-                                {{ transporte.tag }}
-                                <label for="{{ transporte.id_for_label }}" class="unselectable">{{ transporte.choice_label }}</label>
+                                {{ construccion.tag }}
+                                <label for="{{ construccion.id_for_label }}" class="unselectable">{{ construccion.choice_label }}</label>
                             </div>
                         {% endfor %}
-                        <div>
-                            <br>
-                        </div>
+                        <div><br></div>
+                        {% if manufactura in procesos_empresa.procesos.all %}
+                            <h3 style="color: white"><b>7.</b> Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada</h3>
+                            <div><br></div>
+                            {% for manufactura in form_manufactura.manufactura %}
+                                <div class="input-radio">
+                                    {{ manufactura.tag }}
+                                    <label for="{{ manufactura.id_for_label }}" class="unselectable">{{ manufactura.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                            <div><br></div>
+                            {% if transporte in procesos_empresa.procesos.all %}
+                                <h3 style="color: white"><b>8.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada</h3>
+                                <div><br></div>
+                                {% for transporte in form_transporte.transporte %}
+                                    <div class="input-radio">
+                                        {{ transporte.tag }}
+                                        <label for="{{ transporte.id_for_label }}" class="unselectable">{{ transporte.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+                                <div><br></div>
                         {% if servicio in procesos_empresa.procesos.all %}
-                            <b>9.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
+                            <h3 style="color: white;"><b>9.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
                             <div>
                                 <br>
                             </div>
@@ -75,70 +60,52 @@
                                 <br>
                             </div>
                         {% endif %}
-                    {% elif servicio in procesos_empresa.procesos.all %}
-                        <b>8.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
-                        <div>
-                            <br>
-                        </div>
-                        {% for servicios in form_servicio.servicios %}
-                            <div class="input-radio">
-                                {{ servicios.tag }}
-                                <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
-                            </div>
-                        {% endfor %}
-                        <div>
-                            <br>
-                        </div>
-                    {% endif %}
-                {% elif transporte in procesos_empresa.procesos.all %}
-                    <b>7.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
-                    <div>
-                        <br>
-                    </div>
-                    {% for transporte in form_transporte.transporte %}
-                        <div class="input-radio">
-                            {{ transporte.tag }}
-                            <label for="{{ transporte.id_for_label }}" class="unselectable">{{ transporte.choice_label }}</label>
-                        </div>
-                    {% endfor %}
-                    <div>
-                        <br>
-                    </div>
-                    {% if servicio in procesos_empresa.procesos.all %}
-                        <b>8.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
-                        <div>
-                            <br>
-                        </div>
-                        {% for servicios in form_servicio.servicios %}
-                            <div class="input-radio">
-                                {{ servicios.tag }}
-                                <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
-                            </div>
-                        {% endfor %}
-                        <div>
-                            <br>
-                        </div>
-                    {% endif %}
-                {% elif servicio in procesos_empresa.procesos.all %}
-                    <b>7.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
-                    <div>
-                        <br>
-                    </div>
-                    {% for servicios in form_servicio.servicios %}
-                        <div class="input-radio">
-                            {{ servicios.tag }}
-                            <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
-                        </div>
-                    {% endfor %}
-                    <div>
-                        <br>
-                    </div>
-                {% endif %}
-            {% elif manufactura in procesos_empresa.procesos.all %}
-                Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada
-                    <div>
-                        <br>
-                    </div>
+                            {% elif servicio in procesos_empresa.procesos.all %}
+                                <h3 style="color: white"><b>8.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
+                                <div><br></div>
+                                {% for servicios in form_servicio.servicios %}
+                                    <div class="input-radio">
+                                        {{ servicios.tag }}
+                                        <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+                                <div><br></div>
+                            {% endif %}
+                        {% elif transporte in procesos_empresa.procesos.all %}
+                            <h3 style="color: white;"><b>7.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada</h3>
+                            <div><br></div>
+                            {% for transporte in form_transporte.transporte %}
+                                <div class="input-radio">
+                                    {{ transporte.tag }}
+                                    <label for="{{ transporte.id_for_label }}" class="unselectable">{{ transporte.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                            <div><br></div>
+                            {% if servicio in procesos_empresa.procesos.all %}
+                                <h3 style="color: white"><b>8.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
+                                <div><br></div>
+                                {% for servicios in form_servicio.servicios %}
+                                    <div class="input-radio">
+                                        {{ servicios.tag }}
+                                        <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+                                <div><br></div>
+                            {% endif %}
+                        {% elif servicio in procesos_empresa.procesos.all %}
+                            <h3 style="color: white"><b>7.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
+                            <div><br></div>
+                            {% for servicios in form_servicio.servicios %}
+                                <div class="input-radio">
+                                    {{ servicios.tag }}
+                                    <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
+                                </div>
+                            {% endfor %}
+                            <div><br></div>
+                        {% endif %}
+                    {% elif manufactura in procesos_empresa.procesos.all %}
+                        <h3 style="color: white"><b>6.</b>Marque todas las actividades de MANUFACTURA que realiza la empresa a ser evaluada</h3>
+                        <div><br></div>
                     {% for manufactura in form_manufactura.manufactura %}
                         <div class="input-radio">
                             {{ manufactura.tag }}
@@ -149,7 +116,7 @@
                     <br>
                 </div>
                 {% if transporte in procesos_empresa.procesos.all %}
-                    <b>7.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
+                    <h3 style="color: white"><b>7.</b> Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada</h3>
                     <div>
                         <br>
                     </div>
@@ -163,7 +130,7 @@
                         <br>
                     </div>
                     {% if servicio in procesos_empresa.procesos.all %}
-                        <b>8.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
+                        <h3 style="color: white"><b>8.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
                         <div>
                             <br>
                         </div>
@@ -178,7 +145,7 @@
                         </div>
                     {% endif %}
                 {% elif servicio in procesos_empresa.procesos.all %}
-                    <b>7.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
+                    <h3 style="color: white"><b>7.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
                     <div>
                         <br>
                     </div>
@@ -188,75 +155,57 @@
                             <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
                         </div>
                     {% endfor %}
-                    <div>
-                        <br>
-                    </div>
+                    <div><br></div>
                 {% endif %}
             {% elif transporte in procesos_empresa.procesos.all %}
-                Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada
-                    <div>
-                        <br>
-                    </div>
+                <h3 style="color: white;"><b>6.</b>Indique el tipo de cargas dentro del territorio nacional para TRANSPORTE TERRESTRE que realiza la empresa a ser evaluada</h3>
+                    <div><br></div>
                     {% for transporte in form_transporte.transporte %}
                         <div class="input-radio">
                             {{ transporte.tag }}
                             <label for="{{ transporte.id_for_label }}" class="unselectable">{{ transporte.choice_label }}</label>
                         </div>
                     {% endfor %}
-                <div>
-                    <br>
-                </div>
+                <div><br></div>
                 {% if servicio in procesos_empresa.procesos.all %}
-                        <b>7.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
-                        <div>
-                            <br>
-                        </div>
+                        <h3 style="color: white;"><b>7.</b> Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
+                        <div><br></div>
                         {% for servicios in form_servicio.servicios %}
                             <div class="input-radio">
                                 {{ servicios.tag }}
                                 <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
                             </div>
                         {% endfor %}
-                        <div>
-                            <br>
-                        </div>
+                        <div><br></div>
                     {% endif %}
             {% elif servicio in procesos_empresa.procesos.all %}
-                Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada
-                    <div>
-                        <br>
-                    </div>
+                <h3 style="color: white"><b>6.</b>Indique todos los SERVICIOS GENERALES que realiza la empresa a ser evaluada</h3>
+                <div><br></div>
                     {% for servicios in form_servicio.servicios %}
                         <div class="input-radio">
                             {{ servicios.tag }}
                             <label for="{{ servicios.id_for_label }}" class="unselectable">{{ servicios.choice_label }}</label>
                         </div>
                     {% endfor %}
-              <div>
-                  <br>
-              </div>
+                <div><br></div>
+                </div>
             {% endif %}
+            </div>
+
+        <div class="uk-container">
+            <div class="inicio" style="text-align: center">
+                <div class="boton">
+                    <input class="uk-button" type="button" id="previous" onclick="history.go(-1)" value="Anterior">
+                </div>
+                <div class="boton">
+                    <button class="uk-button" type="submit" value="Submit" id="next">Siguiente</button>
+                </div>
+            </div>
+        </div>
+
+            <div class="pagina">
+                Página 2/4
+            </div>
             <div><br></div>
-            <div><hr></div>
-            <div style="text-align: center" class="navButtons">
-            <div class="boton">
-                <input type="button" id="previous" onclick="history.go(-1)" value="Anterior">
-            </div>
-            <div class="boton">
-                <button type="submit" value="Submit" id="next">Siguiente</button>
-            </div>
-        </div>
-        </div>
-        <div class="pagina">
-            Página 2/4
-        </div>
-        <div>
-            <br>
-        </div>
-    </form>
-      <!-- Optional JavaScript -->
-      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        </form>
 {% endblock %}
