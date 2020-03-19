@@ -1,5 +1,9 @@
 {% extends 'MideTuRiesgo/mideturiesgo-base.html' %}
 {% load static %}
+
+{% block head %}
+{% endblock %}
+
 {% block content %}
     <!-- Encabezado de Titulo de la encuesta -->
     <div class="inicio">
@@ -34,7 +38,7 @@
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="direccion">Dirección</label></td>
-                        <td class="campos">{{ form_user.address }}</td>
+                        <td class="campos">{{ form_perfil_empresa.direccion_empresa }}</td>
                     </tr>
                     <tr>
                         <td class="nombreCampo"><label for="comuna">Comuna</label></td>

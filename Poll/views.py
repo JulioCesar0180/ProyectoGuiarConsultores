@@ -502,6 +502,10 @@ def rut_unformat(value):
     return value.replace("-", "").replace(".", "").replace(",", "")
 
 
+def welcome_poll(request):
+    return render(request, 'MideTuRiesgo/welcome_poll.html')
+
+
 @login_required(login_url='MTRlogin')
 def page_one_poll(request):
 
