@@ -6,57 +6,65 @@
     <title>Mide tu riesgo</title>
 {% endblock %}
 {% block content %}
-    <div class="inicio">
-        Las siguientes preguntas están relacionadas con la implementación y manejo de riesgos de la empresa
-        <div><hr></div>
+    <div class="uk-container uk-container-expand" uk-height-viewport="expand" style="background: rgba(69,90,100,0.8);">
+    <div class="uk-container" style="background: blue; padding: 20px">
+        <div class="inicio">
+            <p style="color: white">Las siguientes preguntas están relacionadas con la implementación y manejo de riesgos de la empresa</p>
+            <div><hr></div>
+        </div>
     </div>
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="inicio">
-            <b>{{cont|add:"1"}}.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada
-            <div><br></div>
-            {% for manejo_riesgo in form_man_riesgo.opciones_manejo %}
-                {% if manejo_riesgo.id_for_label == "id_opciones_manejo_2" %}
-                    <div class="input-radio" onclick="blockOptions()">
-                        {{ manejo_riesgo.tag }}
-                        <label for="{{ manejo_riesgo.id_for_label }}" class="unselectable">{{ manejo_riesgo.choice_label }}</label>
-                    </div>
-                {% else %}
-                    <div class="input-radio" onclick="unblockOptions()">
-                        {{ manejo_riesgo.tag }}
-                        <label for="{{ manejo_riesgo.id_for_label }}" class="unselectable">{{ manejo_riesgo.choice_label }}</label>
-                    </div>
-                {% endif %}
-            {% endfor %}
-            <div><hr></div>
-        </div>
-
-        <div class="inicio">
-            <b>{{cont|add:"2"}}.</b> La empresa cuenta con prevencionista de riesgos
-            {% for t_preven in form_preven_empresa.opciones_prevencionista_t %}
-                <div class="input-radio">
-                    {% if t_preven.choice_label != "---------" %}
-                        {{ t_preven.tag }}
-                        <label for="{{ t_preven.id_for_label }}" class="unselectable">{{ t_preven.choice_label }}</label>
-                    {% endif %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <div class="inicio">
+                    <h3 style="color: white"><b>{{cont|add:"1"}}.</b> Indique todos los elementos de manejo de riesgo con los que cuenta la empresa a ser evaluada</h3>
+                    <div><br></div>
+                    {% for manejo_riesgo in form_man_riesgo.opciones_manejo %}
+                        {% if manejo_riesgo.id_for_label == "id_opciones_manejo_2" %}
+                            <div class="input-radio" onclick="blockOptions()">
+                                {{ manejo_riesgo.tag }}
+                                <label for="{{ manejo_riesgo.id_for_label }}" class="unselectable">{{ manejo_riesgo.choice_label }}</label>
+                            </div>
+                        {% else %}
+                            <div class="input-radio" onclick="unblockOptions()">
+                                {{ manejo_riesgo.tag }}
+                                <label for="{{ manejo_riesgo.id_for_label }}" class="unselectable">{{ manejo_riesgo.choice_label }}</label>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div><hr></div>
                 </div>
-            {% endfor %}
-            <div><hr></div>
-            <div style="text-align: center" class="navButtons">
-            <div class="boton">
-                <input type="button" id="previous" onclick="history.go(-1)" value="Anterior">
             </div>
-            <div class="boton">
-                <button type="submit" value="Submit" id="next">Siguiente</button>
-            </div>
-        </div>
-        </div>
-        <div class="pagina">
-            Página 3/4
-        </div>
-    </form>
-    <div><br></div>
 
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <div class="inicio">
+                    <h3 style="color: white"><b>{{cont|add:"2"}}.</b> La empresa cuenta con prevencionista de riesgos</h3>
+                    {% for t_preven in form_preven_empresa.opciones_prevencionista_t %}
+                        <div class="input-radio">
+                            {% if t_preven.choice_label != "---------" %}
+                                {{ t_preven.tag }}
+                                <label for="{{ t_preven.id_for_label }}" class="unselectable">{{ t_preven.choice_label }}</label>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <div><hr></div>
+                </div>
+            </div>
+            <div class="uk-container" style="background: rgba(0,0,255, 0.7); padding: 20px; margin-top: 20px">
+                <div style="text-align: center" class="navButtons">
+                    <div class="boton">
+                        <input class="uk-button" type="button" id="previous" onclick="history.go(-1)" value="Anterior">
+                    </div>
+                    <div class="boton">
+                        <button class="uk-button" type="submit" value="Submit" id="next">Siguiente</button>
+                    </div>
+                    <div class="pagina" style="margin-top: 20px">
+                        Página 3/4
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
     <script type="text/javascript">
         <!--
         function redirectTo(sUrl) {
