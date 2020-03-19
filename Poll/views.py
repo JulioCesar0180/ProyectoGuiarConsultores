@@ -763,7 +763,7 @@ def page_three_poll(request):
         print(form_man_riesgo.errors)
         print(form_preven_empresa.errors)
         print(form_man_riesgo.is_valid())
-        if form_man_riesgo.is_valid():
+        if form_man_riesgo.is_valid() and form_preven_empresa.is_valid():
 
             form_man_riesgo.save(commit=False)
             form_man_riesgo.save()
