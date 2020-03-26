@@ -1,18 +1,17 @@
 # encoding: utf-8
-"""PDF"""
+
 from django.conf import settings
 from io import BytesIO
 
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.units import cm
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
-from reportlab.lib import colors
-from datetime import date
 
+"""PDF"""
+from django.views.generic import View
+
+from .utils import render_to_pdf
+
+from django.template.loader import  get_template
 
 
 """Se utiliza en el rut validator, es para iterar o una especie de foreach"""
@@ -145,12 +144,39 @@ def get_name(request):
 
     return render(request, 'MideTuRiesgo/test.html', {'form': form})
 
+class GeneratePDF(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('PDF/invoice.html')
+        context = {
+            "invoice_id": 123,
+            "customer_name": "John Cooper",
+            "amount": 1399.99,
+            "today": "Today",
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('PDF/invoice.html', context)
+
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Reporte_%s.pdf"
+            content = "inline; filename = '%s'" %(filename)
+            response['Content-Disposition'] = content
+
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" % (filename)
+            response['Content-Disposition'] = content
+
+            return response
+        return
+
 
 desgloce=[]
 desgloce_ordenado=[]
 @login_required(login_url='MTRlogin')
 def report(request):
     global desgloce_ordenado
+<<<<<<< refs/remotes/origin/SinError
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=Reporte-Guiar-Consultores.pdf'
 
@@ -300,6 +326,9 @@ def report(request):
     buffer.close()
     response.write(pdf)
     return response
+=======
+
+>>>>>>> Aplicacion de xhtml to pdf
 
 
 
