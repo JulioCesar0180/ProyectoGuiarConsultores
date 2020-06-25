@@ -25,5 +25,5 @@ urlpatterns = [
     path('password/change/<slug:pk>', login_required(views.ChangePasswordView.as_view()), name='change_password'),
     path('password/reset', views.reset_password, name='reset_password'),
 
-    path('pdf/', views.GeneratePDF.as_view(), name="pdfReport"),
+    # path('pdf/', views.GeneratePDF.as_view(), name="pdfReport"),
 ]

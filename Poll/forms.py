@@ -6,11 +6,12 @@ from .models import *
 
 
 class LogInForm(forms.Form):
-    rut = forms.CharField(label='Rut Empresa', widget=forms.TextInput(attrs={'placeholder': 'Ingrese Rut de Empresa',
-                                                                             'class': 'uk-input'}))
-    password = forms.CharField(label='Contraseña', max_length=30,
-                               widget=forms.PasswordInput(attrs={'placeholder': 'Ingrese Contraseña',
-                                                                 'class': 'uk-input'}))
+    rut = forms.CharField(label='Rut Empresa', widget=forms.TextInput(attrs={
+        'class': 'form-control', 'autocomplete': 'off'}
+    ))
+    password = forms.CharField(label='Contraseña', max_length=30, widget=forms.PasswordInput(
+        attrs={'class': 'form-control'}
+    ))
 
     class Meta:
         model = UserGuiar
