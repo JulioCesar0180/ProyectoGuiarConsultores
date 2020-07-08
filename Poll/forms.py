@@ -18,7 +18,8 @@ class LogInForm(forms.Form):
         fields = ('rut', 'password')
 
 
-# Arreglarlo
+# Arreglarlo  [rd2EUM79}EU%K44
+# pass: server ftp -> 9aa02QLF6NuF*f6g
 class SignUpForm(UserCreationForm):
     rut = forms.CharField(
         max_length=30, required=True,
