@@ -984,7 +984,7 @@ def page_results(request):
 
     # Resultado de manejo de Riesgos pag 3
     result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
-    suma_mriesgo = result_mriesgo.opciones_manejo.all().aggregate(Sum('cr'))['cr__sum']
+    suma_mriesgo = result_mriesgo.opciones_manejo.aggregate(Sum('cr'))['cr__sum']
     if suma_mriesgo is None:
         suma_mriesgo = 0
     else:
