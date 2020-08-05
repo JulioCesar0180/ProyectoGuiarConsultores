@@ -984,7 +984,10 @@ def page_results(request):
 
     # Resultado de manejo de Riesgos pag 3
     result_mriesgo, _ = TablaResultadosManejoRiesgo.objects.get_or_create(id=request.user)
-    suma_mriesgo = result_mriesgo.opciones_manejo.aggregate(Sum('cr'))['cr__sum']
+    suma_mriesgo = result_mriesgo.opciones_manejo.cr
+    print(suma_mriesgo)
+    """
+    Explicar el objetivo de este codigo
     if suma_mriesgo is None:
         suma_mriesgo = 0
     else:
@@ -997,6 +1000,8 @@ def page_results(request):
                         d[1] += 0
                         d[2] = d[2] * (1 - suma_mriesgo / 100)
             resultado = resultado * (1 - suma_mriesgo / 100)
+    """
+    resultado = resultado * (1 - suma_mriesgo / 100)
 
     # Resultado de Tiempo de Prevencionista (Disponibilidad) Pag 3
     result_preven, _ = TablaResultadosTiempoPreven.objects.get_or_create(id=request.user)
